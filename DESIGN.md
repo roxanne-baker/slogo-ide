@@ -1,4 +1,4 @@
-## external API's 
+## External API's 
 
 #### backend to frontend: for getting info to render turtles visually 
 
@@ -17,7 +17,7 @@
 * checkParamInBounds() // need several methods
 
 
-## internal API's
+## Internal API's
 
 backend: implementation
 * addCommand(String[], lambda expression for corresponding method)
