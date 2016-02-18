@@ -20,15 +20,14 @@
 ## internal API's
 
 backend: implementation
-adding a command 
-addCommand(String[], lambda expression for corresponding method)
-executeCommand(String, params) // will outsource errochecking to errorhandling API
-addErrorForCommand()
+* addCommand(String[], lambda expression for corresponding method)
+* executeCommand(String, params) // will outsource errochecking to errorhandling API
+* addErrorForCommand()
 
 #### frontend: add views and GUI elements
-createGUIObject(Object-type, eventHandler, label, etc)
-addView(Group g)
-createView(size params, color, name)
-addGUIObjectToView(Object, view)
-rearrange()
+* createGUIObject(Object-type, eventHandler, label, etc)
+* addView(Group g)
+* createView(size params, color, name)
+* addGUIObjectToView(Object, view)
+* rearrange()
 
