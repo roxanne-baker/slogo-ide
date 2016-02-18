@@ -1,0 +1,36 @@
+external API's 
+
+backend to frontend: for getting info to render turtles visually 
+retrieve states of turtles: colors/calculated location/orientation
+getColor()
+getX()
+getY()
+getOrientation()
+getSize()
+getPenColor()
+getPenWidth()
+getVisibility()
+
+frontend to backend: errorHandling
+checkValidCommandName()
+checkValidParam()
+checkMissingParams()
+checkParamType()
+checkParamInBounds() // need several methods
+
+
+internal API's
+
+backend: 
+adding a command 
+addCommand(String[], lambda expression for corresponding method)
+executeCommand(String, params) // will outsource errochecking to errorhandling API
+addErrorForCommand()
+
+frontend: 
+createGUIObject(Object-type, eventHandler, label, etc)
+addView(Group g)
+createView(size params, color, name)
+addGUIObjectToView(Object, view)
+rearrange()
+
