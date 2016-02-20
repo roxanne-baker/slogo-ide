@@ -1,7 +1,13 @@
 ## External API's 
 
-#### backend to frontend: for getting info to render turtles visually 
+#### frontend, for backend: for rendering turtles visually 
 
+
+* drawTurtle(Turtle)
+* drawPath(Line)
+* 
+
+// nevermind
 * retrieve states of turtles: ccalculated location/orientation
 * getX()
 * getY()
@@ -9,7 +15,7 @@
 * getSize()
 * getVisibility()
 
-#### frontend to backend: errorHandling
+#### backend, for frontend: errorHandling
 * checkValidCommandName()
 * checkValidParam()
 * checkMissingParams()
