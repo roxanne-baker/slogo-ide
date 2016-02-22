@@ -153,7 +153,7 @@ should handle actually changing any values as a result of the command (e.g., pos
 Will likely refer to Resources class in order to get instances of classes necessary to make changes (e.g., get TurtleTracker and call relevant method to change position of current turtle) dictated by that particular command
 
 Below is how the two backend API’s would interact with each other.
-![alt text]("backend API UML diagram.PNG")
+![backend API flow](backend API UML diagram.PNG)
 
 ### FRONT END: External API Drawer
 
