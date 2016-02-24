@@ -153,9 +153,9 @@ should handle actually changing any values as a result of the command (e.g., pos
 Will likely refer to Resources class in order to get instances of classes necessary to make changes (e.g., get TurtleTracker and call relevant method to change position of current turtle) dictated by that particular command
 
 Below is how the two backend API’s would interact with each other.
-![alt text]("backend API UML diagram.PNG")
+![backend API flow](backend API UML diagram.PNG)
 
-## FRONT END: External API Drawer
+### FRONT END: External API Drawer
 
 ``` java
 public interface Drawer {
@@ -170,6 +170,8 @@ This method is responsible for making the actor (represented by some image) appe
 }
 
 This external API for the front-end is intended to allow a program to visually render movements of some kind of object across a scene.  In our case, it allows us to meet the assignment specification of allowing the user to see the results of the turtle after executing commands on it.  It would be used by some kind of Turtle class which would implement this interface’s methods by drawing lines for every movement a Turtle object made, and making the Turtle appear at one coordinate or another upon creation or depending on its movements.  It would rely on information passed to it from classes implementing the Parser and the commands parsed and executed to determine next coordinates, etc.  It is made very general to allow for extension by any kind of other program that needs to visually render some kind of drawing on a scene other than Turtle objects.
+
+### FRONTEND: Internal API
 
 ``` java
 public interface GUIMaker {
@@ -282,7 +284,6 @@ Another point of discussion was whether to have the turtle move immediately afte
 However, having an animation would likely be preferable for many users (even if not necessary).  For some of the more intricate programs that would be possible with SLogo, users would likely enjoy being able to (more directly) see their program in action.  This could also be useful to users who need to “debug” their program if their code isn’t producing the image they had hoped.
 
 Ultimately, it was decided to have the turtle move immediately after entering in a command.  While we would likely use an animation if time were not a factor, for the purposes of this project we felt it would result in better functionality and a cleaner design.
-
 
 
 
