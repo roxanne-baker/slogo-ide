@@ -37,8 +37,8 @@ public class Parser {
 	}
 	
 	private void addCommandtoMap(Command c) { 
-		for (String name: c.getNames()) { 
-			commandsMap.put(name, c); 
-		}
+//		for (String name: c.getNames()) { 
+//			commandsMap.put(name, c); 
+//		}
 	}
 }
