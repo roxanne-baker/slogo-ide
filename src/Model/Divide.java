@@ -1,8 +1,12 @@
 package Model;
 
-public class Sum extends Command implements Executable {
+import java.util.List;
 
-	numParams = 2;
+public class Divide extends Command implements Executable {
+
+	public Divide() {
+		numParams = 2;
+	}
 	
 	public double execute(List<ParseNode> params) {
 		// need to figure out how to communicate with front-end
@@ -15,10 +19,10 @@ public class Sum extends Command implements Executable {
 		for (ParseNode param : params) {
 			Object paramValue = param.getValue();
 			if (!(paramValue instanceof Integer || paramValue instanceof Double)) {
-				return String.format(errors.getString(WrongParamType), paramValue.toString());
+				return String.format(errors.getString("WrongParamType"), paramValue.toString());
 			}	
-			else if (paramValue == 0) {
-				return errors.getString(DivideByZero);
+			else if ((int) paramValue == 0) {
+				return errors.getString("DivideByZero");
 			}
 		}
 		return null;
