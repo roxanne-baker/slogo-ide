@@ -12,17 +12,24 @@ public class CommandParseTree {
 	class ParseNode { 
 		Command c; 
 		List<ParseNode> params; 
-		Double value; 
+		Object value; 
+		boolean paramsGood; 
+		
 		ParseNode(Command c, List<ParseNode> params) { 
 			this.c = c;
 			this.params = params;  	
 			value = null; 
+			paramsGood = false;
 		}
 		
-		void setValue(double value) { 
+		void setValue(Object value) { 
 			this.value = value;
 			c = null; 
 			params = null; 
+		}
+		
+		Object getValue() { 
+			return value;
 		}
 	}
 
