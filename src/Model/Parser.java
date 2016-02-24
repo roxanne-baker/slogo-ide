@@ -2,9 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -12,20 +10,14 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-	protected Map<String, Command> commandsMap; 
+//	protected Map<String, Command> commandsMap; 
 	private List<Entry<String, Pattern>> mySymbols;
 	
 	public Parser() {
-		initializeCommandsMap();
+//		initializeCommandsMap();
         mySymbols = new ArrayList<>();
 	}
 	
-	public void run(String userInput) { 
-		Command c = commandsMap.get(getCommandName(userInput));
-		// c.checkError(); 
-		
-		// c.execute(); 
-	}
 
     // adds the given resource file to this language's recognized types
     public void addPatterns (String syntax) {
@@ -56,36 +48,4 @@ public class Parser {
         // THIS IS THE KEY LINE
         return regex.matcher(text).matches();
     }
-	
-	
-	public boolean errorCommandName(String userInput) {
-		String commandName = getCommandName(userInput);
-		if (!commandsMap.containsKey(commandName)) { 
-			return true;
-		}
-		else return false;  
-	}
-
-	private String getCommandName(String input) { 
-		String[] commandAndParams = input.split(" "); 
-		return commandAndParams[0];
-	}
-	
-	// recursive
-	
-//	private void populateParseTree(Command c) { 
-//		CommandParseTree commandTree = new CommandParseTree(ParseNode());
-//	}
-//	
-	private void initializeCommandsMap() { 
-		commandsMap = new HashMap<String, Command>(); 
-		// for all command c somewhere 
-		// addCommandtoMap(c); 
-	}
-	
-	private void addCommandtoMap(Command c) { 
-		for (String name: c.getNames()) { 
-			commandsMap.put(name, c); 
-		}
-	}
 }
