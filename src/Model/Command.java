@@ -19,5 +19,9 @@ public class Command {
 			return null;
 		}
 	}
+	
+	public int getNumParams() { 
+		return numParams; 
+	}
 
 }

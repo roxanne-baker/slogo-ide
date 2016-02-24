@@ -36,12 +36,12 @@ public class Interpreter {
 		commandsMap = new HashMap<String, Command>(); 
 	}
 	
-	private void addCommandtoMap(Command c) { 
-		for (String name: c.getNames()) { 
-			commandsMap.put(name, c); 
-		}
-	}
-	
+//	private void addCommandtoMap(Command c) { 
+//		for (String name: c.getNames()) { 
+//			commandsMap.put(name, c); 
+//		}
+//	}
+//	
 //    private static String readFileToString (String filename) throws FileNotFoundException {
 //        final String END_OF_FILE = "\\z";
 //        Scanner input = new Scanner(new File(filename));
@@ -60,13 +60,13 @@ public class Interpreter {
     	ParseNode root = new ParseNode(command);  
     	root.params = new ArrayList<ParseNode>(); 
     	int index = 1; 
-    	for (command.getNumParams()) { 
+    	for (int i=0; i < command.getNumParams();i++) { 
     		String param = text.split(WHITESPACE)[index];
     		if (commandsMap.get(param).equals("CONSTANT")) { 
         		root.params.add(new ParseNode(Double.valueOf(param))); 	
     		}
     		else {
-    			parseText(index); 
+    			//parseText(index); 
     		}
     		index++; 
     	}
