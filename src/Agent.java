@@ -7,31 +7,51 @@ import javafx.scene.paint.Paint;
 
 
 public abstract class Agent extends Observable{
-	private int[] agentPosition;
+	private static final String DEFAULT_IMAGE_PATH = "dot.png";
+	private int agentXPosition;
+	private int agentYPosition;
 	private boolean agentPenUp;
-	private Paint agentColor;
+	private String agentColor;
 	private ImageView agentImageView;
 	private double orientation; //degrees going clockwise
-	private int size;
+	private int agentSize;
+	private String agentImagePath;
+	private int oldYPosition;
+	private int oldXPosition;
+	private String agentName;
+	private boolean isVisible;
 	
-	public Agent(String name, int xPos, int yPos){
-		agentPosition = new int[2];
-		agentPosition[0]= xPos;
-		agentPosition[1] = yPos;
+	public Agent(String name, int xPos, int yPos,View obsView){
+		agentXPosition= xPos;
+		agentYPosition = yPos;
 		agentPenUp = false; //default value pen is down
-		agentColor = Color.BLACK;
+		agentColor = "Black";
 		orientation = 0;
-		size =10;
+		agentSize = 50;
+		agentName = name;
+		isVisible = true;
+		setImagePath(DEFAULT_IMAGE_PATH);
+
 	}
-	public int[] getPosition(){
-		return agentPosition;
+	public int getXPosition(){
+		return agentXPosition;
+	}
+	public int getYPosition(){
+		return agentYPosition;
 	}
 	
-	public void setPosition(int x, int y){
-		agentPosition[0] = x;
-		agentPosition[1] = y;
+	public void movePosition(int x, int y){
+		oldXPosition = agentXPosition;
+		oldYPosition = agentYPosition;
+		agentXPosition = agentXPosition + x;
+		agentYPosition = agentYPosition + y;
+		setChanged();
+		notifyObservers("MOVE");
 	}
-	
+	public void leaveStamp(){
+		setChanged();
+		notifyObservers("STAMP");
+	}
 	public boolean isPenUp(){
 		return agentPenUp;
 	}
@@ -40,35 +60,71 @@ public abstract class Agent extends Observable{
 		agentPenUp = penBool;
 	}
 	
-	public void setColor(Paint color){
+	public void setColor(String color){
 		agentColor = color;
 	}
 	
-	public Paint getColor(){
+	public String getColor(){
 		return agentColor;
 	}
 	
-	public boolean hasImageView(){
-		if (agentImageView == null){
-			return true;
-		}
-		return false;
+
+	
+	public String getImagePath(){;
+		return agentImagePath;
 	}
-	public void setImageView(String imagePath){
-		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),size,size,false,false));
+	
+	public void setImagePath(String imagePath){
+		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),agentSize,agentSize,true,true));
+		agentImagePath = imagePath;
 	}
 	public ImageView getImageView(){
-		if (hasImageView()){
-			return agentImageView;
-		
-		}
-		return null; //or throw error?
+		return agentImageView;
 	}
-	public Number getOrientation(){
+	public double getOrientation(){
 		return orientation;
 	}
 	public void changeOrientation(double degreeChange){
 		orientation = orientation +  degreeChange;
 		agentImageView.setRotate(orientation);
 	}
-}
+	
+	public int getSize(){
+		return agentSize;
+		
+	}
+	public void setSize(int newSize){
+		agentSize = newSize;
+	}
+	public int getOldXPosition() {
+		// TODO Auto-generated method stub
+		return oldXPosition;
+	}
+	public int getOldYPosition(){
+		return oldYPosition;
+	}
+	public ImageView getImageCopy() {
+		ImageView imgCopy = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath),agentSize,agentSize,true,true));
+		imgCopy.setRotate(orientation);
+		return imgCopy;
+
+	}
+	public String getName() {
+		// TODO Auto-generated method stub
+		return agentName;
+	}
+	public void changeName(String newName) {
+		agentName = newName;
+		
+	}
+	public void setVisible(boolean isVis) {
+		isVisible = isVis;
+		
+	}
+	public boolean isVisible(){
+		return isVisible;
+	}
+	
+
+
+}	
