@@ -2,30 +2,17 @@ package Model;
 
 import java.util.List;
 
-public class Sum extends Command implements Executable {
+public class Power extends Command implements Executable {
 
-	public Sum() {
+	public Power() {
 		numParams = 2;
 	}
 	
 	public double execute(List<ParseNode> params) {
 		// need to figure out how to communicate with front-end
-		int sum = 0;
-		for (ParseNode param : params) {
-			double val = (double) param.getValue();
-			sum += val;
-		}
-		return sum;
-	}
-	
-	@Override
-	public String checkNumParams(List<ParseNode> params) {
-		if (params.size() < 2) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
+		double base = (double) params.get(0).getValue();
+		double exponent = (double) params.get(1).getValue();
+		return Math.pow(base, exponent);
 	}
 	
 	public String checkParamTypes(List<ParseNode> params) {

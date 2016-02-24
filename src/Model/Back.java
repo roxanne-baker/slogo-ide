@@ -2,9 +2,11 @@ package Model;
 
 import java.util.List;
 
-public class Forward extends Command implements Executable {
+public class Back extends Command implements Executable {
 
-	public Forward() {
+	// SAME AS FORWARD
+	// DIFFERENT EXECUTE, OTHER METHODS SAME
+	public Back() {
 		numParams = 1;
 	}
 	

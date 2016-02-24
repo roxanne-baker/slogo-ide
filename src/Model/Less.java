@@ -2,29 +2,19 @@ package Model;
 
 import java.util.List;
 
-public class Sum extends Command implements Executable {
+public class Less extends Command implements Executable {
 
-	public Sum() {
+	public Less() {
 		numParams = 2;
 	}
 	
 	public double execute(List<ParseNode> params) {
 		// need to figure out how to communicate with front-end
-		int sum = 0;
-		for (ParseNode param : params) {
-			double val = (double) param.getValue();
-			sum += val;
-		}
-		return sum;
-	}
-	
-	@Override
-	public String checkNumParams(List<ParseNode> params) {
-		if (params.size() < 2) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
+		if ((double) params.get(0).getValue() < (double) params.get(1).getValue()) {
+			return 1;
 		}
 		else {
-			return null;
+			return 0;
 		}
 	}
 	
@@ -33,10 +23,9 @@ public class Sum extends Command implements Executable {
 			Object paramValue = param.getValue();
 			if (!(paramValue instanceof Integer || paramValue instanceof Double)) {
 				return String.format(errors.getString("WrongParamType"), paramValue.toString());
-			}			
+			}	
 		}
 		return null;
 	}
-	
 	
 }

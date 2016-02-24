@@ -2,9 +2,9 @@ package Model;
 
 import java.util.List;
 
-public class Forward extends Command implements Executable {
+public class Left extends Command implements Executable {
 
-	public Forward() {
+	public Left() {
 		numParams = 1;
 	}
 	

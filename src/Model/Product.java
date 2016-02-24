@@ -2,20 +2,20 @@ package Model;
 
 import java.util.List;
 
-public class Sum extends Command implements Executable {
+public class Product extends Command implements Executable {
 
-	public Sum() {
+	public Product() {
 		numParams = 2;
 	}
 	
 	public double execute(List<ParseNode> params) {
 		// need to figure out how to communicate with front-end
-		int sum = 0;
+		int product = 1;
 		for (ParseNode param : params) {
 			double val = (double) param.getValue();
-			sum += val;
+			product *= val;
 		}
-		return sum;
+		return product;
 	}
 	
 	@Override
