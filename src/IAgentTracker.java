@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 
@@ -8,24 +11,31 @@ import javafx.scene.paint.Paint;
  */
 public interface IAgentTracker{
 	int getNumAgents();
-	Agent[] getAgents();
-	String[] getAgentNames();
+	List<Agent> getAgents();
+	List<String> getAgentNames();
 	void addAgent(String agentName); //Throws error if agentName has already been created
 	void removeAgent(String agentName);
 	boolean isAgent(String name); 
+	boolean isValidAgentName(String name);
 	
 	//Specific to current agent
 	void setCurrentAgent(String agentName);
+	String getCurrentAgent();
 	void moveCurrentAgent(int changeX,int changeY);
-	void setCurrentAgentColor(Paint color);
-	Paint getCurrentAgentColor();
-	void setCurrentAgentImageView(ImageView image);
-	ImageView getCurrentAgentImageView(ImageView image);
+	int getCurrentAgentXPosition();
+	int getCurrentAgentYPosition();
+	void setCurrentAgentColor(String color); //doesn't work yet
+	String getCurrentAgentColor();
+	void setCurrentAgentImage(String imagePath);
 	void setCurrentAgentPenUp(boolean isUp);
 	boolean isCurrentAgentPenUp();
 	void setCurrentAgentVisible(boolean isVisible);
-	void changeCurrentAgentOrientation(double degrees);
+	void changeCurrentAgentOrientation(double changeDegrees);
 	double getCurrentAgentOrientation();
+	void stampCurrentAgent();
+	void changeCurrentAgentSize(int size); //doesn't work yet
+	int getCurrentAgentSize(int size); //doesn't work yet
+
 	
 	
 	
