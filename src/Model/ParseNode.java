@@ -25,10 +25,8 @@ class ParseNode {
 	
 	void setValue(Object value) { 
 		this.value = value;
-		c = null; 
-		params = null; 
 	}
-	
+
 	List<ParseNode> getParams() { 
 		return params; 
 	}
@@ -40,8 +38,7 @@ class ParseNode {
 	Command getCommand() { 
 		return c; 
 	}
-	
-	Object getValue() { 
+	public Object getValue() { 
 		return value;
 	}
 }

@@ -3,15 +3,15 @@ package Model;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Command {
+public abstract class Command implements Executable {
  
 	int numParams; 
-	protected ResourceBundle errors = ResourceBundle.getBundle("resources/Errors");
+	protected ResourceBundle errors = ResourceBundle.getBundle("resources.errors/Errors");
 	
 	public Command() {
 	}
 	
-	public String checkNumParams(List<ParseNode> params) {
+	public String checkNumParams(List<Object> params) {
 		if (params.size() != numParams) {
 			return String.format(errors.getString("WrongNumParams"), numParams, params.size());
 		}
@@ -19,12 +19,9 @@ public class Command {
 			return null;
 		}
 	}
-<<<<<<< HEAD
-=======
 	
 	public int getNumParams() { 
 		return numParams; 
 	}
->>>>>>> carolyn
 
 }

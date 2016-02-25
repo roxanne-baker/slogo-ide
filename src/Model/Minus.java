@@ -8,14 +8,14 @@ public class Minus extends Command implements Executable {
 		numParams = 1;
 	}
 	
-	public double execute(List<ParseNode> params) {
+	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		return -((double) params.get(0).getValue());
+		return -((double) params.get(0));
 	}
 	
-	public String checkParamTypes(List<ParseNode> params) {
-		for (ParseNode param : params) {
-			Object paramValue = param.getValue();
+	public String checkParamTypes(List<Object> params) {
+		for (Object param : params) {
+			Object paramValue = param;
 			if (!(paramValue instanceof Integer || paramValue instanceof Double)) {
 				return String.format(errors.getString("WrongParamType"), paramValue.toString());
 			}			

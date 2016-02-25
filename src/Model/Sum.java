@@ -8,18 +8,19 @@ public class Sum extends Command implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<ParseNode> params) {
+	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		int sum = 0;
-		for (ParseNode param : params) {
-			double val = (double) param.getValue();
+		double sum = 0;
+		for (Object param : params) {
+			double val = (double) param;
 			sum += val;
 		}
 		return sum;
 	}
 	
 	@Override
-	public String checkNumParams(List<ParseNode> params) {
+
+	public String checkNumParams(List<Object> params) {
 		if (params.size() < 2) {
 			return String.format(errors.getString("MathTooFewParams"), params.size());
 		}
@@ -28,15 +29,11 @@ public class Sum extends Command implements Executable {
 		}
 	}
 	
-	public String checkParamTypes(List<ParseNode> params) {
-		for (ParseNode param : params) {
-<<<<<<< HEAD
-			Object paramValue = param.getValue();
-=======
-			Object paramValue = params.get(0).getValue();
->>>>>>> carolyn
-			if (!(paramValue instanceof Integer || paramValue instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), paramValue.toString());
+
+	public String checkParamTypes(List<Object> params) {
+		for (Object param : params) {
+			if (!(param instanceof Integer || param instanceof Double)) {
+				return String.format(errors.getString("WrongParamType"), param.toString());
 			}			
 		}
 		return null;
