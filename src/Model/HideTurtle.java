@@ -1,16 +1,6 @@
 package Model;
 
 import java.util.List;
-<<<<<<< HEAD
-
-public class HideTurtle extends Command implements Executable {
-
-	public HideTurtle() {
-		numParams = 0;
-	}
-	
-	public double execute(List<ParseNode> params) {
-=======
 import Controller.TurtleController;
 
 public class HideTurtle extends Command implements Executable {

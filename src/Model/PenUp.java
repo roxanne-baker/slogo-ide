@@ -1,16 +1,6 @@
 package Model;
 
 import java.util.List;
-
-<<<<<<< HEAD
-public class PenUp extends Command implements Executable {
-
-	public PenUp() {
-		numParams = 1;
-	}
-	
-	public double execute(List<ParseNode> params) {
-=======
 import Controller.TurtleController;
 
 public class PenUp extends Command implements Executable {
