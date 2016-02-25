@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Observable;
 
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -25,7 +26,8 @@ public class ConsoleView extends View {
 	}
 
 	@Override
-	public Region getView() {
+	public Group getView() {
+		Group group = new Group();
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
 		console.getStyleClass().add("code");
@@ -43,7 +45,8 @@ public class ConsoleView extends View {
 			console.clear();
 		});
 		vb.getChildren().addAll(console,btn);
-		return vb;
+		group.getChildren().add(vb);
+		return group;
 	}
 
 }

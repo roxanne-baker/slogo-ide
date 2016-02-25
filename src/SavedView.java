@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Observable;
 
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -28,7 +29,8 @@ public class SavedView extends View {
 	}
 
 	@Override
-	public Region getView() {
+	public Group getView() {
+		Group group = new Group();
 		vars.setPrefWidth(width/2);
 		methods.setPrefWidth(width/2);
 		ScrollPane varScroll = new ScrollPane(vars);
@@ -36,7 +38,8 @@ public class SavedView extends View {
 		varScroll.setMaxHeight(height);
 		methodScroll.setMaxHeight(height);
 		HBox hb = new HBox(varScroll,methodScroll);
-		return hb;
+		group.getChildren().add(hb);
+		return group;
 	}
 
 }

@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Observable;
 
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.*;
@@ -28,14 +29,14 @@ public class HistoryView extends View {
 	
 	
 	@Override
-	public Region getView() {
-		Pane pane = new Pane();
+	public Group getView() {
+		Group group = new Group();
 		vb.setPrefWidth(width);
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setPrefSize(width,height);
 		sp.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
-		pane.getChildren().add(sp);
-		return pane;
+		group.getChildren().add(sp);
+		return group;
 	}
 
 }

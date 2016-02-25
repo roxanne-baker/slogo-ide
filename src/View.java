@@ -28,7 +28,7 @@ public abstract class View implements Observer{
 		System.out.println("here");
 	}
 	
-	public abstract Region getView();
+	public abstract Group getView();
 	
 	
 	public int getWidth(){
