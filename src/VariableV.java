@@ -5,9 +5,9 @@ public class VariableV {
 	private Label name;
 	private TextField value;
 
-	public VariableV(Variable variable) {
-		name = new Label(variable.getName());
-		value = new TextField(variable.getValue());
+	public VariableV(String name, String value) {
+		this.name = new Label(name);
+		this.value = new TextField(value);
 	}
 	
 	public String getName(){

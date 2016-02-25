@@ -8,9 +8,9 @@ public class SavedVariableC {
 		this.view = view;
 	}
 	
-	public void addVariable(Variable variable){
-		model.addVariable(variable);
-		view.addVariableView(variable);
+	public void addVariable(String name, String value){
+		model.addVariable(name,value);
+		view.addVariableView(name,value);
 	}
 	
 	public void editVariable(String name, String newValue){

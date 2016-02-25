@@ -9,8 +9,8 @@ public class SavedVariableM extends Observable {
 		
 	}
 	
-	public void addVariable(Variable variable){
-		variableMap.put(variable.getName(),variable.getValue());
+	public void addVariable(String name,String value){
+		variableMap.put(name,value);
 	}
 	
 	public void modifyVariable(String name,String newValue){

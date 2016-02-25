@@ -1,26 +1,27 @@
-import java.util.ArrayList;
-import java.util.Observable;
-
+import java.util.HashMap;
 import javafx.scene.layout.VBox;
 
-public class SavedVariableV extends Observable {
-	private ArrayList<VariableV> varList = new ArrayList<VariableV>();
+public class SavedVariableV {
+	private HashMap<String,VariableV> varMap = new HashMap<String,VariableV>();
 	private VBox savedVars = new VBox();
 	
 	public SavedVariableV() {
 		
 	}
 	
-	public void addVariableView(Variable variable){
-		savedVars.getChildren().add(new VariableV(variable).getVariableV());
+	public void addVariableView(String name, String value){
+		VariableV varView = new VariableV(name,value);
+		if(varMap.containsKey(name)){
+			editVariableView(name,value);
+		}
+		else{
+			savedVars.getChildren().add(varView.getVariableV());
+		}
+		varMap.put(name, varView);
 	}
 	
 	public void editVariableView(String name, String newValue){
-		for(VariableV var: varList){
-			if(var.getName()==name){
-				var.setValue(newValue);
-			}
-		}
+		varMap.get(name).setValue(newValue);
 	}
 	
 	public VBox getSavedVars(){
