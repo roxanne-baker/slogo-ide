@@ -19,9 +19,12 @@ public class Command {
 			return null;
 		}
 	}
+<<<<<<< HEAD
+=======
 	
 	public int getNumParams() { 
 		return numParams; 
 	}
+>>>>>>> carolyn
 
 }

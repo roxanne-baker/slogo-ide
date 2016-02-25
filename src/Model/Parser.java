@@ -19,6 +19,24 @@ public class Parser {
 	}
 	
 
+<<<<<<< HEAD
+	private String getCommandName(String input) { 
+		String[] commandAndParams = input.split(" "); 
+		return commandAndParams[0];
+	}
+	
+	private void initializeCommandsMap() { 
+		commandsMap = new HashMap<String, Command>(); 
+		// for all command c somewhere 
+		// addCommandtoMap(c); 
+	}
+	
+	private void addCommandtoMap(Command c) { 
+//		for (String name: c.getNames()) { 
+//			commandsMap.put(name, c); 
+//		}
+	}
+=======
     // adds the given resource file to this language's recognized types
     public void addPatterns (String syntax) {
         ResourceBundle resources = ResourceBundle.getBundle(syntax);
@@ -48,4 +66,5 @@ public class Parser {
         // THIS IS THE KEY LINE
         return regex.matcher(text).matches();
     }
+>>>>>>> carolyn
 }
