@@ -1,8 +1,8 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class Interpreter {
 
@@ -15,7 +15,7 @@ public class Interpreter {
 	}
 	
 	public void run(String userInput) { 
-		parseText(lang, userInput); 
+		//parseText(lang, userInput); 
 	}
 	
 	
@@ -53,23 +53,24 @@ public class Interpreter {
     
     private static void parseText (Parser lang, String text) {
     	String first = text.split(WHITESPACE)[0];
+    	
     	if (!lang.getSymbol(first).equals("COMMAND")) { 
     		System.out.println(text);
     	}
     	Command command = commandsMap.get(lang.getSymbol(first));
     	ParseNode root = new ParseNode(command);  
-    	root.params = new ArrayList<ParseNode>(); 
-    	int index = 1; 
-    	for (int i=0; i < command.getNumParams();i++) { 
-    		String param = text.split(WHITESPACE)[index];
-    		if (commandsMap.get(param).equals("CONSTANT")) { 
-        		root.params.add(new ParseNode(Double.valueOf(param))); 	
-    		}
-    		else {
-    			//parseText(index); 
-    		}
-    		index++; 
-    	}
+//    	root.params = new ArrayList<ParseNode>(); 
+//    	int index = 1; 
+//    	for (int i=0; i < command.getNumParams();i++) { 
+//    		String param = text.split(WHITESPACE)[index];
+//    		if (commandsMap.get(param).equals("CONSTANT")) { 
+//        		root.params.add(new ParseNode(Double.valueOf(param))); 	
+//    		}
+//    		else {
+//    			//parseText(index); 
+//    		}
+//    		index++; 
+//    	}
 //        for (String s : split) {
 //            if (s.trim().length() > 0) {
 //                System.out.println(String.format("%s : %s", s, lang.getSymbol(s)));
@@ -78,14 +79,39 @@ public class Interpreter {
         System.out.println();
     }
     
-    private void recurse(String text, Parser lang) { 
+    private void callRecurse(String text, ParseNode parent, Stack<ParseNode> commandStack) { 
+    	String[] split = text.split(WHITESPACE);
+    	String first = lang.getSymbol(split[0]); 
+    	
+    }
+    
+    private void recurse(String text, ParseNode parent, int numParam) { 
     	String[] split = text.split(WHITESPACE);
     	String s = lang.getSymbol(split[0]); 
-    	if (commandsMap.containsKey(s)) { 
-    		
+    	if (text.length() == 0) {
+    		if (parent.getCommand().getNumParams() < numParam) { 
+    			System.out.println("Not enough params"); 
+    		}
+    		return; 
     	}
-    	
-    	
+    	if (lang.getSymbol(s).equals("Constant")) { 
+    		ParseNode cur = new ParseNode(Double.parseDouble(s));
+    		parent.getParams().add(cur); 
+    		numParam++; 
+    		if (parent.getCommand().getNumParams() == numParam) { 
+    			while (parent.getParent() != null && parent.paramsEnough()) { 
+    				parent = parent.getParent();
+    			}
+    		}
+    		recurse(cutFirst(text), parent, numParam); 
+    	} 
+    	else if (lang.getSymbol(s).equals("Command") && commandsMap.containsKey(s)) { 
+    		ParseNode cur = new ParseNode(commandsMap.get(s));
+    		parent.getParams().add(cur); 
+    		numParam++; 
+    		int newNumParam = 0; 
+    		recurse(cutFirst(text), cur, newNumParam); 
+    	}
     	
     }
     

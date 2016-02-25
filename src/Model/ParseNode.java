@@ -4,10 +4,11 @@ import java.util.List;
 
 
 class ParseNode { 
-	Command c; 
-	List<ParseNode> params; 
-	Object value; 
-	boolean paramsGood; 
+	private Command c; 
+	private ParseNode parent; 
+	private List<ParseNode> params; 
+	private Object value; 
+	private boolean paramsEnough; 
 	
 	ParseNode(Command c) { 
 		this.c = c; 
@@ -23,13 +24,31 @@ class ParseNode {
 		this.c = c;
 		this.params = params;  	
 		value = null; 
-		paramsGood = false;
+		paramsEnough = false;
 	}
 	
 	void setValue(Object value) { 
 		this.value = value;
 		c = null; 
 		params = null; 
+	}
+	
+	ParseNode getParent() { 
+		return parent;
+	}
+	
+	void setParent(ParseNode node) {
+		this.parent = node; 
+	}
+	
+	boolean paramsEnough() { 
+		return paramsEnough; 
+	}
+	List<ParseNode> getParams() { 
+		return params; 
+	}
+	Command getCommand() { 
+		return c; 
 	}
 	
 	Object getValue() { 
