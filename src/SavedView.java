@@ -8,7 +8,8 @@ import javafx.scene.layout.*;
 public class SavedView extends View {
 	private int width;
 	private int height;
-	VBox vars = new VBox();
+	SavedVariableV sv = new SavedVariableV();
+	VBox vars;
 	VBox methods = new VBox();
 		
 	public SavedView(String id, int height, int width,HashMap<String,View> viewCollection) {
@@ -19,18 +20,22 @@ public class SavedView extends View {
 
 	@Override
 	public void update(Observable savedObj, Object arg) {
-		if(arg=="NEWVAR"){
-			vars.getChildren().add(((VariableM) savedObj).getVar());
-		}
-		else if(arg=="NEWMETHOD"){
-			methods.getChildren().add(((SavedMethod) savedObj).getText());
-		}
+//		if(arg=="NEWVAR"){
+//			vars.getChildren().add(((SavedVariableM) savedObj).getVar());
+//		}
+//		else if(arg=="NEWMETHOD"){
+//			methods.getChildren().add(((SavedMethod) savedObj).getText());
+//		}
 
 	}
-
+	public SavedVariableV getSavedVars(){
+		return sv;
+	}
+	
 	@Override
 	public Group getView() {
 		Group group = new Group();
+		vars = sv.getSavedVars();
 		vars.setPrefWidth(width/2);
 		methods.setPrefWidth(width/2);
 		ScrollPane varScroll = new ScrollPane(vars);

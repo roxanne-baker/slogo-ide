@@ -12,12 +12,17 @@ public class ConsoleView extends View {
 	private int height;
 	private int width;
 	private HashMap<String,View> allViews;
+	private SavedVariableM model = new SavedVariableM();
+	private SavedVariableV view;
+	private SavedVariableC controller;
 	
 	public ConsoleView(String id, int height, int width, HashMap<String,View> viewCollection) {
 		super(id, height, width,viewCollection);
 		this.height = height;
 		this.width = width;
 		allViews = viewCollection;
+		view = ((SavedView)allViews.get("Saved")).getSavedVars();
+		controller = new SavedVariableC(model,view);
 	}
 	
 	@Override
@@ -39,7 +44,7 @@ public class ConsoleView extends View {
 			//else if variable, create variable and add to saved vars
 			if(console.getText().contains("make '")){
 				String[] textList = console.getText().split(" ");
-				VariableM sv = new VariableM(textList[1].substring(1),textList[2],allViews.get("Saved"));
+				controller.addVariable(new Variable(textList[1].substring(1),textList[2]));
 			}
 			//else if method, create method and add to saved methods
 			console.clear();
