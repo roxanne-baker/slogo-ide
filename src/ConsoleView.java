@@ -15,14 +15,19 @@ public class ConsoleView extends View {
 	private SavedVariableM model = new SavedVariableM();
 	private SavedVariableV view;
 	private SavedVariableC controller;
+	private SavedMethodM methodmodel = new SavedMethodM();
+	private SavedMethodV methodview;
+	private SavedMethodC methodcontroller;
 	
 	public ConsoleView(String id, int height, int width, HashMap<String,View> viewCollection) {
 		super(id, height, width,viewCollection);
 		this.height = height;
 		this.width = width;
 		allViews = viewCollection;
-		view = ((SavedView)allViews.get("Saved")).getSavedVars();
+		view = ((SavedVariableV)allViews.get("SavedVar"));
 		controller = new SavedVariableC(model,view);
+		methodview = (SavedMethodV)allViews.get("SavedMethod");
+		methodcontroller = new SavedMethodC(methodmodel,methodview);
 	}
 	
 	@Override
@@ -41,12 +46,16 @@ public class ConsoleView extends View {
 		btn.setOnMouseClicked(e->{
 			History hist = new History(console.getText(),allViews.get("History"));
 			//if error, create error and add to history
+			
 			//else if variable, create variable and add to saved vars
 			if(console.getText().contains("make '")){
 				String[] textList = console.getText().split(" ");
 				controller.addVariable(textList[1].substring(1),textList[2]);
+			}//else if method, create method and add to saved methods
+			else if(console.getText().contains("save")){
+				String[] textList = console.getText().split(" ");
+				methodcontroller.addMethod(textList[1]);
 			}
-			//else if method, create method and add to saved methods
 			console.clear();
 		});
 		vb.getChildren().addAll(console,btn);

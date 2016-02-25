@@ -12,8 +12,11 @@ public class ViewFactory {
 		case "History":
 			view = new HistoryView(ID,height,width, allViews);
 			break;
-		case "Saved":
-			view = new SavedView(ID,height,width, allViews);
+		case "SavedVar":
+			view = new SavedVariableV(ID,height,width, allViews);
+			break;
+		case "SavedMethod":
+			view = new SavedMethodV(ID,height,width,allViews);
 			break;
 		default:
 			return null;

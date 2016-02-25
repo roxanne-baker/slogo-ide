@@ -2,7 +2,10 @@
 public class History extends ClickableText {
 
 	public History(String text,View view) {
-		super(text,"NEWHISTORY",view);
+		super(text);
+		addObserver(view);
+		setChanged();
+		notifyObservers("NEWHISTORY");
 	}
 
 	@Override

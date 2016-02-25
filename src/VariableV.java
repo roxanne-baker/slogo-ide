@@ -1,16 +1,29 @@
+import java.util.Observable;
+import java.util.Observer;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-public class VariableV {
+public class VariableV extends Observable {
 	private Label name;
 	private TextField value;
 
-	public VariableV(String name, String value) {
+	public VariableV(String name, String value,Observer view) {
+		addObserver(view);
 		this.name = new Label(name);
 		this.value = new TextField(value);
+		this.value.setOnMouseClicked(e->{
+			setChanged();
+			notifyObservers("FIELDCHANGED");
+		});
+		
 	}
 	
 	public String getName(){
+		return name.getText();
+	}
+	
+	public String getValue(){
 		return name.getText();
 	}
 	
