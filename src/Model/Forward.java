@@ -2,16 +2,19 @@ package Model;
 
 import java.util.List;
 
+import View.Turtle;
+import Controller.TurtleController;
+
 public class Forward extends Command implements Executable {
 
-	
-	public Forward() {
+	Turtle currentTurtle;
+	public Forward(TurtleController turtleController) {
 		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-
+		
 	
 		return (double) params.get(0);
 	}

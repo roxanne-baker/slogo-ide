@@ -1,10 +1,11 @@
 package Model;
 
 import java.util.List;
+import Controller.TurtleController;
 
 public class HideTurtle extends Command implements Executable {
 
-	public HideTurtle() {
+	public HideTurtle(TurtleController turtleController) {
 		numParams = 0;
 	}
 	

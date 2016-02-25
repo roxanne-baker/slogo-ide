@@ -2,9 +2,11 @@ package Model;
 
 import java.util.List;
 
+import Controller.TurtleController;
+
 public class PenDown extends Command implements Executable {
 
-	public PenDown() {
+	public PenDown(TurtleController turtleController) {
 		numParams = 0;
 	}
 	

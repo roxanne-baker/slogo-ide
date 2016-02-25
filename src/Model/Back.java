@@ -2,10 +2,13 @@ package Model;
 
 import java.util.List;
 
+import Controller.TurtleController;
+import View.Turtle;
+
 public class Back extends Command implements Executable {
 
-	// DIFFERENT EXECUTE, OTHER METHODS SAME
-	public Back() {
+	Turtle currentTurtle;
+	public Back(TurtleController turtleController) {
 		numParams = 1;
 	}
 	

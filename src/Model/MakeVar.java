@@ -2,9 +2,11 @@ package Model;
 
 import java.util.List;
 
+import Controller.VariableController;
+
 public class MakeVar extends Command implements Executable {
 
-	public MakeVar() {
+	public MakeVar(VariableController variableController) {
 		numParams = 2;
 	}
 	

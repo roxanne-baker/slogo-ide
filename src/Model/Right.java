@@ -2,9 +2,11 @@ package Model;
 
 import java.util.List;
 
+import Controller.TurtleController;
+
 public class Right extends Command implements Executable {
 
-	public Right() {
+	public Right(TurtleController turtleController) {
 		numParams = 1;
 	}
 	

@@ -2,9 +2,11 @@ package Model;
 
 import java.util.List;
 
+import Controller.TurtleController;
+
 public class SetHeading extends Command implements Executable {
 
-	public SetHeading() {
+	public SetHeading(TurtleController turtleController) {
 		numParams = 1;
 	}
 	
