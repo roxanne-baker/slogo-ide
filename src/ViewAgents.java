@@ -1,6 +1,7 @@
 import java.util.Observable;
 
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 
 
 public class ViewAgents extends View{
@@ -16,7 +17,7 @@ public class ViewAgents extends View{
 	}
 
 	@Override
-	public Group getView() {
+	public Pane getView() {
 		// TODO Auto-generated method stub
 		return null;
 	}
