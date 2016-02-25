@@ -20,4 +20,8 @@ public abstract class Command implements Executable {
 		}
 	}
 
+	public int getNumParams() {
+		return numParams;
+	}
+
 }
