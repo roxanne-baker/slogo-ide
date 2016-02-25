@@ -7,6 +7,10 @@ class ParseNode {
 		List<ParseNode> params; 
 		Object value; 
 		
+		public ParseNode(Object value) {
+			this.value = value;
+		}
+		
 		public ParseNode(Command c, List<ParseNode> params) { 
 			this.c = c;
 			this.params = params;  	

@@ -4,19 +4,18 @@ import java.util.List;
 
 public class Back extends Command implements Executable {
 
-	// SAME AS FORWARD
 	// DIFFERENT EXECUTE, OTHER METHODS SAME
 	public Back() {
 		numParams = 1;
 	}
 	
-	public double execute(List<ParseNode> params) {
+	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		return (double) params.get(0).getValue();
+		return (double) params.get(0);
 	}
 	
-	public String checkParamTypes(List<ParseNode> params) {
-		Object paramValue = params.get(0).value;
+	public String checkParamTypes(List<Object> params) {
+		Object paramValue = params.get(0);
 		if (paramValue instanceof Integer || paramValue instanceof Double) {
 			return null;
 		}
