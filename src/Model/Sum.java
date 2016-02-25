@@ -30,7 +30,11 @@ public class Sum extends Command implements Executable {
 	
 	public String checkParamTypes(List<ParseNode> params) {
 		for (ParseNode param : params) {
+<<<<<<< HEAD
 			Object paramValue = param.getValue();
+=======
+			Object paramValue = params.get(0).getValue();
+>>>>>>> carolyn
 			if (!(paramValue instanceof Integer || paramValue instanceof Double)) {
 				return String.format(errors.getString("WrongParamType"), paramValue.toString());
 			}			
