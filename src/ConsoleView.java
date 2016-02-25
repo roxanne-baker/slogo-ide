@@ -39,7 +39,7 @@ public class ConsoleView extends View {
 			//else if variable, create variable and add to saved vars
 			if(console.getText().contains("make '")){
 				String[] textList = console.getText().split(" ");
-				SavedVariable sv = new SavedVariable(textList[1].substring(1),textList[2],allViews.get("Saved"));
+				VariableM sv = new VariableM(textList[1].substring(1),textList[2],allViews.get("Saved"));
 			}
 			//else if method, create method and add to saved methods
 			console.clear();

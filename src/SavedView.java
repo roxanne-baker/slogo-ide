@@ -20,7 +20,7 @@ public class SavedView extends View {
 	@Override
 	public void update(Observable savedObj, Object arg) {
 		if(arg=="NEWVAR"){
-			vars.getChildren().add(((SavedVariable) savedObj).getVar());
+			vars.getChildren().add(((VariableM) savedObj).getVar());
 		}
 		else if(arg=="NEWMETHOD"){
 			methods.getChildren().add(((SavedMethod) savedObj).getText());

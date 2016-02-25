@@ -4,11 +4,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.beans.property.*;
 
-public class SavedVariable extends Observable {
+public class VariableM extends Observable {
 	private String name;
 	private StringProperty value = new SimpleStringProperty();
 	
-	public SavedVariable(String name,String value, View view) {
+	public VariableM(String name,String value, View view) {
 		this.name = name;
 		this.value.set(value);
 		addObserver(view);
