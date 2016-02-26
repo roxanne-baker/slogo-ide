@@ -1,6 +1,5 @@
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
@@ -34,5 +33,8 @@ public class Drawer {
 		img.setX(posX);
 		img.setY(posY);
 		group.getChildren().add(img);
+	}
+	public void removeImage(ImageView agentView) {
+		group.getChildren().remove(agentView);
 	}
 }
