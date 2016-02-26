@@ -9,7 +9,7 @@ public class Cosine extends Command implements Executable {
 	}
 	
 	public double execute(List<Object> params) {
-		double degrees = (double) params.get(0);
+		double degrees = (Double) params.get(0);
 		return Math.cos(degrees);
 	}
 	

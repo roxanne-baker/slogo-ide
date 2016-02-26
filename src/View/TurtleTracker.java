@@ -177,6 +177,14 @@ public class TurtleTracker implements IAgentTracker{
 	public int getCurrentAgentYPosition() {
 		return agentMap.get(currentAgent).getYPosition();
 	}
+	@Override
+	public Agent getCurrentAgent(String agentName) {
+		return agentMap.get(currentAgent);
+	}
+	@Override
+	public String getCurrentAgentName() {
+		return currentAgent;
+	}
 
 
 

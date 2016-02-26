@@ -10,8 +10,8 @@ public class Difference extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		double minuend = (double) params.get(0);
-		double subtrahend = (double) params.get(1);
+		double minuend = (Double) params.get(0);
+		double subtrahend = (Double) params.get(1);
 		return minuend - subtrahend;
 	}
 	

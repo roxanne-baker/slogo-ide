@@ -36,6 +36,8 @@ public interface IAgentTracker{
 	void stampCurrentAgent();
 	void changeCurrentAgentSize(int size); //doesn't work yet
 	int getCurrentAgentSize(int size); //doesn't work yet
+	Agent getCurrentAgent(String agentName);
+	String getCurrentAgentName();
 
 	
 	

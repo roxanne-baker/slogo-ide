@@ -16,7 +16,7 @@ public class Forward extends Command implements Executable {
 		// need to figure out how to communicate with front-end
 		
 	
-		return (double) params.get(0);
+		return (Double) params.get(0);
 	}
 	
 	public String checkParamTypes(List<Object> params) {
