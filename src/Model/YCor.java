@@ -2,17 +2,18 @@ package Model;
 
 import java.util.List;
 
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 
 public class YCor extends Command implements Executable{
 
-	public YCor(TurtleController turtleController) {
+	TurtleTracker turtleTracker;
+	public YCor(TurtleTracker turtleController) {
+		turtleTracker = turtleController;
 		numParams = 0;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		return 0;
+		return turtleTracker.getCurrentAgentYPosition();
 	}
 	
 	public String checkParamTypes(List<Object> params) {

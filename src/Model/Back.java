@@ -3,19 +3,25 @@ package Model;
 
 import java.util.List;
 
-import Controller.TurtleController;
-import View.Turtle;
+import Controller.TurtleTracker;
 
 public class Back extends Command implements Executable {
 
-	Turtle currentTurtle;
-	public Back(TurtleController turtleController) {
+	TurtleTracker turtleTracker;
+	public Back(TurtleTracker turtleController) {
 		numParams = 1;
+		turtleTracker = turtleController;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		return (Double) params.get(0);
+		double distance = (Double) params.get(0);
+		double orientation = turtleTracker.getCurrentAgentOrientation();
+		double changeX = -distance*Math.sin(orientation);
+		double changeY = -distance*Math.cos(orientation);
+		
+		turtleTracker.moveCurrentAgent(changeX, changeY);
+	
+		return distance;
 	}
 	
 	public String checkParamTypes(List<Object> params) {

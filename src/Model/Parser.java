@@ -10,14 +10,14 @@ import java.util.ResourceBundle;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 import Controller.VariableController;
 
 public class Parser {
 
 	private Map<String, Command> commandsMap;
 	private List<Entry<String, Pattern>> mySymbols;
-	TurtleController turtleController;
+	TurtleTracker turtleController;
 	VariableController variableController;
 	
 	public Parser() {

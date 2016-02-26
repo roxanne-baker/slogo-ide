@@ -4,9 +4,12 @@ package Model;
 import java.util.List;
 
 import Controller.VariableController;
+import View.VariableModel;
+
 
 public class MakeVar extends Command implements Executable {
 
+	VariableController variableController;
 	public MakeVar(VariableController variableController) {
 		numParams = 2;
 	}
@@ -14,16 +17,23 @@ public class MakeVar extends Command implements Executable {
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
 		// what if expression not a number?  need to account for later
-		double val = (Double) params.get(1);
-		return val;
+		String name = (String) params.get(0);
+		double valueNum = (double) params.get(1);
+		String value = Double.toString(valueNum);
+		variableController.addVariable(name, value);
+
+		return valueNum;
 	}
 	
 	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}	
+		Object name = params.get(0);
+		if (!(name instanceof String)) {
+			return String.format(errors.getString("WrongParamType"), name.toString());
 		}
+		Object value = params.get(0);
+		if (!(value instanceof Integer || value instanceof Double)) {
+			return String.format(errors.getString("WrongParamType"), value.toString());
+		}	
 		return null;
 	}
 	

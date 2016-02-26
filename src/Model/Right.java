@@ -3,17 +3,21 @@ package Model;
 
 import java.util.List;
 
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 
 public class Right extends Command implements Executable {
 
-	public Right(TurtleController turtleController) {
+	TurtleTracker turtleTracker;
+	public Right(TurtleTracker turtleController) {
+		turtleTracker = turtleController;
 		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		return (double) params.get(0);
+		double changeDegrees = (Double) params.get(0) % 360;
+		turtleTracker.changeCurrentAgentOrientation(-changeDegrees);
+	
+		return changeDegrees;
 	}
 	
 	public String checkParamTypes(List<Object> params) {

@@ -4,16 +4,23 @@ import java.util.List;
 
 import Controller.TurtleTracker;
 
-public class XCor extends Command implements Executable{
+public class ShowingQuery extends Command implements Executable{
 
 	TurtleTracker turtleTracker;
-	public XCor(TurtleTracker turtleController) {
+	
+	public ShowingQuery(TurtleTracker turtleController) {
 		turtleTracker = turtleController;
 		numParams = 0;
 	}
 	
 	public double execute(List<Object> params) {
-		return turtleTracker.getCurrentAgentXPosition();
+		// NEED CHECK FOR TURTLE SHOWING
+		if (turtleTracker.isCurrentAgentPenUp()) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
 	}
 	
 	public String checkParamTypes(List<Object> params) {

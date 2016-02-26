@@ -3,11 +3,11 @@ package Model;
 
 import java.util.List;
 
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 
 public class PenUp extends Command implements Executable {
 
-	public PenUp(TurtleController turtleController) {
+	public PenUp(TurtleTracker turtleController) {
 		numParams = 1;
 	}
 	
