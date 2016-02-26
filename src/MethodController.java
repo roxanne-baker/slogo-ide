@@ -1,9 +1,9 @@
 
-public class SavedMethodC {
-	private SavedMethodM model;
-	private SavedMethodV view;
+public class MethodController {
+	private MethodModel model;
+	private MethodView view;
 	
-	public SavedMethodC(SavedMethodM model,SavedMethodV view) {
+	public MethodController(MethodModel model,MethodView view) {
 		this.model = model;
 		this.view = view;
 	}

@@ -2,21 +2,23 @@ import java.util.*;
 
 public class ViewFactory {
 	private static HashMap<String,View> allViews = new HashMap<String,View>();
+	private View history;
 	
-	public static View createProduct(String viewType, String ID, int height, int width){
+	public View createView(String ID){
 		View view;
-		switch(viewType){
+		switch(ID){
 		case "Console":
-			view = new ConsoleView(ID,height,width, allViews);
+			view = new ConsoleView(ID,history);
 			break;
 		case "History":
-			view = new HistoryView(ID,height,width, allViews);
+			view = new HistoryView(ID);
+			history = view;
 			break;
 		case "SavedVar":
-			view = new SavedVariableV(ID,height,width, allViews);
+			view = new VariableView(ID);
 			break;
 		case "SavedMethod":
-			view = new SavedMethodV(ID,height,width,allViews);
+			view = new MethodView(ID);
 			break;
 		default:
 			return null;

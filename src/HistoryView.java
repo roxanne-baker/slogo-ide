@@ -12,16 +12,19 @@ public class HistoryView extends View {
 	int width;
 	VBox vb = new VBox();
 	
-	public HistoryView(String id, int height, int width,HashMap<String,View> viewCollection) {
-		super(id, height, width,viewCollection);
-		this.height=height;
-		this.width=width;
+	public HistoryView(String id) {
+		super(id);
+//		this.height=height;
+//		this.width=width;
 	}
 	
 	@Override
-	public void update(Observable history, Object obj) {
-		if(obj=="NEWHISTORY"){
-			vb.getChildren().add(((History) history).getText());
+	public void update(Observable o, Object arg) {
+		if(arg=="NEWHISTORY"){
+			vb.getChildren().add(((HistoryElem) o).getText());
+		}
+		if(arg=="ERROR"){
+			
 		}
 
 	}
@@ -31,9 +34,9 @@ public class HistoryView extends View {
 	@Override
 	public Group getView() {
 		Group group = new Group();
-		vb.setPrefWidth(width);
+//		vb.setPrefWidth(width);
 		ScrollPane sp = new ScrollPane(vb);
-		sp.setPrefSize(width,height);
+//		sp.setPrefSize(width,height);
 		sp.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		group.getChildren().add(sp);
 		return group;

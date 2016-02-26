@@ -1,9 +1,9 @@
 import java.util.HashSet;
 
-public class SavedMethodM {
+public class MethodModel {
 	private HashSet<String> savedMethods = new HashSet<String>();
 	
-	public SavedMethodM() {
+	public MethodModel() {
 		// TODO Auto-generated constructor stub
 	}
 	

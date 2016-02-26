@@ -4,11 +4,11 @@ import java.util.Observer;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-public class VariableV extends Observable {
+public class VariableElem extends Observable {
 	private Label name;
 	private TextField value;
 
-	public VariableV(String name, String value,Observer view) {
+	public VariableElem(String name, String value,Observer view) {
 		addObserver(view);
 		this.name = new Label(name);
 		this.value = new TextField(value);

@@ -1,7 +1,7 @@
 
-public class History extends ClickableText {
+public class HistoryElem extends ClickableText {
 
-	public History(String text,View view) {
+	public HistoryElem(String text,View view) {
 		super(text);
 		addObserver(view);
 		setChanged();

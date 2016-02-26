@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.application.Application;
@@ -94,7 +95,11 @@ public class Main extends Application {
 //		cvnode.setLayoutY(200);
 //		root.getChildren().addAll(hv.getView(),cv.getView(),sv.getView());
 //		Scene myScene = new Scene(root, 500, 400); 
-		TurtleUI UI = new TurtleUI();
+		ArrayList<String> viewlist = new ArrayList<String>();
+		viewlist.add("History");
+		viewlist.add("Console");
+		viewlist.add("SavedVar");
+		Workspace UI = new Workspace(viewlist);
 		Scene myScene = UI.init();
 		myScene.getStylesheets().add("resources/style/style.css");
         primaryStage.setScene(myScene);

@@ -2,10 +2,10 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-public class SavedVariableM extends Observable {
+public class VariableModel extends Observable {
 	private HashMap<String,String> variableMap = new HashMap<String,String>();
 	
-	public SavedVariableM() {
+	public VariableModel() {
 		// TODO Auto-generated constructor stub
 	}
 	
