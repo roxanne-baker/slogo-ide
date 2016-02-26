@@ -19,9 +19,9 @@ public abstract class Command implements Executable {
 			return null;
 		}
 	}
-
-	public int getNumParams() {
-		return numParams;
+	
+	public int getNumParams() { 
+		return numParams; 
 	}
 
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 public class Divide extends Command implements Executable {
 
-	
-	
 	public Divide() {
 		numParams = 2;
 	}

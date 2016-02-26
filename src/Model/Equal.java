@@ -8,6 +8,7 @@ public class Equal extends Command implements Executable {
 		numParams = 2;
 	}
 	
+
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
 		if ((double) params.get(0) == (double) params.get(1)) {

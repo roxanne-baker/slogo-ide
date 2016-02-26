@@ -2,6 +2,15 @@ package Model;
 
 import java.util.List;
 
+<<<<<<< HEAD
+public class ShowTurtle extends Command implements Executable {
+
+	public ShowTurtle() {
+		numParams = 0;
+	}
+	
+	public double execute(List<ParseNode> params) {
+=======
 import Controller.TurtleController;
 
 public class ShowTurtle extends Command implements Executable {

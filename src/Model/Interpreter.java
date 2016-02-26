@@ -58,7 +58,6 @@ public class Interpreter {
     		System.out.println(text);
     	}
     	Command command = commandsMap.get(lang.getSymbol(first));
-    	ParseNode root = new ParseNode(command);  
 //    	root.params = new ArrayList<ParseNode>(); 
 //    	int index = 1; 
 //    	for (int i=0; i < command.getNumParams();i++) { 
@@ -79,40 +78,39 @@ public class Interpreter {
         System.out.println();
     }
     
-    private void callRecurse(String text, ParseNode parent, Stack<ParseNode> commandStack) { 
-    	String[] split = text.split(WHITESPACE);
-    	String first = lang.getSymbol(split[0]); 
-    	
+    private void callRecurse(String text) { 
+    	Stack<ParseNode> commandStack = new Stack<ParseNode>();
+    	commandStack.push(new ParseNode(commandsMap.get(text.split(WHITESPACE)[0])));
+    	recurse(cutFirst(text), commandStack); 
     }
     
-    private void recurse(String text, ParseNode parent, int numParam) { 
+    private void recurse(String text, Stack<ParseNode> commandStack) { 
     	String[] split = text.split(WHITESPACE);
-    	String s = lang.getSymbol(split[0]); 
+    	String first = lang.getSymbol(split[0]); 
+    	ParseNode mostRecentCommand = commandStack.peek();
     	if (text.length() == 0) {
-    		if (parent.getCommand().getNumParams() < numParam) { 
+    		if (!mostRecentCommand.paramsFilled()) { 
     			System.out.println("Not enough params"); 
-    		}
+    		} 
     		return; 
     	}
-    	if (lang.getSymbol(s).equals("Constant")) { 
-    		ParseNode cur = new ParseNode(Double.parseDouble(s));
-    		parent.getParams().add(cur); 
-    		numParam++; 
-    		if (parent.getCommand().getNumParams() == numParam) { 
-    			while (parent.getParent() != null && parent.paramsEnough()) { 
-    				parent = parent.getParent();
-    			}
+    	if (lang.getSymbol(first).equals("Constant")) { 
+    		ParseNode cur = new ParseNode(Double.parseDouble(first));
+    		mostRecentCommand.getParams().add(cur); 
+    		if (mostRecentCommand.paramsFilled()) { 
+    			commandStack.pop();
     		}
-    		recurse(cutFirst(text), parent, numParam); 
+    		recurse(cutFirst(text), commandStack); 
     	} 
-    	else if (lang.getSymbol(s).equals("Command") && commandsMap.containsKey(s)) { 
-    		ParseNode cur = new ParseNode(commandsMap.get(s));
-    		parent.getParams().add(cur); 
-    		numParam++; 
-    		int newNumParam = 0; 
-    		recurse(cutFirst(text), cur, newNumParam); 
+    	else if (lang.getSymbol(first).equals("Command") && commandsMap.containsKey(first)) { 
+    		ParseNode cur = new ParseNode(commandsMap.get(first));
+    		mostRecentCommand.getParams().add(cur); 
+    		if (mostRecentCommand.paramsFilled()) { 
+    			commandStack.pop();
+    		} 
+    		commandStack.push(cur);
+    		recurse(cutFirst(text), commandStack); 
     	}
-    	
     }
     
     private static String cutFirst(String text) { 
@@ -173,5 +171,4 @@ public class Interpreter {
 		//parseText(lang, fileInput.split(WHITESPACE));
     	
     }
-
 }

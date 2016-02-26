@@ -1,8 +1,6 @@
 package Model;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import Controller.TurtleController;
 
 public class Left extends Command implements Executable {

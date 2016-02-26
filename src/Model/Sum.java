@@ -19,6 +19,7 @@ public class Sum extends Command implements Executable {
 	}
 	
 	@Override
+
 	public String checkNumParams(List<Object> params) {
 		if (params.size() < 2) {
 			return String.format(errors.getString("MathTooFewParams"), params.size());
@@ -28,6 +29,7 @@ public class Sum extends Command implements Executable {
 		}
 	}
 	
+
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			if (!(param instanceof Integer || param instanceof Double)) {

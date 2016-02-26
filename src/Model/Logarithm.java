@@ -7,7 +7,7 @@ public class Logarithm extends Command implements Executable {
 	public Logarithm() {
 		numParams = 1;
 	}
-	
+
 	public double execute(List<Object> params) {
 		double expr = (double) params.get(0);
 		return Math.log(expr);

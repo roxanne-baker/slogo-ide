@@ -21,6 +21,12 @@ public class ArcTangent extends Command implements Executable {
 		}
 		return null;
 	}
+
+	@Override
+	public String checkNumParams(List<Object> params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
