@@ -1,13 +1,14 @@
 import java.util.Observable;
 
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 
 
 public class ViewAgents extends View{
 	Drawer drawer;
 	Group viewGroup;
-	public ViewAgents(String id, int height, int width) {
-		super(id, height, width);
+	public ViewAgents(String id) {
+		super(id);
 		viewGroup = new Group();
 		drawer = new Drawer(viewGroup);
 	}
@@ -37,7 +38,9 @@ public class ViewAgents extends View{
 		}
 
 	@Override
+
 	public Group getView() {
+
 		return viewGroup;
 	}
 

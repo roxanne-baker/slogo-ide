@@ -17,8 +17,8 @@ public class ViewPreferences extends View{
 	private Group viewGroup;
 	private VBox preferencesBox;
 	private static final int PADDING = 10;
-	public ViewPreferences(String id, int height, int width, List<Agent> aList) {
-		super(id, height, width);
+	public ViewPreferences(String id, List<Agent> aList) {
+		super(id);
 		agentList = aList;
 		viewGroup = new Group();
 	}

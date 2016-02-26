@@ -7,7 +7,7 @@ public class TurtleTester extends Application{
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		ViewAgents agentView = new ViewAgents("TurtleView",500, 500);
+		ViewAgents agentView = new ViewAgents("TurtleView");
 		TurtleTracker tTracker = new TurtleTracker(agentView);
 		tTracker.addAgent("Melissa");
 		System.out.println(tTracker.getCurrentAgentName());
@@ -27,7 +27,7 @@ public class TurtleTester extends Application{
 		System.out.println(tTracker.getCurrentAgentName());
 		printPosition(tTracker);
 		
-		ViewPreferences prefView= new ViewPreferences("PrefView",500,500,tTracker.getAgents());
+		ViewPreferences prefView= new ViewPreferences("PrefView",tTracker.getAgents());
 	//still need error throw when request doesn't exist...
 
 		Scene s = new Scene(prefView.getView(), 500, 500);
