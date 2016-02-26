@@ -20,7 +20,5 @@ public class ArcTangent extends Command implements Executable {
 			}			
 		}
 		return null;
-	}
-	
-	
+	}	
 }
