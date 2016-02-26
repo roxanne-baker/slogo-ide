@@ -1,8 +1,4 @@
-import java.util.ArrayList;
 import java.util.List;
-
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Paint;
 
 /**
  * This external interface is for tracking agents on the screen. API calls can change the current agent (i.e. current turtle), remove agents, add agents, get list of agents, etc. You can also change the properties of the current agent. 
@@ -11,16 +7,17 @@ import javafx.scene.paint.Paint;
  */
 public interface IAgentTracker{
 	int getNumAgents();
-	List<Agent> getAgents();
 	List<String> getAgentNames();
+	List<Agent> getAgents();
 	void addAgent(String agentName); //Throws error if agentName has already been created
 	void removeAgent(String agentName);
 	boolean isAgent(String name); 
 	boolean isValidAgentName(String name);
+	Agent getCurrentAgent(String agentName);
 	
 	//Specific to current agent
 	void setCurrentAgent(String agentName);
-	String getCurrentAgent();
+	String getCurrentAgentName();
 	void moveCurrentAgent(int changeX,int changeY);
 	int getCurrentAgentXPosition();
 	int getCurrentAgentYPosition();
