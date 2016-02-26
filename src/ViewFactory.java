@@ -20,6 +20,9 @@ public class ViewFactory {
 		case "SavedMethod":
 			view = new MethodView(ID);
 			break;
+		case "Agent":
+			view = new ViewAgents(ID);
+			break;
 		default:
 			return null;
 		}

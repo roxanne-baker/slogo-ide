@@ -1,6 +1,5 @@
 import java.util.*;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
@@ -15,11 +14,25 @@ public class Workspace {
 		ViewFactory factory = new ViewFactory();
 		
 		GridPane root = new GridPane();
-		int i=0;
 		for(String type: views){
 			View view = factory.createView(type);
-			root.add(view.getView(),i,0);
-			i++;
+			switch(type){
+			case "Agent":
+				root.add(view.getView(),0,0);
+				break;
+			case "Console":
+				root.add(view.getView(),0,1);
+				break;
+			case "History":
+				root.add(view.getView(),1,0);
+				break;
+			case "SavedMethod":
+				root.add(view.getView(),2,0);
+				break;
+			case "SavedVar":
+				root.add(view.getView(),2,1);
+				break;
+			}
 		}
 		return new Scene(root);
 	}

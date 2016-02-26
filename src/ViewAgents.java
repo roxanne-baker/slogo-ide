@@ -1,6 +1,7 @@
 import java.util.Observable;
 
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 
@@ -9,7 +10,10 @@ public class ViewAgents extends View{
 	Group viewGroup;
 	public ViewAgents(String id) {
 		super(id);
+		Pane pane = new Pane();
+		pane.setPrefSize(View.WIDE_WIDTH, View.TALL_HEIGHT);
 		viewGroup = new Group();
+		viewGroup.getChildren().add(pane);
 		drawer = new Drawer(viewGroup);
 	}
 
@@ -40,7 +44,6 @@ public class ViewAgents extends View{
 	@Override
 
 	public Group getView() {
-
 		return viewGroup;
 	}
 

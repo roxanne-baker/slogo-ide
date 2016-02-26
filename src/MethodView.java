@@ -1,4 +1,4 @@
-import java.util.HashMap;
+
 import java.util.HashSet;
 
 import javafx.scene.Group;
@@ -6,27 +6,25 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 public class MethodView extends View{
-	private int width;
-	private int height;
-	private HashSet<String> methods = new HashSet<String>();
+	private HashSet<ClickableText> methods = new HashSet<ClickableText>();
 	private VBox savedMethods = new VBox();
 	
 	public MethodView(String id) {
 		super(id);
-//		this.width = width;
-//		this.height = height;
 	}
 	
 	public void addMethodView(String method){
-		if(!methods.contains(method)){
-			methods.add(method);
-			savedMethods.getChildren().add(new ClickableText(method).getText());
+		ClickableText methodView = new ClickableText(method);
+		if(!methods.contains(methodView)){
+			methods.add(methodView);
+			savedMethods.getChildren().add(methodView.getTextBox());
 		}
 	}
 
 	@Override
 	public Group getView() {
 		Group group = new Group();
+		savedMethods.setPrefSize(View.NARROW_WIDTH,View.TALL_HEIGHT);
 		ScrollPane sp = new ScrollPane(savedMethods);
 		group.getChildren().add(sp);
 		return group;

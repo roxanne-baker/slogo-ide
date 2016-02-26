@@ -4,15 +4,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class ConsoleView extends View {
-	private int height;
-	private int width;
 	private View historyView;
 	
 	public ConsoleView(String id, View history) {
 		super(id);
 		historyView = history;
-//		this.height = height;
-//		this.width = width;
 	}
 	
 	@Override
@@ -26,7 +22,6 @@ public class ConsoleView extends View {
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
 		console.getStyleClass().add("code");
-//		console.setPrefSize(width, height);
 		Button btn = new Button("Run");
 		btn.setOnMouseClicked(e->{
 			HistoryElem hist = new HistoryElem(console.getText(),historyView);
@@ -44,6 +39,7 @@ public class ConsoleView extends View {
 //			console.clear();
 		});
 		vb.getChildren().addAll(console,btn);
+		vb.setPrefSize(View.WIDE_WIDTH, View.SHORT_HEIGHT);
 		group.getChildren().add(vb);
 		return group;
 	}
