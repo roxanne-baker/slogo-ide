@@ -1,11 +1,11 @@
-package Model;
+package model;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import Controller.TurtleController;
-import Controller.VariableController;
+import controller.TurtleController;
+import controller.VariableController;
 
 public class Interpreter {
 

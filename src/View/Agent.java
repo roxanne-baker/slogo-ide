@@ -1,14 +1,9 @@
-<<<<<<< HEAD:src/View/Agent.java
 package view;
-=======
 import java.util.List;
->>>>>>> f499e3850c35348f2b479dd03ef0e17b982ec4a1:src/Agent.java
 import java.util.Observable;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-
 
 public abstract class Agent extends Observable{
 	private static final String DEFAULT_IMAGE_PATH = "dot.png";

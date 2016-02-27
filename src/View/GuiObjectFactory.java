@@ -1,6 +1,4 @@
-
-
-
+package view;
 public class GuiObjectFactory {
 	
 	public GuiObjectFactory(){

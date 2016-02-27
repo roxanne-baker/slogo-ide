@@ -1,3 +1,4 @@
+package view;
 import java.util.HashMap;
 
 import javafx.scene.Group;

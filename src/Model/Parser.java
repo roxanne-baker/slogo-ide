@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -10,8 +10,9 @@ import java.util.ResourceBundle;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-import Controller.TurtleController;
-import Controller.VariableController;
+
+import controller.TurtleController;
+import controller.VariableController;
 
 public class Parser {
 

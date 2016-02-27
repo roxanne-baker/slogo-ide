@@ -1,7 +1,8 @@
-package Model;
+package model;
 
 import java.util.List;
-import Controller.TurtleController;
+
+import controller.TurtleController;
 import view.Turtle;
 
 public class Back extends Command implements Executable {

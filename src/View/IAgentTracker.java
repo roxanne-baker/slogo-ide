@@ -1,8 +1,5 @@
-<<<<<<< HEAD:src/View/IAgentTracker.java
 package view;
 import java.util.ArrayList;
-=======
->>>>>>> f499e3850c35348f2b479dd03ef0e17b982ec4a1:src/IAgentTracker.java
 import java.util.List;
 
 /**

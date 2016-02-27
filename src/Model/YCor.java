@@ -1,8 +1,8 @@
-package Model;
+package model;
 
 import java.util.List;
 
-import Controller.TurtleController;
+import controller.TurtleController;
 
 public class YCor extends Command implements Executable{
 

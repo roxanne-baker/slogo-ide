@@ -1,3 +1,4 @@
+package view;
 
 
 import java.util.Observable;
@@ -13,7 +14,7 @@ public class GuiObjectCheckBox extends GuiObject{
 	private BiConsumer<Observable, Boolean> setCheckedLambda;
 	private boolean isNewSelection;
 	
-	public GuiObjectCheckBox(String name, String resourceBundle,Agent agent,BiConsumer<Observable,Boolean> lambda) {
+	public GuiObjectCheckBox(String name, String resourceBundle, Agent agent,BiConsumer<Observable,Boolean> lambda) {
 		super(name, resourceBundle, agent);
 		setCheckedLambda = lambda;
 	}

@@ -1,8 +1,9 @@
-package Model;
+package model;
 
 import java.util.List;
+
+import controller.TurtleController;
 import view.Turtle;
-import Controller.TurtleController;
 
 public class Forward extends Command implements Executable {
 

@@ -1,10 +1,6 @@
-<<<<<<< HEAD:src/View/Turtle.java
 package view;
-=======
 import java.util.Arrays;
 import java.util.List;
-
->>>>>>> f499e3850c35348f2b479dd03ef0e17b982ec4a1:src/Turtle.java
 
 public class Turtle extends Agent{
 	private static final String RESOURCE_DIR = "TurtleProperties";
