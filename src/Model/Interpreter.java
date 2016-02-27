@@ -25,7 +25,6 @@ public class Interpreter {
 	
     
     private void callRecurse(String text) { 
-    	this.initializeCommandsMap();
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	Command c = commandsMap.get(takeFirst(text));
     	ParseNode root = new ParseNode(c);
@@ -42,8 +41,8 @@ public class Interpreter {
     		if (cur.allParamsHaveValue()) { 
     			double result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
-    			System.out.println(result);
     		}
+        	System.out.println(cur.getValue());
     	}
     }
     
@@ -51,14 +50,13 @@ public class Interpreter {
     	if (!root.isCommand()) { 
     		return; 
     	}
-    	else if (root.isCommand() && root.allParamsHaveValue()) { 
-    		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
-    	}
-    	else if (root.isCommand() && !root.allParamsHaveValue()) { 
-    		stack.push(root);
-    		for (ParseNode p: root.getParams()) { 
-    			combThruTree(p, stack);
-    		}
+    	stack.push(root);
+    	if (root.allParamsHaveValue()) { 
+       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
+    	} else { 
+       		for (ParseNode p: root.getParams()) { 
+       			combThruTree(p, stack);
+       		}
     	}
     }
     
@@ -69,26 +67,18 @@ public class Interpreter {
     }
     
     private static void buildExprTree(String text, Stack<ParseNode> commandStack) { 
-    	System.out.println(text);
-    	if (commandStack.isEmpty()) {
+    	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
-        		System.out.println("too many params");
-    		} else { 
-    			System.out.println("done");
-    		}
-    		return;
-    	}
-    	ParseNode mostRecentCommand = commandStack.peek();
-    	if (text.length() == 0) {
-    		if (!mostRecentCommand.paramsFilled()) { 
-    			System.out.println("Not enough params"); 
-    		} else { 
-    			System.out.println(commandStack.pop());
+    			System.out.println("Too many params");
     		}
     		return; 
     	}
+    	if (text.length() == 0 && !commandStack.isEmpty()) {
+    		System.out.println("Not enough params"); 
+        	return; 
+    	} 
     	String first = takeFirst(text); 
-    	System.out.println(first);
+    	ParseNode mostRecentCommand = commandStack.peek();
     	if (first.equals("Constant")) { 
     		ParseNode cur = new ParseNode(Double.parseDouble(text.split(WHITESPACE)[0]));
     		mostRecentCommand.getParams().add(cur); 
@@ -105,6 +95,8 @@ public class Interpreter {
     		} 
     		commandStack.push(cur);
     		buildExprTree(cutFirst(text), commandStack); 
+    	} else { 
+    		System.out.println(String.format("%s is not a valid command", text.split(WHITESPACE)[0]));
     	}
     }
 	
@@ -137,30 +129,6 @@ public class Interpreter {
     
     private static String parseText(String s) {
     	return lang.getSymbol(s);
-    	
-//    	String first = text.split(WHITESPACE)[0];
-//    	
-//    	if (!lang.getSymbol(first).equals("COMMAND")) { 
-//    		System.out.println(text);
-//    	}
-//    	Command command = commandsMap.get(lang.getSymbol(first));
-//    	root.params = new ArrayList<ParseNode>(); 
-//    	int index = 1; 
-//    	for (int i=0; i < command.getNumParams();i++) { 
-//    		String param = text.split(WHITESPACE)[index];
-//    		if (commandsMap.get(param).equals("CONSTANT")) { 
-//        		root.params.add(new ParseNode(Double.valueOf(param))); 	
-//    		}
-//    		else {
-//    			//parseText(index); 
-//    		}
-//    		index++; 
-//    	}
-//        for (String s : split) {
-//            if (s.trim().length() > 0) {
-//                System.out.println(String.format("%s : %s", s, lang.getSymbol(s)));
-//            }
-//        }
     }
     
     private void initializeCommandsMap() { 
@@ -261,15 +229,13 @@ public class Interpreter {
 //        };
         lang.addPatterns("resources/languages/English");
         lang.addPatterns("resources/languages/Syntax");
-        String ui = "fd sum / 4 * 2 4 3 ";
-        String ui2 = "fd fd 50";
-        String ui3 = "sum * 2 4 6";
+        String ui = "fd sum / 4 less? 2 4 3 ";
+        String ui3 = "* / 4 sin 30 18";
+        String ui1 = "sin 30.0";
         String ui4 = "- 3 5";
         String userInput = "fd 50 rt 90 BACK :distance Left :angle";
         String userInput2 = "fd + 10 div 6 2";
-		//String fileInput = readFileToString("square.logo");
         Interpreter it = new Interpreter(); 
-    	it.run(ui);
-    	it.run(ui4);
+    	it.run(ui3);
     }
 }
