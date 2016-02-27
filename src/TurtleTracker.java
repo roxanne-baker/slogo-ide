@@ -7,8 +7,8 @@ import javafx.scene.image.ImageView;
 
 
 public class TurtleTracker implements IAgentTracker{
-	private static final int DEFAULT_XLOCATION = 100;
-	private static final int DEFAULT_YLOCATION = 100;	
+	private static final double DEFAULT_XLOCATION = 100;
+	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
 	private View observerView;
@@ -99,15 +99,7 @@ public class TurtleTracker implements IAgentTracker{
 		
 	}
 
-	@Override
-	public void setCurrentAgentColor(String color) {
-		agentMap.get(currentAgent).setColor(color);		
-	}
 
-	@Override
-	public String getCurrentAgentColor() {
-		return agentMap.get(currentAgent).getColor();
-	}
 
 	@Override
 	public void setCurrentAgentImage(String imagePath) {
@@ -161,19 +153,19 @@ public class TurtleTracker implements IAgentTracker{
 		
 	}
 	@Override
-	public void changeCurrentAgentSize(int size) {
+	public void changeCurrentAgentSize(double size) {
 		agentMap.get(currentAgent).setSize(size);		
 	}
 	@Override
-	public int getCurrentAgentSize(int size) {
+	public double getCurrentAgentSize() {
 		return agentMap.get(currentAgent).getSize();		
 	}
 	@Override
-	public int getCurrentAgentXPosition() {
+	public double getCurrentAgentXPosition() {
 		return agentMap.get(currentAgent).getXPosition();
 	}
 	@Override
-	public int getCurrentAgentYPosition() {
+	public double getCurrentAgentYPosition() {
 		return agentMap.get(currentAgent).getYPosition();
 	}
 	@Override

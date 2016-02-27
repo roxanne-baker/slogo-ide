@@ -2,11 +2,14 @@ import java.util.Arrays;
 import java.util.List;
 
 
+
 public class Turtle extends Agent{
 	private static final String RESOURCE_DIR = "TurtleProperties";
-	private static final List<String> MUTABLE_LIST = Arrays.asList("VISIBLE","PENUP","IMAGEPATH","SIZE","ORIENTATION","NAME");
-	public Turtle(String name, int xPos, int yPos, View obsView) {
-		super(name, xPos, yPos, obsView);
+	private static final List<String> MUTABLE_LIST = Arrays.asList("PENWIDTH","PENCOLOR","PENUP");
+	private static final List<String> OBSERVER_LIST = Arrays.asList("NAME","VISIBLE","IMAGEPATH","SIZE","ORIENTATION");
+
+	public Turtle(String name, double defaultXlocation, double defaultYlocation, View obsView) {
+		super(name, defaultXlocation, defaultYlocation, obsView);
 		super.setImagePath("turtle.png");
 		super.addObserver(obsView);
 		setChanged();
@@ -18,10 +21,20 @@ public class Turtle extends Agent{
 
 		return MUTABLE_LIST;
 	}
+	
 	@Override
 	public String getResourceString(){
 		return RESOURCE_DIR;
 	}
+
+	@Override
+	public List<String> getObserverProperties() {
+		return OBSERVER_LIST;
+	}
+
+
+
+
 
 
 }

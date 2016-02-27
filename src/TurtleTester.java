@@ -22,7 +22,7 @@ public class TurtleTester extends Application{
 		tTracker.setCurrentAgent("Melissa");
 		tTracker.stampCurrentAgent();
 		tTracker.moveCurrentAgent(150, 80);
-		tTracker.setCurrentAgentVisible(false);
+		//tTracker.setCurrentAgentVisible(false);
 		tTracker.renameAgent("Melissa", "Colette");
 		System.out.println(tTracker.getCurrentAgentName());
 		printPosition(tTracker);
