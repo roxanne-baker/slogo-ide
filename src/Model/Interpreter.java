@@ -124,7 +124,7 @@ public class Interpreter {
 		if (!commandsMap.containsKey(input)) { 
 			return true;
 		}
-		else return false;  
+		return false;  
 	}
 
 //    private static String readFileToString (String filename) throws FileNotFoundException {
