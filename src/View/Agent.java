@@ -1,10 +1,13 @@
+<<<<<<< HEAD:src/View/Agent.java
 package view;
+=======
+import java.util.List;
+>>>>>>> f499e3850c35348f2b479dd03ef0e17b982ec4a1:src/Agent.java
 import java.util.Observable;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+
 
 
 public abstract class Agent extends Observable{
@@ -78,6 +81,9 @@ public abstract class Agent extends Observable{
 	public void setImagePath(String imagePath){
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),agentSize,agentSize,true,true));
 		agentImagePath = imagePath;
+		setChanged();
+		notifyObservers("IMAGEVIEW");
+
 	}
 	public ImageView getImageView(){
 		return agentImageView;
@@ -98,7 +104,6 @@ public abstract class Agent extends Observable{
 		agentSize = newSize;
 	}
 	public int getOldXPosition() {
-		// TODO Auto-generated method stub
 		return oldXPosition;
 	}
 	public int getOldYPosition(){
@@ -120,12 +125,20 @@ public abstract class Agent extends Observable{
 	}
 	public void setVisible(boolean isVis) {
 		isVisible = isVis;
+		System.out.println("hi");
+		setChanged();
+		notifyObservers("VISIBLE");
+		setChanged();
+		notifyObservers("UPDATE");
 		
 	}
 	public boolean isVisible(){
 		return isVisible;
 	}
 	
+	public abstract List<String> getMutableProperties();
+	
+	public abstract String getResourceString();
 
 
 }	
