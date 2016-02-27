@@ -17,22 +17,31 @@ public class Interpreter {
 	
 	public Interpreter() {
 		initializeCommandsMap();
+		initializeLangs();
+	}
+	
+	private void initializeLangs() { 
+        lang.addPatterns("resources/languages/English");
+        lang.addPatterns("resources/languages/Syntax");
 	}
 	
 	public void run(String userInput) { 
-		this.callRecurse(userInput);
+		this.callBuildTree(userInput);
+
 	}
-	
     
-    private void callRecurse(String text) { 
-    	Stack<ParseNode> commandStack = new Stack<ParseNode>();
-    	Command c = commandsMap.get(takeFirst(text));
+    private void callBuildTree(String text) { 
+    	Command c = commandsMap.get(parseText(takeFirst(text)));
     	ParseNode root = new ParseNode(c);
+    	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
-    	buildExprTree(cutFirst(text), commandStack); 
+    	// if no repeat or control variable
+    	buildExprTree(cutFirst(text), commandStack);  
     	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
     	combThruTree(root, treeStack);
     	fillCommandStackParams(treeStack);
+    	// if repeat / control sequence 
+    	// do something else 
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
@@ -62,62 +71,62 @@ public class Interpreter {
     
     private static String takeFirst(String text) { 
     	String[] split = text.split(WHITESPACE);
-    	String first = parseText(split[0]); 
-    	return first; 
+    	return split[0];
+    }
+    
+    private static boolean stopBuild(String text, Stack<ParseNode> commandStack) { 
+    	String parsedFirst = parseText(takeFirst(text));
+    	if (commandStack.isEmpty()) { 
+    		if (!text.equals("")) { 
+    			// throw error to console view
+    			System.out.println("Too many params");
+    		}
+    		return true; 
+    	}
+    	else if (text.length() == 0 && !commandStack.isEmpty()) {
+    		// throw error to console view
+    		System.out.println("Not enough params"); 
+        	return true; 
+    	} 
+    	else if (!parsedFirst.equals("Constant") && errorCommandName(parsedFirst)) { 
+    		// throw error to console view
+    		System.out.println(String.format("%s is not a valid command", takeFirst(text)));
+    		return true;
+    	}
+    	return false;
     }
     
     private static void buildExprTree(String text, Stack<ParseNode> commandStack) { 
-    	if (commandStack.isEmpty()) { 
-    		if (!text.equals("")) { 
-    			System.out.println("Too many params");
-    		}
-    		return; 
-    	}
-    	if (text.length() == 0 && !commandStack.isEmpty()) {
-    		System.out.println("Not enough params"); 
-        	return; 
-    	} 
+    	if (stopBuild(text, commandStack)) return; 
     	String first = takeFirst(text); 
+    	String parsedFirst = parseText(first);
     	ParseNode mostRecentCommand = commandStack.peek();
-    	if (first.equals("Constant")) { 
-    		ParseNode cur = new ParseNode(Double.parseDouble(text.split(WHITESPACE)[0]));
+    	if (parsedFirst.equals("Constant")) { 
+    		ParseNode cur = new ParseNode(Double.parseDouble(first));
     		mostRecentCommand.getParams().add(cur); 
     		if (mostRecentCommand.paramsFilled()) { 
     			commandStack.pop();
     		}
     		buildExprTree(cutFirst(text), commandStack); 
     	} 
-    	else if (commandsMap.containsKey(first)) { 
-    		ParseNode cur = new ParseNode(commandsMap.get(first));
+    	else { 
+    		ParseNode cur = new ParseNode(commandsMap.get(parsedFirst));
     		mostRecentCommand.getParams().add(cur); 
     		if (mostRecentCommand.paramsFilled()) { 
     			commandStack.pop();
     		} 
     		commandStack.push(cur);
     		buildExprTree(cutFirst(text), commandStack); 
-    	} else { 
-    		System.out.println(String.format("%s is not a valid command", text.split(WHITESPACE)[0]));
-    	}
+    	} 
     }
 	
-//	public boolean errorCommandName(String userInput) {
-//		String commandName = getCommandName(userInput);
-//		if (!commandsMap.containsKey(commandName)) { 
-//			return true;
-//		}
-//		else return false;  
-//	}
-//
-//	private String getCommandName(String input) { 
-//		String[] commandAndParams = input.split(" "); 
-//		return commandAndParams[0];
-//	}
-//	private void addCommandtoMap(Command c) { 
-//		for (String name: c.getNames()) { 
-//			commandsMap.put(name, c); 
-//		}
-//	}
-//	
+	private static boolean errorCommandName(String input) {
+		if (!commandsMap.containsKey(input)) { 
+			return true;
+		}
+		else return false;  
+	}
+
 //    private static String readFileToString (String filename) throws FileNotFoundException {
 //        final String END_OF_FILE = "\\z";
 //        Scanner input = new Scanner(new File(filename));
@@ -188,47 +197,6 @@ public class Interpreter {
     }
     
     public static void main(String[] args) { 
-//        String[] examples = {
-//            "",
-//            "# foo",
-//            "foo #",
-//            "#",
-//            "fd",
-//            "FD",
-//            "forwardd",
-//            "equalp",
-//            "equal?",
-//            "equal??",
-//            "+",
-//            "SuM",
-//            "-",
-//            "*",
-//            "/",
-//            "%",
-//            "~",
-//            "+not",
-//            "not+",
-//            "++",
-//            "+*+",
-//            "or",
-//            "FOR",
-//            "allOrNothing",
-//            "all_or_nothing",
-//            "allOr_nothing?",
-//            "allOr?nothing_",
-//            ":allornothing",
-//            "PI",
-//            "90",
-//            "9.09",
-//            "9.0.0",
-//            "[",
-//            "]",
-//            "(",
-//            ")", 
-//            "fd (sum 10 3)"
-//        };
-        lang.addPatterns("resources/languages/English");
-        lang.addPatterns("resources/languages/Syntax");
         String ui = "fd sum / 4 less? 2 4 3 ";
         String ui3 = "* / 4 sin 30 18";
         String ui1 = "sin 30.0";
