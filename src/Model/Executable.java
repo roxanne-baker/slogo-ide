@@ -13,7 +13,6 @@ public interface Executable {
 	 **/
 	public double execute(List<Object> params);
 	
-	
 	/**
 	 * This method will take the user input and determine if there
 	 * are too few/many parameters for the command
