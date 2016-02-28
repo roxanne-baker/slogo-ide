@@ -18,6 +18,7 @@ public interface IAgentTracker{
 	void removeAgent(String agentName);
 	boolean isAgent(String name); 
 	boolean isValidAgentName(String name);
+	Agent getCurrentAgent(String agentName);
 	
 	//Specific to current agent
 	void setCurrentAgent(String agentName);

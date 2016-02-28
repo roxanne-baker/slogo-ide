@@ -1,8 +1,5 @@
 package view;
 
-package view;
-
-
 public class HistoryElem extends ClickableText {
 
 	public HistoryElem(String text,View view) {
