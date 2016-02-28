@@ -27,5 +27,9 @@ public class VariableController implements Observer {
 			addVariable(((VariableElem)savedObj).getName(),((VariableElem)savedObj).getValue());
 		}
 	}
+	
+	public Object getVariable(String name) { 
+		return model.getVariable(name);
+	}
 
 }

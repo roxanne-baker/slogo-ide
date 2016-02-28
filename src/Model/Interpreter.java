@@ -20,17 +20,21 @@ public class Interpreter {
 		initializeLangs();
 	}
 	
+	public void changeLang() { 
+		
+	}
+	
 	private void initializeLangs() { 
         lang.addPatterns("resources/languages/English");
         lang.addPatterns("resources/languages/Syntax");
 	}
 	
 	public void run(String userInput) { 
-		this.callBuildTree(userInput);
+		callBuildTree(userInput);
 
 	}
     
-    private void callBuildTree(String text) { 
+    private static void callBuildTree(String text) { 
     	Command c = commandsMap.get(parseText(takeFirst(text)));
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
@@ -39,23 +43,25 @@ public class Interpreter {
     	buildExprTree(cutFirst(text), commandStack);  
     	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
     	combThruTree(root, treeStack);
-    	fillCommandStackParams(treeStack);
+    	Object ans = fillCommandStackParams(treeStack);
+    	System.out.println(ans);
     	// if repeat / control sequence 
     	// do something else 
     }
     
-    private void fillCommandStackParams(Stack<ParseNode> stack) { 
+    private static Object fillCommandStackParams(Stack<ParseNode> stack) { 
+		Object result = stack.peek().getValue();
     	while (!stack.isEmpty()) { 
     		ParseNode cur = stack.pop();
     		if (cur.allParamsHaveValue()) { 
-    			double result = cur.getCommand().execute(cur.extractParamsFromNode());
+    			result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
     		}
-        	System.out.println(cur.getValue());
     	}
+    	return result;
     }
     
-    private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
+    private static void combThruTree(ParseNode root, Stack<ParseNode> stack) {
     	if (!root.isCommand()) { 
     		return; 
     	}
@@ -79,6 +85,7 @@ public class Interpreter {
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
     			// throw error to console view
+    			callBuildTree(text);
     			System.out.println("Too many params");
     		}
     		return true; 
@@ -109,6 +116,9 @@ public class Interpreter {
     		}
     		buildExprTree(cutFirst(text), commandStack); 
     	} 
+    	else if (parsedFirst.equals("Variable")) { 
+    		// call variablecontroller
+    	}
     	else { 
     		ParseNode cur = new ParseNode(commandsMap.get(parsedFirst));
     		mostRecentCommand.getParams().add(cur); 
@@ -197,13 +207,13 @@ public class Interpreter {
     }
     
     public static void main(String[] args) { 
-        String ui = "fd sum / 4 less? 2 4 3 ";
+        String ui = "fd sum / 4 less? 2 4 3";
         String ui3 = "* / 4 sin 30 18";
         String ui1 = "sin 30.0";
         String ui4 = "- 3 5";
         String userInput = "fd 50 rt 90 BACK :distance Left :angle";
         String userInput2 = "fd + 10 div 6 2";
         Interpreter it = new Interpreter(); 
-    	it.run(ui3);
+    	it.run(userInput);
     }
 }
