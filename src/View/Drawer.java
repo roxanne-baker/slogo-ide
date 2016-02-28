@@ -1,5 +1,5 @@
 
-package View;
+package view;
 import javafx.scene.Group;
 
 import javafx.scene.image.ImageView;
@@ -24,7 +24,7 @@ public class Drawer {
 	 * 
 	 * Need to make a copy of ImageView to stamp it otherwise run into duplicate children issue
 	 */
-	public void stampImage(ImageView img, double posX, double posY, int size){
+	public void stampImage(ImageView img, double posX, double posY, double d){
 		img.setX(posX);
 		img.setY(posY);
 		group.getChildren().add(img);

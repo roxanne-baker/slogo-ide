@@ -1,7 +1,7 @@
-package View;
-import java.util.Observable;
-import java.util.Observer;
 
+package view;
+import java.util.Observer;
+import java.util.Observable;
 import javafx.scene.Group;
 import javafx.scene.layout.*;
 import java.util.*;

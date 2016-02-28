@@ -1,5 +1,5 @@
 
-package Model;
+package model;
 
 import java.util.List;
 
@@ -30,6 +30,4 @@ public class Divide extends Command implements Executable {
 		return null;
 	}
 	
-	
 }
->>>>>>> a4efb0f6d78711515c4792da5b08d02b6b9d0349

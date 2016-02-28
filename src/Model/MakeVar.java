@@ -1,10 +1,10 @@
 
-package Model;
+package model;
 
 import java.util.List;
 
-import Controller.VariableController;
-import View.VariableModel;
+import controller.VariableController;
+import view.VariableModel;
 
 
 public class MakeVar extends Command implements Executable {

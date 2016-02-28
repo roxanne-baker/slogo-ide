@@ -1,17 +1,11 @@
-<<<<<<< HEAD
-package Controller;
-
-public class VariableController {
-
-}
-=======
-package Controller;
-
+package controller;
+import view.VariableElem;
+import view.VariableView;
 import java.util.Observable;
 import java.util.Observer;
-import View.VariableModel;
-import View.VariableView;
-import View.VariableElem;
+
+import model.VariableModel;
+
 
 public class VariableController implements Observer {
 	private VariableModel model;
@@ -35,4 +29,3 @@ public class VariableController implements Observer {
 	}
 
 }
->>>>>>> a4efb0f6d78711515c4792da5b08d02b6b9d0349

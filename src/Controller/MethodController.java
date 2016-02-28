@@ -1,5 +1,6 @@
-package view;
-
+package controller;
+import model.MethodModel;
+import view.MethodView;
 
 public class MethodController {
 	private MethodModel model;

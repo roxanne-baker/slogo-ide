@@ -1,8 +1,8 @@
-package Model;
+package model;
 
 import java.util.List;
 
-import Controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class ClearScreen extends Command implements Executable {
 

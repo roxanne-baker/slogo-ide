@@ -1,7 +1,7 @@
-package Model;
+package model;
 
 import java.util.List;
-import Controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class HideTurtle extends Command implements Executable {
 

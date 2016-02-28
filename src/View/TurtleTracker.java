@@ -1,4 +1,4 @@
-package View;
+package view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +95,7 @@ public class TurtleTracker implements IAgentTracker{
 	}
 
 	@Override
-	public void moveCurrentAgent(int changeX, int changeY) {
+	public void moveCurrentAgent(double changeX, double changeY) {
 		agentMap.get(currentAgent).movePosition(changeX, changeY);
 		
 	}
@@ -166,15 +166,15 @@ public class TurtleTracker implements IAgentTracker{
 		agentMap.get(currentAgent).setSize(size);		
 	}
 	@Override
-	public int getCurrentAgentSize(int size) {
+	public double getCurrentAgentSize(int size) {
 		return agentMap.get(currentAgent).getSize();		
 	}
 	@Override
-	public int getCurrentAgentXPosition() {
+	public double getCurrentAgentXPosition() {
 		return agentMap.get(currentAgent).getXPosition();
 	}
 	@Override
-	public int getCurrentAgentYPosition() {
+	public double getCurrentAgentYPosition() {
 		return agentMap.get(currentAgent).getYPosition();
 	}
 	@Override

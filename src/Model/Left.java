@@ -1,10 +1,10 @@
 
-package Model;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class Left extends Command implements Executable {
 

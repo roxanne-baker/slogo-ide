@@ -1,5 +1,5 @@
 
-package View;
+package view;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface IAgentTracker{
 	double getCurrentAgentOrientation();
 	void stampCurrentAgent();
 	void changeCurrentAgentSize(int size); //doesn't work yet
-	int getCurrentAgentSize(int size); //doesn't work yet
+	double getCurrentAgentSize(int size); //doesn't work yet
 	Agent getCurrentAgent(String agentName);
 	String getCurrentAgentName();
 

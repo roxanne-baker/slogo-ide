@@ -1,9 +1,9 @@
 
-package View;
+package view;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class TurtleTester extends Application{
 	
