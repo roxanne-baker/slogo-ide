@@ -1,5 +1,5 @@
 
-package View;
+package view;
 
 /**
  * This Factory class creates GuiObjects based on the type of gui object requested.
