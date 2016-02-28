@@ -2,7 +2,6 @@
 package model;
 
 import java.util.List;
-
 import view.TurtleTracker;
 
 public class Forward extends Command implements Executable {

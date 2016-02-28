@@ -30,7 +30,7 @@ public class ConsoleView extends View {
 //		console.setPrefSize(width, height);
 		Button btn = new Button("Run");
 		btn.setOnMouseClicked(e->{
-			HistoryElem hist = new HistoryElem(console.getText(),historyView);
+			HistoryElem hist = new HistoryElem(console.getText(), historyView);
 //			//if error, create error and add to history
 //			
 //			//else if variable, create variable and add to saved vars

@@ -32,4 +32,5 @@ public class Turtle extends Agent{
 	public List<String> getObserverProperties() {
 		return OBSERVER_LIST;
 	}
+
 }

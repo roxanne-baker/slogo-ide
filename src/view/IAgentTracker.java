@@ -21,12 +21,14 @@ public interface IAgentTracker{
 	
 	//Specific to current agent
 	void setCurrentAgent(String agentName);
+
 	String getCurrentAgent();
 	void moveCurrentAgent(double changeX,double changeY);
 	double getCurrentAgentXPosition();
 	double getCurrentAgentYPosition();
 	void setCurrentAgentColor(String color); //doesn't work yet
 	String getCurrentAgentColor();
+
 	void setCurrentAgentImage(String imagePath);
 	void setCurrentAgentPenUp(boolean isUp);
 	boolean isCurrentAgentPenUp();
@@ -34,6 +36,7 @@ public interface IAgentTracker{
 	void changeCurrentAgentOrientation(double changeDegrees);
 	double getCurrentAgentOrientation();
 	void stampCurrentAgent();
+
 	void changeCurrentAgentSize(int size); //doesn't work yet
 	double getCurrentAgentSize(int size); //doesn't work yet
 	Agent getCurrentAgent(String agentName);

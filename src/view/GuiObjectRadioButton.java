@@ -1,7 +1,5 @@
 package view;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -69,7 +67,7 @@ public class GuiObjectRadioButton extends GuiObject{
 	        }
 	    });
 		
-		radioLabel = new Label(getResourceString().getString("Label"+getObjectName()));
+		radioLabel = new Label(getResourceString().getString(getObjectName()+"LABEL"));
 		VBox stateControls = new VBox();
 		stateControls.getChildren().add(radioLabel);
 		for(RadioButton button: buttonList){

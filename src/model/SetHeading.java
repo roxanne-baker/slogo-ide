@@ -17,7 +17,6 @@ public class SetHeading extends Command implements Executable {
 		double currOrientation = turtleTracker.getCurrentAgentOrientation();
 		
 		turtleTracker.changeCurrentAgentOrientation(orientationToSet-currOrientation);
-		
 		return (double) params.get(0);
 	}
 	
@@ -29,5 +28,5 @@ public class SetHeading extends Command implements Executable {
 		else {
 			return String.format(errors.getString("WrongParamType"), param.toString());
 		}
-	}	
+	}
 }

@@ -1,5 +1,8 @@
 package view;
+<<<<<<< HEAD:src/view/VariableView.java
 
+=======
+>>>>>>> 004c8185657be13ae90847bec1687b6b9ae77e5f:src/view/VariableView.java
 import java.util.HashMap;
 
 import javafx.scene.Group;

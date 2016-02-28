@@ -10,7 +10,7 @@ public class Sine extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		double degrees = (double) params.get(0);
-		return Math.sin(degrees);
+		return Math.sin(Math.toRadians(degrees));
 	}
 	
 	public String checkParamTypes(List<Object> params) {

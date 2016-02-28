@@ -9,6 +9,7 @@ import view.VariableModel;
 public class MakeVar extends Command implements Executable {
 
 	VariableController variableController;
+
 	public MakeVar(VariableController variableController) {
 		numParams = 2;
 	}
@@ -37,3 +38,4 @@ public class MakeVar extends Command implements Executable {
 	}
 	
 }
+
