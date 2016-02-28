@@ -1,8 +1,5 @@
 package view;
-<<<<<<< HEAD:src/view/VariableElem.java
 
-=======
->>>>>>> 004c8185657be13ae90847bec1687b6b9ae77e5f:src/view/VariableElem.java
 import java.util.Observable;
 import java.util.Observer;
 

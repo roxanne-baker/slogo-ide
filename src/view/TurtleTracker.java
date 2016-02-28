@@ -158,11 +158,7 @@ public class TurtleTracker implements IAgentTracker{
 		agentMap.get(currentAgent).setSize(size);		
 	}
 	@Override
-<<<<<<< HEAD:src/view/TurtleTracker.java
-	public double getCurrentAgentSize(int size) {
-=======
 	public double getCurrentAgentSize() {
->>>>>>> 004c8185657be13ae90847bec1687b6b9ae77e5f:src/view/TurtleTracker.java
 		return agentMap.get(currentAgent).getSize();		
 	}
 	@Override
