@@ -3,20 +3,25 @@ package Model;
 import java.util.List;
 
 import View.Turtle;
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 
 public class Forward extends Command implements Executable {
 
-	Turtle currentTurtle;
-	public Forward(TurtleController turtleController) {
+	TurtleTracker turtleTracker;
+	public Forward(TurtleTracker turtleController) {
 		numParams = 1;
+		turtleTracker = turtleController;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
+		double distance = (Double) params.get(0);
+		double orientation = turtleTracker.getCurrentAgentOrientation();
+		double changeX = distance*Math.sin(orientation);
+		double changeY = distance*Math.cos(orientation);
 		
+		turtleTracker.moveCurrentAgent(changeX, changeY);
 	
-		return (Double) params.get(0);
+		return distance;
 	}
 	
 	public String checkParamTypes(List<Object> params) {

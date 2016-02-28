@@ -173,5 +173,4 @@ public class Interpreter {
 		//parseText(lang, fileInput.split(WHITESPACE));
     	
     }
-
 }

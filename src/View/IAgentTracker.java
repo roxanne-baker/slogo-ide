@@ -1,3 +1,4 @@
+
 package View;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,9 @@ public interface IAgentTracker{
 	//Specific to current agent
 	void setCurrentAgent(String agentName);
 	String getCurrentAgent();
-	void moveCurrentAgent(int changeX,int changeY);
-	int getCurrentAgentXPosition();
-	int getCurrentAgentYPosition();
+	void moveCurrentAgent(double changeX,double changeY);
+	double getCurrentAgentXPosition();
+	double getCurrentAgentYPosition();
 	void setCurrentAgentColor(String color); //doesn't work yet
 	String getCurrentAgentColor();
 	void setCurrentAgentImage(String imagePath);

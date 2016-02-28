@@ -10,16 +10,16 @@ import javafx.scene.image.ImageView;
 
 public abstract class Agent extends Observable{
 	private static final String DEFAULT_IMAGE_PATH = "dot.png";
-	private int agentXPosition;
-	private int agentYPosition;
+	private double agentXPosition;
+	private double agentYPosition;
 	private boolean agentPenUp;
 	private String agentColor;
 	private ImageView agentImageView;
 	private double orientation; //degrees going clockwise
 	private int agentSize;
 	private String agentImagePath;
-	private int oldYPosition;
-	private int oldXPosition;
+	private double oldYPosition;
+	private double oldXPosition;
 	private String agentName;
 	private boolean isVisible;
 	
@@ -35,14 +35,14 @@ public abstract class Agent extends Observable{
 		setImagePath(DEFAULT_IMAGE_PATH);
 
 	}
-	public int getXPosition(){
+	public double getXPosition(){
 		return agentXPosition;
 	}
-	public int getYPosition(){
+	public double getYPosition(){
 		return agentYPosition;
 	}
 	
-	public void movePosition(int x, int y){
+	public void movePosition(double x, double y){
 		oldXPosition = agentXPosition;
 		oldYPosition = agentYPosition;
 		agentXPosition = agentXPosition + x;
@@ -101,10 +101,10 @@ public abstract class Agent extends Observable{
 	public void setSize(int newSize){
 		agentSize = newSize;
 	}
-	public int getOldXPosition() {
+	public double getOldXPosition() {
 		return oldXPosition;
 	}
-	public int getOldYPosition(){
+	public double getOldYPosition(){
 		return oldYPosition;
 	}
 	public ImageView getImageCopy() {

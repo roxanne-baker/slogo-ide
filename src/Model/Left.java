@@ -1,19 +1,24 @@
+
 package Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 
 public class Left extends Command implements Executable {
 
-	public Left(TurtleController turtleController) {
+	TurtleTracker turtleTracker;
+	public Left(TurtleTracker turtleController) {
+		turtleTracker = turtleController;
 		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		return (Double) params.get(0);
+		double changeDegrees = (Double) params.get(0) % 360;
+		turtleTracker.changeCurrentAgentOrientation(changeDegrees);
+	
+		return changeDegrees;
 	}
 	
 	public String checkParamTypes(List<Object> params) {

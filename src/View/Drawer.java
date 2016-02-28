@@ -1,3 +1,4 @@
+
 package View;
 import javafx.scene.Group;
 
@@ -11,7 +12,7 @@ public class Drawer {
 		group = g;
 
 	}
-	public void drawLine(int startX,int startY,int endX, int endY){
+	public void drawLine(double startX,double startY,double endX, double endY){
 		Line line = new Line();
 		line.setStartX(startX);
 		line.setStartY(startY);
@@ -23,13 +24,13 @@ public class Drawer {
 	 * 
 	 * Need to make a copy of ImageView to stamp it otherwise run into duplicate children issue
 	 */
-	public void stampImage(ImageView img, int posX, int posY, int size){
+	public void stampImage(ImageView img, double posX, double posY, int size){
 		img.setX(posX);
 		img.setY(posY);
 		group.getChildren().add(img);
 	}
 	
-	public void moveImage(ImageView img, int posX, int posY){
+	public void moveImage(ImageView img, double posX, double posY){
 		group.getChildren().remove(img);
 		img.setX(posX);
 		img.setY(posY);

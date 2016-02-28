@@ -1,16 +1,18 @@
 package Model;
 
 import java.util.List;
-import Controller.TurtleController;
+import Controller.TurtleTracker;
 
 public class HideTurtle extends Command implements Executable {
 
-	public HideTurtle(TurtleController turtleController) {
+	TurtleTracker turtleTracker;
+	public HideTurtle(TurtleTracker turtleController) {
+		turtleTracker = turtleController;
 		numParams = 0;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
+		turtleTracker.setCurrentAgentVisible(false);
 		return 0;
 	}
 	
