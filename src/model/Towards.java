@@ -1,9 +1,8 @@
-
 package model;
 
 import java.util.List;
 
-import controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class Towards extends Command implements Executable {
 

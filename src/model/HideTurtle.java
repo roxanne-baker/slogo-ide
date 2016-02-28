@@ -1,3 +1,4 @@
+
 package model;
 
 import java.util.List;
@@ -19,6 +20,4 @@ public class HideTurtle extends Command implements Executable {
 	public String checkParamTypes(List<Object> params) {
 		return null;
 	}
-	
-	
 }

@@ -1,4 +1,7 @@
 package view;
+
+
+
 import java.util.Observable;
 import java.util.function.BiConsumer;
 
@@ -36,7 +39,7 @@ public class GuiObjectSlider extends GuiObject{
 		slider = new Slider(minValue,maxValue,curValue); 
 		slider.setShowTickMarks(true);
 		slider.setBlockIncrement(numIncrement);
-		textLabel = new Label(getResourceString().getString(getObjectName()+"LABEL"));
+		textLabel = new Label(getResourceString().getString("Label"+getObjectName()));
 		numLabel = new Label(Double.toString(slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Object>(){
 			@Override

@@ -1,4 +1,6 @@
+
 package view;
+
 
 public class HistoryElem extends ClickableText {
 
@@ -15,3 +17,4 @@ public class HistoryElem extends ClickableText {
 	}
 
 }
+

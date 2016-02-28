@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,7 +13,7 @@ public class ParseNode {
 	public ParseNode(Command c) { 
 		this.c = c; 
 		this.value = null; 
-		params = new ArrayList<ParseNode>(); 
+		params = null; 
 	}
 	
 	public ParseNode(Object value){ 
@@ -40,40 +39,6 @@ public class ParseNode {
 	
 	public void setParent(ParseNode node) {
 		this.parent = node; 
-	}
-
-	boolean isCommand() { 
-		return (c != null);
-	}
-//	List<ParseNode> getParams() { 
-//		return params; 
-//	}
-	
-    boolean allParamsHaveValue() { 
-    	for (ParseNode p: params) { 
-    		if (p.getValue() == null) { 
-    			return false; 
-    		}
-    	}
-    	return true;
-    }
-	
-	int getNumParamsFilled() { 
-		return this.params.size();
-	}
-	
-	List<Object> extractParamsFromNode() { 
-		List<Object> paramVals = new ArrayList<Object>();
-		for (ParseNode p: params) { 
-			if (p.getValue() != null) { 
-				paramVals.add(p.getValue());
-			}
-		}
-		return paramVals;
-	}
-	
-	boolean paramsFilled() { 
-		return params.size() == c.getNumParams();
 	}
 	
 	public boolean paramsEnough() { 

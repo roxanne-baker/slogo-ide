@@ -1,9 +1,7 @@
-
 package model;
 
 import java.util.List;
 
-import controller.TurtleController;
 import view.TurtleTracker;
 
 public class ShowTurtle extends Command implements Executable {
@@ -22,6 +20,4 @@ public class ShowTurtle extends Command implements Executable {
 	public String checkParamTypes(List<Object> params) {
 		return null;
 	}
-	
-	
 }

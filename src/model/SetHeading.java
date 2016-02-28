@@ -2,26 +2,23 @@ package model;
 
 import java.util.List;
 
-import controller.TurtleController;
 import view.TurtleTracker;
 
 public class SetHeading extends Command implements Executable {
 
 	TurtleTracker turtleTracker;
-	
 	public SetHeading(TurtleTracker turtleController) {
-		numParams = 1;
 		turtleTracker = turtleController;
+		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
 		double orientationToSet = (double) params.get(0);
 		double currOrientation = turtleTracker.getCurrentAgentOrientation();
 		
 		turtleTracker.changeCurrentAgentOrientation(orientationToSet-currOrientation);
 		
-		return orientationToSet;
+		return (double) params.get(0);
 	}
 	
 	public String checkParamTypes(List<Object> params) {
@@ -32,7 +29,5 @@ public class SetHeading extends Command implements Executable {
 		else {
 			return String.format(errors.getString("WrongParamType"), param.toString());
 		}
-	}
-	
-	
+	}	
 }

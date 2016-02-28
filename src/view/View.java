@@ -1,4 +1,3 @@
-
 package view;
 import java.util.Observer;
 import java.util.Observable;

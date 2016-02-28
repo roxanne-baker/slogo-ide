@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.List;
@@ -27,5 +26,4 @@ public class Equal extends Command implements Executable {
 		}
 		return null;
 	}
-	
 }

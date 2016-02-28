@@ -1,6 +1,7 @@
 package view;
 
 
+
 import java.util.Observable;
 import java.util.function.BiConsumer;
 
@@ -14,14 +15,14 @@ public class GuiObjectCheckBox extends GuiObject{
 	private BiConsumer<Observable, Boolean> setCheckedLambda;
 	private boolean isNewSelection;
 	
-	public GuiObjectCheckBox(String name, String resourceBundle, Agent agent,BiConsumer<Observable,Boolean> lambda) {
+	public GuiObjectCheckBox(String name, String resourceBundle,Agent agent,BiConsumer<Observable,Boolean> lambda) {
 		super(name, resourceBundle, agent);
 		setCheckedLambda = lambda;
 	}
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		checkBox = new CheckBox(getResourceString().getString(getObjectName()+"LABEL"));
+		checkBox = new CheckBox(getResourceString().getString(getObjectName()));
 		checkBox.setSelected(isChecked);
 	    checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	        public void changed(ObservableValue<? extends Boolean> ov,

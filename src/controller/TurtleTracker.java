@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import view.IAgentTracker;
 import javafx.scene.image.ImageView;
 import view.Agent;
-import view.IAgentTracker;
-import view.Turtle;
 import view.View;
+import view.Turtle;
 
 public class TurtleTracker implements IAgentTracker{
 	private static final int DEFAULT_XLOCATION = 100;
@@ -163,14 +163,14 @@ public class TurtleTracker implements IAgentTracker{
 		agentMap.get(currentAgent).leaveStamp();
 		
 	}
-//	@Override
-//	public void changeCurrentAgentSize(int size) {
-//		agentMap.get(currentAgent).setSize(size);		
-//	}
-//	@Override
-//	public int getCurrentAgentSize(int size) {
-//		return agentMap.get(currentAgent).getSize();		
-//	}
+	@Override
+	public void changeCurrentAgentSize(int size) {
+		agentMap.get(currentAgent).setSize(size);		
+	}
+	@Override
+	public double getCurrentAgentSize(int size) {
+		return agentMap.get(currentAgent).getSize();		
+	}
 	@Override
 	public double getCurrentAgentXPosition() {
 		return agentMap.get(currentAgent).getXPosition();
@@ -179,22 +179,12 @@ public class TurtleTracker implements IAgentTracker{
 	public double getCurrentAgentYPosition() {
 		return agentMap.get(currentAgent).getYPosition();
 	}
-//	@Override
-//	public Agent getCurrentAgent(String agentName) {
-//		return agentMap.get(currentAgent);
-//	}
-//	@Override
-//	public String getCurrentAgentName() {
-//		return currentAgent;
-//	}
 	@Override
-	public void changeCurrentAgentSize(double size) {
-		// TODO Auto-generated method stub
-		
+	public Agent getCurrentAgent(String agentName) {
+		return agentMap.get(currentAgent);
 	}
 	@Override
-	public double getCurrentAgentSize() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getCurrentAgentName() {
+		return currentAgent;
 	}
 }

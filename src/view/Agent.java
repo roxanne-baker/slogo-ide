@@ -1,4 +1,3 @@
-
 package view;
 import java.util.List;
 import java.util.Observable;
@@ -176,6 +175,5 @@ public abstract class Agent extends Observable{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 }	

@@ -8,8 +8,8 @@ import javafx.scene.image.ImageView;
 
 
 public class TurtleTracker implements IAgentTracker{
-	private static final double DEFAULT_XLOCATION = 100;
-	private static final double DEFAULT_YLOCATION = 100;	
+	private static final int DEFAULT_XLOCATION = 100;
+	private static final int DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
 	private View observerView;
@@ -100,7 +100,15 @@ public class TurtleTracker implements IAgentTracker{
 		
 	}
 
+	@Override
+	public void setCurrentAgentColor(String color) {
+		agentMap.get(currentAgent).setColor(color);		
+	}
 
+	@Override
+	public String getCurrentAgentColor() {
+		return agentMap.get(currentAgent).getColor();
+	}
 
 	@Override
 	public void setCurrentAgentImage(String imagePath) {
@@ -154,11 +162,11 @@ public class TurtleTracker implements IAgentTracker{
 		
 	}
 	@Override
-	public void changeCurrentAgentSize(double size) {
+	public void changeCurrentAgentSize(int size) {
 		agentMap.get(currentAgent).setSize(size);		
 	}
 	@Override
-	public double getCurrentAgentSize() {
+	public double getCurrentAgentSize(int size) {
 		return agentMap.get(currentAgent).getSize();		
 	}
 	@Override
@@ -169,23 +177,13 @@ public class TurtleTracker implements IAgentTracker{
 	public double getCurrentAgentYPosition() {
 		return agentMap.get(currentAgent).getYPosition();
 	}
-//	@Override
-//	public Agent getCurrentAgent(String agentName) {
-//		return agentMap.get(currentAgent);
-//	}
-//	@Override
+	@Override
+	public Agent getCurrentAgent(String agentName) {
+		return agentMap.get(currentAgent);
+	}
+	@Override
 	public String getCurrentAgentName() {
 		return currentAgent;
-	}
-	@Override
-	public void setCurrentAgentColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String getCurrentAgentColor() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.List;
@@ -11,7 +10,7 @@ public class Sine extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		double degrees = (double) params.get(0);
-		return Math.sin(Math.toRadians(degrees));
+		return Math.sin(degrees);
 	}
 	
 	public String checkParamTypes(List<Object> params) {
@@ -22,6 +21,4 @@ public class Sine extends Command implements Executable {
 		}
 		return null;
 	}
-	
-	
 }

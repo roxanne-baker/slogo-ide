@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.List;
@@ -20,6 +19,5 @@ public class YCor extends Command implements Executable{
 	public String checkParamTypes(List<Object> params) {
 		return null;
 	}
-	
-	
+
 }

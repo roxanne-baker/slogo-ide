@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-import controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class SetXY extends Command implements Executable {
 	TurtleTracker turtleTracker;

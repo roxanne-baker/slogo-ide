@@ -3,7 +3,6 @@ package model;
 
 import java.util.List;
 
-import view.Turtle;
 import view.TurtleTracker;
 
 public class Forward extends Command implements Executable {
@@ -33,7 +32,5 @@ public class Forward extends Command implements Executable {
 		else {
 			return String.format(errors.getString("WrongParamType"), param.toString());
 		}
-	}
-	
-	
+	}	
 }

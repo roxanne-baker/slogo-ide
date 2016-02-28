@@ -1,3 +1,4 @@
+
 package model;
 
 import java.util.List;
@@ -25,6 +26,5 @@ public class Greater extends Command implements Executable {
 			}	
 		}
 		return null;
-	}
-	
+	}	
 }

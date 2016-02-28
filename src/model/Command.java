@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -8,14 +7,8 @@ public abstract class Command implements Executable {
  
 	int numParams; 
 	protected ResourceBundle errors = ResourceBundle.getBundle("resources.errors/Errors");
-	private List<Object> params; 
 	
 	public Command() {
-		params = new ArrayList<Object>();
-	}
-	
-	public void addParam(Object param) { 
-		params.add(param);
 	}
 	
 	public String checkNumParams(List<Object> params) {

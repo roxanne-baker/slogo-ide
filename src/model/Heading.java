@@ -1,8 +1,9 @@
+
 package model;
 
 import java.util.List;
 
-import controller.TurtleTracker;
+import view.TurtleTracker;
 
 public class Heading extends Command implements Executable{
 	TurtleTracker turtleTracker;

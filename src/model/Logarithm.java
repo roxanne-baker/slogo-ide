@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.List;
@@ -22,6 +21,4 @@ public class Logarithm extends Command implements Executable {
 		}
 		return null;
 	}
-	
-	
 }

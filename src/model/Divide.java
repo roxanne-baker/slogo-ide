@@ -1,5 +1,5 @@
-
 package model;
+
 import java.util.List;
 
 public class Divide extends Command implements Executable {
@@ -28,6 +28,5 @@ public class Divide extends Command implements Executable {
 		}
 		return null;
 	}
-	
 	
 }

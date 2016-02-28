@@ -3,13 +3,13 @@ package model;
 import java.util.List;
 
 import controller.VariableController;
+import view.VariableModel;
+
 
 public class MakeVar extends Command implements Executable {
 
 	VariableController variableController;
-	
 	public MakeVar(VariableController variableController) {
-		this.variableController = variableController;
 		numParams = 2;
 	}
 	
@@ -25,11 +25,14 @@ public class MakeVar extends Command implements Executable {
 	}
 	
 	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}	
+		Object name = params.get(0);
+		if (!(name instanceof String)) {
+			return String.format(errors.getString("WrongParamType"), name.toString());
 		}
+		Object value = params.get(0);
+		if (!(value instanceof Integer || value instanceof Double)) {
+			return String.format(errors.getString("WrongParamType"), value.toString());
+		}	
 		return null;
 	}
 	
