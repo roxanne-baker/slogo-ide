@@ -1,4 +1,4 @@
-package view;
+package View;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +23,7 @@ public class TurtleTester extends Application{
 		tTracker.setCurrentAgent("Melissa");
 		tTracker.stampCurrentAgent();
 		tTracker.moveCurrentAgent(150, 80);
-		tTracker.setCurrentAgentVisible(false);
+		//tTracker.setCurrentAgentVisible(false);
 		tTracker.renameAgent("Melissa", "Colette");
 		System.out.println(tTracker.getCurrentAgentName());
 		printPosition(tTracker);

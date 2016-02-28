@@ -1,4 +1,4 @@
-package view;
+package View;
 import java.util.Observer;
 import java.util.Observable;
 import javafx.scene.Group;

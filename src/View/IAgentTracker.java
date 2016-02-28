@@ -1,4 +1,4 @@
-package view;
+package View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +21,8 @@ public interface IAgentTracker{
 	void setCurrentAgent(String agentName);
 	String getCurrentAgentName();
 	void moveCurrentAgent(int changeX,int changeY);
-	int getCurrentAgentXPosition();
-	int getCurrentAgentYPosition();
-	void setCurrentAgentColor(String color); //doesn't work yet
-	String getCurrentAgentColor();
+	double getCurrentAgentXPosition();
+	double getCurrentAgentYPosition();
 	void setCurrentAgentImage(String imagePath);
 	void setCurrentAgentPenUp(boolean isUp);
 	boolean isCurrentAgentPenUp();
@@ -32,8 +30,8 @@ public interface IAgentTracker{
 	void changeCurrentAgentOrientation(double changeDegrees);
 	double getCurrentAgentOrientation();
 	void stampCurrentAgent();
-	void changeCurrentAgentSize(int size); //doesn't work yet
-	int getCurrentAgentSize(int size); //doesn't work yet
+	void changeCurrentAgentSize(double size); //doesn't work yet
+	double getCurrentAgentSize(); //doesn't work yet
 
 	
 	

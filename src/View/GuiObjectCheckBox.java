@@ -1,4 +1,4 @@
-package view;
+package View;
 
 
 import java.util.Observable;
@@ -21,7 +21,7 @@ public class GuiObjectCheckBox extends GuiObject{
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		checkBox = new CheckBox(getResourceString().getString(getObjectName()));
+		checkBox = new CheckBox(getResourceString().getString(getObjectName()+"LABEL"));
 		checkBox.setSelected(isChecked);
 	    checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	        public void changed(ObservableValue<? extends Boolean> ov,
