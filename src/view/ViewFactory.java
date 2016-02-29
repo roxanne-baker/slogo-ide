@@ -1,34 +1,52 @@
 package view;
-import java.util.*;
+
+import controller.TurtleController;
+import controller.VariableController;
+import model.Interpreter;
+import model.VariableModel;
 
 public class ViewFactory {
-	private static HashMap<String,View> allViews = new HashMap<String,View>();
-	private View history;
+//	private static HashMap<String,View> allViews = new HashMap<String,View>();
+	private HistoryView historyView; 
+	private VariableView variableView; 
+	private ConsoleView consoleView; 
+	private MethodView methodView; 
+	private ViewAgents agentsView; 
+	
+	// 
+	TurtleController tc = new TurtleController(); 
+	VariableModel vm = new VariableModel();
+	//VariableView varView = new VariableView("0");
+	VariableController vc = new VariableController(vm);
+	Interpreter ip = new Interpreter(tc, vc);
 	
 	public View createView(String ID){
-		View view;
 		switch(ID){
 		case "Console":
-			view = new ConsoleView(ID,history);
-			break;
+			consoleView = new ConsoleView(ID,historyView);
+			consoleView.setInterpreter(ip);
+			return consoleView;
 		case "History":
-			view = new HistoryView(ID);
-			history = view;
-			break;
+			historyView = new HistoryView(ID);
+			return historyView;
 		case "SavedVar":
-			view = new VariableView(ID);
-			break;
+			variableView = new VariableView(ID);
+			vc.setVariableView(variableView);
+			return variableView;
 		case "SavedMethod":
-			view = new MethodView(ID);
-			break;
+			methodView = new MethodView(ID);
+			return methodView;
 		case "Agent":
-			view = new ViewAgents(ID);
-			break;
+			agentsView = new ViewAgents(ID);
+			tc.setView(agentsView);
+			tc.addAgent("Melissa");
+			tc.setCurrentAgent("Melissa");
+			return agentsView;
 		default:
 			return null;
 		}
-		allViews.put(ID, view);
-		return view;
+		//allViews.put(ID, view);
+		//return view;
 	}
 
 }

@@ -11,9 +11,12 @@ public class VariableController implements Observer {
 	private VariableModel model;
 	private VariableView view;
 	
-	public VariableController(VariableModel model, VariableView view) {
+	public VariableController(VariableModel model) {
 		this.model = model;
-		this.view = view;
+	}
+	
+	public void setVariableView(VariableView v) { 
+		view = v;
 	}
 	
 	public void addVariable(String name, String value){
