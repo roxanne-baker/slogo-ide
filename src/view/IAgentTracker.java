@@ -1,5 +1,4 @@
 package view;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +6,7 @@ import java.util.List;
  * @author Melissa Zhang
  *
  */
-public interface IAgentTracker{
+public interface IAgentTracker {
 	int getNumAgents();
 	List<String> getAgentNames();
 	List<Agent> getAgents();

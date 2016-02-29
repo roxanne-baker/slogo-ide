@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.beans.InvalidationListener;
 import javafx.scene.image.ImageView;
 
 
@@ -12,9 +13,11 @@ public class TurtleTracker implements IAgentTracker{
 	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
-	private View observerView;
+	private ViewPreferences preferencesView;
+	private ViewAgents observerView;
 	
-	public TurtleTracker(View obsView){
+	public TurtleTracker(ViewPreferences prefView, ViewAgents obsView){
+		preferencesView = prefView;
 		observerView = obsView;
 		agentMap = new HashMap<String,Agent>();
 	}
@@ -46,9 +49,11 @@ public class TurtleTracker implements IAgentTracker{
 	public void addAgent(String agentName) {
 		Turtle newTurtle = new Turtle(agentName, DEFAULT_XLOCATION, DEFAULT_YLOCATION,observerView);
 		agentMap.put(agentName, newTurtle);
+		preferencesView.updateAgentMap(agentMap);
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
+		
 
 	}
 
@@ -58,6 +63,8 @@ public class TurtleTracker implements IAgentTracker{
 		if(currentAgent.equals(agentName)){
 			currentAgent = null;
 		}
+		preferencesView.updateAgentMap(agentMap);
+
 		
 	}
 	public void renameAgent(String oldName, String newName){ //needs to throw an error
@@ -70,6 +77,9 @@ public class TurtleTracker implements IAgentTracker{
 		if(currentAgent.equals(oldName)){
 			currentAgent = newName;
 		}
+		preferencesView.updateCurrentAgentAndAgentMap(newName,agentMap);
+
+
 		
 	}
 	public String getCurrentAgent() { //needs to throw an error if null
@@ -90,6 +100,7 @@ public class TurtleTracker implements IAgentTracker{
 
 	@Override
 	public void setCurrentAgent(String agentName) {
+		preferencesView.updateCurrentAgent(agentName);
 		currentAgent = agentName;
 		
 	}

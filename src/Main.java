@@ -99,6 +99,7 @@ public class Main extends Application {
 		viewlist.add("History");
 		viewlist.add("Console");
 		viewlist.add("SavedVar");
+		viewlist.add("Agents");
 		Workspace UI = new Workspace(viewlist);
 		Scene myScene = UI.init();
 		myScene.getStylesheets().add("resources/style/style.css");
