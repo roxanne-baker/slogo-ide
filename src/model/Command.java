@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 public abstract class Command implements Executable {
  
-	int numParams; 
+	public int numParams; 
 	protected ResourceBundle errors = ResourceBundle.getBundle("resources.errors/Errors");
 	private List<Object> params; 
 	

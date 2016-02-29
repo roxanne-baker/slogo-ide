@@ -18,7 +18,6 @@ public interface IAgentTracker{
 	void removeAgent(String agentName);
 	boolean isAgent(String name); 
 	boolean isValidAgentName(String name);
-	Agent getCurrentAgent(String agentName);
 	
 	//Specific to current agent
 	void setCurrentAgent(String agentName);
@@ -38,8 +37,8 @@ public interface IAgentTracker{
 	double getCurrentAgentOrientation();
 	void stampCurrentAgent();
 
-	void changeCurrentAgentSize(int size); //doesn't work yet
-	double getCurrentAgentSize(int size); //doesn't work yet
+	void changeCurrentAgentSize(double size); //doesn't work yet
+	double getCurrentAgentSize(); //doesn't work yet
 	Agent getCurrentAgent(String agentName);
 	String getCurrentAgentName();
 

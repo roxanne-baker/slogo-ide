@@ -1,7 +1,5 @@
 package view;
 
-package view;
-
 
 public class ErrorElem {
 

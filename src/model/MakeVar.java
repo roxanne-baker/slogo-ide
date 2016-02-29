@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 import controller.VariableController;
-import view.VariableModel;
+import model.VariableModel;
 
 
 public class MakeVar extends Command implements Executable {

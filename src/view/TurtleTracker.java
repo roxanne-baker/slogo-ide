@@ -177,6 +177,16 @@ public class TurtleTracker implements IAgentTracker{
 	public String getCurrentAgentName() {
 		return currentAgent;
 	}
+	@Override
+	public void setCurrentAgentColor(String color) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String getCurrentAgentColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

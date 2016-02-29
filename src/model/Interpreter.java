@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import controller.TurtleController;
+import view.TurtleTracker;
 import controller.VariableController;
 
 public class Interpreter {
@@ -12,7 +12,7 @@ public class Interpreter {
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
     private static Parser lang = new Parser();
-	TurtleController turtleController;
+	TurtleTracker turtleController;
 	VariableController variableController;
 	
 	public Interpreter() {
@@ -155,7 +155,8 @@ public class Interpreter {
 		commandsMap.put("Left", new Left(turtleController));
 		commandsMap.put("Right", new Right(turtleController));
 		commandsMap.put("SetHeading", new SetHeading(turtleController));
-		//set towards
+		commandsMap.put("SetTowards", new Towards(turtleController));
+		commandsMap.put("SetPosition", new SetXY(turtleController));
 		commandsMap.put("PenDown", new PenDown(turtleController));
 		commandsMap.put("PenUp", new PenUp(turtleController));
 		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
@@ -165,6 +166,9 @@ public class Interpreter {
 	private void addTurtleQueries() {
 		commandsMap.put("XCoordinate", new XCor(turtleController));
 		commandsMap.put("YCoordinate", new YCor(turtleController));		
+		commandsMap.put("Heading", new Heading(turtleController));
+		commandsMap.put("IsPenDown", new PenDownQuery(turtleController));
+		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
 	}
 	
 	private void addMathOps() {
