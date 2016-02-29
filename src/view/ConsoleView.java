@@ -3,11 +3,13 @@ import java.util.Observable;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import model.Interpreter;
 
 public class ConsoleView extends View {
-	private View historyView;
+	private HistoryView historyView;
+	private Interpreter interpreter;
 	
-	public ConsoleView(String id, View history) {
+	public ConsoleView(String id, HistoryView history) {
 		super(id);
 		historyView = history;
 	}
@@ -15,6 +17,10 @@ public class ConsoleView extends View {
 	@Override
 	public void update(Observable o, Object arg) {
 
+	}
+	
+	public void setInterpreter(Interpreter ip) { 
+		interpreter = ip; 
 	}
 
 	@Override
@@ -26,6 +32,7 @@ public class ConsoleView extends View {
 		Button btn = new Button("Run");
 		btn.setOnMouseClicked(e->{
 			HistoryElem hist = new HistoryElem(console.getText(), historyView);
+			interpreter.run(console.getText());
 //			//if error, create error and add to history
 //			
 //			//else if variable, create variable and add to saved vars
