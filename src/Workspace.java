@@ -2,6 +2,8 @@ import java.util.*;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import view.View;
+import view.ViewFactory;
 
 public class Workspace {
 	private List<String> views;
@@ -12,7 +14,6 @@ public class Workspace {
 	
 	public Scene init(){
 		ViewFactory factory = new ViewFactory();
-		
 		GridPane root = new GridPane();
 		for(String type: views){
 			View view = factory.createView(type);
