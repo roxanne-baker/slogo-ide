@@ -28,7 +28,7 @@ public class ViewAgents extends View{
 	private Drawer drawer;
 	private Group agentGroup;
 	private Color backgroundColor;
-	//private VBox vbox;
+	private VBox vbox;
 	private Group viewGroup;
 	private ResourceBundle myResources;
 	private ImageView turtleView; 
@@ -37,23 +37,23 @@ public class ViewAgents extends View{
 		super(id);
 		agentGroup = new Group();
 		drawer = new Drawer(agentGroup);
-		//vbox = new VBox();
-		//vbox.getChildren().add(agentGroup);
+		vbox = new VBox();
+		vbox.getChildren().add(agentGroup);
 		viewGroup = new Group();
 		viewGroup.getChildren().add(agentGroup);
 //		Rectangle rect = new Rectangle(20, 40);
 //		rect.setFill(Color.RED);
 //		viewGroup.getChildren().add(rect);
-		backgroundColor = Color.AQUAMARINE;
+		backgroundColor = DEFAULT_COLOR;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		//drawer.drawLine(0, 0, 50, 50, 10, Color.BLACK);
 	}
 	
-	public void addTurtleView() { 
-		
-		
-	}
-	
+//	public void addTurtleView() { 
+//		
+//		
+//	}
+//	
 
 //	public StringProperty getImagePathProperty(){
 //		return agentImagePath;
@@ -62,20 +62,19 @@ public class ViewAgents extends View{
 //		return agentImagePath.toString();
 //	}
 	
-	public void setImagePath(String imagePath){
-		turtleView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
-		//agentImagePath.setValue(imagePath);
-		//setChanged();
-		//notifyObservers(myResources.getString("IMAGEVIEW"));
-
-//	}
+//	public void setImagePath(String imagePath){
+//		turtleView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
+//		//agentImagePath.setValue(imagePath);
+//		//setChanged();
+//		//notifyObservers(myResources.getString("IMAGEVIEW"));
+//
+////	}
 //	public ImageView getImageView(){
 //		return agentImageView;
 //	}
 	public void setBackgroundColor(Color color){
-		//vbox.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
-//		viewGroup.
-//		backgroundColor = color;
+		vbox.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+		backgroundColor = color;
 	}
 	public Color getBackgroundColor(){
 		return backgroundColor;
@@ -94,7 +93,9 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == myResources.getString("INITIAL") || obj == myResources.getString("IMAGEVIEW")){
+			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){
+				
+				System.out.println("hi");
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}

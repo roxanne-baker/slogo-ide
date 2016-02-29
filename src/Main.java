@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+import model.Interpreter;
+import model.VariableModel;
+import controller.TurtleController;
+import controller.VariableController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,6 +16,8 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
+		VariableModel vm = new VariableModel();
+		VariableController vc = new VariableController(vm);
 
 		ArrayList<String> viewlist = new ArrayList<String>();
 		viewlist.add("Agent");
@@ -19,6 +25,8 @@ public class Main extends Application {
 		viewlist.add("Console");
 		viewlist.add("SavedVar");
 		viewlist.add("SavedMethod");
+
+
 		Workspace UI = new Workspace(viewlist);
 		Scene myScene = UI.init();
 		myScene.getStylesheets().add("resources/style/style.css");

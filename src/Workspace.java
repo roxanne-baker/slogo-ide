@@ -34,6 +34,7 @@ public class Workspace {
 				root.add(view.getView(),2,1);
 				break;
 			}
+			
 		}
 		return new Scene(root);
 	}

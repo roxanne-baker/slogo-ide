@@ -17,7 +17,7 @@ public class ViewFactory {
 	private ViewPreferences preferencesView;
 	
 	// 
-	TurtleController tc = new TurtleController(); 
+	TurtleController tc = new TurtleController(preferencesView,agentsView); 
 	VariableModel vm = new VariableModel();
 	//VariableView varView = new VariableView("0");
 	VariableController vc = new VariableController(vm);
@@ -41,8 +41,6 @@ public class ViewFactory {
 			return methodView;
 		case "Agent":
 			agentsView = new ViewAgents(ID);
-			tc.setView(agentsView);
-			tc.addAgent("Melissa");
 			tc.setCurrentAgent("Melissa");
 			return agentsView;
 		case "Preferences":

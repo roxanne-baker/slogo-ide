@@ -67,9 +67,8 @@ public class ViewPreferences extends View{
 //		for (Agent agent: agentList){
 			VBox agentPrefBox = new VBox();
 			List<Node> observerLabelList = new ArrayList<Node>();
-			System.out.println(agentMap);
-			System.out.println(currentAgent);
 			if(currentAgent!=null){
+			System.out.println(currentAgent);
 			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
 			
 			List<Node> mutableGuiObjectList = new ArrayList<Node>();
@@ -124,6 +123,7 @@ public class ViewPreferences extends View{
 	}
 
 	public void updateCurrentAgentAndAgentMap(String newName,HashMap<String, Agent> newAgentMap) {
+		System.out.println("name change from "+ currentAgent+ " to "+ newName);
 		agentMap = newAgentMap;
 		currentAgent = newName;
 		updateView();
