@@ -1,21 +1,18 @@
 package view;
+
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.StringProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  * This view displays all the agents and updates when it is called by the Agent Observables
@@ -31,7 +28,6 @@ public class ViewAgents extends View{
 	private VBox vbox;
 	private Group viewGroup;
 	private ResourceBundle myResources;
-	private ImageView turtleView; 
 	
 	public ViewAgents(String id) {
 		super(id);
@@ -40,38 +36,10 @@ public class ViewAgents extends View{
 		vbox = new VBox();
 		vbox.getChildren().add(agentGroup);
 		viewGroup = new Group();
-		viewGroup.getChildren().add(agentGroup);
-//		Rectangle rect = new Rectangle(20, 40);
-//		rect.setFill(Color.RED);
-//		viewGroup.getChildren().add(rect);
+		viewGroup.getChildren().add(vbox);
 		backgroundColor = DEFAULT_COLOR;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
-		//drawer.drawLine(0, 0, 50, 50, 10, Color.BLACK);
 	}
-	
-//	public void addTurtleView() { 
-//		
-//		
-//	}
-//	
-
-//	public StringProperty getImagePathProperty(){
-//		return agentImagePath;
-//	}
-//	public String getImagePath(){;
-//		return agentImagePath.toString();
-//	}
-	
-//	public void setImagePath(String imagePath){
-//		turtleView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
-//		//agentImagePath.setValue(imagePath);
-//		//setChanged();
-//		//notifyObservers(myResources.getString("IMAGEVIEW"));
-//
-////	}
-//	public ImageView getImageView(){
-//		return agentImageView;
-//	}
 	public void setBackgroundColor(Color color){
 		vbox.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		backgroundColor = color;
@@ -80,6 +48,15 @@ public class ViewAgents extends View{
 		return backgroundColor;
 	}
 	
+	public void setUpColorPicker(){
+		ColorPicker colorPicker = new ColorPicker(backgroundColor);
+        colorPicker.setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                setBackgroundColor(colorPicker.getValue());      
+            }
+        });
+        vbox.getChildren().add(colorPicker);
+	}
 	@Override
 	public void update(Observable agent, Object obj) {
 		System.out.println(obj);
@@ -94,8 +71,6 @@ public class ViewAgents extends View{
 				
 				}
 			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){
-				
-				System.out.println("hi");
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}
@@ -109,6 +84,7 @@ public class ViewAgents extends View{
 
 	@Override
 	public Group getView() {
+		setUpColorPicker();
 		return viewGroup;
 	}
 
