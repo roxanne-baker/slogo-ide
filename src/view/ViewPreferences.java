@@ -1,11 +1,18 @@
 package view;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -16,20 +23,21 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewPreferences extends View{
-	private List<Agent> agentList;
+	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
 	private HBox preferencesBox;
+	private String currentAgent;
 	private static final int PADDING = 10;
-	public ViewPreferences(String id, List<Agent> aList) {
+	public ViewPreferences(String id) {
 		super(id);
-		agentList = aList;
 		viewGroup = new Group();
+		agentMap = new HashMap<String,Agent>();
+		currentAgent = null;
 	}
 
 	@Override
-	public void update(Observable updateType, Object agent) {
-		System.out.println(updateType);
-		updateView();
+	public void update(Observable agent, Object updateType) {
+
 		
 	}
 
@@ -44,22 +52,35 @@ public class ViewPreferences extends View{
 		viewGroup.getChildren().remove(preferencesBox);
 		preferencesBox = new HBox();
 		preferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
-		
-		System.out.println(agentList.size());
-		for (Agent agent: agentList){
+		ComboBox agentDropDown = new ComboBox();
+		for (String name: agentMap.keySet()){
+			agentDropDown.getItems().add(name);
+		}
+		agentDropDown.setValue(currentAgent);
+		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue ov, String t, String t1) {                
+                currentAgent = t1;
+				updateView();
+            }
+		});
+		preferencesBox.getChildren().add(agentDropDown);
+//		for (Agent agent: agentList){
 			VBox agentPrefBox = new VBox();
 			List<Node> observerLabelList = new ArrayList<Node>();
-			populateObserverLabelList(agent, observerLabelList);
+			System.out.println(agentMap);
+			System.out.println(currentAgent);
+			if(currentAgent!=null){
+			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
 			
 			List<Node> mutableGuiObjectList = new ArrayList<Node>();
-			populateMutableGuiObjectList(agent,mutableGuiObjectList);
+			populateMutableGuiObjectList(agentMap.get(currentAgent),mutableGuiObjectList);
 			
 			addToAgentPrefBox(agentPrefBox, observerLabelList);
 			addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
-			
+			}
 			preferencesBox.getChildren().add(agentPrefBox);
 
-		}
+//		}
 
 
 		viewGroup.getChildren().add(preferencesBox);
@@ -82,15 +103,31 @@ public class ViewPreferences extends View{
 		}
 	}
 
-private void populateObserverLabelList(Agent agent, List<Node> observerLabelList) {
-	for (String property: agent.getObserverProperties()){
-		ObserverLabelFactory labelFactory = new ObserverLabelFactory();
-		Object newLabel = labelFactory.createNewObserverLabel(property, agent);
-		
-		if (newLabel!= null){
-			observerLabelList.add((Node) newLabel);
+	private void populateObserverLabelList(Agent agent, List<Node> observerLabelList) {
+		for (String property: agent.getObserverProperties()){
+			ObserverLabelFactory labelFactory = new ObserverLabelFactory();
+			Object newLabel = labelFactory.createNewObserverLabel(property, agent);
+			
+			if (newLabel!= null){
+				observerLabelList.add((Node) newLabel);
+			}
 		}
 	}
-}
+	public void updateAgentMap(Map<String,Agent> newAgentMap){
+		agentMap = (HashMap<String, Agent>) newAgentMap;
+		updateView();
+	}
+
+	public void updateCurrentAgent(String agentName) {
+		currentAgent = agentName;
+		updateView();
+	}
+
+	public void updateCurrentAgentAndAgentMap(String newName,HashMap<String, Agent> newAgentMap) {
+		agentMap = newAgentMap;
+		currentAgent = newName;
+		updateView();
+	}
+
 
 }

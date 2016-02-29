@@ -19,6 +19,7 @@ public class Main extends Application {
 		viewlist.add("SavedVar");
 		viewlist.add("SavedMethod");
 		viewlist.add("Agent");
+
 		Workspace UI = new Workspace(viewlist);
 		Scene myScene = UI.init();
 		myScene.getStylesheets().add("resources/style/style.css");

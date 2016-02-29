@@ -13,6 +13,7 @@ public class ViewFactory {
 	private ConsoleView consoleView; 
 	private MethodView methodView; 
 	private ViewAgents agentsView; 
+	private ViewPreferences preferencesView;
 	
 	// 
 	TurtleController tc = new TurtleController(); 
@@ -35,6 +36,7 @@ public class ViewFactory {
 			vc.setVariableView(variableView);
 			return variableView;
 		case "SavedMethod":
+
 			methodView = new MethodView(ID);
 			return methodView;
 		case "Agent":
@@ -43,6 +45,9 @@ public class ViewFactory {
 			tc.addAgent("Melissa");
 			tc.setCurrentAgent("Melissa");
 			return agentsView;
+		case "Preferences":
+			preferencesView = new ViewPreferences(ID);
+
 		default:
 			return null;
 		}

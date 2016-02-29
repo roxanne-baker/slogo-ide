@@ -1,29 +1,24 @@
-package controller;
-import view.IAgentTracker;
-import view.Agent;
-import view.View;
-import view.Turtle;
-
+package view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.beans.InvalidationListener;
 import javafx.scene.image.ImageView;
-import view.Agent;
-import view.IAgentTracker;
-import view.Turtle;
-import view.View;
-import view.ViewAgents;
 
-public class TurtleController implements IAgentTracker{
 
+
+public class TurtleTracker implements IAgentTracker{
 	private static final double DEFAULT_XLOCATION = 100;
 	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
-	private View observerView;
+	private ViewPreferences preferencesView;
+	private ViewAgents observerView;
 	
-	public TurtleController(){
+	public TurtleTracker(ViewPreferences prefView, ViewAgents obsView){
+		preferencesView = prefView;
+		observerView = obsView;
 		agentMap = new HashMap<String,Agent>();
 	}
 	@Override
@@ -31,27 +26,6 @@ public class TurtleController implements IAgentTracker{
 		return agentMap.size();
 	}
 
-	public void setView(ViewAgents obsView) { 
-		observerView = obsView;
-	}
-	
-	public void test() { 
-		addAgent("Melissa");
-		System.out.println(getCurrentAgentName());
-		addAgent("Bob");
-		setCurrentAgent("Bob");
-		System.out.println(getCurrentAgentName());
-		System.out.println(getAgentNames());
-		setCurrentAgentPenUp(true);
-		moveCurrentAgent(100, 100);
-		changeCurrentAgentOrientation(90);
-		setCurrentAgent("Melissa");
-		stampCurrentAgent();
-		moveCurrentAgent(150, 80);
-		//tTracker.setCurrentAgentVisible(false);
-		renameAgent("Melissa", "Colette");
-		System.out.println(getCurrentAgentName());
-	}
 
 	@Override
 	public List<Agent> getAgents() {
@@ -75,9 +49,11 @@ public class TurtleController implements IAgentTracker{
 	public void addAgent(String agentName) {
 		Turtle newTurtle = new Turtle(agentName, DEFAULT_XLOCATION, DEFAULT_YLOCATION,observerView);
 		agentMap.put(agentName, newTurtle);
+		preferencesView.updateAgentMap(agentMap);
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
+		
 
 	}
 
@@ -87,6 +63,8 @@ public class TurtleController implements IAgentTracker{
 		if(currentAgent.equals(agentName)){
 			currentAgent = null;
 		}
+		preferencesView.updateAgentMap(agentMap);
+
 		
 	}
 	public void renameAgent(String oldName, String newName){ //needs to throw an error
@@ -99,6 +77,9 @@ public class TurtleController implements IAgentTracker{
 		if(currentAgent.equals(oldName)){
 			currentAgent = newName;
 		}
+		preferencesView.updateCurrentAgentAndAgentMap(newName,agentMap);
+
+
 		
 	}
 	public String getCurrentAgent() { //needs to throw an error if null
@@ -119,9 +100,12 @@ public class TurtleController implements IAgentTracker{
 
 	@Override
 	public void setCurrentAgent(String agentName) {
+		preferencesView.updateCurrentAgent(agentName);
 		currentAgent = agentName;
 		
 	}
+
+
 
 
 
@@ -223,5 +207,5 @@ public class TurtleController implements IAgentTracker{
 
 	
 	
-	
+
 }
