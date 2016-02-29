@@ -38,7 +38,6 @@ public class ViewAgents extends View{
 		viewGroup.getChildren().add(vbox);
 		backgroundColor = DEFAULT_COLOR;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
-		drawer.drawLine(0, 0, 50, 50, 10, Color.BLACK);
 	}
 	public void setBackgroundColor(Color color){
 		vbox.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
