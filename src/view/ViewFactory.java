@@ -3,6 +3,7 @@ package view;
 import java.util.*;
 import controller.TurtleController;
 import controller.VariableController;
+import javafx.scene.paint.Color;
 import model.Interpreter;
 import model.VariableModel;
 
@@ -36,7 +37,6 @@ public class ViewFactory {
 			vc.setVariableView(variableView);
 			return variableView;
 		case "SavedMethod":
-
 			methodView = new MethodView(ID);
 			return methodView;
 		case "Agent":

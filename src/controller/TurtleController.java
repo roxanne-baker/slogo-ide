@@ -9,10 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javafx.scene.image.ImageView;
-import view.Agent;
-import view.IAgentTracker;
-import view.Turtle;
-import view.View;
 import view.ViewAgents;
 
 public class TurtleController implements IAgentTracker{
@@ -21,7 +17,7 @@ public class TurtleController implements IAgentTracker{
 	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
-	private View observerView;
+	private ViewAgents observerView;
 	
 	public TurtleController(){
 		agentMap = new HashMap<String,Agent>();
@@ -78,6 +74,7 @@ public class TurtleController implements IAgentTracker{
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
+		
 
 	}
 
@@ -120,10 +117,12 @@ public class TurtleController implements IAgentTracker{
 	@Override
 	public void setCurrentAgent(String agentName) {
 		currentAgent = agentName;
-		
 	}
 
-
+	@Override
+	public void moveCurrentAgent(double changeX, double changeY) {
+		agentMap.get(currentAgent).movePosition(changeX, changeY);	
+	}
 
 	@Override
 	public void setCurrentAgentImage(String imagePath) {
@@ -149,16 +148,10 @@ public class TurtleController implements IAgentTracker{
 		agentMap.get(currentAgent).setVisible(isVisible);
 	}
 
-
-
-
 	@Override
 	public void changeCurrentAgentOrientation(double changeDegrees) {
 		agentMap.get(currentAgent).changeOrientation(changeDegrees);
 	}
-
-
-
 
 	@Override
 	public double getCurrentAgentOrientation() {
@@ -201,11 +194,6 @@ public class TurtleController implements IAgentTracker{
 		return currentAgent;
 	}
 	@Override
-	public void moveCurrentAgent(double changeX, double changeY) {
-		agentMap.get(currentAgent).movePosition(changeX, changeY);
-		
-	}
-	@Override
 	public void setCurrentAgentColor(String color) {
 		// TODO Auto-generated method stub
 		
@@ -216,12 +204,4 @@ public class TurtleController implements IAgentTracker{
 		return null;
 	}
 
-
-
-
-
-
-	
-	
-	
 }
