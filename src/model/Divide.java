@@ -4,14 +4,16 @@ import java.util.List;
 
 public class Divide extends Command implements Executable {
 
+	
+	
 	public Divide() {
 		numParams = 2;
 	}
 	
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		double numerator = (double) params.get(0);
-		double denominator = (double) params.get(1);
+		double numerator = (Double) params.get(0);
+		double denominator = (Double) params.get(1);
 		return numerator / denominator;
 	}
 	
@@ -20,12 +22,11 @@ public class Divide extends Command implements Executable {
 			if (!(param instanceof Integer || param instanceof Double)) {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}	
-			else if ((int) param == 0) {
+			else if ((Integer) param == 0) {
 				return errors.getString("DivideByZero");
 			}
 		}
 		return null;
 	}
-	
 	
 }

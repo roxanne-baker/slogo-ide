@@ -52,7 +52,7 @@ public abstract class Agent extends Observable{
 		return agentYPosition.doubleValue();
 	}
 	
-	public void movePosition(int x, int y){
+	public void movePosition(double x, double y){
 		oldXPosition = agentXPosition;
 		oldYPosition = agentYPosition;
 		agentXPosition.setValue(agentXPosition.doubleValue() + x);
@@ -142,7 +142,7 @@ public abstract class Agent extends Observable{
 	}
 	
 	public String getName(){
-		return nameProperty.toString();
+		return nameProperty.getValue();
 	}
 
 	public void changeName(String newName) {
@@ -166,6 +166,14 @@ public abstract class Agent extends Observable{
 	public abstract String getResourceString();
 
 	public abstract List<String> getObserverProperties();
-
+	
+	public void setColor(String color) {
+		// TODO Auto-generated method stub
+		
+	}
+	public String getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }	

@@ -1,4 +1,5 @@
 package view;
+
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -47,6 +48,15 @@ public class ViewAgents extends View{
 		return backgroundColor;
 	}
 	
+	public void setUpColorPicker(){
+		ColorPicker colorPicker = new ColorPicker(backgroundColor);
+        colorPicker.setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                setBackgroundColor(colorPicker.getValue());      
+            }
+        });
+        vbox.getChildren().add(colorPicker);
+	}
 	@Override
 	public void update(Observable agent, Object obj) {
 		System.out.println(obj);
@@ -60,7 +70,7 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == myResources.getString("INITIAL") || obj == myResources.getString("IMAGEVIEW")){
+			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}
@@ -74,6 +84,7 @@ public class ViewAgents extends View{
 
 	@Override
 	public Group getView() {
+		setUpColorPicker();
 		return viewGroup;
 	}
 

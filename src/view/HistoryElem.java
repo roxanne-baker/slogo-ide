@@ -15,3 +15,4 @@ public class HistoryElem extends ClickableText {
 	}
 
 }
+

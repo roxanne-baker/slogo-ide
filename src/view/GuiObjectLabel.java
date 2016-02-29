@@ -1,4 +1,5 @@
 package view;
+
 import java.util.Observable;
 import javafx.scene.control.Label;
 
