@@ -10,7 +10,7 @@ public class NotEqual extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		if ((double) params.get(0) != (double) params.get(1)) {
+		if ((Double) params.get(0) != (Double) params.get(1)) {
 			return 1;
 		}
 		else {

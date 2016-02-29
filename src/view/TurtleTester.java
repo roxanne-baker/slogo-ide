@@ -2,14 +2,14 @@ package view;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import controller.TurtleController;
 
 public class TurtleTester extends Application{
-
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		ViewAgents agentView = new ViewAgents("TurtleView");
-		TurtleTracker tTracker = new TurtleTracker(agentView);
+		TurtleController tTracker = new TurtleController(agentView);
 		tTracker.addAgent("Melissa");
 		System.out.println(tTracker.getCurrentAgentName());
 		tTracker.addAgent("Bob");
@@ -36,7 +36,7 @@ public class TurtleTester extends Application{
 		stage.show();
 	}
 
-	private void printPosition(TurtleTracker tTracker) {
+	private void printPosition(TurtleController tTracker) {
 //		System.out.println(tTracker.getCurrentAgentXPosition());
 //		System.out.println(tTracker.getCurrentAgentYPosition());
 	}

@@ -9,7 +9,7 @@ public class ArcTangent extends Command implements Executable {
 	}
 	
 	public double execute(List<Object> params) {
-		double degrees = (double) params.get(0);
+		double degrees = (Double) params.get(0);
 		return Math.atan(degrees);
 	}
 	
@@ -19,12 +19,6 @@ public class ArcTangent extends Command implements Executable {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}			
 		}
-		return null;
-	}
-
-	@Override
-	public String checkNumParams(List<Object> params) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

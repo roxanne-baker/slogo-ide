@@ -1,20 +1,26 @@
+
 package model;
 
 import java.util.List;
-
 import controller.TurtleController;
-import view.Turtle;
 
 public class Forward extends Command implements Executable {
 
-	Turtle currentTurtle;
+	TurtleController turtleTracker;
 	public Forward(TurtleController turtleController) {
 		numParams = 1;
+		turtleTracker = turtleController;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		return (double) params.get(0);
+		double distance = (Double) params.get(0);
+		double orientation = turtleTracker.getCurrentAgentOrientation();
+		double changeX = distance*Math.sin(orientation);
+		double changeY = distance*Math.cos(orientation);
+		
+		turtleTracker.moveCurrentAgent(changeX, changeY);
+	
+		return distance;
 	}
 	
 	public String checkParamTypes(List<Object> params) {
@@ -25,7 +31,5 @@ public class Forward extends Command implements Executable {
 		else {
 			return String.format(errors.getString("WrongParamType"), param.toString());
 		}
-	}
-	
-	
+	}	
 }

@@ -1,4 +1,5 @@
 package view;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,10 +32,5 @@ public class Turtle extends Agent{
 	public List<String> getObserverProperties() {
 		return OBSERVER_LIST;
 	}
-
-
-
-
-
 
 }

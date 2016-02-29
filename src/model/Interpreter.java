@@ -12,6 +12,8 @@ public class Interpreter {
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
     private static Parser lang = new Parser();
+
+
 	private static TurtleController turtleController;
 	private static VariableController variableController;
 	
@@ -181,7 +183,8 @@ public class Interpreter {
 		commandsMap.put("Left", new Left(turtleController));
 		commandsMap.put("Right", new Right(turtleController));
 		commandsMap.put("SetHeading", new SetHeading(turtleController));
-		//set towards
+		commandsMap.put("SetTowards", new Towards(turtleController));
+		commandsMap.put("SetPosition", new SetXY(turtleController));
 		commandsMap.put("PenDown", new PenDown(turtleController));
 		commandsMap.put("PenUp", new PenUp(turtleController));
 		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
@@ -191,6 +194,9 @@ public class Interpreter {
 	private static void addTurtleQueries() {
 		commandsMap.put("XCoordinate", new XCor(turtleController));
 		commandsMap.put("YCoordinate", new YCor(turtleController));		
+		commandsMap.put("Heading", new Heading(turtleController));
+		commandsMap.put("IsPenDown", new PenDownQuery(turtleController));
+		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
 	}
 	
 	private static void addMathOps() {

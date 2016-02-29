@@ -6,12 +6,17 @@ import controller.TurtleController;
 
 public class SetHeading extends Command implements Executable {
 
+	TurtleController turtleTracker;
 	public SetHeading(TurtleController turtleController) {
+		turtleTracker = turtleController;
 		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
+		double orientationToSet = (double) params.get(0);
+		double currOrientation = turtleTracker.getCurrentAgentOrientation();
+		
+		turtleTracker.changeCurrentAgentOrientation(orientationToSet-currOrientation);
 		return (double) params.get(0);
 	}
 	
@@ -24,6 +29,4 @@ public class SetHeading extends Command implements Executable {
 			return String.format(errors.getString("WrongParamType"), param.toString());
 		}
 	}
-	
-	
 }

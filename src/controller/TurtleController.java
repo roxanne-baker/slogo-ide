@@ -1,5 +1,8 @@
 package controller;
-
+import view.IAgentTracker;
+import view.Agent;
+import view.View;
+import view.Turtle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
