@@ -1,6 +1,7 @@
 package view;
 import java.util.Observable;
 
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public class ClickableText extends Observable {
@@ -8,7 +9,6 @@ public class ClickableText extends Observable {
 	
 	public ClickableText(String text){
 		this.text = new Text(text);
-		this.text.setOnMouseClicked(e->onMouseClick());
 		this.text.getStyleClass().add("code");
 	}
 	
@@ -17,8 +17,20 @@ public class ClickableText extends Observable {
 		System.out.println("clicked");
 	}
 	
-	public Text getText(){
-		return text;
+	public String getString(){
+		return text.getText();
+	}
+	
+	public HBox getTextBox(){
+		HBox textBox = new HBox(text);
+		textBox.setOnMouseClicked(e->onMouseClick());
+		textBox.getStyleClass().add("textBox");
+		return textBox;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		return text.getText()==((ClickableText)o).getString();
 	}
 
 }
