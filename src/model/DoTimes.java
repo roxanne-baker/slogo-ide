@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class DoTimes extends Command implements Executable {
 		String varLimitExpr = (String) params.get(0);
 		int endVarNameIndex = varLimitExpr.indexOf(" ");
 		String varName = varLimitExpr.substring(0, endVarNameIndex);
-		String varLimitCommand = varLimitExpr.substring(endVarNameIndex+1);
+		//String varLimitCommand = varLimitExpr.substring(endVarNameIndex+1);
 		
 		double maxValue = 0;
 		//double maxValue = interpreter.run(varLimitCommand);

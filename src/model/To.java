@@ -14,11 +14,11 @@ public class To extends Command implements Executable {
 	}
 	
 	public double execute(List<Object> params) {
-		String methodName = (String) params.get(0);
-		String varNamesString = (String) params.get(1);
-		String commands = (String) params.get(2);
-		
-		String[] varNames = varNamesString.split(" ");
+//		String methodName = (String) params.get(0);
+//		String varNamesString = (String) params.get(1);
+//		String commands = (String) params.get(2);
+//		
+//		String[] varNames = varNamesString.split(" ");
 		
 		return 0;
 		

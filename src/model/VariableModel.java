@@ -1,7 +1,7 @@
 package model;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Observer;
+//import java.util.Observer;
 
 public class VariableModel extends Observable {
 	private HashMap<String,String> variableMap = new HashMap<String,String>();
@@ -14,5 +14,4 @@ public class VariableModel extends Observable {
 		variableMap.put(name,value);
 	}
 	
-
 }
