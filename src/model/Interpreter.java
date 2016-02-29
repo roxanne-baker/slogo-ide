@@ -12,25 +12,32 @@ public class Interpreter {
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
     private static Parser lang = new Parser();
-	TurtleController turtleController;
-	VariableController variableController;
+
+
+	private static TurtleController turtleController;
+	private static VariableController variableController;
 	
-	public Interpreter() {
-		initializeCommandsMap();
-		initializeLangs();
+	public Interpreter(TurtleController tc, VariableController vc) {
+		turtleController = tc; 
+		variableController = vc;
 	}
 	
-	private void initializeLangs() { 
+	public void changeLang() { 
+		
+	}
+	
+	private static void initializeLangs() { 
         lang.addPatterns("resources/languages/English");
         lang.addPatterns("resources/languages/Syntax");
 	}
 	
-	public void run(String userInput) { 
-		this.callBuildTree(userInput);
-
+	public static void run(String userInput) { 
+		initializeLangs();
+		initializeCommandsMap();
+		callBuildTree(userInput);
 	}
     
-    private void callBuildTree(String text) { 
+    private static void callBuildTree(String text) { 
     	Command c = commandsMap.get(parseText(takeFirst(text)));
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
@@ -39,23 +46,27 @@ public class Interpreter {
     	buildExprTree(cutFirst(text), commandStack);  
     	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
     	combThruTree(root, treeStack);
-    	fillCommandStackParams(treeStack);
+    	Object ans = fillCommandStackParams(treeStack);
+    	//System.out.println(ans);
     	// if repeat / control sequence 
     	// do something else 
     }
     
-    private void fillCommandStackParams(Stack<ParseNode> stack) { 
+    private static Object fillCommandStackParams(Stack<ParseNode> stack) { 
+		Object result = new Object();
     	while (!stack.isEmpty()) { 
+    		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
     		if (cur.allParamsHaveValue()) { 
-    			double result = cur.getCommand().execute(cur.extractParamsFromNode());
+    			result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
     		}
-        	System.out.println(cur.getValue());
     	}
+    	System.out.println(result);
+    	return result;
     }
     
-    private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
+    private static void combThruTree(ParseNode root, Stack<ParseNode> stack) {
     	if (!root.isCommand()) { 
     		return; 
     	}
@@ -79,6 +90,7 @@ public class Interpreter {
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
     			// throw error to console view
+    			callBuildTree(text);
     			System.out.println("Too many params");
     		}
     		return true; 
@@ -88,9 +100,16 @@ public class Interpreter {
     		System.out.println("Not enough params"); 
         	return true; 
     	} 
+    	else if (parsedFirst.equals("Variable")) { 
+    		try {
+    			Object val = variableController.getVariable(takeFirst(text).substring(1));
+    		} catch(Exception e) { 
+        		System.out.println(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
+        		return true;
+    		}
+    	}
     	else if (!parsedFirst.equals("Constant") && errorCommandName(parsedFirst)) { 
     		// throw error to console view
-    		System.out.println(String.format("%s is not a valid command", takeFirst(text)));
     		return true;
     	}
     	return false;
@@ -109,6 +128,14 @@ public class Interpreter {
     		}
     		buildExprTree(cutFirst(text), commandStack); 
     	} 
+    	else if (parsedFirst.equals("Variable")) { 
+        	ParseNode cur = new ParseNode(variableController.getVariable(first.substring(1)));
+        	mostRecentCommand.getParams().add(cur); 
+       		if (mostRecentCommand.paramsFilled()) { 
+       			commandStack.pop();
+       		}
+       		buildExprTree(cutFirst(text), commandStack); 
+   		} 
     	else { 
     		ParseNode cur = new ParseNode(commandsMap.get(parsedFirst));
     		mostRecentCommand.getParams().add(cur); 
@@ -140,7 +167,7 @@ public class Interpreter {
     	return lang.getSymbol(s);
     }
     
-    private void initializeCommandsMap() { 
+    private static void initializeCommandsMap() { 
 		commandsMap = new HashMap<String, Command>(); 
 		addTurtleCommands();
 		addTurtleQueries();
@@ -149,7 +176,7 @@ public class Interpreter {
 		commandsMap.put("MakeVariable", new MakeVar(variableController));
 	}
 	
-	private void addTurtleCommands() {
+	private static void addTurtleCommands() {
 		commandsMap.put("Forward", new Forward(turtleController));
 		commandsMap.put("Back", new Back(turtleController));
 		commandsMap.put("Left", new Left(turtleController));
@@ -163,7 +190,7 @@ public class Interpreter {
 		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
 	}
 	
-	private void addTurtleQueries() {
+	private static void addTurtleQueries() {
 		commandsMap.put("XCoordinate", new XCor(turtleController));
 		commandsMap.put("YCoordinate", new YCor(turtleController));		
 		commandsMap.put("Heading", new Heading(turtleController));
@@ -171,7 +198,7 @@ public class Interpreter {
 		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
 	}
 	
-	private void addMathOps() {
+	private static void addMathOps() {
 		commandsMap.put("Sum", new Sum());
 		commandsMap.put("Difference", new Difference());
 		commandsMap.put("Product", new Product());
@@ -188,7 +215,7 @@ public class Interpreter {
 		commandsMap.put("Pi", new Pi());
 	}
 	
-	private void addBooleanOps() {
+	private static void addBooleanOps() {
 		commandsMap.put("LessThan", new Less());
 		commandsMap.put("GreaterThan", new Greater());
 		commandsMap.put("Equal", new Equal());
@@ -201,13 +228,13 @@ public class Interpreter {
     }
     
     public static void main(String[] args) { 
-        String ui = "fd sum / 4 less? 2 4 3 ";
+        String ui = "fd sum / 4 less? 2 4 3";
         String ui3 = "* / 4 sin 30 18";
         String ui1 = "sin 30.0";
         String ui4 = "- 3 5";
         String userInput = "fd 50 rt 90 BACK :distance Left :angle";
-        String userInput2 = "fd + 10 div 6 2";
-        Interpreter it = new Interpreter(); 
-    	it.run(ui3);
+        String userInput2 = "fd 50 rt 90 BACK 40 Left :angle";
+        String userInput3 = "fd + 10 div 6 2";
+        run(userInput2);
     }
 }

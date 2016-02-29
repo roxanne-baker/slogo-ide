@@ -7,19 +7,17 @@ import controller.TurtleController;
 
 public class YCor extends Command implements Executable{
 
-	TurtleController turtleTracker;
+	TurtleController turtleController;
 	public YCor(TurtleController turtleController) {
-		turtleTracker = turtleController;
+		turtleController = turtleController;
 		numParams = 0;
 	}
 	
 	public double execute(List<Object> params) {
-		return turtleTracker.getCurrentAgentYPosition();
+		return turtleController.getCurrentAgentYPosition();
 	}
 	
 	public String checkParamTypes(List<Object> params) {
 		return null;
 	}
-	
-	
 }

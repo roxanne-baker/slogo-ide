@@ -20,13 +20,13 @@ public class Drawer {
 		
 
 	}
-	public void drawLine(double d,double e,double f, double g, double h, Color color){
+	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color){
 		Line line = new Line();
-		line.setStartX(d);
-		line.setStartY(e);
-		line.setEndX(f);
-		line.setEndY(g);
-		line.setStrokeWidth(h);
+		line.setStartX(oldX);
+		line.setStartY(oldY);
+		line.setEndX(newX);
+		line.setEndY(newY);
+		line.setStrokeWidth(thickness);
 		line.setStroke(color);
 		group.getChildren().add(line);
 	}
