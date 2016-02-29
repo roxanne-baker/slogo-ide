@@ -29,7 +29,7 @@ public class VariableController implements Observer {
 	}
 	
 	public Object getVariable(String name) { 
-		return model.getVariable(name);
+		return model.getVariable(name) == null? new Object(): model.getVariable(name);
 	}
 
 }
