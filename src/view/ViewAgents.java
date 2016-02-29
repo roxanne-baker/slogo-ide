@@ -38,6 +38,7 @@ public class ViewAgents extends View{
 		viewGroup.getChildren().add(vbox);
 		backgroundColor = DEFAULT_COLOR;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+		drawer.drawLine(0, 0, 50, 50, 10, Color.BLACK);
 	}
 	public void setBackgroundColor(Color color){
 		vbox.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -47,15 +48,6 @@ public class ViewAgents extends View{
 		return backgroundColor;
 	}
 	
-	public void setUpColorPicker(){
-		ColorPicker colorPicker = new ColorPicker((Color)new ColorMap().get(backgroundColor));
-        colorPicker.setOnAction(new EventHandler() {
-            public void handle(Event t) {
-                setBackgroundColor(colorPicker.getValue());      
-            }
-        });
-        vbox.getChildren().add(colorPicker);
-	}
 	@Override
 	public void update(Observable agent, Object obj) {
 		System.out.println(obj);
@@ -83,7 +75,6 @@ public class ViewAgents extends View{
 
 	@Override
 	public Group getView() {
-		setUpColorPicker();
 		return viewGroup;
 	}
 
