@@ -17,7 +17,7 @@ public class TurtleController implements IAgentTracker{
 	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
-	private View observerView;
+	private ViewAgents observerView;
 	
 	public TurtleController(){
 		agentMap = new HashMap<String,Agent>();
@@ -74,6 +74,7 @@ public class TurtleController implements IAgentTracker{
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
+		
 
 	}
 
