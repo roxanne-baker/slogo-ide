@@ -8,18 +8,21 @@ import java.util.HashMap;
 import java.util.List;
 
 import javafx.scene.image.ImageView;
-
-
+import view.Agent;
+import view.IAgentTracker;
+import view.Turtle;
+import view.View;
+import view.ViewAgents;
 
 public class TurtleController implements IAgentTracker{
+
 	private static final double DEFAULT_XLOCATION = 100;
 	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
 	private View observerView;
 	
-	public TurtleController(View obsView){
-		observerView = obsView;
+	public TurtleController(){
 		agentMap = new HashMap<String,Agent>();
 	}
 	@Override
@@ -27,6 +30,27 @@ public class TurtleController implements IAgentTracker{
 		return agentMap.size();
 	}
 
+	public void setView(ViewAgents obsView) { 
+		observerView = obsView;
+	}
+	
+	public void test() { 
+		addAgent("Melissa");
+		System.out.println(getCurrentAgentName());
+		addAgent("Bob");
+		setCurrentAgent("Bob");
+		System.out.println(getCurrentAgentName());
+		System.out.println(getAgentNames());
+		setCurrentAgentPenUp(true);
+		moveCurrentAgent(100, 100);
+		changeCurrentAgentOrientation(90);
+		setCurrentAgent("Melissa");
+		stampCurrentAgent();
+		moveCurrentAgent(150, 80);
+		//tTracker.setCurrentAgentVisible(false);
+		renameAgent("Melissa", "Colette");
+		System.out.println(getCurrentAgentName());
+	}
 
 	@Override
 	public List<Agent> getAgents() {
@@ -99,7 +123,7 @@ public class TurtleController implements IAgentTracker{
 	}
 
 	@Override
-	public void moveCurrentAgent(double changeX, double changeY) {
+	public void moveCurrentAgent(int changeX, int changeY) {
 		agentMap.get(currentAgent).movePosition(changeX, changeY);
 		
 	}
@@ -181,16 +205,6 @@ public class TurtleController implements IAgentTracker{
 	public String getCurrentAgentName() {
 		return currentAgent;
 	}
-	@Override
-	public void setCurrentAgentColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String getCurrentAgentColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 
@@ -199,5 +213,5 @@ public class TurtleController implements IAgentTracker{
 
 	
 	
-
+	
 }

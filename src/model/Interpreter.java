@@ -31,7 +31,7 @@ public class Interpreter {
         lang.addPatterns("resources/languages/Syntax");
 	}
 	
-	public static void run(String userInput) { 
+	public void run(String userInput) { 
 		initializeLangs();
 		initializeCommandsMap();
 		callBuildTree(userInput);
@@ -117,6 +117,7 @@ public class Interpreter {
     
     private static void buildExprTree(String text, Stack<ParseNode> commandStack) { 
     	if (stopBuild(text, commandStack)) return; 
+    	System.out.println(text);
     	String first = takeFirst(text); 
     	String parsedFirst = parseText(first);
     	ParseNode mostRecentCommand = commandStack.peek();
@@ -228,13 +229,13 @@ public class Interpreter {
     }
     
     public static void main(String[] args) { 
-        String ui = "fd sum / 4 less? 2 4 3";
-        String ui3 = "* / 4 sin 30 18";
-        String ui1 = "sin 30.0";
-        String ui4 = "- 3 5";
-        String userInput = "fd 50 rt 90 BACK :distance Left :angle";
-        String userInput2 = "fd 50 rt 90 BACK 40 Left :angle";
-        String userInput3 = "fd + 10 div 6 2";
-        run(userInput2);
+//        String ui = "fd sum / 4 less? 2 4 3";
+//        String ui3 = "* / 4 sin 30 18";
+//        String ui1 = "sin 30.0";
+//        String ui4 = "- 3 5";
+//        String userInput = "fd 50 rt 90 BACK :distance Left :angle";
+//        String userInput2 = "fd 50 rt 90 BACK 40 Left :angle";
+//        String userInput3 = "fd + 10 div 6 2";
+//        run(userInput2);
     }
 }

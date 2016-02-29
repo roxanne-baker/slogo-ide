@@ -59,6 +59,7 @@ class ParseNode {
 	}
 	
 	boolean paramsFilled() { 
+		System.out.println(params.size() + " " + c.getNumParams());
 		return params.size() == c.getNumParams();
 	}
 	
