@@ -2,12 +2,12 @@
 package model;
 
 import java.util.List;
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class HideTurtle extends Command implements Executable {
 
-	TurtleTracker turtleTracker;
-	public HideTurtle(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public HideTurtle(TurtleController turtleController) {
 		turtleTracker = turtleController;
 		numParams = 0;
 	}

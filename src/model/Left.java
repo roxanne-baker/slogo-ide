@@ -3,12 +3,12 @@ package model;
 
 import java.util.List;
 
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class Left extends Command implements Executable {
 
-	TurtleTracker turtleTracker;
-	public Left(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public Left(TurtleController turtleController) {
 		turtleTracker = turtleController;
 		numParams = 1;
 	}

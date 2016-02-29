@@ -2,12 +2,12 @@ package model;
 
 import java.util.List;
 
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class ShowTurtle extends Command implements Executable {
 
-	TurtleTracker turtleTracker;
-	public ShowTurtle(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public ShowTurtle(TurtleController turtleController) {
 		turtleTracker = turtleController;
 		numParams = 0;
 	}

@@ -2,12 +2,12 @@ package model;
 
 import java.util.List;
 
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class SetHeading extends Command implements Executable {
 
-	TurtleTracker turtleTracker;
-	public SetHeading(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public SetHeading(TurtleController turtleController) {
 		turtleTracker = turtleController;
 		numParams = 1;
 	}

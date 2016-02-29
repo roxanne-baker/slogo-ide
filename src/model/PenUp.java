@@ -2,12 +2,12 @@ package model;
 
 import java.util.List;
 
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class PenUp extends Command implements Executable {
 
-	TurtleTracker turtleController;
-	public PenUp(TurtleTracker turtleController) {
+	TurtleController turtleController;
+	public PenUp(TurtleController turtleController) {
 		this.turtleController = turtleController;
 		numParams = 1;
 	}

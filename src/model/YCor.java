@@ -3,12 +3,12 @@ package model;
 
 import java.util.List;
 
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class YCor extends Command implements Executable{
 
-	TurtleTracker turtleTracker;
-	public YCor(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public YCor(TurtleController turtleController) {
 		turtleTracker = turtleController;
 		numParams = 0;
 	}

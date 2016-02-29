@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import view.TurtleTracker;
+import controller.TurtleController;
 import controller.VariableController;
 
 public class Interpreter {
@@ -12,7 +12,7 @@ public class Interpreter {
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
     private static Parser lang = new Parser();
-	TurtleTracker turtleController;
+	TurtleController turtleController;
 	VariableController variableController;
 	
 	public Interpreter() {

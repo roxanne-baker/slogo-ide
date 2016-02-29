@@ -1,12 +1,12 @@
 package model;
 
 import java.util.List;
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class XCor extends Command implements Executable{
 
-	TurtleTracker turtleTracker;
-	public XCor(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public XCor(TurtleController turtleController) {
 		turtleTracker = turtleController;
 		numParams = 0;
 	}

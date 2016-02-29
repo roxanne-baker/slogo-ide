@@ -2,12 +2,12 @@
 package model;
 
 import java.util.List;
-import view.TurtleTracker;
+import controller.TurtleController;
 
 public class Forward extends Command implements Executable {
 
-	TurtleTracker turtleTracker;
-	public Forward(TurtleTracker turtleController) {
+	TurtleController turtleTracker;
+	public Forward(TurtleController turtleController) {
 		numParams = 1;
 		turtleTracker = turtleController;
 	}
