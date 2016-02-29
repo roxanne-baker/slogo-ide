@@ -10,3 +10,7 @@
 .text {
     	-fx-background-color: #F9F9F9;
 }
+
+.textBox {
+	-fx-background-color: #F0F0F0;
+}

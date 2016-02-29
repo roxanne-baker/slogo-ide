@@ -13,9 +13,6 @@ public class VariableView extends View{
 	
 	public VariableView(String id) {
 		super(id);
-//		this.width = width;
-//		this.height = height;
-//		savedVars.setPrefSize(width,height);
 	}
 	
 	
@@ -33,6 +30,7 @@ public class VariableView extends View{
 	@Override
 	public Group getView() {
 		Group group = new Group();
+		savedVars.setPrefSize(View.NARROW_WIDTH,View.SHORT_HEIGHT);
 		ScrollPane sp = new ScrollPane(savedVars);
 		group.getChildren().add(sp);
 		return group;
