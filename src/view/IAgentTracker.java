@@ -1,5 +1,4 @@
 package view;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.ImageView;
@@ -10,7 +9,7 @@ import javafx.scene.paint.Paint;
  * @author Melissa Zhang
  *
  */
-public interface IAgentTracker{
+public interface IAgentTracker {
 	int getNumAgents();
 	List<Agent> getAgents();
 	List<String> getAgentNames();

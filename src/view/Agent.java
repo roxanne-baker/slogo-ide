@@ -142,7 +142,7 @@ public abstract class Agent extends Observable{
 	}
 	
 	public String getName(){
-		return nameProperty.toString();
+		return nameProperty.getValue();
 	}
 
 	public void changeName(String newName) {
