@@ -21,7 +21,6 @@ public class MakeVar extends Command implements Executable {
 		double valueNum = (double) params.get(1);
 		String value = Double.toString(valueNum);
 		variableController.addVariable(name, value);
-
 		return valueNum;
 	}
 	

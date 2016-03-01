@@ -7,7 +7,7 @@ import java.util.Stack;
 import controller.TurtleController;
 import controller.VariableController;
 
-public class Interpreter {
+public class IntPar {
 
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
@@ -17,9 +17,9 @@ public class Interpreter {
 	private static TurtleController turtleController;
 	private static VariableController variableController;
 	
-	public Interpreter(TurtleController tc, VariableController vc) {
-		turtleController = tc; 
-		variableController = vc;
+	public IntPar() {
+//		turtleController = tc; 
+//		variableController = vc;
 	}
 	
 	public void changeLang() { 
@@ -117,7 +117,6 @@ public class Interpreter {
     
     private static void buildExprTree(String text, Stack<ParseNode> commandStack) { 
     	if (stopBuild(text, commandStack)) return; 
-    	System.out.println(text);
     	String first = takeFirst(text); 
     	String parsedFirst = parseText(first);
     	ParseNode mostRecentCommand = commandStack.peek();
@@ -230,11 +229,13 @@ public class Interpreter {
     
     public static void main(String[] args) { 
         String ui = "fd sum / 4 less? 2 4 3";
-        String ui3 = "* / 4 sin 30 18";
+        String ui3 = "* / 4 sin 30 18 + 3 5";
         String ui1 = "sin 30.0";
         String ui4 = "- 3 5";
         String userInput = "fd 50 rt 90 BACK :distance Left :angle";
         String userInput2 = "fd 50 rt 90 BACK 40 Left :angle";
         String userInput3 = "fd + 10 div 6 2";
+        IntPar ip = new IntPar(); 
+        ip.run(ui3);
     }
 }
