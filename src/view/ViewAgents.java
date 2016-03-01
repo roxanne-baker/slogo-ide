@@ -34,9 +34,11 @@ public class ViewAgents extends View{
 		super(id);
 		agentGroup = new Group();
 		drawer = new Drawer(agentGroup);
+
 		pane = new Pane();
 		pane.setPrefSize(WIDE_WIDTH, TALL_HEIGHT);
 		pane.getChildren().add(agentGroup);
+
 		viewGroup = new Group();
 		viewGroup.getChildren().add(pane);
 		backgroundColor = DEFAULT_COLOR;
