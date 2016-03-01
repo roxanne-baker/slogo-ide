@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import controller.Controller;
+
 import controller.TurtleController;
 import controller.VariableController;
 
@@ -17,9 +19,9 @@ public class Interpreter {
 	private static TurtleController turtleController;
 	private static VariableController variableController;
 	
-	public Interpreter(TurtleController tc, VariableController vc) {
-		turtleController = tc; 
-		variableController = vc;
+	public Interpreter(HashMap<String,Controller> controllers) {
+		turtleController = (TurtleController)controllers.get("Agents"); 
+		variableController = (VariableController)controllers.get("Variables");
 	}
 	
 	public void changeLang() { 
@@ -102,7 +104,7 @@ public class Interpreter {
     	} 
     	else if (parsedFirst.equals("Variable")) { 
     		try {
-    			Object val = variableController.getVariable(takeFirst(text).substring(1));
+    			Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
         		System.out.println(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
