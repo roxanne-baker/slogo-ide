@@ -4,8 +4,44 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import commands.XCor;
+import commands.YCor;
 import controller.TurtleController;
 import controller.VariableController;
+import commands.ArcTangent;
+import commands.Back;
+import commands.Command;
+import commands.Cosine;
+import commands.Difference;
+import commands.Divide;
+import commands.Equal;
+import commands.Forward;
+import commands.Greater;
+import commands.Heading;
+import commands.HideTurtle;
+import commands.Left;
+import commands.Less;
+import commands.Logarithm;
+import commands.MakeVar;
+import commands.Minus;
+import commands.NotEqual;
+import commands.PenDown;
+import commands.PenDownQuery;
+import commands.PenUp;
+import commands.Pi;
+import commands.Power;
+import commands.Product;
+import commands.RandomCommand;
+import commands.Remainder;
+import commands.Right;
+import commands.SetHeading;
+import commands.SetXY;
+import commands.ShowTurtle;
+import commands.ShowingQuery;
+import commands.Sine;
+import commands.Sum;
+import commands.Tangent;
+import commands.Towards;
 
 public class IntPar {
 
@@ -89,9 +125,13 @@ public class IntPar {
     	String parsedFirst = parseText(takeFirst(text));
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
+    			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
+    				callBuildTree(text);
+    			}
+    			else { 
     			// throw error to console view
-    			callBuildTree(text);
-    			System.out.println("Too many params");
+    				System.out.println("Too many params");
+    			}
     		}
     		return true; 
     	}

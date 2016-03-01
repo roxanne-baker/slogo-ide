@@ -4,17 +4,53 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import commands.XCor;
+import commands.YCor;
 import controller.Controller;
 
 import controller.TurtleController;
 import controller.VariableController;
+import commands.ArcTangent;
+import commands.Back;
+import commands.Command;
+import commands.Cosine;
+import commands.Difference;
+import commands.Divide;
+import commands.Equal;
+import commands.Forward;
+import commands.Greater;
+import commands.Heading;
+import commands.HideTurtle;
+import commands.Left;
+import commands.Less;
+import commands.Logarithm;
+import commands.MakeVar;
+import commands.Minus;
+import commands.NotEqual;
+import commands.PenDown;
+import commands.PenDownQuery;
+import commands.PenUp;
+import commands.Pi;
+import commands.Power;
+import commands.Product;
+import commands.RandomCommand;
+import commands.Remainder;
+import commands.Right;
+import commands.SetHeading;
+import commands.SetXY;
+import commands.ShowTurtle;
+import commands.ShowingQuery;
+import commands.Sine;
+import commands.Sum;
+import commands.Tangent;
+import commands.Towards;
 
 public class Interpreter {
 
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
     private static Parser lang = new Parser();
-
+    private final String resourcesPath = "resources/languages/";
 
 	private static TurtleController turtleController;
 	private static VariableController variableController;
@@ -24,8 +60,8 @@ public class Interpreter {
 		variableController = (VariableController)controllers.get("Variables");
 	}
 	
-	public void changeLang() { 
-		
+	public void addLang(String language) { 
+		lang.addPatterns(resourcesPath + language.trim());
 	}
 	
 	private static void initializeLangs() { 
@@ -91,9 +127,13 @@ public class Interpreter {
     	String parsedFirst = parseText(takeFirst(text));
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
+    			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
+    				callBuildTree(text);
+    			}
+    			else { 
     			// throw error to console view
-    			callBuildTree(text);
-    			System.out.println("Too many params");
+    				System.out.println("Too many params");
+    			}
     		}
     		return true; 
     	}
@@ -119,7 +159,6 @@ public class Interpreter {
     
     private static void buildExprTree(String text, Stack<ParseNode> commandStack) { 
     	if (stopBuild(text, commandStack)) return; 
-    	System.out.println(text);
     	String first = takeFirst(text); 
     	String parsedFirst = parseText(first);
     	ParseNode mostRecentCommand = commandStack.peek();
