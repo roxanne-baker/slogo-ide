@@ -6,8 +6,6 @@ import java.util.Stack;
 
 import commands.XCor;
 import commands.YCor;
-import controller.Controller;
-
 import controller.TurtleController;
 import controller.VariableController;
 import commands.ArcTangent;
@@ -45,23 +43,23 @@ import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
 
-public class Interpreter {
+public class IntPar {
 
 	protected static Map<String, Command> commandsMap; 
 	private static final String WHITESPACE = "\\p{Space}";
     private static Parser lang = new Parser();
-    private final String resourcesPath = "resources/languages/";
+
 
 	private static TurtleController turtleController;
 	private static VariableController variableController;
 	
-	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController)controllers.get("Agents"); 
-		variableController = (VariableController)controllers.get("Variables");
+	public IntPar() {
+//		turtleController = tc; 
+//		variableController = vc;
 	}
 	
-	public void addLang(String language) { 
-		lang.addPatterns(resourcesPath + language.trim());
+	public void changeLang() { 
+		
 	}
 	
 	private static void initializeLangs() { 
@@ -144,7 +142,7 @@ public class Interpreter {
     	} 
     	else if (parsedFirst.equals("Variable")) { 
     		try {
-    			Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
+    			Object val = variableController.getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
         		System.out.println(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
@@ -271,11 +269,13 @@ public class Interpreter {
     
     public static void main(String[] args) { 
         String ui = "fd sum / 4 less? 2 4 3";
-        String ui3 = "* / 4 sin 30 18";
+        String ui3 = "* / 4 sin 30 18 + 3 5";
         String ui1 = "sin 30.0";
         String ui4 = "- 3 5";
         String userInput = "fd 50 rt 90 BACK :distance Left :angle";
         String userInput2 = "fd 50 rt 90 BACK 40 Left :angle";
         String userInput3 = "fd + 10 div 6 2";
+        IntPar ip = new IntPar(); 
+        ip.run(ui3);
     }
 }

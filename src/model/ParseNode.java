@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.Command;
+
 class ParseNode { 
 	private Command c; 
 	private List<ParseNode> params; 
@@ -59,7 +61,6 @@ class ParseNode {
 	}
 	
 	boolean paramsFilled() { 
-		System.out.println(params.size() + " " + c.getNumParams());
 		return params.size() == c.getNumParams();
 	}
 	
