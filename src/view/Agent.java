@@ -19,6 +19,7 @@ public abstract class Agent extends Observable{
 	private boolean agentPenUp;
 	private Color penColor;
 	private ImageView agentImageView;
+	private ImageView oldImageView;
 	private DoubleProperty orientation; //degrees going clockwise
 	private StringProperty agentImagePath;
 	private DoubleProperty oldYPosition;
@@ -41,6 +42,8 @@ public abstract class Agent extends Observable{
 		sizeProperty = new SimpleDoubleProperty(50);
 		isVisible = true;
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
+		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
+		oldImageView = agentImageView;
 		nameProperty = new SimpleStringProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 
@@ -94,10 +97,11 @@ public abstract class Agent extends Observable{
 		return agentImagePath;
 	}
 	public String getImagePath(){;
-		return agentImagePath.toString();
+		return agentImagePath.getValue();
 	}
 	
 	public void setImagePath(String imagePath){
+		oldImageView = agentImageView;
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
 		agentImagePath.setValue(imagePath);
 		setChanged();
@@ -105,6 +109,7 @@ public abstract class Agent extends Observable{
 
 	}
 	public ImageView getImageView(){
+		
 		return agentImageView;
 	}
 	public DoubleProperty getOrientationProperty(){
@@ -176,6 +181,9 @@ public abstract class Agent extends Observable{
 	public String getColor() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public ImageView getOldImageView() {
+		return oldImageView;
 	}
 	
 }	
