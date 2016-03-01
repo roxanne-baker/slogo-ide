@@ -1,4 +1,4 @@
-package view;
+package factory;
 
 import java.util.*;
 import controller.TurtleController;
@@ -6,6 +6,13 @@ import controller.VariableController;
 import javafx.scene.paint.Color;
 import model.Interpreter;
 import model.VariableModel;
+import view.ConsoleView;
+import view.HistoryView;
+import view.MethodView;
+import view.VariableView;
+import view.View;
+import view.ViewAgents;
+import view.ViewPreferences;
 
 public class ViewFactory {
 //	private static HashMap<String,View> allViews = new HashMap<String,View>();
@@ -16,36 +23,26 @@ public class ViewFactory {
 	private ViewAgents agentsView; 
 	private ViewPreferences preferencesView;
 	
-	// 
-	TurtleController tc = new TurtleController(preferencesView,agentsView); 
-	VariableModel vm = new VariableModel();
-	//VariableView varView = new VariableView("0");
-	VariableController vc = new VariableController(vm);
-	Interpreter ip = new Interpreter(tc, vc);
-	
 	public View createView(String ID){
 		switch(ID){
 		case "Console":
 			consoleView = new ConsoleView(ID,historyView);
-			consoleView.setInterpreter(ip);
 			return consoleView;
 		case "History":
 			historyView = new HistoryView(ID);
 			return historyView;
-		case "SavedVar":
+		case "Variables":
 			variableView = new VariableView(ID);
-			vc.setVariableView(variableView);
 			return variableView;
-		case "SavedMethod":
+		case "Methods":
 			methodView = new MethodView(ID);
 			return methodView;
 		case "Agent":
 			agentsView = new ViewAgents(ID);
-			tc.addAgent("Melissa");
 			return agentsView;
 		case "Preferences":
 			preferencesView = new ViewPreferences(ID);
-
+			return preferencesView;
 		default:
 			return null;
 		}
