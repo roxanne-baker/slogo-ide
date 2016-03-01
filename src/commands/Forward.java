@@ -6,19 +6,19 @@ import controller.TurtleController;
 
 public class Forward extends Command implements Executable {
 
-	TurtleController turtleTracker;
+	private TurtleController turtleController;
 	public Forward(TurtleController turtleController) {
 		numParams = 1;
-		turtleTracker = turtleController;
+		this.turtleController = turtleController;
 	}
 	
 	public double execute(List<Object> params) {
 		double distance = (Double) params.get(0);
-		double orientation = turtleTracker.getCurrentAgentOrientation();
+		double orientation = turtleController.getCurrentAgentOrientation();
 		double changeX = distance*Math.sin(orientation);
 		double changeY = distance*Math.cos(orientation);
 		
-		turtleTracker.moveCurrentAgent(changeX, changeY);
+		turtleController.moveCurrentAgent(changeX, changeY);
 	
 		return distance;
 	}
