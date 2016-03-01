@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Observable;
 //import java.util.Observer;
 
-public class VariableModel extends Observable {
+public class VariableModel extends Model {
 	private HashMap<String,Object> variableMap = new HashMap<String,Object>();
 	
 	public VariableModel() {
