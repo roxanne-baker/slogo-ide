@@ -77,10 +77,6 @@ public class Interpreter extends Observable {
 		initializeCommandsMap();
 		callBuildTree(userInput);
 	}
-	
-	public void addOutsideObserver(Observer o) { 
-		addObserver(o);
-	}
     
     private void callBuildTree(String text) { 
     	String parsedFirst = parseText(takeFirst(text));

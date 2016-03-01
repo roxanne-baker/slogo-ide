@@ -37,7 +37,7 @@ public class HistoryView extends View implements Observer{
 	
 	public void setInterpreter(Interpreter ip) { 
 		interpreter = ip; 
-		ip.addOutsideObserver(this);
+		ip.addObserver(this);
 	}
 	
 	

@@ -1,8 +1,7 @@
 package controller;
 import view.VariableElem;
 import view.VariableView;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 import model.VariableModel;
 
@@ -18,13 +17,19 @@ public class VariableController extends Controller implements Observer {
 	
 	public void addVariable(String name, String value){
 		model.addVariable(name,value);
-		view.addVariableView(new VariableElem(name,value,this));
+		
+		HashMap<String,Object> varMap = model.getVariables();
+		ArrayList<VariableElem> varList = new ArrayList<VariableElem>();
+		for(String key: varMap.keySet()){
+			varList.add(new VariableElem(key,varMap.get(key).toString(),this));
+		}
+		view.update(varList);
 	}
 	
 	@Override
-	public void update(Observable savedObj, Object arg) {
+	public void update(Observable o, Object arg) {
 		if(arg=="FIELDCHANGED"){
-			addVariable(((VariableElem)savedObj).getName(),((VariableElem)savedObj).getValue());
+			addVariable(((VariableElem)o).getName(),((VariableElem)o).getValue());
 		}
 	}
 	
