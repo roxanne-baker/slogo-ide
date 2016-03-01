@@ -16,13 +16,9 @@ public class VariableController extends Controller implements Observer {
 		this.view = view;
 	}
 	
-	public void setVariableView(VariableView v) { 
-		view = v;
-	}
-	
 	public void addVariable(String name, String value){
 		model.addVariable(name,value);
-		view.addVariableView(name, value, new VariableElem(name,value,this));
+		view.addVariableView(new VariableElem(name,value,this));
 	}
 	
 	@Override
