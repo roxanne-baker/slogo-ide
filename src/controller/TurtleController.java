@@ -8,16 +8,11 @@ import view.IAgentTracker;
 import view.Turtle;
 import view.ViewAgents;
 import view.ViewPreferences;
-import javafx.beans.InvalidationListener;
 import javafx.scene.image.ImageView;
 
 
 
 public class TurtleController extends Controller implements IAgentTracker{
-	private static final double DEFAULT_XLOCATION = 100;
-	private static final double DEFAULT_YLOCATION = 100;
-	private double startX;
-	private double startY;
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
 	private ViewPreferences preferencesView;
@@ -26,7 +21,6 @@ public class TurtleController extends Controller implements IAgentTracker{
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
-	private int scale;
 	
 	public TurtleController(ViewPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
@@ -227,23 +221,6 @@ public class TurtleController extends Controller implements IAgentTracker{
 
 
 
-	public void test() { 
-		addAgent("Melissa");
-		System.out.println(getCurrentAgentName());
-		addAgent("Bob");
-		setCurrentAgent("Bob");
-		System.out.println(getCurrentAgentName());
-		System.out.println(getAgentNames());
-		setCurrentAgentPenUp(true);
-		moveCurrentAgent(100, 100);
-		changeCurrentAgentOrientation(90);
-		setCurrentAgent("Melissa");
-		stampCurrentAgent();
-		moveCurrentAgent(150, 80);
-		//tTracker.setCurrentAgentVisible(false);
-		renameAgent("Melissa", "Colette");
-		System.out.println(getCurrentAgentName());
-	}
 
 
 	
