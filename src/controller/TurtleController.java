@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 
 
 
-public class TurtleController implements IAgentTracker{
+public class TurtleController extends Controller implements IAgentTracker{
 	private static final double DEFAULT_XLOCATION = 100;
 	private static final double DEFAULT_YLOCATION = 100;	
 	private HashMap<String,Agent> agentMap;
@@ -25,6 +25,21 @@ public class TurtleController implements IAgentTracker{
 		preferencesView = prefView;
 		observerView = obsView;
 		agentMap = new HashMap<String,Agent>();
+		addAgent("Melissa");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		moveCurrentAgent(100, 100);
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+		//changeCurrentAgentOrientation(90);
 	}
 	@Override
 	public int getNumAgents() {
