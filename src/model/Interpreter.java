@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Stack;
 
 import commands.XCor;
@@ -21,6 +23,7 @@ import commands.Forward;
 import commands.Greater;
 import commands.Heading;
 import commands.HideTurtle;
+import commands.Home;
 import commands.Left;
 import commands.Less;
 import commands.Logarithm;
@@ -45,26 +48,26 @@ import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
 
-public class Interpreter {
+public class Interpreter extends Observable {
 
-	protected static Map<String, Command> commandsMap; 
-	private static final String WHITESPACE = "\\p{Space}";
-    private static Parser lang = new Parser();
+	protected Map<String, Command> commandsMap; 
+	private final String WHITESPACE = "\\p{Space}";
+    private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
-
-	private static TurtleController turtleController;
-	private static VariableController variableController;
+	private TurtleController turtleController;
+	private VariableController variableController;
+	private String errorMessage = new String();
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController)controllers.get("Agents"); 
-		variableController = (VariableController)controllers.get("Variables");
+		turtleController = (TurtleController) controllers.get("Agent"); 
+		variableController = (VariableController) controllers.get("Variables");
 	}
 	
 	public void addLang(String language) { 
 		lang.addPatterns(resourcesPath + language.trim());
 	}
 	
-	private static void initializeLangs() { 
+	private void initializeLangs() { 
         lang.addPatterns("resources/languages/English");
         lang.addPatterns("resources/languages/Syntax");
 	}
@@ -74,9 +77,18 @@ public class Interpreter {
 		initializeCommandsMap();
 		callBuildTree(userInput);
 	}
+	
+	public void addOutsideObserver(Observer o) { 
+		addObserver(o);
+	}
     
-    private static void callBuildTree(String text) { 
-    	Command c = commandsMap.get(parseText(takeFirst(text)));
+    private void callBuildTree(String text) { 
+    	String parsedFirst = parseText(takeFirst(text));
+    	if (errorCommandName(parsedFirst)) { 
+    		sendError(String.format("%s is not a valid command", takeFirst(text)));
+    		return;
+    	}
+    	Command c = commandsMap.get(parsedFirst);
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
@@ -90,7 +102,7 @@ public class Interpreter {
     	// do something else 
     }
     
-    private static Object fillCommandStackParams(Stack<ParseNode> stack) { 
+    private Object fillCommandStackParams(Stack<ParseNode> stack) { 
 		Object result = new Object();
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
@@ -104,13 +116,14 @@ public class Interpreter {
     	return result;
     }
     
-    private static void combThruTree(ParseNode root, Stack<ParseNode> stack) {
+    private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
     	if (!root.isCommand()) { 
     		return; 
     	}
     	stack.push(root);
     	if (root.allParamsHaveValue()) { 
-       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
+//       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
+// executes twice and executes from back command to front command
     	} else { 
        		for (ParseNode p: root.getParams()) { 
        			combThruTree(p, stack);
@@ -118,12 +131,12 @@ public class Interpreter {
     	}
     }
     
-    private static String takeFirst(String text) { 
+    private String takeFirst(String text) { 
     	String[] split = text.split(WHITESPACE);
     	return split[0];
     }
     
-    private static boolean stopBuild(String text, Stack<ParseNode> commandStack) { 
+    private boolean stopBuild(String text, Stack<ParseNode> commandStack) { 
     	String parsedFirst = parseText(takeFirst(text));
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
@@ -131,33 +144,61 @@ public class Interpreter {
     				callBuildTree(text);
     			}
     			else { 
-    			// throw error to console view
-    				System.out.println("Too many params");
+    				sendError("Too many params");
     			}
     		}
     		return true; 
     	}
     	else if (text.length() == 0 && !commandStack.isEmpty()) {
-    		// throw error to console view
-    		System.out.println("Not enough params"); 
+    		sendError("Not enough params"); 
         	return true; 
     	} 
     	else if (parsedFirst.equals("Variable")) { 
+    		if (commandStack.peek().getCommand().isNeedsVarName()) {
+    			return false;
+    		}
     		try {
     			Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
-        		System.out.println(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
+        		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
     		}
     	}
     	else if (!parsedFirst.equals("Constant") && errorCommandName(parsedFirst)) { 
-    		// throw error to console view
+    		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return true;
     	}
     	return false;
     }
     
-    private static void buildExprTree(String text, Stack<ParseNode> commandStack) { 
+//  private void buildExprTree(String text, Stack<ParseNode> commandStack) { 
+//	if (stopBuild(text, commandStack)) return; 
+//	String first = takeFirst(text); 
+//	String parsedFirst = parseText(first);
+//	ParseNode mostRecentCommand = commandStack.peek();
+//	ParseNode cur;
+//	if (parsedFirst.equals("Constant")) { 
+//		cur = new ParseNode(Double.parseDouble(first));
+//	} 
+//	else if (parsedFirst.equals("Variable")) { 
+//		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
+//			cur = new ParseNode(first);
+//		}
+//		else { 
+//			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));	
+//		}
+//	}
+//	else { 
+//		cur = new ParseNode(commandsMap.get(parsedFirst));
+//	} 
+//	mostRecentCommand.getParams().add(cur); 
+//	if (mostRecentCommand.paramsFilled()) { 
+//		commandStack.pop();
+//	}
+//	buildExprTree(cutFirst(text), commandStack); 
+//}
+    
+    private void buildExprTree(String text, Stack<ParseNode> commandStack) { 
     	if (stopBuild(text, commandStack)) return; 
     	String first = takeFirst(text); 
     	String parsedFirst = parseText(first);
@@ -171,7 +212,14 @@ public class Interpreter {
     		buildExprTree(cutFirst(text), commandStack); 
     	} 
     	else if (parsedFirst.equals("Variable")) { 
-        	ParseNode cur = new ParseNode(variableController.getVariable(first.substring(1)));
+    		ParseNode cur;
+    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
+    			cur = new ParseNode(first);
+    		}
+    		else { 
+//        		System.out.println(variableController.getVariable(first));
+    			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
+    		}
         	mostRecentCommand.getParams().add(cur); 
        		if (mostRecentCommand.paramsFilled()) { 
        			commandStack.pop();
@@ -189,11 +237,21 @@ public class Interpreter {
     	} 
     }
 	
-	private static boolean errorCommandName(String input) {
+	private boolean errorCommandName(String input) {
 		if (!commandsMap.containsKey(input)) { 
 			return true;
 		}
 		return false;  
+	}
+	
+	public String getErrorMessage() { 
+		return errorMessage;
+	}
+	
+	private void sendError(String message) { 
+		errorMessage = message;
+		setChanged();
+		notifyObservers("ERROR");
 	}
 
 //    private static String readFileToString (String filename) throws FileNotFoundException {
@@ -205,11 +263,11 @@ public class Interpreter {
 //        return result;
 //    }
     
-    private static String parseText(String s) {
+    private String parseText(String s) {
     	return lang.getSymbol(s);
     }
     
-    private static void initializeCommandsMap() { 
+    private void initializeCommandsMap() { 
 		commandsMap = new HashMap<String, Command>(); 
 		addTurtleCommands();
 		addTurtleQueries();
@@ -218,7 +276,7 @@ public class Interpreter {
 		commandsMap.put("MakeVariable", new MakeVar(variableController));
 	}
 	
-	private static void addTurtleCommands() {
+	private void addTurtleCommands() {
 		commandsMap.put("Forward", new Forward(turtleController));
 		commandsMap.put("Back", new Back(turtleController));
 		commandsMap.put("Left", new Left(turtleController));
@@ -230,9 +288,10 @@ public class Interpreter {
 		commandsMap.put("PenUp", new PenUp(turtleController));
 		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
 		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
+		commandsMap.put("Home", new Home(turtleController));
 	}
 	
-	private static void addTurtleQueries() {
+	private void addTurtleQueries() {
 		commandsMap.put("XCoordinate", new XCor(turtleController));
 		commandsMap.put("YCoordinate", new YCor(turtleController));		
 		commandsMap.put("Heading", new Heading(turtleController));
@@ -240,7 +299,7 @@ public class Interpreter {
 		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
 	}
 	
-	private static void addMathOps() {
+	private void addMathOps() {
 		commandsMap.put("Sum", new Sum());
 		commandsMap.put("Difference", new Difference());
 		commandsMap.put("Product", new Product());
@@ -257,25 +316,15 @@ public class Interpreter {
 		commandsMap.put("Pi", new Pi());
 	}
 	
-	private static void addBooleanOps() {
+	private void addBooleanOps() {
 		commandsMap.put("LessThan", new Less());
 		commandsMap.put("GreaterThan", new Greater());
 		commandsMap.put("Equal", new Equal());
 		commandsMap.put("NotEqual", new NotEqual());
 	}
     
-    private static String cutFirst(String text) { 
+    private String cutFirst(String text) { 
     	String first = text.split(WHITESPACE)[0];
     	return text.substring(first.length()).trim(); 
-    }
-    
-    public static void main(String[] args) { 
-        String ui = "fd sum / 4 less? 2 4 3";
-        String ui3 = "* / 4 sin 30 18";
-        String ui1 = "sin 30.0";
-        String ui4 = "- 3 5";
-        String userInput = "fd 50 rt 90 BACK :distance Left :angle";
-        String userInput2 = "fd 50 rt 90 BACK 40 Left :angle";
-        String userInput3 = "fd + 10 div 6 2";
     }
 }

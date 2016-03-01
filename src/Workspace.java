@@ -1,6 +1,7 @@
 import java.util.*;
 
 import controller.Controller;
+import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
@@ -10,6 +11,7 @@ import model.Interpreter;
 import model.Model;
 import view.View;
 import view.ConsoleView;
+import view.HistoryView;
 
 public class Workspace {
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
@@ -24,8 +26,10 @@ public class Workspace {
 		initModels();
 		initViews();
 		initControllers();
+		TurtleController tc = (TurtleController) controllerMap.get("Agent");
 		Interpreter ip = new Interpreter(controllerMap);
-		((ConsoleView)viewMap.get("Console")).setInterpreter(ip);
+		((ConsoleView) viewMap.get("Console")).setInterpreter(ip);
+		((HistoryView) viewMap.get("History")).setInterpreter(ip);
 		return new Scene(root);
 	}
 	
@@ -74,6 +78,10 @@ public class Workspace {
 			Controller controller = controllerFactory.createController(type);
 			controllerMap.put(type, controller);
 		}
+	}
+	
+	public Map<String, Controller> getControllerMap() { 
+		return controllerMap;
 	}
 
 

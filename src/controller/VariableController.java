@@ -1,8 +1,6 @@
 package controller;
 import view.VariableElem;
 import view.VariableView;
-
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 

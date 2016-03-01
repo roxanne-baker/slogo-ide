@@ -15,16 +15,27 @@ import javafx.scene.image.ImageView;
 
 public class TurtleController extends Controller implements IAgentTracker{
 	private static final double DEFAULT_XLOCATION = 100;
-	private static final double DEFAULT_YLOCATION = 100;	
+	private static final double DEFAULT_YLOCATION = 100;
+	private double startX;
+	private double startY;
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
 	private ViewPreferences preferencesView;
 	private ViewAgents observerView;
+	private double observerWidth;
+	private double observerHeight;
+	private double offsetX;
+	private double offsetY;
+	private int scale;
 	
 	public TurtleController(ViewPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
 		observerView = obsView;
 		agentMap = new HashMap<String,Agent>();
+		observerWidth = obsView.getWidth();
+		observerHeight = obsView.getHeight();
+		offsetX = observerWidth/2;
+		offsetY = observerHeight/2;
 		addAgent("Melissa");
 		try {
 			Thread.sleep(2000);
@@ -32,9 +43,6 @@ public class TurtleController extends Controller implements IAgentTracker{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-
-		moveCurrentAgent(200, 200);
-
 //		try {
 //			Thread.sleep(2000);
 //		} catch (InterruptedException e) {
@@ -42,12 +50,13 @@ public class TurtleController extends Controller implements IAgentTracker{
 //			e.printStackTrace();
 //		} 
 		//changeCurrentAgentOrientation(90);
+
 	}
+	
 	@Override
 	public int getNumAgents() {
-		return agentMap.size();
+		return agentMap.keySet().size();
 	}
-
 
 	@Override
 	public List<Agent> getAgents() {
@@ -69,14 +78,12 @@ public class TurtleController extends Controller implements IAgentTracker{
 
 	@Override
 	public void addAgent(String agentName) {
-		Turtle newTurtle = new Turtle(agentName, DEFAULT_XLOCATION, DEFAULT_YLOCATION,observerView);
+		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,observerView); //starts in middle of screen
 		agentMap.put(agentName, newTurtle);
 		preferencesView.updateAgentMap(agentMap);
-		if (getNumAgents()==1){
+		//if (getNumAgents()==1){
 			setCurrentAgent(agentName);
-		}
-		
-
+		//}
 	}
 
 	@Override
@@ -123,13 +130,8 @@ public class TurtleController extends Controller implements IAgentTracker{
 	@Override
 	public void setCurrentAgent(String agentName) {
 		preferencesView.updateCurrentAgent(agentName);
-		currentAgent = agentName;
-		
+		currentAgent = agentName;		
 	}
-
-
-
-
 
 	@Override
 	public void setCurrentAgentImage(String imagePath) {
@@ -155,16 +157,10 @@ public class TurtleController extends Controller implements IAgentTracker{
 		agentMap.get(currentAgent).setVisible(isVisible);
 	}
 
-
-
-
 	@Override
 	public void changeCurrentAgentOrientation(double changeDegrees) {
 		agentMap.get(currentAgent).changeOrientation(changeDegrees);
 	}
-
-
-
 
 	@Override
 	public double getCurrentAgentOrientation() {
@@ -177,11 +173,13 @@ public class TurtleController extends Controller implements IAgentTracker{
 		}
 		return true;
 	}
+	
 	@Override
 	public void stampCurrentAgent() {
 		agentMap.get(currentAgent).leaveStamp();
 		
 	}
+	
 	@Override
 	public void changeCurrentAgentSize(double size) {
 		agentMap.get(currentAgent).setSize(size);		
@@ -221,8 +219,6 @@ public class TurtleController extends Controller implements IAgentTracker{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	public void test() { 
 		addAgent("Melissa");
