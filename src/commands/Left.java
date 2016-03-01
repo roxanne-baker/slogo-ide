@@ -15,8 +15,8 @@ public class Left extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		double changeDegrees = (Double) params.get(0) % 360;
-		turtleTracker.changeCurrentAgentOrientation(changeDegrees);
-	
+		turtleTracker.changeCurrentAgentOrientation(-changeDegrees);
+		System.out.println(turtleTracker.getCurrentAgentOrientation());
 		return changeDegrees;
 	}
 	
