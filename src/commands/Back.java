@@ -6,19 +6,19 @@ import controller.TurtleController;
 
 public class Back extends Command implements Executable {
 
-	TurtleController turtleTracker;
+	TurtleController turtleController;
 	public Back(TurtleController turtleController) {
 		numParams = 1;
-		turtleTracker = turtleController;
+		this.turtleController = turtleController;
 	}
 	
 	public double execute(List<Object> params) {
 		double distance = (Double) params.get(0);
-		double orientation = turtleTracker.getCurrentAgentOrientation();
-		double changeX = -distance*Math.sin(orientation);
-		double changeY = -distance*Math.cos(orientation);
+		double orientation = turtleController.getCurrentAgentOrientation();
+		double changeX = -distance*Math.sin(Math.toRadians(orientation));
+		double changeY = distance*Math.cos(Math.toRadians(orientation));
 		
-		turtleTracker.moveCurrentAgent(changeX, changeY);
+		turtleController.moveCurrentAgent(changeX, changeY);
 	
 		return distance;
 	}

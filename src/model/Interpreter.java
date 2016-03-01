@@ -122,7 +122,8 @@ public class Interpreter extends Observable {
     	}
     	stack.push(root);
     	if (root.allParamsHaveValue()) { 
-       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
+//       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
+// executes twice and executes from back command to front command
     	} else { 
        		for (ParseNode p: root.getParams()) { 
        			combThruTree(p, stack);
