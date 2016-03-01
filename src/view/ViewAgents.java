@@ -26,7 +26,7 @@ public class ViewAgents extends View{
 	private Drawer drawer;
 	private Group agentGroup;
 	private Color backgroundColor;
-	private VBox vbox;
+	private Pane pane;
 	private Group viewGroup;
 	private ResourceBundle myResources;
 	
@@ -34,17 +34,18 @@ public class ViewAgents extends View{
 		super(id);
 		agentGroup = new Group();
 		drawer = new Drawer(agentGroup);
-		vbox = new VBox();
-		Pane pane = new Pane();
+
+		pane = new Pane();
+		pane.setPrefSize(WIDE_WIDTH, TALL_HEIGHT);
 		pane.getChildren().add(agentGroup);
-		pane.setPrefSize(NARROW_WIDTH, TALL_HEIGHT);
+
 		viewGroup = new Group();
 		viewGroup.getChildren().add(pane);
 		backgroundColor = DEFAULT_COLOR;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 	}
 	public void setBackgroundColor(Color color){
-		vbox.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+		pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		backgroundColor = color;
 	}
 	public Color getBackgroundColor(){
@@ -58,7 +59,9 @@ public class ViewAgents extends View{
                 setBackgroundColor(colorPicker.getValue());      
             }
         });
-        vbox.getChildren().add(colorPicker);
+        colorPicker.setLayoutY(TALL_HEIGHT);
+        colorPicker.setLayoutX(200);
+        pane.getChildren().add(colorPicker);
 	}
 	@Override
 	public void update(Observable agent, Object obj) {
@@ -73,7 +76,7 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){
+			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){ //fix this resource stuff
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}

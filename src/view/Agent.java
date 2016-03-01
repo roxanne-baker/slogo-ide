@@ -53,12 +53,14 @@ public abstract class Agent extends Observable{
 	}
 	
 	public void movePosition(double x, double y){
-		oldXPosition = agentXPosition;
-		oldYPosition = agentYPosition;
+		oldXPosition.setValue(agentXPosition.getValue());
+		oldYPosition.setValue(agentYPosition.getValue());
 		agentXPosition.setValue(agentXPosition.doubleValue() + x);
 		agentYPosition.setValue(agentYPosition.doubleValue() + y);
+
 		setChanged();
-		notifyObservers("MOVE");
+		notifyObservers(myResources.getString("MOVE"));
+
 	}
 	public void leaveStamp(){
 		setChanged();

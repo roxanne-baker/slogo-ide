@@ -21,6 +21,11 @@ public class Drawer {
 
 	}
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color){
+		System.out.println(oldX);
+		System.out.println(oldY);
+		System.out.println(newX);
+		System.out.println(newY);
+
 		Line line = new Line();
 		line.setStartX(oldX);
 		line.setStartY(oldY);
