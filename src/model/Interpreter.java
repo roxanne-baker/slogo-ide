@@ -58,8 +58,8 @@ public class Interpreter extends Observable {
 	private String errorMessage = new String();
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController)controllers.get("Agents"); 
-		variableController = (VariableController)controllers.get("Variables");
+		turtleController = (TurtleController) controllers.get("Agent"); 
+		variableController = (VariableController) controllers.get("Variables");
 	}
 	
 	public void addLang(String language) { 
@@ -85,6 +85,7 @@ public class Interpreter extends Observable {
     	String parsedFirst = parseText(takeFirst(text));
     	if (errorCommandName(parsedFirst)) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
+    		return;
     	}
     	Command c = commandsMap.get(parsedFirst);
     	ParseNode root = new ParseNode(c);

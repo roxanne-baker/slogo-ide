@@ -1,6 +1,7 @@
 import java.util.*;
 
 import controller.Controller;
+import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ViewFactory;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ public class Workspace {
 	public Scene init(){
 		initViews();
 		initControllers();
+		TurtleController tc = (TurtleController) controllerMap.get("Agent");
 		Interpreter ip = new Interpreter(controllerMap);
 		((ConsoleView) viewMap.get("Console")).setInterpreter(ip);
 		((HistoryView) viewMap.get("History")).setInterpreter(ip);
@@ -63,6 +65,10 @@ public class Workspace {
 			Controller controller = controllerFactory.createController(type);
 			controllerMap.put(type, controller);
 		}
+	}
+	
+	public Map<String, Controller> getControllerMap() { 
+		return controllerMap;
 	}
 
 
