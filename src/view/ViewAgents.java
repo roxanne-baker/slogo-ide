@@ -12,7 +12,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
@@ -66,7 +65,7 @@ public class ViewAgents extends View{
 		System.out.println(obj);
 		if(((Agent) agent).isVisible()){
 			if (obj == myResources.getString("STAMP")){
-				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(), ((Agent) agent).getSize());
+				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (obj == myResources.getString("MOVE")){
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
@@ -74,9 +73,11 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){ //fix this resource stuff
+			}else if (obj == "INITIAL"){ //fix this resource stuff
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
+			}else if (obj == myResources.getString("IMAGEVIEW")){
+				drawer.setNewImage(((Agent) agent).getOldImageView(),((Agent) agent).getImageView(),((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			}
 		}else if(obj == myResources.getString("VISIBLE")){
 			drawer.removeImage(((Agent) agent).getImageView());
@@ -90,6 +91,12 @@ public class ViewAgents extends View{
 	public Group getView() {
 		setUpColorPicker();
 		return viewGroup;
+	}
+	public double getWidth() {
+		return WIDE_WIDTH;
+	}
+	public double getHeight() {
+		return TALL_HEIGHT;
 	}
 
 	

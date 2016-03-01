@@ -39,20 +39,27 @@ public class Drawer {
 	 * 
 	 * Need to make a copy of ImageView to stamp it otherwise run into duplicate children issue
 	 */
-	public void stampImage(ImageView img, double d, double e, double f){
-		img.setX(d);
-		img.setY(e);
+	public void stampImage(ImageView img, double xPosition, double yPosition){
+		img.setX(xPosition);
+		img.setY(yPosition);
 		stampList.add(img);
 		group.getChildren().add(img);
 	}
 	
-	public void moveImage(ImageView img, double d, double e){
+	public void moveImage(ImageView img, double xPosition, double yPosition){
 		group.getChildren().remove(img);
-		img.setX(d);
-		img.setY(e);
+		img.setX(xPosition);
+		img.setY(yPosition);
 		group.getChildren().add(img);
 	}
 	public void removeImage(ImageView agentView) {
 		group.getChildren().remove(agentView);
+	}
+	public void setNewImage(ImageView oldView,ImageView newView, double xPosition,double yPosition) {
+		group.getChildren().remove(oldView);
+		newView.setX(xPosition);
+		newView.setY(yPosition);
+		group.getChildren().add(newView);
+		
 	}
 }

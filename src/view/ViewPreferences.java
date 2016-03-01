@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
 public class ViewPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
-	private HBox preferencesBox;
+	private VBox preferencesBox;
 	private String currentAgent;
 	private static final int PADDING = 10;
 	public ViewPreferences(String id) {
@@ -50,7 +50,7 @@ public class ViewPreferences extends View{
 	}
 	private void updateView() {
 		viewGroup.getChildren().remove(preferencesBox);
-		preferencesBox = new HBox();
+		preferencesBox = new VBox();
 		preferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		ComboBox agentDropDown = new ComboBox();
 		for (String name: agentMap.keySet()){
@@ -123,7 +123,6 @@ public class ViewPreferences extends View{
 	}
 
 	public void updateCurrentAgentAndAgentMap(String newName,HashMap<String, Agent> newAgentMap) {
-		System.out.println("name change from "+ currentAgent+ " to "+ newName);
 		agentMap = newAgentMap;
 		currentAgent = newName;
 		updateView();
