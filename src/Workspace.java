@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import model.Interpreter;
 import view.View;
 import view.ConsoleView;
+import view.HistoryView;
 
 public class Workspace {
 	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods"};
@@ -20,7 +21,8 @@ public class Workspace {
 		initViews();
 		initControllers();
 		Interpreter ip = new Interpreter(controllerMap);
-		((ConsoleView)viewMap.get("Console")).setInterpreter(ip);
+		((ConsoleView) viewMap.get("Console")).setInterpreter(ip);
+		((HistoryView) viewMap.get("History")).setInterpreter(ip);
 		return new Scene(root);
 	}
 	
