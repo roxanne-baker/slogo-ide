@@ -1,18 +1,22 @@
 package controller;
 import view.VariableElem;
 import view.VariableView;
+
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import model.VariableModel;
 
 
-public class VariableController implements Observer {
-	private VariableModel model;
+public class VariableController extends Controller implements Observer {
+	//private VariableModel model;
+	private HashMap<String,Object> variableMap = new HashMap<String,Object>();//
 	private VariableView view;
 	
-	public VariableController(VariableModel model) {
-		this.model = model;
+	public VariableController(VariableView view) {
+		//this.model = model;
+		this.view = view;
 	}
 	
 	public void setVariableView(VariableView v) { 
@@ -20,7 +24,8 @@ public class VariableController implements Observer {
 	}
 	
 	public void addVariable(String name, String value){
-		model.addVariable(name,value);
+		//model.addVariable(name,value);
+		variableMap.put(name,value);//
 		view.addVariableView(name, value, new VariableElem(name,value,this));
 	}
 	
@@ -32,7 +37,8 @@ public class VariableController implements Observer {
 	}
 	
 	public Object getVariable(String name) { 
-		return model.getVariable(name) == null? new Object(): model.getVariable(name);
+		//return model.getVariable(name) == null? new Object(): model.getVariable(name);
+		return variableMap.get(name) == null? new Object(): variableMap.get(name);
 	}
 
 }

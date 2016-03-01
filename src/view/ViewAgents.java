@@ -11,6 +11,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -34,9 +35,11 @@ public class ViewAgents extends View{
 		agentGroup = new Group();
 		drawer = new Drawer(agentGroup);
 		vbox = new VBox();
-		vbox.getChildren().add(agentGroup);
+		Pane pane = new Pane();
+		pane.getChildren().add(agentGroup);
+		pane.setPrefSize(NARROW_WIDTH, TALL_HEIGHT);
 		viewGroup = new Group();
-		viewGroup.getChildren().add(vbox);
+		viewGroup.getChildren().add(pane);
 		backgroundColor = DEFAULT_COLOR;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 	}
