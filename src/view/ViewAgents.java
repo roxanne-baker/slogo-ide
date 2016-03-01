@@ -70,7 +70,7 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){
+			}else if (obj == "INITIAL" || obj == myResources.getString("IMAGEVIEW")){ //fix this resource stuff
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}

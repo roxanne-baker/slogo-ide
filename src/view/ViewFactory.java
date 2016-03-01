@@ -41,7 +41,7 @@ public class ViewFactory {
 			return methodView;
 		case "Agent":
 			agentsView = new ViewAgents(ID);
-			tc.setCurrentAgent("Melissa");
+			tc.addAgent("Melissa");
 			return agentsView;
 		case "Preferences":
 			preferencesView = new ViewPreferences(ID);
