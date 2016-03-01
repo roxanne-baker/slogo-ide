@@ -11,8 +11,6 @@ import view.ViewPreferences;
 import javafx.beans.InvalidationListener;
 import javafx.scene.image.ImageView;
 
-
-
 public class TurtleController extends Controller implements IAgentTracker{
 	private static final double DEFAULT_XLOCATION = 100;
 	private static final double DEFAULT_YLOCATION = 100;
