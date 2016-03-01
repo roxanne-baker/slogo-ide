@@ -32,7 +32,7 @@ public class TurtleController extends Controller implements IAgentTracker{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		moveCurrentAgent(100, 100);
+		moveCurrentAgent(0, 100);
 //		try {
 //			Thread.sleep(2000);
 //		} catch (InterruptedException e) {
