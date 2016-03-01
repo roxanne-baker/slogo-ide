@@ -18,7 +18,9 @@ public class VariableModel extends Model {
 		if (variableMap.containsKey(name)) { 
 			return variableMap.get(name);
 		}
-		else return null; 
+		else{
+			return null; 
+		}
 	}
 
 }

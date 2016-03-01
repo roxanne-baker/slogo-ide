@@ -11,7 +11,8 @@ public class HistoryElem extends ClickableText {
 
 	@Override
 	public void onMouseClick() {
-		System.out.println("will execute history");
+		setChanged();
+		notifyObservers("HISTORYCLICKED");
 	}
 
 }
