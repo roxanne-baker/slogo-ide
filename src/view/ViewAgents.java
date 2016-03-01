@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * This view displays all the agents and updates when it is called by the Agent Observables
+ * This view displays all the agents and updates when the update method is called by the Agent Observables.
  * @author Melissa Zhang
  *
  */
@@ -59,7 +59,6 @@ public class ViewAgents extends View{
             }
         });
         colorPicker.setLayoutY(TALL_HEIGHT);
-        colorPicker.setLayoutX(200);
         pane.getChildren().add(colorPicker);
 	}
 	@Override
@@ -75,7 +74,7 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == "INITIAL"){ //fix this resource stuff
+			}else if (obj == myResources.getString("INITIAL")){ //fix this resource stuff
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (obj == myResources.getString("IMAGEVIEW")){

@@ -29,12 +29,15 @@ public class HistoryView extends View implements Observer{
 			ClickableText errorText = new ClickableText(ip.getErrorMessage());
 			vb.getChildren().add(errorText.getTextBox());
 		}
+		if(arg=="HISTORYCLICKED"){
+			interpreter.run(((HistoryElem) o).getString());
+		}
 
 	}
 	
 	public void setInterpreter(Interpreter ip) { 
 		interpreter = ip; 
-		ip.addOutsideObserver(this);
+		ip.addObserver(this);
 	}
 	
 	

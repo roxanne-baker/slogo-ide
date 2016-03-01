@@ -1,7 +1,7 @@
 package model;
 import java.util.HashSet;
 
-public class MethodModel {
+public class MethodModel extends Model {
 	private HashSet<String> savedMethods = new HashSet<String>();
 	
 	public MethodModel() {

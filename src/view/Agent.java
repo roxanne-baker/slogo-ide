@@ -14,6 +14,10 @@ import javafx.scene.paint.Color;
 public abstract class Agent extends Observable{
 	private static final String DEFAULT_IMAGE_PATH = "dot.png";
 	private static final String UPDATE_PROPERTIES = "updateObserver";
+	private static final int DEFAULT_PEN_THICKNESS = 2;
+	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
+	private static final double DEFAULT_SIZE = 50;
+	private static final double DEFAULT_ORIENTATION = 0;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
 	private boolean agentPenUp;
@@ -36,10 +40,10 @@ public abstract class Agent extends Observable{
 		oldXPosition = new SimpleDoubleProperty(defaultXlocation);
 		oldYPosition = new SimpleDoubleProperty(defaultYlocation);
 		agentPenUp = false; //default value pen is down
-		penColor = Color.BLACK;
-		penThickness = 2;
-		orientation = new SimpleDoubleProperty(0); //vertical
-		sizeProperty = new SimpleDoubleProperty(50);
+		penColor = DEFAULT_PEN_COLOR;
+		penThickness = DEFAULT_PEN_THICKNESS;
+		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); //vertical
+		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = true;
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
@@ -174,14 +178,7 @@ public abstract class Agent extends Observable{
 
 	public abstract List<String> getObserverProperties();
 	
-	public void setColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
-	public String getColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	public ImageView getOldImageView() {
 		return oldImageView;
 	}
