@@ -27,3 +27,11 @@
 	-fx-background-color: #43609c;
 	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,2,2 );
 }
+.comboBox{
+	-fx-font-family: "Andale Mono";
+	-fx-padding: 6;
+   	-fx-font-size: 1em;
+	-fx-text-fill: #FFFFFF;
+	-fx-background-color: #43609c;
+	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,2,2 );
+}

@@ -17,14 +17,14 @@ public abstract class Agent extends Observable{
 	private static final int DEFAULT_PEN_THICKNESS = 2;
 	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	private static final double DEFAULT_SIZE = 50;
-	private static final double DEFAULT_ORIENTATION = 0;
+	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
 	private boolean agentPenUp;
 	private Color penColor;
 	private ImageView agentImageView;
 	private ImageView oldImageView;
-	private DoubleProperty orientation; //degrees going clockwise
+	private DoubleProperty orientation; 
 	private StringProperty agentImagePath;
 	private DoubleProperty oldYPosition;
 	private DoubleProperty oldXPosition;
@@ -42,7 +42,7 @@ public abstract class Agent extends Observable{
 		agentPenUp = false; //default value pen is down
 		penColor = DEFAULT_PEN_COLOR;
 		penThickness = DEFAULT_PEN_THICKNESS;
-		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); //vertical
+		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); 
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = true;
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
