@@ -19,7 +19,6 @@ public abstract class View extends Observable implements Observer{
 	public abstract Group getView();
 	
 	public void update(Observable o, Object arg){
-		//System.out.println("here");
 	}
 	public String getID(){
 		return viewID;
