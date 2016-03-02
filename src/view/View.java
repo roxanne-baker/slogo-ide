@@ -10,8 +10,7 @@ public abstract class View extends Observable implements Observer{
 	public static int SHORT_HEIGHT = 200;
 	
 	private String viewID;
-	private int viewHeight;
-	private int viewWidth;
+
 
 	public View(String id){
 		viewID = id;
