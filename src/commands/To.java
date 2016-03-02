@@ -2,13 +2,13 @@ package commands;
 
 import java.util.List;
 
-import controller.MethodController;
+import controller.MethodsController;
 
 public class To extends Command implements Executable {
 
-	MethodController methodController;
+	MethodsController methodController;
 	
-	public To(MethodController methodController) {
+	public To(MethodsController methodController) {
 		this.methodController = methodController;
 		numParams = 3;
 	}

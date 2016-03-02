@@ -3,9 +3,9 @@ package factory;
 import java.util.*;
 
 import controller.Controller;
-import controller.MethodController;
+import controller.MethodsController;
 import controller.TurtleController;
-import controller.VariableController;
+import controller.VariablesController;
 import javafx.scene.paint.Color;
 import model.Interpreter;
 import model.MethodModel;
@@ -13,11 +13,11 @@ import model.Model;
 import model.VariableModel;
 import view.ConsoleView;
 import view.HistoryView;
-import view.MethodView;
-import view.VariableView;
+import view.MethodsView;
+import view.VariablesView;
 import view.View;
 import view.ViewAgents;
-import view.ViewPreferences;
+import view.ViewAgentPreferences;
 
 public class ControllerFactory {
 	private static HashMap<String,Model> allModels;
@@ -33,11 +33,11 @@ public class ControllerFactory {
 		View view = allViews.get(ID);
 		switch(ID){
 		case "Variables":
-			return new VariableController((VariableModel)model,(VariableView)view);
+			return new VariablesController((VariableModel)model,(VariablesView)view);
 		case "Methods":
-			return new MethodController((MethodModel)model,(MethodView)view);
+			return new MethodsController((MethodModel)model,(MethodsView)view);
 		case "Agent":
-			return new TurtleController((ViewPreferences)allViews.get("Preferences"),(ViewAgents)view);
+			return new TurtleController((ViewAgentPreferences)allViews.get("Preferences"),(ViewAgents)view);
 		}
 		return null;
 	}

@@ -4,10 +4,10 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-public class VariableView extends View{
+public class VariablesView extends View{
 	private VBox savedVars = new VBox();
 	
-	public VariableView(String id) {
+	public VariablesView(String id) {
 		super(id);
 	}
 	
@@ -24,7 +24,7 @@ public class VariableView extends View{
 	@Override
 	public Group getView() {
 		Group group = new Group();
-		savedVars.setPrefSize(View.NARROW_WIDTH,View.SHORT_HEIGHT);
+		savedVars.setPrefSize(View.NARROW_WIDTH,View.NARROW_WIDTH);
 		ScrollPane sp = new ScrollPane(savedVars);
 		group.getChildren().add(sp);
 		return group;

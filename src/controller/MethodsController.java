@@ -2,14 +2,14 @@ package controller;
 import java.util.HashSet;
 
 import model.MethodModel;
-import view.ClickableText;
-import view.MethodView;
+import view.TextBox;
+import view.MethodsView;
 
-public class MethodController extends Controller{
+public class MethodsController extends Controller{
 	private MethodModel model;
-	private MethodView view;
+	private MethodsView view;
 	
-	public MethodController(MethodModel model,MethodView view) {
+	public MethodsController(MethodModel model,MethodsView view) {
 		this.model = model;
 		this.view = view;
 	}

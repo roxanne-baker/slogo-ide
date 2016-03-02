@@ -10,7 +10,7 @@ import commands.YCor;
 import controller.Controller;
 
 import controller.TurtleController;
-import controller.VariableController;
+import controller.VariablesController;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -48,6 +48,8 @@ import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
 
+import view.ErrorElem;
+
 public class Interpreter extends Observable {
 
 	protected Map<String, Command> commandsMap; 
@@ -55,16 +57,17 @@ public class Interpreter extends Observable {
     private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
 	private TurtleController turtleController;
-	private VariableController variableController;
+	private VariablesController variableController;
 	private String errorMessage = new String();
 	private double returnResult; 
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariableController) controllers.get("Variables");
+		variableController = (VariablesController) controllers.get("Variables");
 	}
 	
 	public void addLang(String language) { 
+		System.out.println(language);
 		lang.addPatterns(resourcesPath + language.trim());
 	}
 	
@@ -165,7 +168,7 @@ public class Interpreter extends Observable {
     		}
     		try {
     			@SuppressWarnings("unused")
-				Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
+				Object val = ((VariablesController) variableController).getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
         		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
