@@ -11,7 +11,7 @@
     -fx-background-color: #F9F9F9;
 }
 
-.textBox {
+.text-box {
 	-fx-background-color: #F0F0F0;
 }
 
@@ -38,4 +38,8 @@
 .label {
 	-fx-font-family: "Andale Mono";
    	-fx-font-size: 1em;
+}
+
+.view {
+	-fx-background-color: #FFFFFF;
 }

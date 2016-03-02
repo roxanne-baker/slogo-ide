@@ -92,9 +92,11 @@ public class ViewAgents extends View{
 	@Override
 	public Pane getView() {
 		setUpColorPicker();
-		Pane pane = new Pane(viewGroup);//
-		return pane;//
-		//return viewGroup;
+		Pane pane = new Pane(viewGroup);
+		viewGroup.setAutoSizeChildren(false);
+		pane.setMaxSize(WIDE_WIDTH, WIDE_WIDTH);
+		setStyleClass(pane);
+		return pane;
 	}
 	public double getWidth() {
 		return WIDE_WIDTH;

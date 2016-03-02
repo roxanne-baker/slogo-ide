@@ -39,12 +39,11 @@ public class ViewAgentPreferences extends View{
 		
 	}
 
-
-
 	@Override
 	public Pane getView() {
 		updateView();
 		Pane pane = new Pane(viewGroup);
+		setStyleClass(pane);
 		return pane;
 	}
 	private void updateView() {
@@ -74,7 +73,6 @@ public class ViewAgentPreferences extends View{
 			
 			addToAgentPrefBox(agentPrefBox, observerLabelList);
 			addToAgentPrefBox(preferencesBox,mutableGuiObjectList);
-			//addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
 			}
 
 

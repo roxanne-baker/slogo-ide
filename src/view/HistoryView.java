@@ -46,6 +46,7 @@ public class HistoryView extends View implements Observer{
 		ScrollPane sp = new ScrollPane(vb);
 		group.getChildren().add(sp);
 		Pane pane = new Pane(group);
+		setStyleClass(pane);
 		return pane;
 	}
 
