@@ -10,8 +10,6 @@ import view.ViewAgents;
 import view.ViewPreferences;
 import javafx.scene.image.ImageView;
 
-
-
 public class TurtleController extends Controller implements IAgentTracker{
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
