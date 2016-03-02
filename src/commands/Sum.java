@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Sum extends Command implements Executable {
+public class Sum extends OperationCommand implements Executable {
 
 	public Sum() {
 		numParams = 2;
@@ -27,15 +27,4 @@ public class Sum extends Command implements Executable {
 			return null;
 		}
 	}
-	
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
-	}
-	
-	
 }

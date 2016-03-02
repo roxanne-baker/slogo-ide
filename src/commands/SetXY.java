@@ -4,30 +4,20 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class SetXY extends Command implements Executable {
-	TurtleController turtleTracker;
+public class SetXY extends TurtleCommand implements Executable {
 	
 	public SetXY(TurtleController turtleController) {
-		turtleTracker = turtleController;
+		setTurtleController(turtleController);
 		numParams = 2;
 	}
 
 	public double execute(List<Object> params) {
-		double changeX = (double) params.get(0) - turtleTracker.getCurrentAgentXPosition();
-		double changeY = (double) params.get(1) - turtleTracker.getCurrentAgentYPosition();
+		double changeX = (double) params.get(0) - getTurtleController().getCurrentAgentXPosition();
+		double changeY = (double) params.get(1) - getTurtleController().getCurrentAgentYPosition();
 
-		turtleTracker.moveCurrentAgent(changeX, changeY);
+		getTurtleController().moveCurrentAgent(changeX, changeY);
 		double distanceMoved = Math.sqrt(Math.pow(changeX, 2) + Math.pow(changeY, 2));
 		
 		return distanceMoved;
-	}
-
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
 	}
 }

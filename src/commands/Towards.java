@@ -4,17 +4,16 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class Towards extends Command implements Executable {
-
-	TurtleController turtleTracker;
+public class Towards extends TurtleCommand implements Executable {
+	
 	public Towards(TurtleController turtleController) {
-		turtleTracker = turtleController;
+		setTurtleController(turtleController);
 		numParams = 2;
 	}
 	
 	public double execute(List<Object> params) {
-		double changeX = turtleTracker.getCurrentAgentXPosition() - ((double) params.get(0));
-		double changeY = turtleTracker.getCurrentAgentYPosition() - ((double) params.get(1));
+		double changeX = getTurtleController().getCurrentAgentXPosition() - ((double) params.get(0));
+		double changeY = getTurtleController().getCurrentAgentYPosition() - ((double) params.get(1));
 		
 		double degrees;
 		if (changeY == 0) {
@@ -24,20 +23,9 @@ public class Towards extends Command implements Executable {
 			degrees = Math.toDegrees(Math.atan(changeX/changeY))* (changeY / Math.abs(changeY));	
 		}
 		
-		double changeDegrees = degrees - (turtleTracker.getCurrentAgentOrientation() % 360);
-		turtleTracker.changeCurrentAgentOrientation(changeDegrees);
+		double changeDegrees = degrees - (getTurtleController().getCurrentAgentOrientation() % 360);
+		getTurtleController().changeCurrentAgentOrientation(changeDegrees);
 		
 		return (double) params.get(0);
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
-	}
-	
-	
+	}	
 }

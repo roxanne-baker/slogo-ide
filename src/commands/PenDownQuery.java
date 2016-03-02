@@ -4,25 +4,18 @@ package commands;
 import java.util.List;
 import controller.TurtleController;
 
-public class PenDownQuery extends Command implements Executable{
-
-	TurtleController turtleTracker;
+public class PenDownQuery extends TurtleQueryCommands implements Executable{
 	
 	public PenDownQuery(TurtleController turtleController) {
-		turtleTracker = turtleController;
-		numParams = 0;
+		super(turtleController);
 	}
 	
 	public double execute(List<Object> params) {
-		if (turtleTracker.isCurrentAgentPenUp()) {
+		if (getTurtleController().isCurrentAgentPenUp()) {
 			return 0;
 		}
 		else {
 			return 1;
 		}
 	}
-	
-	public String checkParamTypes(List<Object> params) {
-		return null;
-	}	
 }

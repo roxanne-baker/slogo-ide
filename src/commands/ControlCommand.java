@@ -1,32 +1,8 @@
-
 package commands;
 
 import java.util.List;
 
-import model.Interpreter;
-
-
-
-public class Repeat extends ControlCommand implements Executable {
-
-	Interpreter interpreter;
-	
-	public Repeat(Interpreter interpreter) {
-		this.interpreter = interpreter;
-		numParams = 2;
-	}
-	
-	public double execute(List<Object> params) {
-		double numRepeats = (double) params.get(0);
-		String commands = (String) params.get(1);
-		
-		for (int i=0; i<numRepeats; i++) {
-			interpreter.run(commands);		
-		}
-		
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
-	}	
+public abstract class ControlCommand extends Command {
 	
 	public String checkParamTypes(List<Object> params) {
 		Object param = params.get(0);
@@ -41,4 +17,5 @@ public class Repeat extends ControlCommand implements Executable {
 		}
 		return null;
 	}	
+	
 }

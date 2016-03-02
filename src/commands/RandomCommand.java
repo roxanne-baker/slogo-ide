@@ -11,7 +11,8 @@ public class RandomCommand extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		int max = (int) params.get(0);
+		Double maxDouble = (double) params.get(0);
+		int max = maxDouble.intValue();
 		Random getRandInt = new Random();
 		return getRandInt.nextInt(max);
 	}

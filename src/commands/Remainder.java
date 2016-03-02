@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Remainder extends Command implements Executable {
+public class Remainder extends OperationCommand implements Executable {
 
 	public Remainder() {
 		numParams = 2;
@@ -14,16 +14,5 @@ public class Remainder extends Command implements Executable {
 		int divisor = (int) params.get(1);
 
 		return (dividend % divisor);
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
-	}
-	
-	
+	}	
 }

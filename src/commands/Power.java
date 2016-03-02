@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Power extends Command implements Executable {
+public class Power extends OperationCommand implements Executable {
 
 	public Power() {
 		numParams = 2;
@@ -13,16 +13,5 @@ public class Power extends Command implements Executable {
 		double base = (double) params.get(0);
 		double exponent = (double) params.get(1);
 		return Math.pow(base, exponent);
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
-	}
-	
-	
+	}	
 }

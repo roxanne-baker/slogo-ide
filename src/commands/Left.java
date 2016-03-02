@@ -5,28 +5,17 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class Left extends Command implements Executable {
+public class Left extends TurtleCommand implements Executable {
 
-	TurtleController turtleTracker;
 	public Left(TurtleController turtleController) {
-		turtleTracker = turtleController;
+		setTurtleController(turtleController);
 		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
 		double changeDegrees = (Double) params.get(0) % 360;
-		turtleTracker.changeCurrentAgentOrientation(-changeDegrees);
-		System.out.println(turtleTracker.getCurrentAgentOrientation());
+		getTurtleController().changeCurrentAgentOrientation(-changeDegrees);
+		System.out.println(getTurtleController().getCurrentAgentOrientation());
 		return changeDegrees;
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		Object paramValue = params.get(0);
-		if (paramValue instanceof Integer || paramValue instanceof Double) {
-			return null;
-		}
-		else {
-			return String.format(errors.getString("WrongParamType"), paramValue.toString());
-		}
 	}
 }
