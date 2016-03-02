@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import controller.TurtleController;
-import controller.VariableController;
+import controller.VariablesController;
 
 public class Parser {
 

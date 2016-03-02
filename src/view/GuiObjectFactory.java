@@ -1,6 +1,9 @@
 
 package view;
 
+import java.io.File;
+import java.util.ResourceBundle;
+
 /**
  * This Factory class creates GuiObjects based on the type of gui object requested.
  * @author Melissa Zhang
@@ -8,9 +11,9 @@ package view;
  */
 
 
-
 public class GuiObjectFactory {
-	
+	private static final String WINDOW_RESOURCES = "windowProperties";
+	private static final String HELP_FILE = "help.html";
 	public GuiObjectFactory(){
 	}
 	public GuiObject createNewGuiObject(String type, Agent agent){
@@ -34,6 +37,10 @@ public class GuiObjectFactory {
 			case("IMAGEPATH"):{
 				return new GuiObjectInputBox(type, agent.getResourceString(), agent, (a,b)->((Agent)a).setImagePath(b));
 			}
+			case("HELP"):{
+				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, agent, HELP_FILE);
+			}
+
 
 
 			}

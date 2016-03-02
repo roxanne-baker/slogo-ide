@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
@@ -19,6 +20,9 @@ public class GuiObjectInputBox extends GuiObject{
 	private boolean boolInit;
 	private boolean isNewSelection;
 	private static final double PADDING = 10;
+	private static final String FILE_DIRECTORY = "images/";
+	private static final String FILE_TYPE = ".png";
+	private static final double MAXWIDTH = 150;
 	private BiConsumer<Observable,String> setValueFunction;
 	
 	public GuiObjectInputBox(String name, 
@@ -32,13 +36,16 @@ public class GuiObjectInputBox extends GuiObject{
 		ResourceBundle resources = getResourceString();
 		fileErrorLabel = new Label();
 		fileErrorLabel.setVisible(false);
-		
+		fileErrorLabel.setMaxWidth(MAXWIDTH);
+		fileErrorLabel.setWrapText(true);
 		userInputFileString = new TextField(((Agent) getObservable()).getImagePath());
+		userInputFileString.setMaxWidth(MAXWIDTH);
 		initializeButton = new Button(resources.getString(getObjectName()+"BUTTON"));
-		initializeButton.setOnAction(evt -> {if (checkIfValid(resources)){
+		initializeButton.setOnAction(evt -> {if (checkIfValid(resources,userInputFileString.getText())){
 			setIsNewSelection(true);
 			setValueFunction.accept(getObservable(),userInputFileString.getText());
 		}});
+		initializeButton.setMaxWidth(MAXWIDTH);
 		
 		VBox XMLControls = new VBox();
 		XMLControls.getChildren().addAll(userInputFileString, initializeButton,fileErrorLabel);
@@ -48,10 +55,23 @@ public class GuiObjectInputBox extends GuiObject{
 		return XMLControls;
 	}
 
-//todo
-	private boolean checkIfValid(ResourceBundle resources) {
-		initializeButton.getText();
-		return true;
+	private boolean checkIfValid(ResourceBundle resources, String filePath) {
+		File f = new File(FILE_DIRECTORY+filePath);
+		
+		if (f.isFile()){
+			fileErrorLabel.setText(resources.getString("ValidFileType"));
+			fileErrorLabel.setVisible(true);
+			return true;
+		}else{
+			if (filePath.length()< 4 || !filePath.substring(filePath.length()-4,filePath.length()).equals(FILE_TYPE)){
+				
+			fileErrorLabel.setText(resources.getString("NotValidFileType"));
+		}else{
+			fileErrorLabel.setText(resources.getString("FileNotFound"));
+		}
+		}
+		fileErrorLabel.setVisible(true);
+		return false;
 		
 	}
 

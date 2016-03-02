@@ -4,31 +4,25 @@ import java.util.HashMap;
 import java.util.List;
 
 import view.Agent;
-import view.IAgentTracker;
 import view.Turtle;
 import view.ViewAgents;
-import view.ViewPreferences;
-import javafx.beans.InvalidationListener;
+import view.ViewAgentPreferences;
 import javafx.scene.image.ImageView;
 
 
 
-public class TurtleController extends Controller implements IAgentTracker{
-	private static final double DEFAULT_XLOCATION = 100;
-	private static final double DEFAULT_YLOCATION = 100;
-	private double startX;
-	private double startY;
+public class TurtleController extends Controller implements IAgentController{
+
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
-	private ViewPreferences preferencesView;
+	private ViewAgentPreferences preferencesView;
 	private ViewAgents observerView;
 	private double observerWidth;
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
-	private int scale;
 	
-	public TurtleController(ViewPreferences prefView, ViewAgents obsView){
+	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
 		observerView = obsView;
 		agentMap = new HashMap<String,Agent>();
@@ -209,34 +203,7 @@ public class TurtleController extends Controller implements IAgentTracker{
 		agentMap.get(currentAgent).movePosition(changeX, changeY);
 		
 	}
-	@Override
-	public void setCurrentAgentColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String getCurrentAgentColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public void test() { 
-		addAgent("Melissa");
-		System.out.println(getCurrentAgentName());
-		addAgent("Bob");
-		setCurrentAgent("Bob");
-		System.out.println(getCurrentAgentName());
-		System.out.println(getAgentNames());
-		setCurrentAgentPenUp(true);
-		moveCurrentAgent(100, 100);
-		changeCurrentAgentOrientation(90);
-		setCurrentAgent("Melissa");
-		stampCurrentAgent();
-		moveCurrentAgent(150, 80);
-		//tTracker.setCurrentAgentVisible(false);
-		renameAgent("Melissa", "Colette");
-		System.out.println(getCurrentAgentName());
-	}
 
 
 	

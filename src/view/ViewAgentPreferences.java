@@ -7,13 +7,10 @@ import java.util.Observable;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -22,13 +19,13 @@ import javafx.scene.layout.VBox;
  * @author Melissa Zhang
  *
  */
-public class ViewPreferences extends View{
+public class ViewAgentPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
 	private VBox preferencesBox;
 	private String currentAgent;
 	private static final int PADDING = 10;
-	public ViewPreferences(String id) {
+	public ViewAgentPreferences(String id) {
 		super(id);
 		viewGroup = new Group();
 		agentMap = new HashMap<String,Agent>();
@@ -52,7 +49,7 @@ public class ViewPreferences extends View{
 		viewGroup.getChildren().remove(preferencesBox);
 		preferencesBox = new VBox();
 		preferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
-		ComboBox agentDropDown = new ComboBox();
+		ComboBox<String> agentDropDown = new ComboBox<String>();
 		for (String name: agentMap.keySet()){
 			agentDropDown.getItems().add(name);
 		}
@@ -64,11 +61,9 @@ public class ViewPreferences extends View{
             }
 		});
 		preferencesBox.getChildren().add(agentDropDown);
-//		for (Agent agent: agentList){
-			VBox agentPrefBox = new VBox();
-			List<Node> observerLabelList = new ArrayList<Node>();
-			if(currentAgent!=null){
-			System.out.println(currentAgent);
+		VBox agentPrefBox = new VBox();
+		List<Node> observerLabelList = new ArrayList<Node>();
+		if(currentAgent!=null){
 			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
 			
 			List<Node> mutableGuiObjectList = new ArrayList<Node>();
@@ -77,9 +72,7 @@ public class ViewPreferences extends View{
 			addToAgentPrefBox(agentPrefBox, observerLabelList);
 			addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
 			}
-			preferencesBox.getChildren().add(agentPrefBox);
-
-//		}
+		preferencesBox.getChildren().add(agentPrefBox);
 
 
 		viewGroup.getChildren().add(preferencesBox);
