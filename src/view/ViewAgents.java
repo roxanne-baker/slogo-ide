@@ -74,7 +74,6 @@ public class ViewAgents extends View{
 	}
 	@Override
 	public void update(Observable agent, Object obj) {
-		System.out.println(obj);
 		if(((Agent) agent).isVisible()){
 			if (obj == updateResources.getString("STAMP")){
 				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
