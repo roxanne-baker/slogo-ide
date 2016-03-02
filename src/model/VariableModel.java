@@ -7,24 +7,10 @@ import view.VariableElem;
 
 public class VariableModel extends Model {
 	private HashMap<String,Object> variableMap = new HashMap<String,Object>();
-	//private HashMap<String,VariableElem> variableSet = new HashMap<String,VariableElem>();
 	
 	public VariableModel() {
 		// TODO Auto-generated constructor stub
 	}
-	
-//	public void addVariable(String name, VariableElem v){
-//		variableSet.put(name,v);
-//	}
-	
-//	public HashMap<String,VariableElem>
-	
-//	public Object getVariable(String name){
-//		if(variableSet.containsKey(name)){
-//			return variableSet.get(name);
-//		}
-//		return null;
-//	}
 	
 	public HashMap<String,Object> getVariables(){
 		return variableMap;

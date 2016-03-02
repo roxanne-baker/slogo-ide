@@ -10,22 +10,21 @@ import java.util.Observable;
 public abstract class View extends Observable implements Observer{
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
 	public static int WIDE_WIDTH = 500;
-	public static int NARROW_WIDTH = 200;
-	private ResourceBundle updateResources;
-	private Pane pane;
+	public static int NARROW_WIDTH = 250;
+	private ResourceBundle myResources;
 	
 	private String viewID;
 
 
 	public View(String id){
 		viewID = id;
-		updateResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
+		myResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 	}
 	
 	public abstract Pane getView();
 	
 	public void setStyleClass(Pane pane){
-		pane.getStyleClass().add(updateResources.getString("VIEW"));
+		pane.getStyleClass().add(myResources.getString("VIEW"));
 	}
 	
 	public void update(Observable o, Object arg){
