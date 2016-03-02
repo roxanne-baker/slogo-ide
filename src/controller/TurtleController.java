@@ -4,25 +4,25 @@ import java.util.HashMap;
 import java.util.List;
 
 import view.Agent;
-import view.IAgentTracker;
 import view.Turtle;
 import view.ViewAgents;
-import view.ViewPreferences;
+import view.ViewAgentPreferences;
 import javafx.scene.image.ImageView;
 
 
 
-public class TurtleController extends Controller implements IAgentTracker{
+public class TurtleController extends Controller implements IAgentController{
+
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
-	private ViewPreferences preferencesView;
+	private ViewAgentPreferences preferencesView;
 	private ViewAgents observerView;
 	private double observerWidth;
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
 	
-	public TurtleController(ViewPreferences prefView, ViewAgents obsView){
+	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
 		observerView = obsView;
 		agentMap = new HashMap<String,Agent>();
@@ -202,16 +202,6 @@ public class TurtleController extends Controller implements IAgentTracker{
 	public void moveCurrentAgent(double changeX, double changeY) {
 		agentMap.get(currentAgent).movePosition(changeX, changeY);
 		
-	}
-	@Override
-	public void setCurrentAgentColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String getCurrentAgentColor() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

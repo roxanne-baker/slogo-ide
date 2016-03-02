@@ -12,10 +12,11 @@ import view.View;
 import view.ConsoleView;
 import view.HistoryView;
 import view.VariablesView;
+import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
-	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods"};
+	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods", "WindowPreferences"};
 	private String[] STANDARD_CONTROLLERS = {"Agent","Variables","Methods"};
 	private HashMap<String,Model> modelMap = new HashMap<String,Model>();
 	private HashMap<String,View> viewMap = new HashMap<String,View>();
@@ -29,6 +30,7 @@ public class Workspace implements Observer {
 		Interpreter ip = new Interpreter(controllerMap);
 		((ConsoleView) viewMap.get("Console")).setInterpreter(ip);
 		((HistoryView) viewMap.get("History")).setInterpreter(ip);
+		((ViewWindowPreferences) viewMap.get("WindowPreferences")).setInterpreter(ip);
 		return new Scene(root);
 	}
 	
@@ -72,6 +74,10 @@ public class Workspace implements Observer {
 			break;
 		case "Preferences":
 			coords = new int[]{1,1};
+			break;
+		case "WindowPreferences":
+			coords = new int[]{0,2};
+			break;
 		}
 		return coords;
 	}

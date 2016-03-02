@@ -17,7 +17,7 @@ import view.MethodsView;
 import view.VariablesView;
 import view.View;
 import view.ViewAgents;
-import view.ViewPreferences;
+import view.ViewAgentPreferences;
 
 public class ControllerFactory {
 	private static HashMap<String,Model> allModels;
@@ -37,7 +37,7 @@ public class ControllerFactory {
 		case "Methods":
 			return new MethodsController((MethodModel)model,(MethodsView)view);
 		case "Agent":
-			return new TurtleController((ViewPreferences)allViews.get("Preferences"),(ViewAgents)view);
+			return new TurtleController((ViewAgentPreferences)allViews.get("Preferences"),(ViewAgents)view);
 		}
 		return null;
 	}

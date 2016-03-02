@@ -1,9 +1,7 @@
 package view;
 
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Observable;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
