@@ -43,8 +43,8 @@ public class ViewWindowPreferences extends View{
 	public Pane getView() {
 		createView();
 		Pane pane = new Pane(viewGroup);
+		setStyleClass(pane);
 		return pane;
-		//return viewGroup;
 	}
 
 	private void createView() {

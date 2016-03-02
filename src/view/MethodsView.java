@@ -32,6 +32,7 @@ public class MethodsView extends View{
  		ScrollPane sp = new ScrollPane(methodViews);
  		group.getChildren().add(sp);
  		Pane pane = new Pane(group);
+		setStyleClass(pane);
  		return pane;
   	}
 	

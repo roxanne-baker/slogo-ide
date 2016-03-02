@@ -21,6 +21,10 @@ import view.VariablesView;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final int COORD0 = 0;
+	private static final int COORD1 = View.WIDE_WIDTH;
+	private static final int COORD2 = View.WIDE_WIDTH+View.NARROW_WIDTH;
+	
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
 	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods", "WindowPreferences"};
 	private String[] STANDARD_CONTROLLERS = {"Agent","Variables","Methods"};
@@ -32,7 +36,6 @@ public class Workspace implements Observer {
 	ScrollPane pane = new ScrollPane(group);
 	
 	public Scene init(){
-		//initGridConstraints();
 		initModels();
 		initViews();
 		initControllers();
@@ -42,16 +45,7 @@ public class Workspace implements Observer {
 		((ViewWindowPreferences) viewMap.get("WindowPreferences")).setInterpreter(ip);
 		return new Scene(pane);
 	}
-	
-	private void initGridConstraints(){
-		ColumnConstraints col = new ColumnConstraints(View.WIDE_WIDTH,View.WIDE_WIDTH,View.WIDE_WIDTH);
-		col.setHgrow(Priority.ALWAYS);
-		RowConstraints row = new RowConstraints(View.WIDE_WIDTH,View.WIDE_WIDTH,View.WIDE_WIDTH);
-		row.setVgrow(Priority.ALWAYS);
-		root.getColumnConstraints().add(col);
-		root.getRowConstraints().add(row);
-	}
-	
+
 	private void initModels(){
 		ModelFactory modelFactory = new ModelFactory();
 		for(String type: STANDARD_MODELS){
@@ -69,11 +63,9 @@ public class Workspace implements Observer {
 			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
-			//root.add(view.getView(), coords[0], coords[1]);
-			System.out.println(type);
-			Pane viewGroup = view.getView();//
-			viewGroup.setTranslateX(coords[1]);
-			viewGroup.setTranslateY(coords[0]);
+			Pane viewGroup = view.getView();
+			viewGroup.setTranslateX(coords[0]);
+			viewGroup.setTranslateY(coords[1]);
 			group.getChildren().add(viewGroup);
 		}
 	}
@@ -84,28 +76,22 @@ public class Workspace implements Observer {
 		case "Agent":
 			break;
 		case "Console":
-			//coords = new int[]{0,1};
-			coords = new int[]{View.WIDE_WIDTH,0};
+			coords = new int[]{COORD0,COORD1};
 			break;
 		case "History":
-			//coords = new int[]{1,0};
-			coords = new int[]{0,View.WIDE_WIDTH};
+			coords = new int[]{COORD1,COORD0};
 			break;
 		case "Methods":
-			//coords = new int[]{2,0};
-			coords = new int[]{0,View.WIDE_WIDTH+View.NARROW_WIDTH};
+			coords = new int[]{COORD2,COORD0};
 			break;
 		case "Variables":
-			//coords = new int[]{2,1};
-			coords = new int[]{View.WIDE_WIDTH,View.WIDE_WIDTH+View.NARROW_WIDTH};
+			coords = new int[]{COORD2,COORD1};
 			break;
 		case "Preferences":
-			//coords = new int[]{0,2};
-			coords = new int[]{View.WIDE_WIDTH+View.NARROW_WIDTH,0};
+			coords = new int[]{COORD0,COORD2};
 			break;
 		case "WindowPreferences":
-			//coords = new int[]{1,1};
-			coords = new int[]{View.WIDE_WIDTH,View.WIDE_WIDTH};
+			coords = new int[]{COORD1,COORD1};
 			break;
 		}
 		return coords;
@@ -132,8 +118,8 @@ public class Workspace implements Observer {
 		group.getChildren().remove(view.getView());
 		int[] coords = getViewCoords(view.getID());
 		Pane viewGroup = view.getView();
-		viewGroup.setTranslateX(coords[1]);
-		viewGroup.setTranslateY(coords[0]);
+		viewGroup.setTranslateX(coords[0]);
+		viewGroup.setTranslateY(coords[1]);
 		group.getChildren().add(viewGroup);
 		
 	}

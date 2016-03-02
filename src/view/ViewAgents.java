@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+
 import javafx.scene.control.Button;
+
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -25,16 +27,19 @@ public class ViewAgents extends View{
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final String WINDOW_PROPERTIES = "windowProperties";
 	private static final double MAX_PREFERENCE_HEIGHT = 40;
+
 	private Drawer drawer;
 	private Color backgroundColor;
 	private ResourceBundle updateResources;
 	private ResourceBundle windowResources;
 	private HBox agentViewPreferences;
 	private Pane agentPane;
+
 	
 	public ViewAgents(String id) {
 		super(id);
 		backgroundColor = DEFAULT_COLOR;
+
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		agentPane = new Pane();
@@ -46,6 +51,8 @@ public class ViewAgents extends View{
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		agentPane.getChildren().add(agentViewPreferences);
+
+
 
 	}
 	public void setBackgroundColor(Color color){
@@ -64,7 +71,6 @@ public class ViewAgents extends View{
             }
         });
 
-
         agentViewPreferences.getChildren().add(colorPicker);
 
 	}
@@ -82,7 +88,9 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
+
 			}else if (obj == updateResources.getString("INITIAL")){ 
+
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (obj == updateResources.getString("IMAGEVIEW")){
@@ -99,6 +107,7 @@ public class ViewAgents extends View{
 	@Override
 	public Pane getView() {
 		setUpColorPicker();
+
 		setUpClearButton();
 		return agentPane;
 

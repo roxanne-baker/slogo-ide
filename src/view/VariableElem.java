@@ -17,7 +17,7 @@ public class VariableElem extends Observable {
 
 	public VariableElem(String name, String value,Observer view) {
 		addObserver(view);
-		this.name = new Label(name);
+		this.name = new Label(name+" = ");
 		this.value = value;
 		textBox.setEditable(true);
 		textBox.setText(value);

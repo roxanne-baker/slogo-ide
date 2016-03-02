@@ -27,8 +27,9 @@ public class VariablesView extends View{
 		savedVars.setPrefSize(View.NARROW_WIDTH,View.NARROW_WIDTH);
 		ScrollPane sp = new ScrollPane(savedVars);
 		group.getChildren().add(sp);
-		return new Pane(group);
-		//return group;
+		Pane pane = new Pane(group);
+		setStyleClass(pane);
+		return pane;
 	}
 	
 
