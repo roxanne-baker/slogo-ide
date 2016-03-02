@@ -20,7 +20,6 @@ public class Repeat extends Command implements Executable {
 		double numRepeats = (double) params.get(0);
 		String commands = (String) params.get(1);
 		for (int i=0; i<numRepeats; i++) {
-			System.out.println(commands);
 			interpreter.run(commands);		
 		}
 		return interpreter.getReturnResult();

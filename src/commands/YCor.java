@@ -6,7 +6,7 @@ public class YCor extends Command implements Executable{
 
 	TurtleController turtleController;
 	public YCor(TurtleController turtleController) {
-		turtleController = turtleController;
+		this.turtleController = turtleController;
 		numParams = 0;
 	}
 	

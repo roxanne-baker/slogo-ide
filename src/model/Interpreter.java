@@ -8,7 +8,6 @@ import java.util.Stack;
 import commands.XCor;
 import commands.YCor;
 import controller.Controller;
-
 import controller.TurtleController;
 import controller.VariablesController;
 import commands.ArcTangent;
@@ -47,8 +46,6 @@ import commands.Sine;
 import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
-
-import view.ErrorElem;
 
 public class Interpreter extends Observable {
 
@@ -107,13 +104,13 @@ public class Interpreter extends Observable {
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
+    		//&& !cur.getCommand().getClass().getName().equals("commands.Repeat")
     		if (cur.allParamsHaveValue()) { 
     			result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
     		}
     	}
     	returnResult = (double) result;
-    	System.out.println(result);
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -202,8 +199,10 @@ public class Interpreter extends Observable {
     		attachNode(cur, commandStack);
    		} 
     	else if (parsedFirst.equals("ListStart")) { 
-    		cur = new ParseNode(stringInBracket(text));
+    		cur = new ParseNode(takeList(text));
     		attachNode(cur, commandStack);
+    		buildExprTree(cutList(text), commandStack, root);
+    		return;
     	}
     	else { 
     		cur = new ParseNode(commandsMap.get(parsedFirst));
@@ -213,20 +212,26 @@ public class Interpreter extends Observable {
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
     
-    private String stringInBracket(String s) { 
-    	String reversed = new StringBuilder(s).reverse().toString();
-    	//int endIndex = reversed.indexOf("]") + 1;
-    	int endIndex = s.indexOf("]") - 1;
-    	return s.substring(1, endIndex).trim();
-    	//return s.substring(1, s.length() - endIndex).trim();
-    }
-    
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {
     	ParseNode mostRecentCommand = commandStack.peek();
 		mostRecentCommand.getParams().add(cur); 
 		if (mostRecentCommand.paramsFilled()) { 
 			commandStack.pop();
 		}
+    }
+    
+    private String cutList(String s) { 
+    	String reversed = new StringBuilder(s).reverse().toString();
+    	int tempIndex = reversed.indexOf("]");
+    	int endIndex = s.length() - tempIndex - 1; 
+    	return s.substring(endIndex + 1).trim();
+    }
+    
+    private String takeList(String s) { 
+    	String reversed = new StringBuilder(s).reverse().toString();
+    	int tempIndex = reversed.indexOf("]");
+    	int endIndex = s.length() - tempIndex - 1; 
+    	return s.substring(1, endIndex).trim();
     }
     
 //    private void buildExprTree(String text, Stack<ParseNode> commandStack) { 

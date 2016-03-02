@@ -23,9 +23,7 @@ public class If extends Command implements Executable {
 		if (ifCondition != 0) {
 			interpreter.run(commands);
 		}
-		
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 
 	
