@@ -1,10 +1,12 @@
 package view;
 
 
-public class ErrorElem {
+public class ErrorElem extends TextBox {
 
-	public ErrorElem() {
-		// TODO Auto-generated constructor stub
+	public ErrorElem(String errorMessage) {
+		super(errorMessage);
+		addStyleClass("error");
 	}
+
 
 }

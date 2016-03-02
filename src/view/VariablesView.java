@@ -4,10 +4,10 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-public class VariableView extends View{
+public class VariablesView extends View{
 	private VBox savedVars = new VBox();
 	
-	public VariableView(String id) {
+	public VariablesView(String id) {
 		super(id);
 	}
 	
