@@ -132,19 +132,25 @@ public class Interpreter extends Observable {
     	return split[0];
     }
     
+    private void processTree(ParseNode root) { 
+    	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
+    	combThruTree(root, treeStack);
+    	fillCommandStackParams(treeStack);
+    }
+    
     private boolean stopBuild(String text, Stack<ParseNode> commandStack, ParseNode root) { 
     	String parsedFirst = parseText(takeFirst(text));
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
     			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
-    	        	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
-    	        	combThruTree(root, treeStack);
-    	        	fillCommandStackParams(treeStack);
+    				processTree(root);
     				callBuildTree(text);
     			}
     			else { 
     				sendError("Too many parameters!");
     			}
+    		} else { 
+				processTree(root);
     		}
     		return true; 
     	}
