@@ -11,7 +11,7 @@
     -fx-background-color: #F9F9F9;
 }
 
-.textBox {
+.text-box {
 	-fx-background-color: #F0F0F0;
 }
 
@@ -26,4 +26,25 @@
 	-fx-text-fill: #FFFFFF;
 	-fx-background-color: #43609c;
 	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,2,2 );
+}
+
+
+.combo-box {
+	-fx-font-family: "Andale Mono";
+   	-fx-font-size: 1em;
+	-fx-text-fill: #43609c;
+	-fx-background-color: #FFFFFF;
+}
+
+.label {
+	-fx-font-family: "Andale Mono";
+   	-fx-font-size: 1em;
+}
+
+.view {
+	-fx-background-color: #FFFFFF;
+	-fx-border-color: #43609c;
+	-fx-border-width: 2px;
+	-fx-border-style: solid;
+	-fx-padding: 10;
 }

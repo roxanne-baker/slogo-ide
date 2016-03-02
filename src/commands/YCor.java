@@ -2,19 +2,14 @@ package commands;
 import java.util.List;
 import controller.TurtleController;
 
-public class YCor extends Command implements Executable{
+public class YCor extends TurtleQueryCommands implements Executable{
 
 	TurtleController turtleController;
 	public YCor(TurtleController turtleController) {
-		this.turtleController = turtleController;
-		numParams = 0;
+		super(turtleController);
 	}
 	
 	public double execute(List<Object> params) {
 		return turtleController.getCurrentAgentYPosition();
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		return null;
 	}
 }

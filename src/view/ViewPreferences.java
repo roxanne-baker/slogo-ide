@@ -7,6 +7,8 @@ import java.util.Observable;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -20,15 +22,17 @@ import javafx.scene.layout.VBox;
  * @author Melissa Zhang
  *
  */
-public class ViewAgentPreferences extends View{
+public class ViewPreferences extends View{
 	private HashMap<String, Agent> agentMap;
-	private Group viewGroup;
-	private HBox preferencesBox;
+//	private Group viewGroup;
+	private Pane viewGroup;
+	private VBox preferencesBox;
 	private String currentAgent;
 	private static final int PADDING = 10;
-	public ViewAgentPreferences(String id) {
+	public ViewPreferences(String id) {
 		super(id);
-		viewGroup = new Group();
+//		viewGroup = new Group();
+		viewGroup = new Pane();
 		agentMap = new HashMap<String,Agent>();
 		currentAgent = null;
 	}
@@ -39,18 +43,22 @@ public class ViewAgentPreferences extends View{
 		
 	}
 
+
+
 	@Override
 	public Pane getView() {
-		updateView();
-		Pane pane = new Pane(viewGroup);
-		setStyleClass(pane);
-		return pane;
+	updateView();
+	return viewGroup;
 	}
+//	public Group getView() {
+//		updateView();
+//		return viewGroup;
+//	}
 	private void updateView() {
 		viewGroup.getChildren().remove(preferencesBox);
-		preferencesBox = new HBox();
+		preferencesBox = new VBox();
 		preferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
-		ComboBox<String> agentDropDown = new ComboBox<String>();
+		ComboBox agentDropDown = new ComboBox();
 		for (String name: agentMap.keySet()){
 			agentDropDown.getItems().add(name);
 		}
@@ -62,18 +70,22 @@ public class ViewAgentPreferences extends View{
             }
 		});
 		preferencesBox.getChildren().add(agentDropDown);
-		VBox agentPrefBox = new VBox();
-		List<Node> observerLabelList = new ArrayList<Node>();
-		preferencesBox.getChildren().add(agentPrefBox);
-		if(currentAgent!=null){
+//		for (Agent agent: agentList){
+			VBox agentPrefBox = new VBox();
+			List<Node> observerLabelList = new ArrayList<Node>();
+			if(currentAgent!=null){
+			System.out.println(currentAgent);
 			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
 			
 			List<Node> mutableGuiObjectList = new ArrayList<Node>();
 			populateMutableGuiObjectList(agentMap.get(currentAgent),mutableGuiObjectList);
 			
 			addToAgentPrefBox(agentPrefBox, observerLabelList);
-			addToAgentPrefBox(preferencesBox,mutableGuiObjectList);
+			addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
 			}
+			preferencesBox.getChildren().add(agentPrefBox);
+
+//		}
 
 
 		viewGroup.getChildren().add(preferencesBox);

@@ -5,20 +5,15 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class PenDown extends Command implements Executable {
+public class PenDown extends TurtleQueryCommands implements Executable {
 
-	TurtleController turtleController;
 	public PenDown(TurtleController turtleController) {
-		this.turtleController = turtleController;
-		numParams = 0;
+		super(turtleController);
 	}
 	
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
+		getTurtleController().setCurrentAgentPenUp(false);
 		return 1;
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		return null;
 	}
 }

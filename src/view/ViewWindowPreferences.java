@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 public class ViewWindowPreferences extends View{
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
@@ -39,9 +40,11 @@ public class ViewWindowPreferences extends View{
 	}
 
 	@Override
-	public Group getView() {
+	public Pane getView() {
 		createView();
-		return viewGroup;
+		Pane pane = new Pane(viewGroup);
+		setStyleClass(pane);
+		return pane;
 	}
 
 	private void createView() {

@@ -6,7 +6,7 @@ import model.Interpreter;
 
 
 
-public class DoTimes extends Command implements Executable {
+public class DoTimes extends ControlCommand implements Executable {
 
 	Interpreter interpreter;
 	
@@ -30,28 +30,16 @@ public class DoTimes extends Command implements Executable {
 			interpreter.run("MAKE "+varName+" "+i);
 			interpreter.run(loopCommands);
 		}
-
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
-
 	
-	@Override
 	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
-	
-	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			if (!(param instanceof String)) {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}
 		}
 		return null;
-	}	
+	}
+
 }

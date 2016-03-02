@@ -1,4 +1,3 @@
-
 package commands;
 
 import java.util.List;
@@ -7,7 +6,7 @@ import model.Interpreter;
 
 
 
-public class Repeat extends Command implements Executable {
+public class Repeat extends ControlCommand implements Executable {
 
 	Interpreter interpreter;
 	
@@ -19,22 +18,12 @@ public class Repeat extends Command implements Executable {
 	public double execute(List<Object> params) {
 		double numRepeats = (double) params.get(0);
 		String commands = (String) params.get(1);
+		
 		for (int i=0; i<numRepeats; i++) {
 			interpreter.run(commands);		
 		}
 		return interpreter.getReturnResult();
 	}	
-
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
 	
 	public String checkParamTypes(List<Object> params) {
 		Object param = params.get(0);

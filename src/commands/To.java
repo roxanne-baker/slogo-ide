@@ -1,51 +1,52 @@
 package commands;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import controller.MethodsController;
+import controller.VariablesController;
+import model.Interpreter;
 
 public class To extends Command implements Executable {
 
+	Interpreter interpreter;
+	VariablesController variablesController;
 	MethodsController methodController;
 	
-	public To(MethodsController methodController) {
+	public To(Interpreter interpreter, VariablesController variablesController, MethodsController methodController) {
 		this.methodController = methodController;
 		numParams = 3;
 	}
 	
 	public double execute(List<Object> params) {
 //		String methodName = (String) params.get(0);
-//		String varNamesString = (String) params.get(1);
-//		String commands = (String) params.get(2);
-//		
-//		String[] varNames = varNamesString.split(" ");
+		String[] varNamesArray = ((String) params.get(1)).split(" ");
+		String commands = (String) params.get(2);
+
+		CreatedMethod createdMethod = new CreatedMethod(interpreter, variablesController, varNamesArray, commands);
 		
 		return 0;
 		
 	}	
-
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
 	
 	public String checkParamTypes(List<Object> params) {
-		Object param = params.get(0);
-		if (!(param instanceof Integer || param instanceof Double)) {
-			return String.format(errors.getString("WrongParamType"), param.toString());
-		}
 		for (int i=1; i<params.size(); i++) {
 			Object command = params.get(i);
 			if (!(command instanceof String)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
+				return String.format(errors.getString("WrongParamType"), command.toString());
 			}
 		}
+		String varNamesParam = (String) params.get(1);
+		String[] varNamesArray = varNamesParam.split(" ");
+		Pattern p = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+		for (int i=0; i<varNamesArray.length; i++) {
+			if (!varNamesArray[i].startsWith(":")) {
+				return String.format(errors.getString("VariablePrecededByColon"));	
+			}
+			else if ((p.matcher(varNamesArray[i].substring(1)).find())) {
+				return String.format(errors.getString("VariableHasInvalidChar"));				
+			}
+		}		
 		return null;
 	}	
 	

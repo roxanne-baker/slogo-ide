@@ -1,4 +1,3 @@
-
 package commands;
 
 import java.util.List;
@@ -7,7 +6,7 @@ import model.Interpreter;
 
 
 
-public class If extends Command implements Executable {
+public class If extends ControlCommand implements Executable {
 
 	Interpreter interpreter;
 	
@@ -24,30 +23,5 @@ public class If extends Command implements Executable {
 			interpreter.run(commands);
 		}
 		return interpreter.getReturnResult();
-	}	
-
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		Object param = params.get(0);
-		if (!(param instanceof Integer || param instanceof Double)) {
-			return String.format(errors.getString("WrongParamType"), param.toString());
-		}
-		for (int i=1; i<params.size(); i++) {
-			Object command = params.get(i);
-			if (!(command instanceof String)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}
-		}
-		return null;
 	}	
 }

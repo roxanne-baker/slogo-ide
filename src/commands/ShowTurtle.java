@@ -4,20 +4,14 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class ShowTurtle extends Command implements Executable {
+public class ShowTurtle extends TurtleQueryCommands implements Executable {
 
-	TurtleController turtleTracker;
 	public ShowTurtle(TurtleController turtleController) {
-		turtleTracker = turtleController;
-		numParams = 0;
+		super(turtleController);
 	}
 	
 	public double execute(List<Object> params) {
-		turtleTracker.setCurrentAgentVisible(true);
+		getTurtleController().setCurrentAgentVisible(true);
 		return 1;
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		return null;
 	}
 }
