@@ -3,7 +3,7 @@ package commands;
 
 import java.util.List;
 
-public class Minus extends OperationCommand implements Executable {
+public class Minus extends MathCommand implements Executable {
 
 	public Minus() {
 		numParams = 1;

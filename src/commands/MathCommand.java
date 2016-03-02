@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public abstract class OperationCommand extends Command implements Executable {
+public abstract class MathCommand extends Command implements Executable {
 	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {

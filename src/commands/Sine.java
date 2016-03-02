@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Sine extends OperationCommand implements Executable {
+public class Sine extends MathCommand implements Executable {
 
 	public Sine() {
 		numParams = 1;

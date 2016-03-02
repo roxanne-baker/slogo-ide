@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Divide extends OperationCommand implements Executable {
+public class Divide extends MathCommand implements Executable {
 	
 	public Divide() {
 		numParams = 2;

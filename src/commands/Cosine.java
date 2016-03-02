@@ -3,7 +3,7 @@ package commands;
 
 import java.util.List;
 
-public class Cosine extends OperationCommand implements Executable {
+public class Cosine extends MathCommand implements Executable {
 
 	public Cosine() {
 		numParams = 1;

@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Product extends OperationCommand implements Executable {
+public class Product extends MathCommand implements Executable {
 
 	public Product() {
 		numParams = 2;

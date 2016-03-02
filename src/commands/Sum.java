@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Sum extends OperationCommand implements Executable {
+public class Sum extends MathCommand implements Executable {
 
 	public Sum() {
 		numParams = 2;
@@ -20,7 +20,7 @@ public class Sum extends OperationCommand implements Executable {
 	
 	@Override
 	public String checkNumParams(List<Object> params) {
-		if (params.size() < 2) {
+		if (params.size() < numParams) {
 			return String.format(errors.getString("MathTooFewParams"), params.size());
 		}
 		else {

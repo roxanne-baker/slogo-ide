@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Power extends OperationCommand implements Executable {
+public class Power extends MathCommand implements Executable {
 
 	public Power() {
 		numParams = 2;

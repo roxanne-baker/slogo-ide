@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Remainder extends OperationCommand implements Executable {
+public class Remainder extends MathCommand implements Executable {
 
 	public Remainder() {
 		numParams = 2;

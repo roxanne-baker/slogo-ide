@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class Difference extends OperationCommand implements Executable {
+public class Difference extends MathCommand implements Executable {
 
 	public Difference() {
 		numParams = 2;

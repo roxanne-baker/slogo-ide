@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-public class ArcTangent extends OperationCommand implements Executable {
+public class ArcTangent extends MathCommand implements Executable {
 
 	public ArcTangent() {
 		numParams = 1;

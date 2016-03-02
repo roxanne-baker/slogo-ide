@@ -10,6 +10,7 @@ import commands.YCor;
 import controller.Controller;
 import controller.TurtleController;
 import controller.VariablesController;
+import commands.And;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -27,7 +28,9 @@ import commands.Less;
 import commands.Logarithm;
 import commands.MakeVar;
 import commands.Minus;
+import commands.Not;
 import commands.NotEqual;
+import commands.Or;
 import commands.PenDown;
 import commands.PenDownQuery;
 import commands.PenUp;
@@ -365,6 +368,9 @@ public class Interpreter extends Observable {
 		commandsMap.put("GreaterThan", new Greater());
 		commandsMap.put("Equal", new Equal());
 		commandsMap.put("NotEqual", new NotEqual());
+		commandsMap.put("And", new And());
+		commandsMap.put("Or", new Or());
+		commandsMap.put("Not", new Not());
 	}
     
     private String cutFirst(String text) { 
