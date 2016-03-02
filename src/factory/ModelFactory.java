@@ -17,7 +17,7 @@ import view.MethodView;
 import view.VariableView;
 import view.View;
 import view.ViewAgents;
-import view.ViewPreferences;
+import view.ViewAgentPreferences;
 
 public class ModelFactory {
 	

@@ -64,6 +64,7 @@ public class Interpreter extends Observable {
 	}
 	
 	public void addLang(String language) { 
+		System.out.println(language);
 		lang.addPatterns(resourcesPath + language.trim());
 	}
 	
