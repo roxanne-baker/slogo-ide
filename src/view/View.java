@@ -1,3 +1,4 @@
+
 package view;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -10,7 +11,7 @@ public abstract class View extends Observable implements Observer{
 //	public static int NARROW_WIDTH = 200;
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
 	public static int WIDE_WIDTH = 500;
-	public static int NARROW_WIDTH = 200;
+	public static int NARROW_WIDTH = 250;
 	private ResourceBundle updateResources;
 	private Pane pane;
 	

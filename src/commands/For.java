@@ -28,7 +28,6 @@ public class For extends ControlCommand implements Executable {
 		String commands = (String) params.get(1);
 		
 		for (double i=start; i<end; i+= increment) {
-			interpreter.run("MAKE "+varName+" "+i);
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}

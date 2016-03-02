@@ -1,18 +1,26 @@
+
 package view;
 import java.util.*;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.scene.control.Label;
 
 public class VariablesView extends View{
+//	private VBox savedVars = new VBox();
+	private static final String LABEL_PATH = "windowProperties";	//added
+	private ResourceBundle myResources = ResourceBundle.getBundle(LABEL_PATH);	//added
 	private VBox savedVars = new VBox();
+	Label instructions = new Label(myResources.getString("VARIABLEINSNS"));	//added
 	
 	public VariablesView(String id) {
 		super(id);
+		savedVars.getChildren().add(instructions); // added
 	}
 	
 	public void update(ArrayList<VariableElem> variables){
 		savedVars.getChildren().clear();
+		savedVars.getChildren().add(instructions);	// added
 		for(VariableElem var: variables){
 			savedVars.getChildren().add(var.getVariableV());
 		}

@@ -1,3 +1,4 @@
+
 package model;
 import java.util.*;
 import java.util.Observable;
@@ -42,5 +43,4 @@ public class VariableModel extends Model {
 			return null; 
 		}
 	}
-
 }
