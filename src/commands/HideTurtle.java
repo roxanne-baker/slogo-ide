@@ -4,16 +4,14 @@ package commands;
 import java.util.List;
 import controller.TurtleController;
 
-public class HideTurtle extends Command implements Executable {
+public class HideTurtle extends TurtleQueryCommands implements Executable {
 
-	TurtleController turtleTracker;
 	public HideTurtle(TurtleController turtleController) {
-		turtleTracker = turtleController;
-		numParams = 0;
+		super(turtleController);
 	}
 	
 	public double execute(List<Object> params) {
-		turtleTracker.setCurrentAgentVisible(false);
+		getTurtleController().setCurrentAgentVisible(false);
 		return 0;
 	}
 	

@@ -1,3 +1,4 @@
+
 package view;
 
 import java.util.Observable;
@@ -12,6 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class VariableElem extends Observable {
+//	private Label name;
+//	private String value;
+//	private TextField textBox = new TextField();
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
 	private Label name;
 	private String value;
@@ -21,6 +25,7 @@ public class VariableElem extends Observable {
 	public VariableElem(String name, String value,Observer view) {
 		addObserver(view);
 		this.name = new Label(name);
+//		this.name = new Label(name+" = ");
 		this.value = value;
 		textBox.setEditable(true);
 		textBox.setText(value);
@@ -50,9 +55,8 @@ public class VariableElem extends Observable {
 	}
 	
 	public HBox getVariableV(){
-		HBox variableRow = new HBox(name,textBox);
-		//variableRow.getStyleClass().add(myResources.getString("HBOX"));
-		return variableRow;
+		//HBox variableRow = new HBox(name,textBox);
+		////variableRow.getStyleClass().add(myResources.getString("HBOX"));
+		return new HBox(name,textBox);
 	}
-
 }

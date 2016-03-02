@@ -6,7 +6,7 @@ import controller.VariablesController;
 import model.Interpreter;
 
 
-public class For extends Command implements Executable {
+public class For extends ControlCommand implements Executable {
 
 	Interpreter interpreter;
 	VariablesController variableController;
@@ -28,32 +28,19 @@ public class For extends Command implements Executable {
 		String commands = (String) params.get(1);
 		
 		for (double i=start; i<end; i+= increment) {
-			interpreter.run("MAKE "+varName+" "+i);
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}
-
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 
-	
 	@Override
 	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
-	
-	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			if (!(param instanceof String)) {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}
 		}
 		return null;
-	}	
+	}
 }

@@ -49,5 +49,11 @@ public class HistoryView extends View implements Observer{
 		setStyleClass(pane);
 		return pane;
 	}
-
+//	public Group getView() {
+//		Group group = new Group();
+//		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
+//		ScrollPane sp = new ScrollPane(vb);
+//		group.getChildren().add(sp);
+//		return group;
+//	}
 }

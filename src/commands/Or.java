@@ -2,19 +2,19 @@ package commands;
 
 import java.util.List;
 
-public class And extends Command implements Executable {
+public class Or extends Command implements Executable {
 
-	public And() {
+	public Or() {
 		numParams = 2;
 	}
 	
 	public double execute(List<Object> params) {
 		for (Object param : params) {
-			if ((double) param == 0) {
-				return 0;
+			if ((double) param != 0) {
+				return 1;
 			}
 		}
-		return 1;
+		return 0;
 	}
 	
 	@Override

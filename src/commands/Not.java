@@ -2,29 +2,17 @@ package commands;
 
 import java.util.List;
 
-public class And extends Command implements Executable {
+public class Not extends Command implements Executable {
 
-	public And() {
-		numParams = 2;
+	public Not() {
+		numParams = 1;
 	}
 	
 	public double execute(List<Object> params) {
-		for (Object param : params) {
-			if ((double) param == 0) {
-				return 0;
-			}
+		if ((double) params.get(0) == 0) {
+			return 0;
 		}
 		return 1;
-	}
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
 	}
 	
 	public String checkParamTypes(List<Object> params) {

@@ -4,20 +4,14 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class XCor extends Command implements Executable{
+public class XCor extends TurtleQueryCommands implements Executable{
 
-	TurtleController turtleTracker;
 	public XCor(TurtleController turtleController) {
-		turtleTracker = turtleController;
-		numParams = 0;
+		super(turtleController);
 	}
 	
 	public double execute(List<Object> params) {
-		return turtleTracker.getCurrentAgentXPosition();
+		return getTurtleController().getCurrentAgentXPosition();
 	}
-	
-	public String checkParamTypes(List<Object> params) {
-		return null;
-	}	
 }
 
