@@ -26,7 +26,7 @@ public class VariableModel extends Model {
 //		return null;
 //	}
 	
-	public Map<String,Object> getVariables(){
+	public HashMap<String,Object> getVariables(){
 		return variableMap;
 	}
 	

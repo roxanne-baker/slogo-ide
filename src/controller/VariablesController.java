@@ -18,7 +18,7 @@ public class VariablesController extends Controller implements Observer {
 	public void addVariable(String name, String value){
 		model.addVariable(name,value);
 		
-		Map<String,Object> varMap = model.getVariables();
+		HashMap<String,Object> varMap = model.getVariables();
 		ArrayList<VariableElem> varList = new ArrayList<VariableElem>();
 		for(String key: varMap.keySet()){
 			varList.add(new VariableElem(key,varMap.get(key).toString(),this));

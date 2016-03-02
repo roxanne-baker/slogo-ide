@@ -23,6 +23,7 @@ import commands.Greater;
 import commands.Heading;
 import commands.HideTurtle;
 import commands.Home;
+import commands.If;
 import commands.Left;
 import commands.Less;
 import commands.Logarithm;
@@ -321,6 +322,7 @@ public class Interpreter extends Observable {
 	
     private void addControlStructureCommands() { 
     	commandsMap.put("Repeat", new Repeat(this));
+    	commandsMap.put("If", new If(this));
     }
     
 	private void addTurtleCommands() {
