@@ -13,7 +13,7 @@ public class IfElse extends Command implements Executable {
 	
 	public IfElse(Interpreter interpreter) {
 		this.interpreter = interpreter;
-		numParams = 2;
+		numParams = 3;
 	}
 	
 	public double execute(List<Object> params) {

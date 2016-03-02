@@ -19,7 +19,6 @@ public class MakeVar extends Command implements Executable {
 	public double execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
 		// what if expression not a number?  need to account for later
-		System.out.println(params.get(0)+" "+params.get(1));
 		String name = (String) params.get(0);
 		double valueNum = (double) params.get(1);
 		String value = Double.toString(valueNum);

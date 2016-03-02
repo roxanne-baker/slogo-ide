@@ -22,6 +22,7 @@ import commands.Greater;
 import commands.Heading;
 import commands.HideTurtle;
 import commands.Home;
+import commands.If;
 import commands.Left;
 import commands.Less;
 import commands.Logarithm;
@@ -89,7 +90,6 @@ public class Interpreter extends Observable {
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
-    	// if no repeat or control variable
     	buildExprTree(cutFirst(text), commandStack, root);  
 //    	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
 //    	combThruTree(root, treeStack);
@@ -104,7 +104,6 @@ public class Interpreter extends Observable {
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
-    		//&& !cur.getCommand().getClass().getName().equals("commands.Repeat")
     		if (cur.allParamsHaveValue()) { 
     			result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
@@ -118,10 +117,7 @@ public class Interpreter extends Observable {
     		return; 
     	}
     	stack.push(root);
-    	if (root.allParamsHaveValue()) { 
-//       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
-// executes twice and executes from back command to front command
-    	} else { 
+    	if (!root.allParamsHaveValue()) { 
        		for (ParseNode p: root.getParams()) { 
        			combThruTree(p, stack);
        		}
@@ -165,9 +161,9 @@ public class Interpreter extends Observable {
     		}
     		try {
     			@SuppressWarnings("unused")
-				Object val = ((VariablesController) variableController).getVariable(takeFirst(text).substring(1));
+				double val = Double.parseDouble((String) variableController.getVariable(takeFirst(text)));
     		} catch(Exception e) { 
-        		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
+        		sendError(String.format("%s is not a valid variable", takeFirst(text)));
         		return true;
     		}
     	}
@@ -318,6 +314,7 @@ public class Interpreter extends Observable {
 	
     private void addControlStructureCommands() { 
     	commandsMap.put("Repeat", new Repeat(this));
+    	commandsMap.put("If", new If(this));
     }
     
 	private void addTurtleCommands() {
