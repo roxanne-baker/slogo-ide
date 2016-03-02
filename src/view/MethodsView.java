@@ -27,7 +27,7 @@ public class MethodsView extends View{
  	@Override
  	public Group getView() {
  		Group group = new Group();
- 		methodViews.setPrefSize(View.NARROW_WIDTH,View.TALL_HEIGHT);
+ 		methodViews.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
  		ScrollPane sp = new ScrollPane(methodViews);
  		group.getChildren().add(sp);
  		return group;

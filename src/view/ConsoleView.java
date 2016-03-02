@@ -29,25 +29,20 @@ public class ConsoleView extends View {
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
 		console.getStyleClass().add("code");
-		Button btn = new Button("Run");
-		btn.setOnMouseClicked(e->{
+		Button runBtn = new Button("Run");
+		runBtn.setOnMouseClicked(e->{
 			HistoryElem hist = new HistoryElem(console.getText(), historyView);
 			interpreter.run(console.getText());
-//			//if error, create error and add to history
-//			
-//			//else if variable, create variable and add to saved vars
-//			if(console.getText().contains("make '")){
-//				String[] textList = console.getText().split(" ");
-//				controller.addVariable(textList[1].substring(1),textList[2]);
-//			}//else if method, create method and add to saved methods
-//			else if(console.getText().contains("save")){
-//				String[] textList = console.getText().split(" ");
-//				methodcontroller.addMethod(textList[1]);
-//			}
-//			console.clear();
 		});
-		vb.getChildren().addAll(console,btn);
-		vb.setPrefSize(View.WIDE_WIDTH, View.SHORT_HEIGHT);
+		Button clearBtn = new Button("Clear");
+		clearBtn.setOnMouseClicked(e->{
+			console.clear();
+		});
+		HBox buttons = new HBox();
+		buttons.getStyleClass().add("hbox");
+		buttons.getChildren().addAll(runBtn,clearBtn);
+		vb.getChildren().addAll(console,buttons);
+		vb.setPrefSize(View.WIDE_WIDTH, View.NARROW_WIDTH);
 		group.getChildren().add(vb);
 		return group;
 	}
