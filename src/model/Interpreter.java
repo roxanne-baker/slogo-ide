@@ -58,6 +58,7 @@ public class Interpreter extends Observable {
 	private TurtleController turtleController;
 	private VariableController variableController;
 	private String errorMessage = new String();
+	private double returnResult; 
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
@@ -109,8 +110,8 @@ public class Interpreter extends Observable {
     			cur.setValue(result);
     		}
     	}
+    	returnResult = (double) result;
     	System.out.println(result);
-    	//return result;
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -269,6 +270,10 @@ public class Interpreter extends Observable {
 	
 	public String getErrorMessage() { 
 		return errorMessage;
+	}
+	
+	public double getReturnResult() { 
+		return returnResult;
 	}
 	
 	private void sendError(String message) { 
