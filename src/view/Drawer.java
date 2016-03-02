@@ -5,26 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 
 public class Drawer {
-	private Group group;
+	private Group agentGroup;
 	private List<ImageView> stampList;
+	private List<Node> lineList;
+	private List<ImageView> agentViewList;
 	public Drawer(Group g){
-		group = g;
+		agentGroup = g;
 		stampList = new ArrayList<ImageView>();
+		lineList = new ArrayList<Node>();
+		agentViewList = new ArrayList<ImageView>();
 		
 
 	}
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color){
-		System.out.println(oldX);
-		System.out.println(oldY);
-		System.out.println(newX);
-		System.out.println(newY);
 
 		Line line = new Line();
 		line.setStartX(oldX);
@@ -33,7 +35,8 @@ public class Drawer {
 		line.setEndY(newY);
 		line.setStrokeWidth(thickness);
 		line.setStroke(color);
-		group.getChildren().add(line);
+		lineList.add(line);
+		agentGroup.getChildren().add(line);
 	}
 	/**
 	 * 
@@ -42,26 +45,46 @@ public class Drawer {
 	public void stampImage(ImageView img, double xPosition, double yPosition){
 		img.setX(xPosition - img.getBoundsInParent().getWidth()/2);
 		img.setY(yPosition - img.getBoundsInParent().getHeight()/2);
+		
 		stampList.add(img);
-		group.getChildren().add(img);
+		agentGroup.getChildren().add(img);
 	}
 	
 	public void moveImage(ImageView img, double xPosition, double yPosition){
-		System.out.println(xPosition);
-		System.out.println(xPosition - img.getBoundsInParent().getWidth()/2);
-		group.getChildren().remove(img);
+
+		agentGroup.getChildren().remove(img);
 		img.setX(xPosition - img.getBoundsInParent().getWidth()/2);
 		img.setY(yPosition - img.getBoundsInParent().getHeight()/2);
-		group.getChildren().add(img);
+		agentGroup.getChildren().add(img);
+		if (!agentViewList.contains(img)){
+			agentViewList.add(img);
+		
+		}
+
 	}
 	public void removeImage(ImageView agentView) {
-		group.getChildren().remove(agentView);
+		agentGroup.getChildren().remove(agentView);
+		agentViewList.remove(agentView);
 	}
 	public void setNewImage(ImageView oldView,ImageView newView, double xPosition,double yPosition) {
-		group.getChildren().remove(oldView);
+		agentGroup.getChildren().remove(oldView);
+		agentViewList.remove(oldView);
 		newView.setX(xPosition - newView.getBoundsInParent().getWidth()/2);
 		newView.setY(yPosition - newView.getBoundsInParent().getHeight()/2);
-		group.getChildren().add(newView);
+		agentGroup.getChildren().add(newView);
+		agentViewList.add(newView);
+
 		
+	}
+
+	public void clearAllLines() {
+		for (Node line: lineList){
+			agentGroup.getChildren().remove(line);
+		}
+	}
+	public void clearAllStamps(){
+		for (Node stamp: stampList){
+			agentGroup.getChildren().remove(stamp);
+		}
 	}
 }
