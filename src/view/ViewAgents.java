@@ -58,11 +58,12 @@ public class ViewAgents extends View{
                 setBackgroundColor(colorPicker.getValue());      
             }
         });
-        colorPicker.setLayoutY(WIDE_WIDTH);
+        colorPicker.setLayoutY(WIDE_WIDTH-25);
         pane.getChildren().add(colorPicker);
 	}
 	@Override
 	public void update(Observable agent, Object obj) {
+		System.out.println("height: "+pane.getHeight());
 		System.out.println(obj);
 		if(((Agent) agent).isVisible()){
 			if (obj == myResources.getString("STAMP")){
@@ -89,9 +90,11 @@ public class ViewAgents extends View{
 			
 
 	@Override
-	public Group getView() {
+	public Pane getView() {
 		setUpColorPicker();
-		return viewGroup;
+		Pane pane = new Pane(viewGroup);//
+		return pane;//
+		//return viewGroup;
 	}
 	public double getWidth() {
 		return WIDE_WIDTH;
