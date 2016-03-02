@@ -23,9 +23,7 @@ public class Repeat extends ControlCommand implements Executable {
 		for (int i=0; i<numRepeats; i++) {
 			interpreter.run(commands);		
 		}
-		
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 	
 	public String checkParamTypes(List<Object> params) {

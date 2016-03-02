@@ -18,7 +18,7 @@ public class VariablesController extends Controller implements Observer {
 	public void addVariable(String name, String value){
 		model.addVariable(name,value);
 		
-		HashMap<String,Object> varMap = model.getVariables();
+		Map<String,Object> varMap = model.getVariables();
 		ArrayList<VariableElem> varList = new ArrayList<VariableElem>();
 		for(String key: varMap.keySet()){
 			varList.add(new VariableElem(key,varMap.get(key).toString(),this));
@@ -34,7 +34,7 @@ public class VariablesController extends Controller implements Observer {
 	}
 	
 	public Object getVariable(String name) { 
-		return model.getVariable(name) == null? null: model.getVariable(name);
+		return model.getVariable(name) == null? new Object(): model.getVariable(name);
 	}
 
 }

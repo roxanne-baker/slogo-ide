@@ -32,9 +32,7 @@ public class For extends ControlCommand implements Executable {
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}
-
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 
 	@Override

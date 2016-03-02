@@ -30,9 +30,7 @@ public class DoTimes extends ControlCommand implements Executable {
 			interpreter.run("MAKE "+varName+" "+i);
 			interpreter.run(loopCommands);
 		}
-
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 	
 	public String checkNumParams(List<Object> params) {

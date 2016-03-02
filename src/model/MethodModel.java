@@ -1,15 +1,20 @@
 package model;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MethodModel extends Model {
-	private HashSet<String> savedMethods = new HashSet<String>();
+	private Map<String, String> savedMethods;
 	
 	public MethodModel() {
-		// TODO Auto-generated constructor stub
+		savedMethods = new HashMap<String, String>();
 	}
 	
-	public void addMethod(String method){
-		savedMethods.add(method);
+	public void addMethod(String methodName, String methodText){
+		savedMethods.put(methodName, methodText);
+	}
+	
+	public Map<String, String> getMethods() {
+		return savedMethods;
 	}
 
 }

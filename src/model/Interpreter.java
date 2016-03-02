@@ -3,13 +3,11 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Stack;
 
 import commands.XCor;
 import commands.YCor;
 import controller.Controller;
-
 import controller.TurtleController;
 import controller.VariablesController;
 import commands.ArcTangent;
@@ -49,8 +47,6 @@ import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
 
-import view.ErrorElem;
-
 public class Interpreter extends Observable {
 
 	protected Map<String, Command> commandsMap; 
@@ -60,6 +56,7 @@ public class Interpreter extends Observable {
 	private TurtleController turtleController;
 	private VariablesController variableController;
 	private String errorMessage = new String();
+	private double returnResult; 
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
@@ -107,13 +104,13 @@ public class Interpreter extends Observable {
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
+    		//&& !cur.getCommand().getClass().getName().equals("commands.Repeat")
     		if (cur.allParamsHaveValue()) { 
     			result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
     		}
     	}
-    	System.out.println(result);
-    	//return result;
+    	returnResult = (double) result;
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -167,7 +164,8 @@ public class Interpreter extends Observable {
     			return false;
     		}
     		try {
-    			Object val = ((VariablesController) variableController).getVariable(takeFirst(text).substring(1));
+    			@SuppressWarnings("unused")
+				Object val = ((VariablesController) variableController).getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
         		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
@@ -201,8 +199,10 @@ public class Interpreter extends Observable {
     		attachNode(cur, commandStack);
    		} 
     	else if (parsedFirst.equals("ListStart")) { 
-    		cur = new ParseNode(stringInBracket(text));
+    		cur = new ParseNode(takeList(text));
     		attachNode(cur, commandStack);
+    		buildExprTree(cutList(text), commandStack, root);
+    		return;
     	}
     	else { 
     		cur = new ParseNode(commandsMap.get(parsedFirst));
@@ -212,17 +212,26 @@ public class Interpreter extends Observable {
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
     
-    private String stringInBracket(String s) { 
-    	int endIndex = s.indexOf("]") - 1;
-    	return s.substring(1, endIndex).trim();
-    }
-    
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {
     	ParseNode mostRecentCommand = commandStack.peek();
 		mostRecentCommand.getParams().add(cur); 
 		if (mostRecentCommand.paramsFilled()) { 
 			commandStack.pop();
 		}
+    }
+    
+    private String cutList(String s) { 
+    	String reversed = new StringBuilder(s).reverse().toString();
+    	int tempIndex = reversed.indexOf("]");
+    	int endIndex = s.length() - tempIndex - 1; 
+    	return s.substring(endIndex + 1).trim();
+    }
+    
+    private String takeList(String s) { 
+    	String reversed = new StringBuilder(s).reverse().toString();
+    	int tempIndex = reversed.indexOf("]");
+    	int endIndex = s.length() - tempIndex - 1; 
+    	return s.substring(1, endIndex).trim();
     }
     
 //    private void buildExprTree(String text, Stack<ParseNode> commandStack) { 
@@ -272,6 +281,10 @@ public class Interpreter extends Observable {
 	
 	public String getErrorMessage() { 
 		return errorMessage;
+	}
+	
+	public double getReturnResult() { 
+		return returnResult;
 	}
 	
 	private void sendError(String message) { 

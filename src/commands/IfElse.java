@@ -27,8 +27,6 @@ public class IfElse extends ControlCommand implements Executable {
 		else {
 			interpreter.run(falseCommands);
 		}
-		
-		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 }

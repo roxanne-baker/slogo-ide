@@ -1,7 +1,6 @@
 package commands;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import controller.MethodsController;
@@ -29,17 +28,6 @@ public class To extends Command implements Executable {
 		return 0;
 		
 	}	
-
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
 	
 	public String checkParamTypes(List<Object> params) {
 		for (int i=1; i<params.size(); i++) {

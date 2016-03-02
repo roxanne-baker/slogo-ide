@@ -49,4 +49,3 @@ public class HistoryView extends View implements Observer{
 	}
 
 }
-
