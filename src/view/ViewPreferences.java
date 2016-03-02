@@ -24,13 +24,15 @@ import javafx.scene.layout.VBox;
  */
 public class ViewPreferences extends View{
 	private HashMap<String, Agent> agentMap;
-	private Group viewGroup;
+//	private Group viewGroup;
+	private Pane viewGroup;
 	private VBox preferencesBox;
 	private String currentAgent;
 	private static final int PADDING = 10;
 	public ViewPreferences(String id) {
 		super(id);
-		viewGroup = new Group();
+//		viewGroup = new Group();
+		viewGroup = new Pane();
 		agentMap = new HashMap<String,Agent>();
 		currentAgent = null;
 	}
@@ -44,10 +46,14 @@ public class ViewPreferences extends View{
 
 
 	@Override
-	public Group getView() {
-		updateView();
-		return viewGroup;
+	public Pane getView() {
+	updateView();
+	return viewGroup;
 	}
+//	public Group getView() {
+//		updateView();
+//		return viewGroup;
+//	}
 	private void updateView() {
 		viewGroup.getChildren().remove(preferencesBox);
 		preferencesBox = new VBox();

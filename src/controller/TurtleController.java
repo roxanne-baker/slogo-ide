@@ -34,16 +34,9 @@ public class TurtleController extends Controller implements IAgentController{
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-//		try {
-//			Thread.sleep(2000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-		//changeCurrentAgentOrientation(90);
+
 
 	}
 	
@@ -75,9 +68,9 @@ public class TurtleController extends Controller implements IAgentController{
 		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,observerView); //starts in middle of screen
 		agentMap.put(agentName, newTurtle);
 		preferencesView.updateAgentMap(agentMap);
-		//if (getNumAgents()==1){
+		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
-		//}
+		}
 	}
 
 	@Override

@@ -17,7 +17,6 @@ import view.ViewAgentPreferences;
 import view.ViewWindowPreferences;
 
 public class ViewFactory {
-//	private static HashMap<String,View> allViews = new HashMap<String,View>();
 	private HistoryView historyView; 
 	private VariablesView variableView; 
 	private ConsoleView consoleView; 
@@ -52,8 +51,6 @@ public class ViewFactory {
 		default:
 			return null;
 		}
-		//allViews.put(ID, view);
-		//return view;
 	}
 
 }
