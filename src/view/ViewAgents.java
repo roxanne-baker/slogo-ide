@@ -3,6 +3,8 @@ package view;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import com.sun.prism.paint.Paint;
+
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,8 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -46,6 +49,8 @@ public class ViewAgents extends View{
 		drawer = new Drawer(agentPane);
 
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
+		agentPane.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
+		setStyleClass(agentPane);
 
 		agentViewPreferences = new HBox();
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);

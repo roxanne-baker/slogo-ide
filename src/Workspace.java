@@ -22,8 +22,8 @@ import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
 	private static final int COORD0 = 0;
-	private static final int COORD1 = View.WIDE_WIDTH;
-	private static final int COORD2 = View.WIDE_WIDTH+View.NARROW_WIDTH;
+	private static final int COORD1 = (View.WIDE_WIDTH)+5;
+	private static final int COORD2 = (View.WIDE_WIDTH+View.NARROW_WIDTH)+5;
 	
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
 	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods", "WindowPreferences"};

@@ -41,7 +41,10 @@
    	-fx-font-size: 1em;
 }
 
-
 .view {
 	-fx-background-color: #FFFFFF;
+	-fx-border-color: #43609c;
+	-fx-border-width: 2px;
+	-fx-border-style: solid;
+	-fx-padding: 10;
 }
