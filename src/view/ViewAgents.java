@@ -3,8 +3,6 @@ package view;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-import com.sun.prism.paint.Paint;
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -82,10 +80,7 @@ public class ViewAgents extends View{
 
 	@Override
 	public void update(Observable agent, Object obj) {
-<<<<<<< HEAD
-=======
 
->>>>>>> 9cd8647fbe98812da9fe41e14db4efb8c1c97e12
 		if(((Agent) agent).isVisible()){
 			if (obj == updateResources.getString("STAMP")){
 				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
