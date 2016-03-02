@@ -11,7 +11,7 @@ import commands.YCor;
 import controller.Controller;
 
 import controller.TurtleController;
-import controller.VariableController;
+import controller.VariablesController;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -38,6 +38,7 @@ import commands.Power;
 import commands.Product;
 import commands.RandomCommand;
 import commands.Remainder;
+import commands.Repeat;
 import commands.Right;
 import commands.SetHeading;
 import commands.SetXY;
@@ -48,6 +49,8 @@ import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
 
+import view.ErrorElem;
+
 public class Interpreter extends Observable {
 
 	protected Map<String, Command> commandsMap; 
@@ -55,12 +58,12 @@ public class Interpreter extends Observable {
     private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
 	private TurtleController turtleController;
-	private VariableController variableController;
+	private VariablesController variableController;
 	private String errorMessage = new String();
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariableController) controllers.get("Variables");
+		variableController = (VariablesController) controllers.get("Variables");
 	}
 	
 	public void addLang(String language) { 
@@ -133,24 +136,30 @@ public class Interpreter extends Observable {
     	return split[0];
     }
     
+    private void processTree(ParseNode root) { 
+    	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
+    	combThruTree(root, treeStack);
+    	fillCommandStackParams(treeStack);
+    }
+    
     private boolean stopBuild(String text, Stack<ParseNode> commandStack, ParseNode root) { 
     	String parsedFirst = parseText(takeFirst(text));
     	if (commandStack.isEmpty()) { 
     		if (!text.equals("")) { 
     			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
-    	        	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
-    	        	combThruTree(root, treeStack);
-    	        	fillCommandStackParams(treeStack);
+    				processTree(root);
     				callBuildTree(text);
     			}
-    			else { 
+    			else if (parsedFirst.equals("Constant") || parsedFirst.equals("Variable")){ 
     				sendError("Too many parameters!");
     			}
+    		} else { 
+				processTree(root);
     		}
     		return true; 
     	}
     	else if (text.length() == 0 && !commandStack.isEmpty()) {
-    		sendError("Not enough params"); 
+    		sendError("Not enough parameters!"); 
         	return true; 
     	} 
     	else if (parsedFirst.equals("Variable")) { 
@@ -158,13 +167,13 @@ public class Interpreter extends Observable {
     			return false;
     		}
     		try {
-    			Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
+    			Object val = ((VariablesController) variableController).getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
         		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
     		}
     	}
-    	else if (!parsedFirst.equals("Constant") && errorCommandName(parsedFirst)) { 
+    	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart") && errorCommandName(parsedFirst)) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return true;
     	}
@@ -191,12 +200,21 @@ public class Interpreter extends Observable {
     		}
     		attachNode(cur, commandStack);
    		} 
+    	else if (parsedFirst.equals("ListStart")) { 
+    		cur = new ParseNode(stringInBracket(text));
+    		attachNode(cur, commandStack);
+    	}
     	else { 
     		cur = new ParseNode(commandsMap.get(parsedFirst));
     		attachNode(cur, commandStack);
     		commandStack.push(cur);
     	} 
 		buildExprTree(cutFirst(text), commandStack, root); 
+    }
+    
+    private String stringInBracket(String s) { 
+    	int endIndex = s.indexOf("]") - 1;
+    	return s.substring(1, endIndex).trim();
     }
     
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {
@@ -281,9 +299,14 @@ public class Interpreter extends Observable {
 		addTurtleQueries();
 		addMathOps();
 		addBooleanOps();
+		addControlStructureCommands();
 		commandsMap.put("MakeVariable", new MakeVar(variableController));
 	}
 	
+    private void addControlStructureCommands() { 
+    	commandsMap.put("Repeat", new Repeat(this));
+    }
+    
 	private void addTurtleCommands() {
 		commandsMap.put("Forward", new Forward(turtleController));
 		commandsMap.put("Back", new Back(turtleController));

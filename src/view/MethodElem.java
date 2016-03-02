@@ -1,13 +1,13 @@
 package view;
 
-public class HistoryElem extends TextBox implements Clickable{
+public class MethodElem extends TextBox implements Clickable{
 
-	public HistoryElem(String text,View view) {
+	public MethodElem(String text,View view) {
 		super(text);
 		setClickableAction(e-> onMouseClick());
 		addObserver(view);
 		setChanged();
-		notifyObservers("NEWHISTORY");
+		notifyObservers("NEWMETHOD");
 	}
 
 	public void onMouseClick() {

@@ -24,10 +24,10 @@ public class HistoryView extends View implements Observer{
 		}
 		if(arg=="ERROR"){
 			Interpreter ip = (Interpreter) o;
-			ClickableText errorText = new ClickableText(ip.getErrorMessage());
+			ErrorElem errorText = new ErrorElem(ip.getErrorMessage());
 			vb.getChildren().add(errorText.getTextBox());
 		}
-		if(arg=="HISTORYCLICKED"){
+		if(arg=="CLICKED"){
 			interpreter.run(((HistoryElem) o).getString());
 		}
 
@@ -42,7 +42,7 @@ public class HistoryView extends View implements Observer{
 	@Override
 	public Group getView() {
 		Group group = new Group();
-		vb.setPrefSize(View.NARROW_WIDTH,View.TALL_HEIGHT);
+		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
 		ScrollPane sp = new ScrollPane(vb);
 		group.getChildren().add(sp);
 		return group;

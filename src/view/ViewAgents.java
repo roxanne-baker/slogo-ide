@@ -40,7 +40,7 @@ public class ViewAgents extends View{
 		drawer = new Drawer(agentGroup);
 
 		pane = new Pane();
-		pane.setPrefSize(WIDE_WIDTH, TALL_HEIGHT);
+		pane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
 		pane.getChildren().add(agentGroup);
 
 		viewGroup = new Group();
@@ -50,7 +50,7 @@ public class ViewAgents extends View{
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		
 		agentViewPreferences = new HBox();
-		agentViewPreferences.setLayoutY(TALL_HEIGHT);
+		agentViewPreferences.setLayoutY(WIDE_WIDTH);
 		pane.getChildren().add(agentViewPreferences);
 	}
 	public void setBackgroundColor(Color color){
@@ -68,7 +68,9 @@ public class ViewAgents extends View{
                 setBackgroundColor(colorPicker.getValue());      
             }
         });
+
         agentViewPreferences.getChildren().add(colorPicker);
+
 	}
 	@Override
 	public void update(Observable agent, Object obj) {
@@ -118,7 +120,7 @@ public class ViewAgents extends View{
 		return WIDE_WIDTH;
 	}
 	public double getHeight() {
-		return TALL_HEIGHT;
+		return WIDE_WIDTH;
 	}
 
 	

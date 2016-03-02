@@ -5,13 +5,15 @@ import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
 import javafx.scene.Scene;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import model.Interpreter;
 import model.Model;
 import view.View;
 import view.ConsoleView;
 import view.HistoryView;
-import view.VariableView;
+import view.VariablesView;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
@@ -24,6 +26,7 @@ public class Workspace implements Observer {
 	GridPane root = new GridPane();
 	
 	public Scene init(){
+		initGridConstraints();
 		initModels();
 		initViews();
 		initControllers();
@@ -32,6 +35,11 @@ public class Workspace implements Observer {
 		((HistoryView) viewMap.get("History")).setInterpreter(ip);
 		((ViewWindowPreferences) viewMap.get("WindowPreferences")).setInterpreter(ip);
 		return new Scene(root);
+	}
+	
+	private void initGridConstraints(){
+		root.getColumnConstraints().add(new ColumnConstraints(View.WIDE_WIDTH));
+		root.getRowConstraints().add(new RowConstraints(View.WIDE_WIDTH));
 	}
 	
 	private void initModels(){
@@ -47,7 +55,10 @@ public class Workspace implements Observer {
 		for(String type: STANDARD_VIEWS){
 			View view = viewFactory.createView(type);
 			if(type=="Variables"){
-				((VariableView)view).addObserver(this);
+				((VariablesView)view).addObserver(this);
+			}
+			if(type=="Agents"){
+				root.setConstraints(view.getView(), getViewCoords(type)[0], getViewCoords(type)[1]);
 			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
