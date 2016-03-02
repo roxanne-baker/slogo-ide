@@ -7,10 +7,12 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -22,12 +24,15 @@ import javafx.scene.paint.Color;
 public class ViewAgents extends View{
 	private static final Color DEFAULT_COLOR = Color.WHITE;
 	private static final String UPDATE_PROPERTIES = "updateObserver";
+	private static final String WINDOW_PROPERTIES = "windowProperties";
 	private Drawer drawer;
 	private Group agentGroup;
 	private Color backgroundColor;
 	private Pane pane;
 	private Group viewGroup;
-	private ResourceBundle myResources;
+	private ResourceBundle updateResources;
+	private ResourceBundle windowResources;
+	private HBox agentViewPreferences;
 	
 	public ViewAgents(String id) {
 		super(id);
@@ -41,7 +46,12 @@ public class ViewAgents extends View{
 		viewGroup = new Group();
 		viewGroup.getChildren().add(pane);
 		backgroundColor = DEFAULT_COLOR;
-		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
+		
+		agentViewPreferences = new HBox();
+		agentViewPreferences.setLayoutY(WIDE_WIDTH);
+		pane.getChildren().add(agentViewPreferences);
 	}
 	public void setBackgroundColor(Color color){
 		pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -58,29 +68,30 @@ public class ViewAgents extends View{
                 setBackgroundColor(colorPicker.getValue());      
             }
         });
-        colorPicker.setLayoutY(WIDE_WIDTH);
-        pane.getChildren().add(colorPicker);
+
+        agentViewPreferences.getChildren().add(colorPicker);
+
 	}
 	@Override
 	public void update(Observable agent, Object obj) {
 		System.out.println(obj);
 		if(((Agent) agent).isVisible()){
-			if (obj == myResources.getString("STAMP")){
+			if (obj == updateResources.getString("STAMP")){
 				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
-			}else if (obj == myResources.getString("MOVE")){
+			}else if (obj == updateResources.getString("MOVE")){
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 				if(!((Agent) agent).isPenUp()){
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == myResources.getString("INITIAL")){ //fix this resource stuff
+			}else if (obj == updateResources.getString("INITIAL")){ //fix this resource stuff
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
-			}else if (obj == myResources.getString("IMAGEVIEW")){
+			}else if (obj == updateResources.getString("IMAGEVIEW")){
 				drawer.setNewImage(((Agent) agent).getOldImageView(),((Agent) agent).getImageView(),((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			}
-		}else if(obj == myResources.getString("VISIBLE")){
+		}else if(obj == updateResources.getString("VISIBLE")){
 			drawer.removeImage(((Agent) agent).getImageView());
 			
 		}
@@ -91,7 +102,19 @@ public class ViewAgents extends View{
 	@Override
 	public Group getView() {
 		setUpColorPicker();
+		setUpClearButton();
 		return viewGroup;
+	}
+	private void setUpClearButton() {
+		Button clearButton = new Button(windowResources.getString("CLEARBUTTON"));
+		clearButton.setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                drawer.clearAllLines();  
+                drawer.clearAllStamps();
+            }
+        });
+		agentViewPreferences.getChildren().add(clearButton);
+		
 	}
 	public double getWidth() {
 		return WIDE_WIDTH;
