@@ -24,7 +24,7 @@ public class VariablesView extends View{
 	@Override
 	public Group getView() {
 		Group group = new Group();
-		savedVars.setPrefSize(View.NARROW_WIDTH,View.SHORT_HEIGHT);
+		savedVars.setPrefSize(View.NARROW_WIDTH,View.NARROW_WIDTH);
 		ScrollPane sp = new ScrollPane(savedVars);
 		group.getChildren().add(sp);
 		return group;

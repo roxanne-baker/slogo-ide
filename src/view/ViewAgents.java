@@ -35,7 +35,7 @@ public class ViewAgents extends View{
 		drawer = new Drawer(agentGroup);
 
 		pane = new Pane();
-		pane.setPrefSize(WIDE_WIDTH, TALL_HEIGHT);
+		pane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
 		pane.getChildren().add(agentGroup);
 
 		viewGroup = new Group();
@@ -58,7 +58,7 @@ public class ViewAgents extends View{
                 setBackgroundColor(colorPicker.getValue());      
             }
         });
-        colorPicker.setLayoutY(TALL_HEIGHT);
+        colorPicker.setLayoutY(WIDE_WIDTH);
         pane.getChildren().add(colorPicker);
 	}
 	@Override
@@ -97,7 +97,7 @@ public class ViewAgents extends View{
 		return WIDE_WIDTH;
 	}
 	public double getHeight() {
-		return TALL_HEIGHT;
+		return WIDE_WIDTH;
 	}
 
 	
