@@ -3,7 +3,6 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Stack;
 
 import commands.XCor;
@@ -165,7 +164,8 @@ public class Interpreter extends Observable {
     			return false;
     		}
     		try {
-    			Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
+    			@SuppressWarnings("unused")
+				Object val = ((VariableController) variableController).getVariable(takeFirst(text).substring(1));
     		} catch(Exception e) { 
         		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
         		return true;
@@ -211,8 +211,11 @@ public class Interpreter extends Observable {
     }
     
     private String stringInBracket(String s) { 
+    	String reversed = new StringBuilder(s).reverse().toString();
+    	//int endIndex = reversed.indexOf("]") + 1;
     	int endIndex = s.indexOf("]") - 1;
     	return s.substring(1, endIndex).trim();
+    	//return s.substring(1, s.length() - endIndex).trim();
     }
     
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {

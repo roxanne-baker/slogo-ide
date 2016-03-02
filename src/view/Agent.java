@@ -64,7 +64,6 @@ public abstract class Agent extends Observable{
 		oldYPosition.setValue(agentYPosition.getValue());
 		agentXPosition.setValue(agentXPosition.doubleValue() + x);
 		agentYPosition.setValue(agentYPosition.doubleValue() + y);
-
 		setChanged();
 		notifyObservers(myResources.getString("MOVE"));
 
