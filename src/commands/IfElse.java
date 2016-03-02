@@ -1,11 +1,8 @@
-
 package commands;
 
 import java.util.List;
 
 import model.Interpreter;
-
-
 
 public class IfElse extends ControlCommand implements Executable {
 
@@ -13,7 +10,7 @@ public class IfElse extends ControlCommand implements Executable {
 	
 	public IfElse(Interpreter interpreter) {
 		this.interpreter = interpreter;
-		numParams = 2;
+		numParams = 3;
 	}
 	
 	public double execute(List<Object> params) {

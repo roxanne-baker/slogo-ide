@@ -3,8 +3,6 @@ package view;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-import com.sun.prism.paint.Paint;
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

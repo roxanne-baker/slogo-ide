@@ -10,7 +10,6 @@ import commands.YCor;
 import controller.Controller;
 import controller.TurtleController;
 import controller.VariablesController;
-import commands.And;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -18,20 +17,20 @@ import commands.Cosine;
 import commands.Difference;
 import commands.Divide;
 import commands.Equal;
+import commands.For;
 import commands.Forward;
 import commands.Greater;
 import commands.Heading;
 import commands.HideTurtle;
 import commands.Home;
 import commands.If;
+import commands.IfElse;
 import commands.Left;
 import commands.Less;
 import commands.Logarithm;
 import commands.MakeVar;
 import commands.Minus;
-import commands.Not;
 import commands.NotEqual;
-import commands.Or;
 import commands.PenDown;
 import commands.PenDownQuery;
 import commands.PenUp;
@@ -93,7 +92,6 @@ public class Interpreter extends Observable {
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
-    	// if no repeat or control variable
     	buildExprTree(cutFirst(text), commandStack, root);  
 //    	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
 //    	combThruTree(root, treeStack);
@@ -108,7 +106,6 @@ public class Interpreter extends Observable {
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
-    		//&& !cur.getCommand().getClass().getName().equals("commands.Repeat")
     		if (cur.allParamsHaveValue()) { 
     			result = cur.getCommand().execute(cur.extractParamsFromNode());
     			cur.setValue(result);
@@ -122,10 +119,7 @@ public class Interpreter extends Observable {
     		return; 
     	}
     	stack.push(root);
-    	if (root.allParamsHaveValue()) { 
-//       		root.setValue(root.getCommand().execute(root.extractParamsFromNode()));
-// executes twice and executes from back command to front command
-    	} else { 
+    	if (!root.allParamsHaveValue()) { 
        		for (ParseNode p: root.getParams()) { 
        			combThruTree(p, stack);
        		}
@@ -169,9 +163,9 @@ public class Interpreter extends Observable {
     		}
     		try {
     			@SuppressWarnings("unused")
-				Object val = ((VariablesController) variableController).getVariable(takeFirst(text).substring(1));
+				double val = Double.parseDouble((String) variableController.getVariable(takeFirst(text)));
     		} catch(Exception e) { 
-        		sendError(String.format("%s is not a valid variable", takeFirst(text).substring(1)));
+        		sendError(String.format("%s is not a valid variable", takeFirst(text)));
         		return true;
     		}
     	}
@@ -183,6 +177,7 @@ public class Interpreter extends Observable {
     }
     
     private void buildExprTree(String text, Stack<ParseNode> commandStack, ParseNode root) { 
+    	System.out.println(text);
     	if (stopBuild(text, commandStack, root)) {
     		return; 
     	}
@@ -203,6 +198,7 @@ public class Interpreter extends Observable {
     		attachNode(cur, commandStack);
    		} 
     	else if (parsedFirst.equals("ListStart")) { 
+    		System.out.println(takeList(text));
     		cur = new ParseNode(takeList(text));
     		attachNode(cur, commandStack);
     		buildExprTree(cutList(text), commandStack, root);
@@ -224,19 +220,65 @@ public class Interpreter extends Observable {
 		}
     }
     
-    private String cutList(String s) { 
-    	String reversed = new StringBuilder(s).reverse().toString();
-    	int tempIndex = reversed.indexOf("]");
-    	int endIndex = s.length() - tempIndex - 1; 
-    	return s.substring(endIndex + 1).trim();
-    }
+//    private String cutList(String s) { 
+//    	String reversed = new StringBuilder(s).reverse().toString();
+//    	int tempIndex = reversed.indexOf("]");
+//    	int endIndex = s.length() - tempIndex - 1; 
+//    	System.out.println("blah blah" + s.substring(endIndex + 1).trim());
+//    	return s.substring(endIndex + 1).trim();
+//    }
     
     private String takeList(String s) { 
-    	String reversed = new StringBuilder(s).reverse().toString();
-    	int tempIndex = reversed.indexOf("]");
-    	int endIndex = s.length() - tempIndex - 1; 
-    	return s.substring(1, endIndex).trim();
+    	return s.substring(1, endParenIndex(s)).trim();
     }
+    
+    private String cutList(String s) { 
+    	return s.substring(endParenIndex(s)+1).trim();
+    }
+    private int endParenIndex(String s) {
+    	//int endIndex = s.length() - new StringBuilder(s).reverse().toString().indexOf("]") - 1;
+    	int lastClosed = 0;
+    	int openCount = 0;
+    	int closedCount = 0;
+    	for (int i=0; i<s.length();i++) { 
+    		if (s.charAt(i) == '[' && i < s.indexOf(']')) { 
+    			openCount++;
+    		}
+    	}
+    	for (int i=0; i<s.length();i++) { 
+    		if (s.charAt(i) == ']') { 
+    			lastClosed = i; 
+    			closedCount++;
+    			if (closedCount == openCount) { 
+    				break;
+    			}
+    		}
+    	}
+    	return lastClosed; 
+    }
+//    	
+//    	
+//    	int cutOffIndex = 0; 
+//    	while(s.substring(cutOffIndex).indexOf(beginParens) > -1 && s.substring(cutOffIndex).indexOf(beginParens) < s.indexOf(endParens)) { 
+//    		bracketStack.push(beginParens);
+//    		cutOffIndex = s.substring(cutOffIndex).indexOf(beginParens) + 1;
+//        	System.out.println(cutOffIndex);
+//    	}
+//    	System.out.println(cutOffIndex);
+//    	System.out.println("[s in stack " + bracketStack.size());
+//    	while (copy.length() > 0 && copy.indexOf(endParens) > -1 && !bracketStack.isEmpty()) { 
+//    		bracketStack.pop();
+//    		if (bracketStack.isEmpty()) { 
+//    			endIndex = s.indexOf(endParens);
+//    		}
+//    		copy = copy.substring(copy.indexOf(endParens) + 1);
+//    	}
+    	//String reversed = new StringBuilder(s).reverse().toString();
+    	//int tempIndex = reversed.indexOf("]");
+    	//int endIndex = s.length() - tempIndex - 1; 
+    	//System.out.println("endindex = " + endIndex);
+    	//return s.substring(1, endIndex+1).trim();
+   // }
     
 //    private void buildExprTree(String text, Stack<ParseNode> commandStack) { 
 //    	if (stopBuild(text, commandStack)) return; 
@@ -323,6 +365,8 @@ public class Interpreter extends Observable {
     private void addControlStructureCommands() { 
     	commandsMap.put("Repeat", new Repeat(this));
     	commandsMap.put("If", new If(this));
+    	commandsMap.put("IfElse", new IfElse(this));
+    	commandsMap.put("For", new For(this, variableController));
     }
     
 	private void addTurtleCommands() {
@@ -370,9 +414,6 @@ public class Interpreter extends Observable {
 		commandsMap.put("GreaterThan", new Greater());
 		commandsMap.put("Equal", new Equal());
 		commandsMap.put("NotEqual", new NotEqual());
-		commandsMap.put("And", new And());
-		commandsMap.put("Or", new Or());
-		commandsMap.put("Not", new Not());
 	}
     
     private String cutFirst(String text) { 
