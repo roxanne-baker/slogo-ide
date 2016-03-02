@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 
 
 public class TurtleController extends Controller implements IAgentController{
+
 	private HashMap<String,Agent> agentMap;
 	private String currentAgent;
 	private ViewAgentPreferences preferencesView;
