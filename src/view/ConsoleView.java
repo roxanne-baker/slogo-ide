@@ -24,7 +24,7 @@ public class ConsoleView extends View {
 	}
 
 	@Override
-	public Group getView() {
+	public Pane getView() {
 		Group group = new Group();
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
@@ -44,7 +44,8 @@ public class ConsoleView extends View {
 		vb.getChildren().addAll(console,buttons);
 		vb.setPrefSize(View.WIDE_WIDTH, View.NARROW_WIDTH);
 		group.getChildren().add(vb);
-		return group;
+		Pane pane = new Pane(group);
+		return pane;
 	}
 
 }

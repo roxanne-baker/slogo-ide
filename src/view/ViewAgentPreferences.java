@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -22,7 +23,7 @@ import javafx.scene.layout.VBox;
 public class ViewAgentPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
-	private VBox preferencesBox;
+	private HBox preferencesBox;
 	private String currentAgent;
 	private static final int PADDING = 10;
 	public ViewAgentPreferences(String id) {
@@ -41,13 +42,14 @@ public class ViewAgentPreferences extends View{
 
 
 	@Override
-	public Group getView() {
+	public Pane getView() {
 		updateView();
-		return viewGroup;
+		Pane pane = new Pane(viewGroup);
+		return pane;
 	}
 	private void updateView() {
 		viewGroup.getChildren().remove(preferencesBox);
-		preferencesBox = new VBox();
+		preferencesBox = new HBox();
 		preferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		ComboBox<String> agentDropDown = new ComboBox<String>();
 		for (String name: agentMap.keySet()){
@@ -63,6 +65,7 @@ public class ViewAgentPreferences extends View{
 		preferencesBox.getChildren().add(agentDropDown);
 		VBox agentPrefBox = new VBox();
 		List<Node> observerLabelList = new ArrayList<Node>();
+		preferencesBox.getChildren().add(agentPrefBox);
 		if(currentAgent!=null){
 			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
 			
@@ -70,9 +73,9 @@ public class ViewAgentPreferences extends View{
 			populateMutableGuiObjectList(agentMap.get(currentAgent),mutableGuiObjectList);
 			
 			addToAgentPrefBox(agentPrefBox, observerLabelList);
-			addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
+			addToAgentPrefBox(preferencesBox,mutableGuiObjectList);
+			//addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
 			}
-		preferencesBox.getChildren().add(agentPrefBox);
 
 
 		viewGroup.getChildren().add(preferencesBox);
