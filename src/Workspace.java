@@ -11,7 +11,7 @@ import model.Model;
 import view.View;
 import view.ConsoleView;
 import view.HistoryView;
-import view.VariableView;
+import view.VariablesView;
 
 public class Workspace implements Observer {
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
@@ -45,7 +45,7 @@ public class Workspace implements Observer {
 		for(String type: STANDARD_VIEWS){
 			View view = viewFactory.createView(type);
 			if(type=="Variables"){
-				((VariableView)view).addObserver(this);
+				((VariablesView)view).addObserver(this);
 			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);

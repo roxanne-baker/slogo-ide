@@ -8,16 +8,16 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-public class MethodView extends View{
-	private HashSet<ClickableText> methods = new HashSet<ClickableText>();
+public class MethodsView extends View{
+	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
 	
-	public MethodView(String id) {
+	public MethodsView(String id) {
  		super(id);
  	}
  	
  	public void addMethodView(String method){
- 		ClickableText methodView = new ClickableText(method);
+ 		TextBox methodView = new TextBox(method);
  		if(!methods.contains(methodView)){
  			methods.add(methodView);
  			methodViews.getChildren().add(methodView.getTextBox());

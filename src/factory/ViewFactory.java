@@ -2,14 +2,14 @@ package factory;
 
 import java.util.*;
 import controller.TurtleController;
-import controller.VariableController;
+import controller.VariablesController;
 import javafx.scene.paint.Color;
 import model.Interpreter;
 import model.VariableModel;
 import view.ConsoleView;
 import view.HistoryView;
-import view.MethodView;
-import view.VariableView;
+import view.MethodsView;
+import view.VariablesView;
 import view.View;
 import view.ViewAgents;
 import view.ViewPreferences;
@@ -17,9 +17,9 @@ import view.ViewPreferences;
 public class ViewFactory {
 //	private static HashMap<String,View> allViews = new HashMap<String,View>();
 	private HistoryView historyView; 
-	private VariableView variableView; 
+	private VariablesView variableView; 
 	private ConsoleView consoleView; 
-	private MethodView methodView; 
+	private MethodsView methodView; 
 	private ViewAgents agentsView; 
 	private ViewPreferences preferencesView;
 	
@@ -32,10 +32,10 @@ public class ViewFactory {
 			historyView = new HistoryView(ID);
 			return historyView;
 		case "Variables":
-			variableView = new VariableView(ID);
+			variableView = new VariablesView(ID);
 			return variableView;
 		case "Methods":
-			methodView = new MethodView(ID);
+			methodView = new MethodsView(ID);
 			return methodView;
 		case "Agent":
 			agentsView = new ViewAgents(ID);

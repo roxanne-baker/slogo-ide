@@ -7,7 +7,7 @@ import view.ViewPreferences;
 import model.Interpreter;
 import model.VariableModel;
 import controller.TurtleController;
-import controller.VariableController;
+import controller.VariablesController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,7 +20,7 @@ public class Tester extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		VariableModel vm = new VariableModel();
-		VariableController vc = new VariableController(vm);
+		VariablesController vc = new VariablesController(vm);
 		ViewAgents agentView = new ViewAgents("view");
 		HistoryView historyView = new HistoryView("view");
 		ConsoleView consoleView = new ConsoleView("view", historyView);
