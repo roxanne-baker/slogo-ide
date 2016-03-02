@@ -49,6 +49,9 @@ public class Workspace implements Observer {
 			if(type=="Variables"){
 				((VariablesView)view).addObserver(this);
 			}
+//			if(type=="Agents"){
+//				root.setConstraints(view.getView(), getViewCoords(type)[0], getViewCoords(type)[1]);
+//			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
 			root.add(view.getView(), coords[0], coords[1]);
