@@ -4,9 +4,13 @@ import controller.Controller;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import model.Interpreter;
 import model.Model;
@@ -17,6 +21,10 @@ import view.VariablesView;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final int COORD0 = 0;
+	private static final int COORD1 = View.WIDE_WIDTH;
+	private static final int COORD2 = View.WIDE_WIDTH+View.NARROW_WIDTH;
+	
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
 	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods", "WindowPreferences"};
 	private String[] STANDARD_CONTROLLERS = {"Agent","Variables","Methods"};
@@ -24,9 +32,10 @@ public class Workspace implements Observer {
 	private HashMap<String,View> viewMap = new HashMap<String,View>();
 	private HashMap<String,Controller> controllerMap = new HashMap<String,Controller>();
 	GridPane root = new GridPane();
+	Group group = new Group();
+	ScrollPane pane = new ScrollPane(group);
 	
 	public Scene init(){
-		initGridConstraints();
 		initModels();
 		initViews();
 		initControllers();
@@ -34,14 +43,9 @@ public class Workspace implements Observer {
 		((ConsoleView) viewMap.get("Console")).setInterpreter(ip);
 		((HistoryView) viewMap.get("History")).setInterpreter(ip);
 		((ViewWindowPreferences) viewMap.get("WindowPreferences")).setInterpreter(ip);
-		return new Scene(root);
+		return new Scene(pane);
 	}
-	
-	private void initGridConstraints(){
-		root.getColumnConstraints().add(new ColumnConstraints(View.WIDE_WIDTH));
-		root.getRowConstraints().add(new RowConstraints(View.WIDE_WIDTH));
-	}
-	
+
 	private void initModels(){
 		ModelFactory modelFactory = new ModelFactory();
 		for(String type: STANDARD_MODELS){
@@ -57,12 +61,12 @@ public class Workspace implements Observer {
 			if(type=="Variables"){
 				((VariablesView)view).addObserver(this);
 			}
-			if(type=="Agents"){
-				root.setConstraints(view.getView(), getViewCoords(type)[0], getViewCoords(type)[1]);
-			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
-			root.add(view.getView(), coords[0], coords[1]);
+			Pane viewGroup = view.getView();
+			viewGroup.setTranslateX(coords[0]);
+			viewGroup.setTranslateY(coords[1]);
+			group.getChildren().add(viewGroup);
 		}
 	}
 	
@@ -72,22 +76,22 @@ public class Workspace implements Observer {
 		case "Agent":
 			break;
 		case "Console":
-			coords = new int[]{0,1};
+			coords = new int[]{COORD0,COORD1};
 			break;
 		case "History":
-			coords = new int[]{1,0};
+			coords = new int[]{COORD1,COORD0};
 			break;
 		case "Methods":
-			coords = new int[]{2,0};
+			coords = new int[]{COORD2,COORD0};
 			break;
 		case "Variables":
-			coords = new int[]{2,1};
+			coords = new int[]{COORD2,COORD1};
 			break;
 		case "Preferences":
-			coords = new int[]{1,1};
+			coords = new int[]{COORD0,COORD2};
 			break;
 		case "WindowPreferences":
-			coords = new int[]{0,2};
+			coords = new int[]{COORD1,COORD1};
 			break;
 		}
 		return coords;
@@ -111,9 +115,13 @@ public class Workspace implements Observer {
 	}
 
 	private void updateView(View view) {
-		root.getChildren().remove(view.getView());
+		group.getChildren().remove(view.getView());
 		int[] coords = getViewCoords(view.getID());
-		root.add(view.getView(),coords[0],coords[1]);
+		Pane viewGroup = view.getView();
+		viewGroup.setTranslateX(coords[0]);
+		viewGroup.setTranslateY(coords[1]);
+		group.getChildren().add(viewGroup);
+		
 	}
 
 

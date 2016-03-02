@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 import view.ConsoleView;
 import view.HistoryView;
-import view.VariableView;
+import view.VariablesView;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
 import view.ViewWindowPreferences;
@@ -24,12 +24,10 @@ public class Tester extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		VariableModel vm = new VariableModel();
-<<<<<<< HEAD
-		VariablesController vc = new VariablesController(vm);
-=======
-		VariableView vv = new VariableView("HI");
-		VariableController vc = new VariableController(vm, vv);
->>>>>>> c03b3a5f4ce5f0b89f60de4c90ffb1fcf5423dd9
+
+		VariablesView vv = new VariablesView("HI");
+		VariablesController vc = new VariablesController(vm, vv);
+
 		ViewAgents agentView = new ViewAgents("view");
 		HistoryView historyView = new HistoryView("view");
 		ConsoleView consoleView = new ConsoleView("view", historyView);
@@ -41,11 +39,11 @@ public class Tester extends Application{
 		Interpreter ip = new Interpreter(hm);
 		//consoleView.setInterpreter(ip);
 		tc.addAgent("Melissa");
-		
+		tc.moveCurrentAgent(0, 500);
 		ViewWindowPreferences windowPrefView = new ViewWindowPreferences("HI");
 		Group root = new Group();
 		VBox vbox = new VBox();
-		vbox.getChildren().add(windowPrefView.getView());
+		vbox.getChildren().addAll(agentView.getView());
 		root.getChildren().addAll(vbox);
         Scene myScene = new Scene(root, 500,500);
 		primaryStage.setScene(myScene);

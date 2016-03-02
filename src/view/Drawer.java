@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 
 public class Drawer {
-	private Group agentGroup;
+	private Pane agentGroup;
 	private List<ImageView> stampList;
 	private List<Node> lineList;
 	private List<ImageView> agentViewList;
-	public Drawer(Group g){
-		agentGroup = g;
+	public Drawer(Pane agentPane){
+		agentGroup = agentPane;
 		stampList = new ArrayList<ImageView>();
 		lineList = new ArrayList<Node>();
 		agentViewList = new ArrayList<ImageView>();
@@ -43,18 +43,19 @@ public class Drawer {
 	 * Need to make a copy of ImageView to stamp it otherwise run into duplicate children issue
 	 */
 	public void stampImage(ImageView img, double xPosition, double yPosition){
-		img.setX(xPosition - img.getBoundsInParent().getWidth()/2);
-		img.setY(yPosition - img.getBoundsInParent().getHeight()/2);
-		
+		setLocation(img, xPosition, yPosition);
 		stampList.add(img);
 		agentGroup.getChildren().add(img);
 	}
+	private void setLocation(ImageView img, double xPosition, double yPosition) {
+		img.setLayoutX(xPosition -  img.getBoundsInParent().getWidth()/2);
+		img.setLayoutY(yPosition - img.getBoundsInParent().getHeight()/2);
+
+	}
 	
 	public void moveImage(ImageView img, double xPosition, double yPosition){
-
 		agentGroup.getChildren().remove(img);
-		img.setX(xPosition - img.getBoundsInParent().getWidth()/2);
-		img.setY(yPosition - img.getBoundsInParent().getHeight()/2);
+		setLocation(img, xPosition, yPosition);
 		agentGroup.getChildren().add(img);
 		if (!agentViewList.contains(img)){
 			agentViewList.add(img);
@@ -69,8 +70,7 @@ public class Drawer {
 	public void setNewImage(ImageView oldView,ImageView newView, double xPosition,double yPosition) {
 		agentGroup.getChildren().remove(oldView);
 		agentViewList.remove(oldView);
-		newView.setX(xPosition - newView.getBoundsInParent().getWidth()/2);
-		newView.setY(yPosition - newView.getBoundsInParent().getHeight()/2);
+		setLocation(newView, xPosition, yPosition);
 		agentGroup.getChildren().add(newView);
 		agentViewList.add(newView);
 

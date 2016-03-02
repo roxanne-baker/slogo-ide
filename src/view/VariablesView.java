@@ -22,12 +22,14 @@ public class VariablesView extends View{
 
 
 	@Override
-	public Group getView() {
+	public Pane getView() {
 		Group group = new Group();
 		savedVars.setPrefSize(View.NARROW_WIDTH,View.NARROW_WIDTH);
 		ScrollPane sp = new ScrollPane(savedVars);
 		group.getChildren().add(sp);
-		return group;
+		Pane pane = new Pane(group);
+		setStyleClass(pane);
+		return pane;
 	}
 	
 

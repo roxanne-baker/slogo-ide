@@ -13,7 +13,7 @@ public interface IAgentController {
 	int getNumAgents();
 	List<Agent> getAgents();
 	List<String> getAgentNames();
-	void addAgent(String agentName); //Throws error if agentName has already been created
+	void addAgent(String agentName); 
 	void removeAgent(String agentName);
 	boolean isAgent(String name); 
 	boolean isValidAgentName(String name);

@@ -6,8 +6,9 @@ import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
+
 import javafx.scene.control.Button;
+
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -25,36 +26,37 @@ public class ViewAgents extends View{
 	private static final Color DEFAULT_COLOR = Color.WHITE;
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final String WINDOW_PROPERTIES = "windowProperties";
+	private static final double MAX_PREFERENCE_HEIGHT = 40;
+
 	private Drawer drawer;
-	private Group agentGroup;
 	private Color backgroundColor;
-	private Pane pane;
-	private Group viewGroup;
 	private ResourceBundle updateResources;
 	private ResourceBundle windowResources;
 	private HBox agentViewPreferences;
+	private Pane agentPane;
+
 	
 	public ViewAgents(String id) {
 		super(id);
-		agentGroup = new Group();
-		drawer = new Drawer(agentGroup);
-
-		pane = new Pane();
-		pane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
-		pane.getChildren().add(agentGroup);
-
-		viewGroup = new Group();
-		viewGroup.getChildren().add(pane);
 		backgroundColor = DEFAULT_COLOR;
+
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
-		
+		agentPane = new Pane();
+		drawer = new Drawer(agentPane);
+
+		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
+
 		agentViewPreferences = new HBox();
-		agentViewPreferences.setLayoutY(WIDE_WIDTH);
-		pane.getChildren().add(agentViewPreferences);
+		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
+		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
+		agentPane.getChildren().add(agentViewPreferences);
+
+
+
 	}
 	public void setBackgroundColor(Color color){
-		pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+		agentPane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		backgroundColor = color;
 	}
 	public Color getBackgroundColor(){
@@ -72,9 +74,10 @@ public class ViewAgents extends View{
         agentViewPreferences.getChildren().add(colorPicker);
 
 	}
+
 	@Override
 	public void update(Observable agent, Object obj) {
-		System.out.println(obj);
+
 		if(((Agent) agent).isVisible()){
 			if (obj == updateResources.getString("STAMP")){
 				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
@@ -85,7 +88,9 @@ public class ViewAgents extends View{
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor());
 				
 				}
-			}else if (obj == updateResources.getString("INITIAL")){ //fix this resource stuff
+
+			}else if (obj == updateResources.getString("INITIAL")){ 
+
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (obj == updateResources.getString("IMAGEVIEW")){
@@ -95,16 +100,20 @@ public class ViewAgents extends View{
 			drawer.removeImage(((Agent) agent).getImageView());
 			
 		}
-			
-	}
-			
 
-	@Override
-	public Group getView() {
-		setUpColorPicker();
-		setUpClearButton();
-		return viewGroup;
+			
 	}
+			
+	@Override
+	public Pane getView() {
+		setUpColorPicker();
+
+		setUpClearButton();
+		return agentPane;
+
+	}
+	
+
 	private void setUpClearButton() {
 		Button clearButton = new Button(windowResources.getString("CLEARBUTTON"));
 		clearButton.setOnAction(new EventHandler() {
