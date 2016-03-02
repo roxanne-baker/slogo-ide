@@ -38,6 +38,7 @@ import commands.Power;
 import commands.Product;
 import commands.RandomCommand;
 import commands.Remainder;
+import commands.Repeat;
 import commands.Right;
 import commands.SetHeading;
 import commands.SetXY;
@@ -146,7 +147,7 @@ public class Interpreter extends Observable {
     				processTree(root);
     				callBuildTree(text);
     			}
-    			else { 
+    			else if (parsedFirst.equals("Constant") || parsedFirst.equals("Variable")){ 
     				sendError("Too many parameters!");
     			}
     		} else { 
@@ -155,7 +156,7 @@ public class Interpreter extends Observable {
     		return true; 
     	}
     	else if (text.length() == 0 && !commandStack.isEmpty()) {
-    		sendError("Not enough params"); 
+    		sendError("Not enough parameters!"); 
         	return true; 
     	} 
     	else if (parsedFirst.equals("Variable")) { 
@@ -169,7 +170,7 @@ public class Interpreter extends Observable {
         		return true;
     		}
     	}
-    	else if (!parsedFirst.equals("Constant") && errorCommandName(parsedFirst)) { 
+    	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart") && errorCommandName(parsedFirst)) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return true;
     	}
@@ -196,12 +197,21 @@ public class Interpreter extends Observable {
     		}
     		attachNode(cur, commandStack);
    		} 
+    	else if (parsedFirst.equals("ListStart")) { 
+    		cur = new ParseNode(stringInBracket(text));
+    		attachNode(cur, commandStack);
+    	}
     	else { 
     		cur = new ParseNode(commandsMap.get(parsedFirst));
     		attachNode(cur, commandStack);
     		commandStack.push(cur);
     	} 
 		buildExprTree(cutFirst(text), commandStack, root); 
+    }
+    
+    private String stringInBracket(String s) { 
+    	int endIndex = s.indexOf("]") - 1;
+    	return s.substring(1, endIndex).trim();
     }
     
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {
@@ -286,9 +296,14 @@ public class Interpreter extends Observable {
 		addTurtleQueries();
 		addMathOps();
 		addBooleanOps();
+		addControlStructureCommands();
 		commandsMap.put("MakeVariable", new MakeVar(variableController));
 	}
 	
+    private void addControlStructureCommands() { 
+    	commandsMap.put("Repeat", new Repeat(this));
+    }
+    
 	private void addTurtleCommands() {
 		commandsMap.put("Forward", new Forward(turtleController));
 		commandsMap.put("Back", new Back(turtleController));
