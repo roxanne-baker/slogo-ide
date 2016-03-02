@@ -1,6 +1,7 @@
 
 package commands;
 
+import java.util.Arrays;
 import java.util.List;
 import controller.VariablesController;
 import model.Interpreter;
@@ -21,6 +22,7 @@ public class For extends Command implements Executable {
 		String variableStartEndIncrement = (String) params.get(0);
 		String[] forLoopCondition = variableStartEndIncrement.split(" ");
 		String varName = forLoopCondition[0];
+		System.out.println(Arrays.toString(forLoopCondition));
 		double start = Double.parseDouble(forLoopCondition[1]);
 		double end = Double.parseDouble(forLoopCondition[2]);
 		double increment = Double.parseDouble(forLoopCondition[3]);
@@ -28,13 +30,13 @@ public class For extends Command implements Executable {
 		String commands = (String) params.get(1);
 		
 		for (double i=start; i<end; i+= increment) {
-			interpreter.run("MAKE "+varName+" "+i);
+			//interpreter.run("MAKE "+varName+" "+i);
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}
 
 		//NEED TO ADD IN RETURN VALUE
-		return 0;
+		return interpreter.getReturnResult();
 	}	
 
 	
