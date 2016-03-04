@@ -1,6 +1,8 @@
 package view;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -13,6 +15,9 @@ import java.util.ResourceBundle;
 public class GuiObjectFactory {
 	private static final String WINDOW_RESOURCES = "windowProperties";
 	private static final String HELP_FILE = "help.html";
+	private static final String UPDATE_RESOURCES = "updateObserver";
+	private static final List<String> PEN_STYLE_LIST = Arrays.asList("SOLID","DASHED","DOTTED");
+
 	public GuiObjectFactory(){
 	}
 	public GuiObject createNewGuiObject(String type, Agent agent){
@@ -37,8 +42,12 @@ public class GuiObjectFactory {
 				return new GuiObjectInputBox(type, agent.getResourceString(), agent, (a,b)->((Agent)a).setImagePath(b));
 			}
 			case("HELP"):{
-				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, agent, HELP_FILE);
+				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, null , HELP_FILE);
 			}
+			case("PENSTYLE"):{
+				return new GuiObjectRadioButton(type,agent.getResourceString(), agent, agent.getPenStyle(), PEN_STYLE_LIST, (a,s)->((Agent) a).setPenStyle(s));
+			}
+
 
 
 

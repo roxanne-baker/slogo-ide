@@ -3,10 +3,13 @@ import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -28,11 +31,12 @@ public abstract class Agent extends Observable{
 	private StringProperty agentImagePath;
 	private DoubleProperty oldYPosition;
 	private DoubleProperty oldXPosition;
-	private boolean isVisible;
+	private BooleanProperty isVisible;
 	private double penThickness;
 	private StringProperty nameProperty;
 	private DoubleProperty sizeProperty;
 	private ResourceBundle myResources;
+	private String penStyle;
 	
 	public Agent(String name, double defaultXlocation, double defaultYlocation,View obsView){
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
@@ -44,12 +48,13 @@ public abstract class Agent extends Observable{
 		penThickness = DEFAULT_PEN_THICKNESS;
 		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); 
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
-		isVisible = true;
+		isVisible = new SimpleBooleanProperty(true);
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
 		oldImageView = agentImageView;
 		nameProperty = new SimpleStringProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+		penStyle = myResources.getString("SOLID");
 
 	}
 	public double getXPosition(){
@@ -58,7 +63,13 @@ public abstract class Agent extends Observable{
 	public double getYPosition(){
 		return agentYPosition.doubleValue();
 	}
-	
+	public DoubleProperty getXPositionProperty(){
+		return agentXPosition;
+		
+	}
+	public DoubleProperty getYPositionProperty(){
+		return agentYPosition;
+	}
 	public void movePosition(double x, double y){
 		oldXPosition.setValue(agentXPosition.getValue());
 		oldYPosition.setValue(agentYPosition.getValue());
@@ -94,8 +105,13 @@ public abstract class Agent extends Observable{
 	public double getPenThickness(){
 		return penThickness;
 	}
+	public void setPenStyle(String style){
+		penStyle = style;
+	}
+	public String getPenStyle(){
+		return penStyle;
+	}
 	
-
 	public StringProperty getImagePathProperty(){
 		return agentImagePath;
 	}
@@ -160,7 +176,7 @@ public abstract class Agent extends Observable{
 		
 	}
 	public void setVisible(boolean isVis) {
-		isVisible = isVis;
+		isVisible.setValue(isVis);
 		setChanged();
 		notifyObservers(myResources.getString("VISIBLE"));
 		setChanged();
@@ -168,7 +184,7 @@ public abstract class Agent extends Observable{
 		
 	}
 	public boolean isVisible(){
-		return isVisible;
+		return isVisible.getValue();
 	}
 	
 	public abstract List<String> getMutableProperties();
@@ -180,6 +196,10 @@ public abstract class Agent extends Observable{
 
 	public ImageView getOldImageView() {
 		return oldImageView;
+	}
+	public BooleanProperty getVisibleProperty() {
+		
+		return isVisible;
 	}
 	
 }	

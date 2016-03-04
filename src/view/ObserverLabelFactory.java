@@ -27,6 +27,18 @@ public class ObserverLabelFactory {
 			labelObject.getObserverLabel().textProperty().bind(Bindings.convert(agent.getOrientationProperty()));
 			return myLabel;
 		}
+		case("XPOSITION"):{
+			labelObject.getObserverLabel().textProperty().bind(Bindings.convert(agent.getXPositionProperty()));
+			return myLabel;
+		}
+		case("YPOSITION"):{
+			labelObject.getObserverLabel().textProperty().bind(Bindings.convert(agent.getYPositionProperty()));
+			return myLabel;
+			
+		}case("VISIBLE"):{
+			labelObject.getObserverLabel().textProperty().bind(Bindings.convert(agent.getVisibleProperty()));
+			return myLabel;
+		}
 		}
 		return null;
 	}
