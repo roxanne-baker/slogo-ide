@@ -21,6 +21,8 @@ public abstract class Agent extends Observable{
 	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	private static final double DEFAULT_SIZE = 50;
 	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
+	private static final String[] shapeList = {"IMAGE","SQUARE","TRIANGLE","HEXAGON"};
+	private int currentShapeIndex;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
 	private boolean agentPenUp;
@@ -51,6 +53,7 @@ public abstract class Agent extends Observable{
 		isVisible = new SimpleBooleanProperty(true);
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
+		currentShapeIndex = 0;
 		oldImageView = agentImageView;
 		nameProperty = new SimpleStringProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
@@ -198,8 +201,16 @@ public abstract class Agent extends Observable{
 		return oldImageView;
 	}
 	public BooleanProperty getVisibleProperty() {
-		
 		return isVisible;
+	}
+	public int getCurrentShapeIndex(){
+		return currentShapeIndex;
+	}
+	public String getCurrentShape(){
+		return shapeList[currentShapeIndex];
+	}
+	public void setCurrentShapeIndex(int index){
+		currentShapeIndex = index;
 	}
 	
 }	
