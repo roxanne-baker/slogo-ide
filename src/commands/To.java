@@ -15,13 +15,14 @@ public class To extends Command implements Executable {
 	
 	public To(Interpreter interpreter, VariablesController variablesController, MethodsController methodController) {
 		this.methodController = methodController;
+		this.variablesController = variablesController;
 		this.interpreter = interpreter;
 		numParams = 3;
 		needsVarName = true;
 	}
 	
 	public double execute(List<Object> params) {
-		String methodName = (String) params.get(0);
+		String methodName = ((String) params.get(0)).trim();
 		String[] varNamesArray = ((String) params.get(1)).split(" ");
 		String commands = (String) params.get(2);
 		CreatedMethod createdMethod = new CreatedMethod(interpreter, variablesController, methodName, varNamesArray, commands);

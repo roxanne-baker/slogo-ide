@@ -69,6 +69,8 @@ public class Interpreter extends Observable {
 		turtleController = (TurtleController) controllers.get("Agent"); 
 		variableController = (VariablesController) controllers.get("Variables");
 		methodController = (MethodsController) controllers.get("Methods");
+		initializeCommandsMap();
+		initializeLangs();
 	}
 	
 	public void addLang(String language) { 
@@ -82,18 +84,22 @@ public class Interpreter extends Observable {
 	}
 	
 	public void run(String userInput) { 
-		initializeLangs();
-		initializeCommandsMap();
 		callBuildTree(userInput);
 	}
     
     private void callBuildTree(String text) { 
     	String parsedFirst = parseText(takeFirst(text));
-    	if (errorCommandName(parsedFirst)) { 
+    	if (errorCommandName(parsedFirst) && errorCommandName(takeFirst(text))) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return;
     	}
-    	Command c = commandsMap.get(parsedFirst);
+    	Command c;
+    	if (!errorCommandName(takeFirst(text))) {
+    		c = commandsMap.get(takeFirst(text));
+    	}
+    	else { 
+    		c = commandsMap.get(parsedFirst);
+    	}
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
@@ -170,19 +176,18 @@ public class Interpreter extends Observable {
     	}
     	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart")) { 
     		if (parsedFirst.equals("Command")) { 
-    			System.out.println(!errorCommandName(takeFirst(text)));
     			if (commandStack.peek().getCommand().isNeedsVarName() || !errorCommandName(takeFirst(text))) { 
     				return false; 
-    			} else if (errorCommandName(parsedFirst)) { 
-    				return true; 
     			} else { 
     				sendError(String.format("%s is not a valid command", takeFirst(text)));
     				return true;
     			}
+    		} else if (!errorCommandName(parsedFirst)) { 
+    			return false; 
     		}
     		sendError(String.format("%s is not a valid input", takeFirst(text)));
     		return true;
-    	}
+    	} 
     	return false;
     }
     
