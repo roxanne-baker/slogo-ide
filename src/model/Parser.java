@@ -3,16 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import controller.TurtleController;
-import controller.VariablesController;
+
 
 public class Parser {
 

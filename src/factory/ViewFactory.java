@@ -1,12 +1,5 @@
 package factory;
 
-import java.util.*;
-
-import controller.TurtleController;
-import controller.VariablesController;
-import javafx.scene.paint.Color;
-import model.Interpreter;
-import model.VariableModel;
 import view.ConsoleView;
 import view.HistoryView;
 import view.MethodsView;
