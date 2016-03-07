@@ -36,6 +36,10 @@ public class CreatedMethod extends Command implements Executable {
 		return 0;
 	}	
 	
+	public String getMethodCommands() { 
+		return commands;
+	}
+	
 	public String checkParamTypes(List<Object> params) {
 		for (int i=1; i<params.size(); i++) {
 			Object command = params.get(i);

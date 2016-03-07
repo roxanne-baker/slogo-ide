@@ -8,6 +8,7 @@ import java.util.Stack;
 import commands.XCor;
 import commands.YCor;
 import controller.Controller;
+import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
 import commands.ArcTangent;
@@ -48,6 +49,7 @@ import commands.ShowingQuery;
 import commands.Sine;
 import commands.Sum;
 import commands.Tangent;
+import commands.To;
 import commands.Towards;
 
 public class Interpreter extends Observable {
@@ -58,12 +60,14 @@ public class Interpreter extends Observable {
     private final String resourcesPath = "resources/languages/";
 	private TurtleController turtleController;
 	private VariablesController variableController;
+	private MethodsController methodController;
 	private String errorMessage = new String();
 	private double returnResult; 
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
 		variableController = (VariablesController) controllers.get("Variables");
+		methodController = (MethodsController) controllers.get("Method");
 	}
 	
 	public void addLang(String language) { 
@@ -220,14 +224,6 @@ public class Interpreter extends Observable {
 		}
     }
     
-//    private String cutList(String s) { 
-//    	String reversed = new StringBuilder(s).reverse().toString();
-//    	int tempIndex = reversed.indexOf("]");
-//    	int endIndex = s.length() - tempIndex - 1; 
-//    	System.out.println("blah blah" + s.substring(endIndex + 1).trim());
-//    	return s.substring(endIndex + 1).trim();
-//    }
-    
     private String takeList(String s) { 
     	return s.substring(1, endParenIndex(s)).trim();
     }
@@ -367,6 +363,7 @@ public class Interpreter extends Observable {
     	commandsMap.put("If", new If(this));
     	commandsMap.put("IfElse", new IfElse(this));
     	commandsMap.put("For", new For(this, variableController));
+    	commandsMap.put("To", new To(this, variableController, methodController));
     }
     
 	private void addTurtleCommands() {
