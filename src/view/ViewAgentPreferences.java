@@ -1,5 +1,6 @@
 package view;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  * This class is an extension of the View abstract class. It will display all the Agents properties and will be user interactive. 
@@ -27,12 +30,15 @@ public class ViewAgentPreferences extends View{
 	private Group viewGroup;
 	private HBox allPreferencesBox;
 	private StringProperty currentAgentNameProperty;
+	private HBox customColorBox;
+	private CustomColorPalette colorPalette;
 	private static final int PADDING = 10;
 	public ViewAgentPreferences(String id) {
 		super(id);
 		viewGroup = new Group();
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
+		colorPalette = new CustomColorPalette();
 	}
 
 	@Override
@@ -54,6 +60,7 @@ public class ViewAgentPreferences extends View{
 		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		
 		setUpAgentDropDown();
+		setUpCustomColors();
 		
 		VBox observerBox = new VBox();
 		allPreferencesBox.getChildren().add(observerBox);
@@ -88,6 +95,16 @@ public class ViewAgentPreferences extends View{
             }
 		});
 		allPreferencesBox.getChildren().add(agentDropDown);
+	}
+	private void setUpCustomColors(){
+		customColorBox = new HBox();
+		for(CustomColor color: colorPalette.getCustomColorList()){
+			Rectangle colorSquare = new Rectangle(10,10);
+			colorSquare.setStroke(Color.BLACK);
+			colorSquare.setFill(Color.rgb(color.getRed(),color.getGreen(),color.getBlue()));
+			customColorBox.getChildren().add(colorSquare);
+		}
+		allPreferencesBox.getChildren().add(customColorBox);
 	}
 
 	private void addToAgentPrefBox(Pane agentPrefBox,List<Node> ObjectList) {

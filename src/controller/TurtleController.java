@@ -248,6 +248,12 @@ public class TurtleController extends Controller implements IAgentController{
 		
 	}
 
+	@Override
+	public void setColorPalette(int colorIndex, int red, int green, int blue) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 	
