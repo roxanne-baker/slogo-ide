@@ -7,29 +7,24 @@ import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 
 public abstract class View extends Observable implements Observer{
-//	public static int WIDE_WIDTH = 400;
-//	public static int NARROW_WIDTH = 200;
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
 	public static int WIDE_WIDTH = 500;
 	public static int NARROW_WIDTH = 250;
 	private ResourceBundle updateResources;
-	private Pane pane;
-	
-	private String viewID;
+	private ViewType viewType;
 
-
-//	public View(String id){
-//		viewID = id;
-//	}
 	
-	public View(String id){
-		viewID = id;
+	public View(ViewType ID){
+		viewType = ID;
 		updateResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
+	}
+	
+	public ViewType getType(){
+		return viewType;
 	}
 	
 	public abstract Pane getView();
 	
-//	public abstract Group getView();
 	
 	public void update(Observable o, Object arg){
 	}
@@ -37,9 +32,5 @@ public abstract class View extends Observable implements Observer{
 	// added
 	public void setStyleClass(Pane pane){
 		pane.getStyleClass().add(updateResources.getString("VIEW"));
-	}
-	
-	public String getID(){
-		return viewID;
 	}
 }

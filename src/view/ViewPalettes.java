@@ -4,8 +4,9 @@ import javafx.scene.layout.Pane;
 
 public class ViewPalettes extends View{
 
-	public ViewPalettes(String id) {
-		super(id);
+
+	public ViewPalettes(ViewType ID) {
+		super(ID);
 		// TODO Auto-generated constructor stub
 	}
 
