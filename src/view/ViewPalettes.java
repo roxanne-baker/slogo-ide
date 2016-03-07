@@ -2,6 +2,7 @@ package view;
 
 import java.util.ResourceBundle;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -28,13 +29,15 @@ public class ViewPalettes extends View{
 	}
 
 	private void setUpShapePalette() {
+		Label shapeLabel = new Label(myResources.getString("SHAPESLABEL"));
 		ShapePalette shapePalette = new ShapePalette(myResources.getString("SHAPES"),PALETTE_SIZE);
-		vbox.getChildren().add(shapePalette.getPaletteViewGroup());
+		vbox.getChildren().addAll(shapeLabel,shapePalette.getPaletteViewGroup());
 	}
 
 	private void setUpColorPalette() {
+		Label colorLabel = new Label(myResources.getString("CUSTOMCOLORSLABEL"));
 		CustomColorPalette colorPalette = new CustomColorPalette(myResources.getString("CUSTOMCOLORS"),PALETTE_SIZE);
-		vbox.getChildren().add(colorPalette.getPaletteViewGroup());
+		vbox.getChildren().addAll(colorLabel, colorPalette.getPaletteViewGroup());
 	}
 
 }
