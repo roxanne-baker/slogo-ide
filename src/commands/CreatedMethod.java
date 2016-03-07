@@ -19,11 +19,12 @@ public class CreatedMethod extends Command implements Executable {
 		this.commands = commands;
 		numParams = paramNames.length;
 		
-		for (int i=0; i<paramNames.length; i++) {
-			if (variablesController.getVariable(paramNames[i]) == null) {
-				variablesController.addVariable(paramNames[i], "0");
-			}
-		}
+//		for (int i=0; i<numParams; i++) {
+//			if (variablesController.getVariable(paramNames[i]) == null) {
+//				variablesController.addVariable(paramNames[i], "0");
+//			}
+//		}
+
 	}
 	
 	public double execute(List<Object> params) {
@@ -31,11 +32,12 @@ public class CreatedMethod extends Command implements Executable {
 			variablesController.addVariable(paramNames[i], ""+params.get(i));
 		}
 		interpreter.run(commands);
-
-		//NEED TO ADD IN RETURN VALUE
 		return 0;
 	}	
 	
+	public String getMethodCommands() { 
+		return commands;
+	}
 	public String checkParamTypes(List<Object> params) {
 		for (int i=1; i<params.size(); i++) {
 			Object command = params.get(i);
