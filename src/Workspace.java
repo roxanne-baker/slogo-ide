@@ -27,7 +27,7 @@ public class Workspace implements Observer {
 	
 	private String[] STANDARD_MODELS = {"Variables","Methods"};
 	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods", "WindowPreferences"};
-	private String[] STANDARD_CONTROLLERS = {"Agent","Variables","Methods"};
+	private String[] STANDARD_CONTROLLERS = {"Agent","Variables","Methods","ColorPicker"};
 	private HashMap<String,Model> modelMap = new HashMap<String,Model>();
 	private HashMap<String,View> viewMap = new HashMap<String,View>();
 	private HashMap<String,Controller> controllerMap = new HashMap<String,Controller>();
@@ -74,6 +74,8 @@ public class Workspace implements Observer {
 		int[] coords = new int[2];
 		switch(type){
 		case "Agent":
+			break;
+		case "BackgroundPreferences":
 			break;
 		case "Console":
 			coords = new int[]{COORD0,COORD1};

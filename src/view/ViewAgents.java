@@ -1,6 +1,7 @@
 package view;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -40,6 +41,7 @@ public class ViewAgents extends View{
 	private HashMap<ImageView,Agent> imageAgentMap;
 	private StringProperty currentAgentNameProperty;
 	protected HashMap<String, Agent> agentMap;
+	private ColorPicker colorPicker;
 
 	
 	public ViewAgents(String id) {
@@ -75,7 +77,7 @@ public class ViewAgents extends View{
 	}
 	
 	public void setUpColorPicker(){
-		ColorPicker colorPicker = new ColorPicker(backgroundColor);
+		colorPicker = new ColorPicker(backgroundColor);
         colorPicker.setOnAction(new EventHandler() {
             public void handle(Event t) {
                 setBackgroundColor(colorPicker.getValue());      
@@ -194,8 +196,15 @@ public class ViewAgents extends View{
 	}
 	public void updateAgentMap(HashMap<String, Agent> newAgentMap) {
 		agentMap = newAgentMap;
-		
 	}
+	
+	public List<Color> getCustomColors() {
+	return colorPicker.getCustomColors();
+	}
+	
+	public void setColor(Color color) {
+		setBackgroundColor(color);
+}
 
 	
 }

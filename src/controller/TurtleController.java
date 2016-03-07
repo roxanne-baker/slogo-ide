@@ -9,6 +9,7 @@ import view.ViewAgents;
 import view.ViewAgentPreferences;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Color;
 
 
 
@@ -214,8 +215,11 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void setCurrentAgentPenColor(int colorIndex) {
-		// TODO Auto-generated method stub
-		
+		Color penColor = preferencesView.getColorPalette().getCustomColorList().get(colorIndex);
+		System.out.println("PEN COLOR:");
+		System.out.println(penColor == null);
+		System.out.println(this.getCurrentAgent(getCurrentAgent()) == null);
+		this.getCurrentAgent(getCurrentAgent()).setPenColor(penColor);
 	}
 
 	@Override

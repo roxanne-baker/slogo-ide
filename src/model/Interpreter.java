@@ -1,12 +1,14 @@
 package model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Stack;
 
 import commands.XCor;
 import commands.YCor;
+import controller.ColorPickerController;
 import controller.Controller;
 import controller.TurtleController;
 import controller.VariablesController;
@@ -41,7 +43,10 @@ import commands.RandomCommand;
 import commands.Remainder;
 import commands.Repeat;
 import commands.Right;
+import commands.SetBackground;
 import commands.SetHeading;
+import commands.SetPalette;
+import commands.SetPenColor;
 import commands.SetXY;
 import commands.ShowTurtle;
 import commands.ShowingQuery;
@@ -58,12 +63,14 @@ public class Interpreter extends Observable {
     private final String resourcesPath = "resources/languages/";
 	private TurtleController turtleController;
 	private VariablesController variableController;
+	private ColorPickerController colorPickerController;
 	private String errorMessage = new String();
 	private double returnResult; 
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
 		variableController = (VariablesController) controllers.get("Variables");
+		colorPickerController = (ColorPickerController) controllers.get("ColorPicker");
 	}
 	
 	public void addLang(String language) { 
@@ -107,8 +114,16 @@ public class Interpreter extends Observable {
     		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
     		if (cur.allParamsHaveValue()) { 
-    			result = cur.getCommand().execute(cur.extractParamsFromNode());
-    			cur.setValue(result);
+    			List<Object> params = cur.extractParamsFromNode();
+    			String error = cur.getCommand().checkParamTypes(params);
+    			if (error != null) {
+    				sendError(error);
+    				return;
+    			}
+    			else {
+    				result = cur.getCommand().execute(cur.extractParamsFromNode());
+    				cur.setValue(result);
+    			}
     		}
     	}
     	returnResult = (double) result;
@@ -360,6 +375,9 @@ public class Interpreter extends Observable {
 		addBooleanOps();
 		addControlStructureCommands();
 		commandsMap.put("MakeVariable", new MakeVar(variableController));
+		commandsMap.put("SetPalette", new SetPalette(colorPickerController));
+		commandsMap.put("SetBackground", new SetBackground(colorPickerController));
+		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
 	}
 	
     private void addControlStructureCommands() { 

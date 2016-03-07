@@ -31,7 +31,10 @@ public class ViewAgentPreferences extends View{
 	private HBox allPreferencesBox;
 	private StringProperty currentAgentNameProperty;
 	private HBox customColorBox;
+	private List<HBox> customColorBoxes;
 	private CustomColorPalette colorPalette;
+	List<GuiObject> guiObjects;
+	
 	private static final int PADDING = 10;
 	public ViewAgentPreferences(String id) {
 		super(id);
@@ -39,6 +42,8 @@ public class ViewAgentPreferences extends View{
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
 		colorPalette = new CustomColorPalette();
+		guiObjects = new ArrayList<>();
+		customColorBoxes = new ArrayList<>();
 	}
 
 	@Override
@@ -59,9 +64,7 @@ public class ViewAgentPreferences extends View{
 		allPreferencesBox = new HBox();
 		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		
-		setUpAgentDropDown();
-		setUpCustomColors();
-		
+		setUpAgentDropDown();		
 		VBox observerBox = new VBox();
 		allPreferencesBox.getChildren().add(observerBox);
 
@@ -77,9 +80,10 @@ public class ViewAgentPreferences extends View{
 			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
 			}
 
-		
-
 		viewGroup.getChildren().add(allPreferencesBox);
+		
+		setUpCustomColors();
+		
 	}
 
 	private void setUpAgentDropDown() {
@@ -96,14 +100,20 @@ public class ViewAgentPreferences extends View{
 		});
 		allPreferencesBox.getChildren().add(agentDropDown);
 	}
-	private void setUpCustomColors(){
+	public void setUpCustomColors(){
+//		for (HBox customColorBox : customColorBoxes) {
+			if (allPreferencesBox.getChildren().contains(customColorBox)) {
+				allPreferencesBox.getChildren().remove(customColorBox);
+			}			
+//		}
 		customColorBox = new HBox();
-		for(CustomColor color: colorPalette.getCustomColorList()){
+		for(Color color: colorPalette.getCustomColorList()){			
 			Rectangle colorSquare = new Rectangle(10,10);
 			colorSquare.setStroke(Color.BLACK);
-			colorSquare.setFill(Color.rgb(color.getRed(),color.getGreen(),color.getBlue()));
+			colorSquare.setFill(color);
 			customColorBox.getChildren().add(colorSquare);
 		}
+//		customColorBoxes.add(customColorBox);
 		allPreferencesBox.getChildren().add(customColorBox);
 	}
 
@@ -119,7 +129,7 @@ public class ViewAgentPreferences extends View{
 			Object guiObject= objectFactory.createNewGuiObject(property,agent);
 			if (guiObject!= null){
 				mutableGuiObjectList.add((Node) ((GuiObject) guiObject).createObjectAndReturnObject());
-			
+				guiObjects.add((GuiObject) guiObject);
 			}
 		}
 	}
@@ -148,5 +158,7 @@ public class ViewAgentPreferences extends View{
 		updateView();
 	}
 
-
+	public CustomColorPalette getColorPalette() {
+		return colorPalette;
+	}
 }
