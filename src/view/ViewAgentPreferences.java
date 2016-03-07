@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -23,14 +25,14 @@ import javafx.scene.layout.VBox;
 public class ViewAgentPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
-	private HBox preferencesBox;
-	private String currentAgent;
+	private HBox allPreferencesBox;
+	private StringProperty currentAgentNameProperty;
 	private static final int PADDING = 10;
 	public ViewAgentPreferences(String id) {
 		super(id);
 		viewGroup = new Group();
 		agentMap = new HashMap<String,Agent>();
-		currentAgent = null;
+		currentAgentNameProperty = new SimpleStringProperty();
 	}
 
 	@Override
@@ -47,36 +49,45 @@ public class ViewAgentPreferences extends View{
 		return pane;
 	}
 	private void updateView() {
-		viewGroup.getChildren().remove(preferencesBox);
-		preferencesBox = new HBox();
-		preferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
+		viewGroup.getChildren().remove(allPreferencesBox);
+		allPreferencesBox = new HBox();
+		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
+		
+		setUpAgentDropDown();
+		
+		VBox observerBox = new VBox();
+		allPreferencesBox.getChildren().add(observerBox);
+
+		List<Node> observerLabelList = new ArrayList<Node>();
+		List<Node> mutableGuiObjectList = new ArrayList<Node>();
+
+		
+		if(currentAgentNameProperty.getValue()!=null){
+			populateObserverLabelList(agentMap.get(currentAgentNameProperty.getValue()), observerLabelList);
+			populateMutableGuiObjectList(agentMap.get(currentAgentNameProperty.getValue()),mutableGuiObjectList);
+			
+			addToAgentPrefBox(observerBox, observerLabelList);
+			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
+			}
+
+		
+
+		viewGroup.getChildren().add(allPreferencesBox);
+	}
+
+	private void setUpAgentDropDown() {
 		ComboBox<String> agentDropDown = new ComboBox<String>();
 		for (String name: agentMap.keySet()){
 			agentDropDown.getItems().add(name);
 		}
-		agentDropDown.setValue(currentAgent);
+		agentDropDown.setValue(currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue ov, String t, String t1) {                
-                currentAgent = t1;
+            @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
+            	currentAgentNameProperty.setValue(newValue);
 				updateView();
             }
 		});
-		preferencesBox.getChildren().add(agentDropDown);
-		VBox agentPrefBox = new VBox();
-		List<Node> observerLabelList = new ArrayList<Node>();
-		preferencesBox.getChildren().add(agentPrefBox);
-		if(currentAgent!=null){
-			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
-			
-			List<Node> mutableGuiObjectList = new ArrayList<Node>();
-			populateMutableGuiObjectList(agentMap.get(currentAgent),mutableGuiObjectList);
-			
-			addToAgentPrefBox(agentPrefBox, observerLabelList);
-			addToAgentPrefBox(preferencesBox,mutableGuiObjectList);
-			}
-
-
-		viewGroup.getChildren().add(preferencesBox);
+		allPreferencesBox.getChildren().add(agentDropDown);
 	}
 
 	private void addToAgentPrefBox(Pane agentPrefBox,List<Node> ObjectList) {
@@ -111,14 +122,12 @@ public class ViewAgentPreferences extends View{
 		updateView();
 	}
 
-	public void updateCurrentAgent(String agentName) {
-		currentAgent = agentName;
-		updateView();
+
+	public StringProperty getCurrentAgentNameProperty() {
+		return currentAgentNameProperty;
 	}
 
-	public void updateCurrentAgentAndAgentMap(String newName,HashMap<String, Agent> newAgentMap) {
-		agentMap = newAgentMap;
-		currentAgent = newName;
+	public void updateCurrentAgentSelection() {
 		updateView();
 	}
 

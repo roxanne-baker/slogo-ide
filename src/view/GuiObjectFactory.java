@@ -1,7 +1,7 @@
 package view;
 
-import java.io.File;
-import java.util.ResourceBundle;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This Factory class creates GuiObjects based on the type of gui object requested.
@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 public class GuiObjectFactory {
 	private static final String WINDOW_RESOURCES = "windowProperties";
 	private static final String HELP_FILE = "help.html";
+	private static final List<String> PEN_STYLE_LIST = Arrays.asList("SOLID","DASHED","DOTTED");
+
 	public GuiObjectFactory(){
 	}
 	public GuiObject createNewGuiObject(String type, Agent agent){
@@ -37,9 +39,11 @@ public class GuiObjectFactory {
 				return new GuiObjectInputBox(type, agent.getResourceString(), agent, (a,b)->((Agent)a).setImagePath(b));
 			}
 			case("HELP"):{
-				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, agent, HELP_FILE);
+				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, null , HELP_FILE);
 			}
-
+			case("PENSTYLE"):{
+				return new GuiObjectRadioButton(type,agent.getResourceString(), agent, agent.getPenStyle(), PEN_STYLE_LIST, (a,s)->((Agent) a).setPenStyle(s));
+			}
 
 
 			}

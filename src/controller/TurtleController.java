@@ -7,16 +7,17 @@ import view.Agent;
 import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
-import javafx.scene.image.ImageView;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 
 
 public class TurtleController extends Controller implements IAgentController{
 
 	private HashMap<String,Agent> agentMap;
-	private String currentAgent;
+	private StringProperty currentAgentNameProperty;
 	private ViewAgentPreferences preferencesView;
-	private ViewAgents observerView;
+	private ViewAgents agentView;
 	private double observerWidth;
 	private double observerHeight;
 	private double offsetX;
@@ -24,13 +25,21 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
-		observerView = obsView;
+		agentView = obsView;
 		agentMap = new HashMap<String,Agent>();
 		observerWidth = obsView.getWidth();
 		observerHeight = obsView.getHeight();
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
-		addAgent("Melissa");
+		currentAgentNameProperty = new SimpleStringProperty();
+		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
+		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
+		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
+		
+		addAgent("Melissa"); //always start with one agent
+		
+
+		
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -65,9 +74,9 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void addAgent(String agentName) {
-		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,observerView); //starts in middle of screen
+		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,agentView); //starts in middle of screen
 		agentMap.put(agentName, newTurtle);
-		preferencesView.updateAgentMap(agentMap);
+		updateAgentMapInViews();
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
@@ -76,12 +85,17 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public void removeAgent(String agentName) {
 		agentMap.remove(agentName);
-		if(currentAgent.equals(agentName)){
-			currentAgent = null;
+		if(currentAgentNameProperty.getValue().equals(agentName)){
+			currentAgentNameProperty.setValue(null);
 		}
-		preferencesView.updateAgentMap(agentMap);
+		updateAgentMapInViews();
 
 		
+	}
+
+	private void updateAgentMapInViews() {
+		preferencesView.updateAgentMap(agentMap);
+		agentView.updateAgentMap(agentMap);
 	}
 	public void renameAgent(String oldName, String newName){ //needs to throw an error
 		if (isValidAgentName(newName)){
@@ -90,19 +104,19 @@ public class TurtleController extends Controller implements IAgentController{
 		agentMap.remove(oldName);
 		agentMap.put(newName, keepAgent);
 		}
-		if(currentAgent.equals(oldName)){
-			currentAgent = newName;
+		if(currentAgentNameProperty.getValue().equals(oldName)){
+			currentAgentNameProperty.setValue(newName);
 		}
-		preferencesView.updateCurrentAgentAndAgentMap(newName,agentMap);
+		updateAgentMapInViews();
 
 
 		
 	}
 	public String getCurrentAgent() { //needs to throw an error if null
-		if (currentAgent==null){
+		if (currentAgentNameProperty.getValue()==null){
 			return null;
 		}
-		return currentAgent;
+		return currentAgentNameProperty.getValue();
 	}
 	@Override
 	public boolean isAgent(String name) {
@@ -116,42 +130,43 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void setCurrentAgent(String agentName) {
-		preferencesView.updateCurrentAgent(agentName);
-		currentAgent = agentName;		
+		currentAgentNameProperty.setValue(agentName);	
+		preferencesView.updateCurrentAgentSelection();
+		agentView.updateCurrentAgentView();
 	}
 
 	@Override
 	public void setCurrentAgentImage(String imagePath) {
-		agentMap.get(currentAgent).setImagePath(imagePath);		
+		agentMap.get(currentAgentNameProperty).setImagePath(imagePath);		
 	}
 
-	public ImageView getCurrentAgentImageView(ImageView image) {
-		return agentMap.get(currentAgent).getImageView();
-	}
+//	public ImageView getCurrentAgentImageView(ImageView image) {
+//		return agentMap.get(currentAgentNameProperty).getImageView();
+//	}
 
 	@Override
 	public void setCurrentAgentPenUp(boolean isUp) {
-		agentMap.get(currentAgent).setPenUp(isUp);		
+		agentMap.get(currentAgentNameProperty).setPenUp(isUp);		
 	}
 
 	@Override
 	public boolean isCurrentAgentPenUp() {
-		return agentMap.get(currentAgent).isPenUp();
+		return agentMap.get(currentAgentNameProperty).isPenUp();
 	}
 
 	@Override
 	public void setCurrentAgentVisible(boolean isVisible) {
-		agentMap.get(currentAgent).setVisible(isVisible);
+		agentMap.get(currentAgentNameProperty).setVisible(isVisible);
 	}
 
 	@Override
 	public void changeCurrentAgentOrientation(double changeDegrees) {
-		agentMap.get(currentAgent).changeOrientation(changeDegrees);
+		agentMap.get(currentAgentNameProperty).changeOrientation(changeDegrees);
 	}
 
 	@Override
 	public double getCurrentAgentOrientation() {
-		return agentMap.get(currentAgent).getOrientation();
+		return agentMap.get(currentAgentNameProperty).getOrientation();
 	}
 	@Override
 	public boolean isValidAgentName(String name) {
@@ -163,37 +178,73 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	@Override
 	public void stampCurrentAgent() {
-		agentMap.get(currentAgent).leaveStamp();
+		agentMap.get(currentAgentNameProperty).leaveStamp();
 		
 	}
 	
 	@Override
 	public void changeCurrentAgentSize(double size) {
-		agentMap.get(currentAgent).setSize(size);		
+		agentMap.get(currentAgentNameProperty).setSize(size);		
 	}
 	@Override
 	public double getCurrentAgentSize() {
-		return agentMap.get(currentAgent).getSize();		
+		return agentMap.get(currentAgentNameProperty).getSize();		
 	}
 	@Override
 	public double getCurrentAgentXPosition() {
-		return agentMap.get(currentAgent).getXPosition();
+		return agentMap.get(currentAgentNameProperty).getXPosition();
 	}
 	@Override
 	public double getCurrentAgentYPosition() {
-		return agentMap.get(currentAgent).getYPosition();
+		return agentMap.get(currentAgentNameProperty).getYPosition();
 	}
 	@Override
 	public Agent getCurrentAgent(String agentName) {
-		return agentMap.get(currentAgent);
+		return agentMap.get(currentAgentNameProperty);
 	}
 	@Override
 	public String getCurrentAgentName() {
-		return currentAgent;
+		return currentAgentNameProperty.getValue();
 	}
 	@Override
 	public void moveCurrentAgent(double changeX, double changeY) {
-		agentMap.get(currentAgent).movePosition(changeX, changeY);
+		agentMap.get(currentAgentNameProperty).movePosition(changeX, changeY);
+		
+	}
+
+	@Override
+	public void setCurrentAgentPenColor(int colorIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCurrentAgentPenThickness(int thickness) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCurrentAgentShape(int shapeIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getCurrentAgentColorIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getCurrentAgentShapeIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clearStamps() {
+		// TODO Auto-generated method stub
 		
 	}
 

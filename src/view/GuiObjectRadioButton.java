@@ -59,7 +59,6 @@ public class GuiObjectRadioButton extends GuiObject{
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
 
 	            RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-	            System.out.println("Selected Radio Button - "+chk.getText());
 	            isNewSelection = true;
 	            if (setValue!=null){
 	            setValue.accept(getObservable(), chk.getText());

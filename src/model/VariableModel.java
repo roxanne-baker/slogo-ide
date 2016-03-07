@@ -5,6 +5,7 @@ import java.util.*;
 
 public class VariableModel extends Model {
 	private HashMap<String,Object> variableMap = new HashMap<String,Object>();
+
 	
 	public VariableModel() {
 		// TODO Auto-generated constructor stub
