@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import GUI.GuiObject;
+import GUI.GuiObjectFactory;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,8 +31,9 @@ public class ViewPreferences extends View{
 	private VBox preferencesBox;
 	private String currentAgent;
 	private static final int PADDING = 10;
-	public ViewPreferences(String id) {
-		super(id);
+	
+	public ViewPreferences(ViewType ID) {
+		super(ID);
 //		viewGroup = new Group();
 		viewGroup = new Pane();
 		agentMap = new HashMap<String,Agent>();

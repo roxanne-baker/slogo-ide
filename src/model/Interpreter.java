@@ -11,6 +11,7 @@ import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
+import view.ViewType;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -63,11 +64,11 @@ public class Interpreter extends Observable {
 	private MethodsController methodController;
 	private String errorMessage = new String();
 	private double returnResult; 
-	
-	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariablesController) controllers.get("Variables");
-		methodController = (MethodsController) controllers.get("Methods");
+
+	public Interpreter(HashMap<ViewType,Controller> controllers) {
+		turtleController = (TurtleController) controllers.get(ViewType.AGENT); 
+		variableController = (VariablesController) controllers.get(ViewType.VARIABLES);
+		methodController = (MethodsController) controllers.get(ViewType.METHODS);
 	}
 	
 	public void addLang(String language) { 
