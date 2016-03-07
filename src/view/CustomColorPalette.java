@@ -14,12 +14,15 @@ public class CustomColorPalette {
 	public void addCustomColor(CustomColor color){
 		customColorList.add(color);
 	}
-	public void replaceColor(int index, CustomColor color){
+	public void replaceCustomColor(int index, CustomColor color){
 		if (index > customColorList.size() || index < 0){
 			//don't add color; maybe through error?
 		}else{
 			customColorList.set(index, color);
 		}
+	}
+	public CustomColor getCustomColor(int index){
+		return customColorList.get(index);
 	}
 	
 }

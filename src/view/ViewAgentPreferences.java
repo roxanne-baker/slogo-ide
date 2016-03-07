@@ -33,6 +33,7 @@ public class ViewAgentPreferences extends View{
 	private HBox customColorBox;
 	private CustomColorPalette colorPalette;
 	private static final int PADDING = 10;
+	private static final int COLOR_CELL_SIZE = 10;
 	public ViewAgentPreferences(String id) {
 		super(id);
 		viewGroup = new Group();
@@ -99,10 +100,8 @@ public class ViewAgentPreferences extends View{
 	private void setUpCustomColors(){
 		customColorBox = new HBox();
 		for(CustomColor color: colorPalette.getCustomColorList()){
-			Rectangle colorSquare = new Rectangle(10,10);
-			colorSquare.setStroke(Color.BLACK);
-			colorSquare.setFill(Color.rgb(color.getRed(),color.getGreen(),color.getBlue()));
-			customColorBox.getChildren().add(colorSquare);
+			CustomColorView colorView = new CustomColorView(color,COLOR_CELL_SIZE);
+			customColorBox.getChildren().add(colorView.getView());
 		}
 		allPreferencesBox.getChildren().add(customColorBox);
 	}
