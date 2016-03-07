@@ -1,9 +1,3 @@
-import java.util.ArrayList;
-
-import model.Interpreter;
-import model.VariableModel;
-import controller.TurtleController;
-import controller.VariablesController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

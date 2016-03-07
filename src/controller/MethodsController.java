@@ -4,6 +4,7 @@ import view.MethodsView;
 import view.VariableElem;
 import java.util.*;
 
+import commands.CreatedMethod;
 import model.MethodModel;
 
 
@@ -16,22 +17,18 @@ public class MethodsController extends Controller implements Observer {
 		this.view = view;
 	}
 	
-	public void addVariable(String name, String value){
-		model.addMethod(name,value);
-		
-		Map<String,String> methodMap = model.getMethods();
+	public void addMethod(String name, CreatedMethod method){
+		model.addMethod(name,method);
+		Map<String,CreatedMethod> methodMap = model.getMethods();
 		ArrayList<MethodElem> methodList = new ArrayList<MethodElem>();
 		for(String key: methodMap.keySet()){
-			methodList.add(new MethodElem(key,methodMap.get(key).toString(),this));
+			methodList.add(new MethodElem(key,methodMap.get(key).getMethodCommands(),this));
 		}
 		view.update(methodList);
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg=="FIELDCHANGED"){
-			addVariable(((VariableElem)o).getName(),((VariableElem)o).getValue());
-		}
 	}
 	
 //	public Object getVariable(String name) { 

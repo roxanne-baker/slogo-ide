@@ -18,6 +18,7 @@ public class IfElse extends ControlCommand implements Executable {
 		String trueCommands = (String) params.get(1);
 		String falseCommands = (String) params.get(2);
 		
+		
 		if (ifCondition != 0) {
 			interpreter.run(trueCommands);
 		}
