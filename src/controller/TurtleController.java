@@ -138,7 +138,7 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void setCurrentAgentImage(String imagePath) {
-		agentMap.get(currentAgentNameProperty).setImagePath(imagePath);		
+		agentMap.get(currentAgentNameProperty.getValue()).setImagePath(imagePath);		
 	}
 
 //	public ImageView getCurrentAgentImageView(ImageView image) {
@@ -147,27 +147,28 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void setCurrentAgentPenUp(boolean isUp) {
-		agentMap.get(currentAgentNameProperty).setPenUp(isUp);		
+		agentMap.get(currentAgentNameProperty.getValue()).setPenUp(isUp);		
 	}
 
 	@Override
 	public boolean isCurrentAgentPenUp() {
-		return agentMap.get(currentAgentNameProperty).isPenUp();
+		return agentMap.get(currentAgentNameProperty.getValue()).isPenUp();
 	}
 
 	@Override
 	public void setCurrentAgentVisible(boolean isVisible) {
-		agentMap.get(currentAgentNameProperty).setVisible(isVisible);
+		agentMap.get(currentAgentNameProperty.getValue()).setVisible(isVisible);
 	}
 
 	@Override
 	public void changeCurrentAgentOrientation(double changeDegrees) {
-		agentMap.get(currentAgentNameProperty).changeOrientation(changeDegrees);
+		agentMap.get(currentAgentNameProperty.getValue()).changeOrientation(changeDegrees);
 	}
 
 	@Override
 	public double getCurrentAgentOrientation() {
-		return agentMap.get(currentAgentNameProperty).getOrientation();
+		System.out.println(agentMap.get(currentAgentNameProperty.getValue()).getOrientation());
+		return agentMap.get(currentAgentNameProperty.getValue()).getOrientation();
 	}
 	@Override
 	public boolean isValidAgentName(String name) {
@@ -179,29 +180,29 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	@Override
 	public void stampCurrentAgent() {
-		agentMap.get(currentAgentNameProperty).leaveStamp();
+		agentMap.get(currentAgentNameProperty.getValue()).leaveStamp();
 		
 	}
 	
 	@Override
 	public void changeCurrentAgentSize(double size) {
-		agentMap.get(currentAgentNameProperty).setSize(size);		
+		agentMap.get(currentAgentNameProperty.getValue()).setSize(size);		
 	}
 	@Override
 	public double getCurrentAgentSize() {
-		return agentMap.get(currentAgentNameProperty).getSize();		
+		return agentMap.get(currentAgentNameProperty.getValue()).getSize();		
 	}
 	@Override
 	public double getCurrentAgentXPosition() {
-		return agentMap.get(currentAgentNameProperty).getXPosition();
+		return agentMap.get(currentAgentNameProperty.getValue()).getXPosition();
 	}
 	@Override
 	public double getCurrentAgentYPosition() {
-		return agentMap.get(currentAgentNameProperty).getYPosition();
+		return agentMap.get(currentAgentNameProperty.getValue()).getYPosition();
 	}
 	@Override
 	public Agent getCurrentAgent(String agentName) {
-		return agentMap.get(currentAgentNameProperty);
+		return agentMap.get(currentAgentNameProperty.getValue());
 	}
 	@Override
 	public String getCurrentAgentName() {
@@ -209,16 +210,13 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 	@Override
 	public void moveCurrentAgent(double changeX, double changeY) {
-		agentMap.get(currentAgentNameProperty).movePosition(changeX, changeY);
+		agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX, changeY);
 		
 	}
 
 	@Override
 	public void setCurrentAgentPenColor(int colorIndex) {
 		Color penColor = preferencesView.getColorPalette().getCustomColorList().get(colorIndex);
-		System.out.println("PEN COLOR:");
-		System.out.println(penColor == null);
-		System.out.println(this.getCurrentAgent(getCurrentAgent()) == null);
 		this.getCurrentAgent(getCurrentAgent()).setPenColor(penColor);
 	}
 

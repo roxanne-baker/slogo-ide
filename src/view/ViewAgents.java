@@ -114,6 +114,7 @@ public class ViewAgents extends View{
 				currentAgentNameProperty.setValue(((Agent) agent).getName());
 				if(isSelectedAgentToggle){
 					drawer.addSelectEffect(((Agent) agent).getImageView());
+					drawer.removeSelectEffectForNonSelectedTurtles(((Agent) agent).getImageView());
 				}else{
 					drawer.removeSelectEffect(((Agent) agent).getImageView());
 				}

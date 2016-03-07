@@ -70,9 +70,11 @@ public class Drawer {
 
 	public void addSelectEffect(ImageView img){
 		System.out.println("Add select effect");
+		img.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
 	}
 	public void removeSelectEffect(ImageView imageView) {
 		System.out.println("Remove select effect");
+		imageView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)");
 	}
 	public void removeImage(ImageView agentView) {
 		agentGroup.getChildren().remove(agentView);
@@ -97,6 +99,10 @@ public class Drawer {
 		for (Node stamp: stampList){
 			agentGroup.getChildren().remove(stamp);
 		}
+	}
+	public void removeSelectEffectForNonSelectedTurtles(ImageView imageView) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -36,6 +36,7 @@ public class ViewAgentPreferences extends View{
 	List<GuiObject> guiObjects;
 	
 	private static final int PADDING = 10;
+	private static final int COLOR_CELL_SIZE = 10;
 	public ViewAgentPreferences(String id) {
 		super(id);
 		viewGroup = new Group();

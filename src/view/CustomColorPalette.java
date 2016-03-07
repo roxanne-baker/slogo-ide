@@ -18,13 +18,13 @@ public class CustomColorPalette {
 	}
 	public void addCustomColor(Color color){
 		customColorList.add(color);
-		System.out.println("COLOR LIST:");
-		for (Color customColor : customColorList) {
-			System.out.println(customColor.getRed()+" "+customColor.getGreen()+" "+customColor.getBlue());
-		}
 	}
-	public void replaceColor(int index, Color color){
+	public void replaceCustomColor(int index, Color color){
 		customColorList.set(index, color);
+	}
+
+	public Color getCustomColor(int index){
+		return customColorList.get(index);
 	}
 	
 }
