@@ -1,5 +1,6 @@
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,11 +15,16 @@ public class Main extends Application {
 
 
 
-		Workspace UI = new Workspace();
+		Workspace UI = new Workspace(primaryStage);
 		Scene myScene = UI.init();
-		myScene.getStylesheets().add("resources/style/style.css");
+		//Group root = ((Group)(myScene.getRoot())).getChildren().add(e)
         primaryStage.setScene(myScene);
         primaryStage.show();
+//        Stage stage2 = new Stage();
+//        stage2.setScene(new Workspace(stage2).init());
+//        stage2.show();
+        
+        
     }
  
     public static void main(String[] args) {

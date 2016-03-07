@@ -27,8 +27,8 @@ public class ViewWindowPreferences extends View{
 	private ComboBox<String> languageDropDown;
 	
 
-	public ViewWindowPreferences(String id) {
-		super(id);
+	public ViewWindowPreferences(ViewType ID) {
+		super(ID);
 		guiList = new ArrayList<Node>();
 		viewGroup = new Group();
 		windowPreferencesBox = new HBox();

@@ -15,8 +15,8 @@ public class ConsoleView extends View {
 	private ResourceBundle buttonResources;
 	private ResourceBundle cssResources;
 	
-	public ConsoleView(String id, HistoryView history) {
-		super(id);
+	public ConsoleView(ViewType ID, HistoryView history) {
+		super(ID);
 		historyView = history;
 		buttonResources = ResourceBundle.getBundle(BUTTON_LABEL_PATH);
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);

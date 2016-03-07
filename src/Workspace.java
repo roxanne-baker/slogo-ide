@@ -6,12 +6,14 @@ import factory.ModelFactory;
 import factory.ViewFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
 import view.View;
+import view.ViewType;
 import view.ConsoleView;
 import view.HistoryView;
 import view.VariablesView;
@@ -22,30 +24,45 @@ public class Workspace implements Observer {
 	private static final int COORD1 = (View.WIDE_WIDTH)+5;
 	private static final int COORD2 = (View.WIDE_WIDTH+View.NARROW_WIDTH)+5;
 	
-	private String[] STANDARD_MODELS = {"Variables","Methods"};
-	private String[] STANDARD_VIEWS = {"Preferences","Agent","History","Console","Variables","Methods", "WindowPreferences"};
-	private String[] STANDARD_CONTROLLERS = {"Agent","Variables","Methods"};
-	private HashMap<String,Model> modelMap = new HashMap<String,Model>();
-	private HashMap<String,View> viewMap = new HashMap<String,View>();
-	private HashMap<String,Controller> controllerMap = new HashMap<String,Controller>();
-	GridPane root = new GridPane();
-	Group group = new Group();
-	ScrollPane pane = new ScrollPane(group);
+	private ViewType[] STANDARD_MODELS = {ViewType.VARIABLES,ViewType.METHODS};
+	private ViewType[] STANDARD_VIEWS = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES};
+	private ViewType[] STANDARD_CONTROLLERS = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
+	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
+	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
+	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
+	private Group group = new Group();
+	private ScrollPane pane = new ScrollPane(group);
+	private Stage myStage;
+	
+	public Workspace(Stage stage){
+		myStage = stage;
+		//pane.setLayoutY();
+	}
 	
 	public Scene init(){
 		initModels();
 		initViews();
 		initControllers();
+		initInterpreters();
+		Scene myScene = new Scene(pane);
+		myScene.getStylesheets().add("resources/style/style.css");
+		return myScene;
+	}
+	
+	private void initWindowMenu(){
+		CheckBox menu = new CheckBox();
+	}
+	
+	private void initInterpreters() {
 		Interpreter ip = new Interpreter(controllerMap);
-		((ConsoleView) viewMap.get("Console")).setInterpreter(ip);
-		((HistoryView) viewMap.get("History")).setInterpreter(ip);
-		((ViewWindowPreferences) viewMap.get("WindowPreferences")).setInterpreter(ip);
-		return new Scene(pane);
+		((ConsoleView) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
+		((HistoryView) viewMap.get(ViewType.HISTORY)).setInterpreter(ip);
+		((ViewWindowPreferences) viewMap.get(ViewType.WINDOWPREFERENCES)).setInterpreter(ip);
 	}
 
 	private void initModels(){
 		ModelFactory modelFactory = new ModelFactory();
-		for(String type: STANDARD_MODELS){
+		for(ViewType type: STANDARD_MODELS){
 			Model model = modelFactory.createModel(type);
 			modelMap.put(type,model);
 		}
@@ -53,9 +70,9 @@ public class Workspace implements Observer {
 	
 	private void initViews(){
 		ViewFactory viewFactory = new ViewFactory();
-		for(String type: STANDARD_VIEWS){
+		for(ViewType type: STANDARD_VIEWS){
 			View view = viewFactory.createView(type);
-			if(type=="Variables"){
+			if(type==ViewType.VARIABLES){
 				((VariablesView)view).addObserver(this);
 			}
 			int[] coords = getViewCoords(type);
@@ -67,27 +84,27 @@ public class Workspace implements Observer {
 		}
 	}
 	
-	private int[] getViewCoords(String type){
+	private int[] getViewCoords(ViewType type){
 		int[] coords = new int[2];
 		switch(type){
-		case "Agent":
+		case AGENT:
 			break;
-		case "Console":
+		case CONSOLE:
 			coords = new int[]{COORD0,COORD1};
 			break;
-		case "History":
+		case HISTORY:
 			coords = new int[]{COORD1,COORD0};
 			break;
-		case "Methods":
+		case METHODS:
 			coords = new int[]{COORD2,COORD0};
 			break;
-		case "Variables":
+		case VARIABLES:
 			coords = new int[]{COORD2,COORD1};
 			break;
-		case "Preferences":
+		case PREFERENCES:
 			coords = new int[]{COORD0,COORD2};
 			break;
-		case "WindowPreferences":
+		case WINDOWPREFERENCES:
 			coords = new int[]{COORD1,COORD1};
 			break;
 		}
@@ -96,13 +113,13 @@ public class Workspace implements Observer {
 	
 	private void initControllers(){
 		ControllerFactory controllerFactory = new ControllerFactory(modelMap,viewMap);
-		for(String type: STANDARD_CONTROLLERS){
+		for(ViewType type: STANDARD_CONTROLLERS){
 			Controller controller = controllerFactory.createController(type);
 			controllerMap.put(type, controller);
 		}
 	}
 	
-	public Map<String, Controller> getControllerMap() { 
+	public Map<ViewType, Controller> getControllerMap() { 
 		return controllerMap;
 	}
 
@@ -113,7 +130,7 @@ public class Workspace implements Observer {
 
 	private void updateView(View view) {
 		group.getChildren().remove(view.getView());
-		int[] coords = getViewCoords(view.getID());
+		int[] coords = getViewCoords(view.getType());
 		Pane viewGroup = view.getView();
 		viewGroup.setTranslateX(coords[0]);
 		viewGroup.setTranslateY(coords[1]);

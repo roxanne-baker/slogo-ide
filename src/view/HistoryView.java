@@ -11,11 +11,10 @@ public class HistoryView extends View implements Observer{
 	String id;
 	VBox vb = new VBox(2);
 	private Interpreter interpreter;
-	
-	public HistoryView(String id) {
-		super(id);
-	}
 
+	public HistoryView(ViewType ID){
+		super(ID);
+	}
 	
 	@Override
 	public void update(Observable o, Object arg) {

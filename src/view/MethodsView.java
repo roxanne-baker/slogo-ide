@@ -13,10 +13,10 @@ import javafx.scene.layout.VBox;
 public class MethodsView extends View{
 	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
-	
-	public MethodsView(String id) {
- 		super(id);
- 	}
+
+	public MethodsView(ViewType ID){
+		super(ID);
+	}
  	
 	public void update(List<MethodElem> methodList){
 		methodViews.getChildren().clear();

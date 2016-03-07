@@ -6,6 +6,7 @@ import view.MethodsView;
 import view.VariablesView;
 import view.View;
 import view.ViewAgents;
+import view.ViewType;
 import view.ViewAgentPreferences;
 import view.ViewWindowPreferences;
 
@@ -18,27 +19,27 @@ public class ViewFactory {
 	private ViewAgentPreferences preferencesView;
 	private ViewWindowPreferences windowPreferencesView;
 	
-	public View createView(String ID){
+	public View createView(ViewType ID){
 		switch(ID){
-		case "Console":
+		case CONSOLE:
 			consoleView = new ConsoleView(ID,historyView);
 			return consoleView;
-		case "History":
+		case HISTORY:
 			historyView = new HistoryView(ID);
 			return historyView;
-		case "Variables":
+		case VARIABLES:
 			variableView = new VariablesView(ID);
 			return variableView;
-		case "Methods":
+		case METHODS:
 			methodView = new MethodsView(ID);
 			return methodView;
-		case "Agent":
+		case AGENT:
 			agentsView = new ViewAgents(ID);
 			return agentsView;
-		case "Preferences":
+		case PREFERENCES:
 			preferencesView = new ViewAgentPreferences(ID);
 			return preferencesView;
-		case "WindowPreferences":
+		case WINDOWPREFERENCES:
 			windowPreferencesView = new ViewWindowPreferences(ID);
 			return windowPreferencesView;
 		default:

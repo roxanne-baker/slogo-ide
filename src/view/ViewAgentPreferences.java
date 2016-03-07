@@ -28,8 +28,9 @@ public class ViewAgentPreferences extends View{
 	private HBox allPreferencesBox;
 	private StringProperty currentAgentNameProperty;
 	private static final int PADDING = 10;
-	public ViewAgentPreferences(String id) {
-		super(id);
+	
+	public ViewAgentPreferences(ViewType ID) {
+		super(ID);
 		viewGroup = new Group();
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();

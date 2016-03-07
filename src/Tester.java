@@ -2,6 +2,7 @@ import java.util.HashMap;
 
 import view.VariablesView;
 import view.ViewAgents;
+import view.ViewType;
 import view.ViewAgentPreferences;
 import model.VariableModel;
 import controller.Controller;
@@ -20,11 +21,11 @@ public class Tester extends Application{
 	public void start(Stage primaryStage) {
 		VariableModel vm = new VariableModel();
 
-		VariablesView vv = new VariablesView("HI");
+		VariablesView vv = new VariablesView(ViewType.VARIABLES);
 		VariablesController vc = new VariablesController(vm, vv);
 
-		ViewAgents agentView = new ViewAgents("view");
-		ViewAgentPreferences preferencesView = new ViewAgentPreferences("view");
+		ViewAgents agentView = new ViewAgents(ViewType.AGENT);
+		ViewAgentPreferences preferencesView = new ViewAgentPreferences(ViewType.PREFERENCES);
 		TurtleController tc = new TurtleController(preferencesView,agentView);
 		HashMap<String,Controller> hm = new HashMap<String,Controller>();
 		hm.put("Variables",vc);

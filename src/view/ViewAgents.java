@@ -42,8 +42,8 @@ public class ViewAgents extends View{
 	protected HashMap<String, Agent> agentMap;
 
 	
-	public ViewAgents(String id) {
-		super(id);
+	public ViewAgents(ViewType ID) {
+		super(ID);
 		backgroundColor = DEFAULT_COLOR;
 		isSelectedAgentToggle = false;
 		currentAgentNameProperty = new SimpleStringProperty();

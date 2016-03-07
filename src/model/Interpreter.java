@@ -10,6 +10,7 @@ import commands.YCor;
 import controller.Controller;
 import controller.TurtleController;
 import controller.VariablesController;
+import view.ViewType;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -61,7 +62,7 @@ public class Interpreter extends Observable {
 	private String errorMessage = new String();
 	private double returnResult; 
 	
-	public Interpreter(HashMap<String,Controller> controllers) {
+	public Interpreter(HashMap<ViewType,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
 		variableController = (VariablesController) controllers.get("Variables");
 	}
