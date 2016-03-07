@@ -15,6 +15,7 @@ import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
 import commands.Cosine;
+import commands.CreatedMethod;
 import commands.Difference;
 import commands.Divide;
 import commands.Equal;
@@ -54,7 +55,7 @@ import commands.Towards;
 
 public class Interpreter extends Observable {
 
-	protected Map<String, Command> commandsMap; 
+	private Map<String, Command> commandsMap; 
 	private final String WHITESPACE = "\\p{Space}";
     private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
@@ -169,7 +170,8 @@ public class Interpreter extends Observable {
     	}
     	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart")) { 
     		if (parsedFirst.equals("Command")) { 
-    			if (commandStack.peek().getCommand().isNeedsVarName()) { 
+    			System.out.println(!errorCommandName(takeFirst(text)));
+    			if (commandStack.peek().getCommand().isNeedsVarName() || !errorCommandName(takeFirst(text))) { 
     				return false; 
     			} else if (errorCommandName(parsedFirst)) { 
     				return true; 
@@ -185,7 +187,6 @@ public class Interpreter extends Observable {
     }
     
     private void buildExprTree(String text, Stack<ParseNode> commandStack, ParseNode root) { 
-    	System.out.println(text);
     	if (stopBuild(text, commandStack, root)) {
     		return; 
     	}
@@ -216,7 +217,11 @@ public class Interpreter extends Observable {
     			cur = new ParseNode(first);
     			attachNode(cur, commandStack);
     		} else { 
-        		cur = new ParseNode(commandsMap.get(parsedFirst));
+    			if (commandsMap.containsKey(first)) { 
+    				cur = new ParseNode(commandsMap.get(first));
+    			} else { 
+            		cur = new ParseNode(commandsMap.get(parsedFirst));
+    			}
         		attachNode(cur, commandStack);
         		commandStack.push(cur);
     		}
@@ -363,5 +368,9 @@ public class Interpreter extends Observable {
     private String cutFirst(String text) { 
     	String first = text.split(WHITESPACE)[0];
     	return text.substring(first.length()).trim(); 
+    }
+    
+    public void addCommandToMap(CreatedMethod method) { 
+    	commandsMap.put(method.getMethodName(), method);
     }
 }
