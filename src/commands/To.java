@@ -16,6 +16,7 @@ public class To extends Command implements Executable {
 	public To(Interpreter interpreter, VariablesController variablesController, MethodsController methodController) {
 		this.methodController = methodController;
 		numParams = 3;
+		needsVarName = true;
 	}
 	
 	public double execute(List<Object> params) {

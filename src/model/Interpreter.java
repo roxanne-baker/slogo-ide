@@ -67,7 +67,7 @@ public class Interpreter extends Observable {
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
 		variableController = (VariablesController) controllers.get("Variables");
-		methodController = (MethodsController) controllers.get("Method");
+		methodController = (MethodsController) controllers.get("Methods");
 	}
 	
 	public void addLang(String language) { 
@@ -97,12 +97,6 @@ public class Interpreter extends Observable {
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
     	buildExprTree(cutFirst(text), commandStack, root);  
-//    	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
-//    	combThruTree(root, treeStack);
-//    	Object ans = fillCommandStackParams(treeStack);
-    	//System.out.println(ans);
-    	// if repeat / control sequence 
-    	// do something else 
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
@@ -173,8 +167,18 @@ public class Interpreter extends Observable {
         		return true;
     		}
     	}
-    	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart") && errorCommandName(parsedFirst)) { 
-    		sendError(String.format("%s is not a valid command", takeFirst(text)));
+    	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart")) { 
+    		if (parsedFirst.equals("Command")) { 
+    			if (commandStack.peek().getCommand().isNeedsVarName()) { 
+    				return false; 
+    			} else if (errorCommandName(parsedFirst)) { 
+    				return true; 
+    			} else { 
+    				sendError(String.format("%s is not a valid command", takeFirst(text)));
+    				return true;
+    			}
+    		}
+    		sendError(String.format("%s is not a valid input", takeFirst(text)));
     		return true;
     	}
     	return false;
@@ -202,16 +206,20 @@ public class Interpreter extends Observable {
     		attachNode(cur, commandStack);
    		} 
     	else if (parsedFirst.equals("ListStart")) { 
-    		System.out.println(takeList(text));
     		cur = new ParseNode(takeList(text));
     		attachNode(cur, commandStack);
     		buildExprTree(cutList(text), commandStack, root);
     		return;
     	}
     	else { 
-    		cur = new ParseNode(commandsMap.get(parsedFirst));
-    		attachNode(cur, commandStack);
-    		commandStack.push(cur);
+    		if (commandStack.peek().getCommand().isNeedsVarName()) { 
+    			cur = new ParseNode(first);
+    			attachNode(cur, commandStack);
+    		} else { 
+        		cur = new ParseNode(commandsMap.get(parsedFirst));
+        		attachNode(cur, commandStack);
+        		commandStack.push(cur);
+    		}
     	} 
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
@@ -252,67 +260,6 @@ public class Interpreter extends Observable {
     	}
     	return lastClosed; 
     }
-//    	
-//    	
-//    	int cutOffIndex = 0; 
-//    	while(s.substring(cutOffIndex).indexOf(beginParens) > -1 && s.substring(cutOffIndex).indexOf(beginParens) < s.indexOf(endParens)) { 
-//    		bracketStack.push(beginParens);
-//    		cutOffIndex = s.substring(cutOffIndex).indexOf(beginParens) + 1;
-//        	System.out.println(cutOffIndex);
-//    	}
-//    	System.out.println(cutOffIndex);
-//    	System.out.println("[s in stack " + bracketStack.size());
-//    	while (copy.length() > 0 && copy.indexOf(endParens) > -1 && !bracketStack.isEmpty()) { 
-//    		bracketStack.pop();
-//    		if (bracketStack.isEmpty()) { 
-//    			endIndex = s.indexOf(endParens);
-//    		}
-//    		copy = copy.substring(copy.indexOf(endParens) + 1);
-//    	}
-    	//String reversed = new StringBuilder(s).reverse().toString();
-    	//int tempIndex = reversed.indexOf("]");
-    	//int endIndex = s.length() - tempIndex - 1; 
-    	//System.out.println("endindex = " + endIndex);
-    	//return s.substring(1, endIndex+1).trim();
-   // }
-    
-//    private void buildExprTree(String text, Stack<ParseNode> commandStack) { 
-//    	if (stopBuild(text, commandStack)) return; 
-//    	String first = takeFirst(text); 
-//    	String parsedFirst = parseText(first);
-//    	ParseNode mostRecentCommand = commandStack.peek();
-//    	if (parsedFirst.equals("Constant")) { 
-//    		ParseNode cur = new ParseNode(Double.parseDouble(first));
-//    		mostRecentCommand.getParams().add(cur); 
-//    		if (mostRecentCommand.paramsFilled()) { 
-//    			commandStack.pop();
-//    		}
-//    		buildExprTree(cutFirst(text), commandStack); 
-//    	} 
-//    	else if (parsedFirst.equals("Variable")) { 
-//    		ParseNode cur;
-//    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
-//    			cur = new ParseNode(first);
-//    		}
-//    		else { 
-//    			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
-//    		}
-//        	mostRecentCommand.getParams().add(cur); 
-//       		if (mostRecentCommand.paramsFilled()) { 
-//       			commandStack.pop();
-//       		}
-//       		buildExprTree(cutFirst(text), commandStack); 
-//   		} 
-//    	else { 
-//    		ParseNode cur = new ParseNode(commandsMap.get(parsedFirst));
-//    		mostRecentCommand.getParams().add(cur); 
-//    		if (mostRecentCommand.paramsFilled()) { 
-//    			commandStack.pop();
-//    		} 
-//    		commandStack.push(cur);
-//    		buildExprTree(cutFirst(text), commandStack); 
-//    	} 
-//    }
 	
 	private boolean errorCommandName(String input) {
 		if (!commandsMap.containsKey(input)) { 
@@ -363,7 +310,7 @@ public class Interpreter extends Observable {
     	commandsMap.put("If", new If(this));
     	commandsMap.put("IfElse", new IfElse(this));
     	commandsMap.put("For", new For(this, variableController));
-    	commandsMap.put("To", new To(this, variableController, methodController));
+    	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
     }
     
 	private void addTurtleCommands() {
