@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import GUI.GuiObject;
+import GUI.GuiObjectFactory;
 import model.Interpreter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,6 +23,7 @@ public class ViewWindowPreferences extends View{
 	private static final String DEFAULT_LANGUAGE = "English";
 	private static final double PADDING = 10;
 	private Group viewGroup;
+	private Pane pane;
 	private List<Node> guiList;
 	private String currentLanguage;
 	private HBox windowPreferencesBox;
@@ -35,15 +39,13 @@ public class ViewWindowPreferences extends View{
 		myInterpreter = null;
 		currentLanguage = DEFAULT_LANGUAGE;
 		languageDropDown = new ComboBox<String>();
-
-
+		createView();
+		pane = new Pane(viewGroup);
+		setStyleClass(pane);
 	}
 
 	@Override
 	public Pane getView() {
-		createView();
-		Pane pane = new Pane(viewGroup);
-		setStyleClass(pane);
 		return pane;
 	}
 
@@ -66,7 +68,7 @@ public class ViewWindowPreferences extends View{
 		
 		viewGroup.getChildren().add(windowPreferencesBox);
 	}
-
+	
 	private void createLanguagesComboBox() {
 		for (String language: LANGUAGES_LIST){
 			languageDropDown.getItems().add(language);

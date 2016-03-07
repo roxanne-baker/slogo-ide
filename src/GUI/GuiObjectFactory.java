@@ -1,7 +1,9 @@
-package view;
+package GUI;
 
 import java.util.Arrays;
 import java.util.List;
+
+import view.Agent;
 
 /**
  * This Factory class creates GuiObjects based on the type of gui object requested.

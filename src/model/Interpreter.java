@@ -63,8 +63,8 @@ public class Interpreter extends Observable {
 	private double returnResult; 
 	
 	public Interpreter(HashMap<ViewType,Controller> controllers) {
-		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariablesController) controllers.get("Variables");
+		turtleController = (TurtleController) controllers.get(ViewType.AGENT); 
+		variableController = (VariablesController) controllers.get(ViewType.VARIABLES);
 	}
 	
 	public void addLang(String language) { 

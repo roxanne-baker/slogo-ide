@@ -7,8 +7,7 @@ import factory.ViewFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
@@ -20,19 +19,24 @@ import view.VariablesView;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final int MENU_OFFSET = 30;
+	private static final int WINDOW_PREF_OFFSET = 200;
+	private static final int PADDING = 5;
 	private static final int COORD0 = 0;
-	private static final int COORD1 = (View.WIDE_WIDTH)+5;
-	private static final int COORD2 = (View.WIDE_WIDTH+View.NARROW_WIDTH)+5;
+	private static final int COORD1 = View.WIDE_WIDTH+PADDING;
+	private static final int COORD2 = View.WIDE_WIDTH+View.NARROW_WIDTH+PADDING;
 	
-	private ViewType[] STANDARD_MODELS = {ViewType.VARIABLES,ViewType.METHODS};
-	private ViewType[] STANDARD_VIEWS = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES};
-	private ViewType[] STANDARD_CONTROLLERS = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
+	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
+	private ViewType[] views = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES};
+	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
 	private Group group = new Group();
 	private ScrollPane pane = new ScrollPane(group);
+	private Scene myScene;
 	private Stage myStage;
+	private ResourceBundle myResources = ResourceBundle.getBundle("windowProperties");
 	
 	public Workspace(Stage stage){
 		myStage = stage;
@@ -42,15 +46,29 @@ public class Workspace implements Observer {
 	public Scene init(){
 		initModels();
 		initViews();
+		initWindowMenu();
 		initControllers();
 		initInterpreters();
-		Scene myScene = new Scene(pane);
+		myScene = new Scene(pane);
 		myScene.getStylesheets().add("resources/style/style.css");
 		return myScene;
 	}
 	
 	private void initWindowMenu(){
-		CheckBox menu = new CheckBox();
+		HBox viewMenu = new HBox();
+		Button newWorkspaceBtn = new Button(myResources.getString("NEWWORKSPACEBUTTON"));
+		newWorkspaceBtn.setOnMouseClicked(e->openWorkspace());
+		viewMenu.getChildren().add(newWorkspaceBtn);
+		for(ViewType type: views){
+			if(type!=ViewType.AGENT){
+				CheckBox item = new CheckBox(type.name());
+				item.setSelected(true);
+				item.setOnAction(e-> toggleView(type,item.isSelected()));
+				viewMenu.getChildren().add(item);	
+			}
+		}
+		group.getChildren().addAll(viewMenu);
+		viewMenu.setLayoutX(WINDOW_PREF_OFFSET);
 	}
 	
 	private void initInterpreters() {
@@ -62,7 +80,7 @@ public class Workspace implements Observer {
 
 	private void initModels(){
 		ModelFactory modelFactory = new ModelFactory();
-		for(ViewType type: STANDARD_MODELS){
+		for(ViewType type: models){
 			Model model = modelFactory.createModel(type);
 			modelMap.put(type,model);
 		}
@@ -70,7 +88,7 @@ public class Workspace implements Observer {
 	
 	private void initViews(){
 		ViewFactory viewFactory = new ViewFactory();
-		for(ViewType type: STANDARD_VIEWS){
+		for(ViewType type: views){
 			View view = viewFactory.createView(type);
 			if(type==ViewType.VARIABLES){
 				((VariablesView)view).addObserver(this);
@@ -78,9 +96,24 @@ public class Workspace implements Observer {
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
 			Pane viewGroup = view.getView();
-			viewGroup.setTranslateX(coords[0]);
-			viewGroup.setTranslateY(coords[1]);
+			viewGroup.setLayoutX(coords[0]);
+			viewGroup.setLayoutY(coords[1]);
 			group.getChildren().add(viewGroup);
+		}
+	}
+	
+	private void openWorkspace(){
+		Stage newStage = new Stage();
+		newStage.setScene(new Workspace(newStage).init());
+		newStage.show();
+	}
+	
+	private void toggleView(ViewType view, boolean isSelected){
+		if(isSelected){
+			displayView(viewMap.get(view));
+		}
+		else{
+			closeView(viewMap.get(view));
 		}
 	}
 	
@@ -88,24 +121,25 @@ public class Workspace implements Observer {
 		int[] coords = new int[2];
 		switch(type){
 		case AGENT:
+			coords = new int[]{COORD0,COORD0+MENU_OFFSET};
 			break;
 		case CONSOLE:
-			coords = new int[]{COORD0,COORD1};
+			coords = new int[]{COORD0,COORD1+MENU_OFFSET};
 			break;
 		case HISTORY:
-			coords = new int[]{COORD1,COORD0};
+			coords = new int[]{COORD1,COORD0+MENU_OFFSET};
 			break;
 		case METHODS:
-			coords = new int[]{COORD2,COORD0};
+			coords = new int[]{COORD2,COORD0+MENU_OFFSET};
 			break;
 		case VARIABLES:
-			coords = new int[]{COORD2,COORD1};
+			coords = new int[]{COORD2,COORD1+MENU_OFFSET};
 			break;
 		case PREFERENCES:
-			coords = new int[]{COORD0,COORD2};
+			coords = new int[]{COORD0,COORD2+MENU_OFFSET};
 			break;
 		case WINDOWPREFERENCES:
-			coords = new int[]{COORD1,COORD1};
+			coords = new int[]{COORD0,COORD0};
 			break;
 		}
 		return coords;
@@ -113,7 +147,7 @@ public class Workspace implements Observer {
 	
 	private void initControllers(){
 		ControllerFactory controllerFactory = new ControllerFactory(modelMap,viewMap);
-		for(ViewType type: STANDARD_CONTROLLERS){
+		for(ViewType type: controllers){
 			Controller controller = controllerFactory.createController(type);
 			controllerMap.put(type, controller);
 		}
@@ -129,13 +163,26 @@ public class Workspace implements Observer {
 	}
 
 	private void updateView(View view) {
-		group.getChildren().remove(view.getView());
-		int[] coords = getViewCoords(view.getType());
-		Pane viewGroup = view.getView();
-		viewGroup.setTranslateX(coords[0]);
-		viewGroup.setTranslateY(coords[1]);
-		group.getChildren().add(viewGroup);
+		closeView(view);
+		displayView(view);
 		
+	}
+	
+	private void closeView(View view){
+		Pane viewGroup = view.getView();
+		if(group.getChildren().contains(viewGroup)){
+			group.getChildren().remove(viewGroup);
+		}
+	}
+	
+	private void displayView(View view){
+		Pane viewGroup = view.getView();
+		if(!group.getChildren().contains(viewGroup)){
+			int[] coords = getViewCoords(view.getType());
+			viewGroup.setLayoutX(coords[0]);
+			viewGroup.setLayoutY(coords[1]);
+			group.getChildren().add(viewGroup);
+		}
 	}
 
 

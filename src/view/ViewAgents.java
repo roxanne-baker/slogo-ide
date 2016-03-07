@@ -63,6 +63,9 @@ public class ViewAgents extends View{
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		agentPane.getChildren().add(agentViewPreferences);
+		setUpColorPicker();
+		setUpClearButton();
+		setUpSelectAgentToggle();
 		
 
 	}
@@ -133,9 +136,6 @@ public class ViewAgents extends View{
 			
 	@Override
 	public Pane getView() {
-		setUpColorPicker();
-		setUpClearButton();
-		setUpSelectAgentToggle();
 		return agentPane;
 
 	}

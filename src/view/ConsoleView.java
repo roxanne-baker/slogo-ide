@@ -14,12 +14,14 @@ public class ConsoleView extends View {
 	private Interpreter interpreter;
 	private ResourceBundle buttonResources;
 	private ResourceBundle cssResources;
+	Pane pane;
 	
 	public ConsoleView(ViewType ID, HistoryView history) {
 		super(ID);
 		historyView = history;
 		buttonResources = ResourceBundle.getBundle(BUTTON_LABEL_PATH);
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
+		init();
 	}
 	
 	@Override
@@ -33,6 +35,10 @@ public class ConsoleView extends View {
 
 	@Override
 	public Pane getView() {
+		return pane;
+	}
+
+	private void init() {
 		Group group = new Group();
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
@@ -52,9 +58,8 @@ public class ConsoleView extends View {
 		vb.getChildren().addAll(console,buttons);
 		vb.setPrefSize(View.WIDE_WIDTH, View.NARROW_WIDTH);
 		group.getChildren().add(vb);
-		Pane pane = new Pane(group);
+		pane = new Pane(group);
 		setStyleClass(pane);
-		return pane;
 	}
 
 }

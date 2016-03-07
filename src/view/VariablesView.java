@@ -7,15 +7,16 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 
 public class VariablesView extends View{
-//	private VBox savedVars = new VBox();
+	private Pane pane;
 	private static final String LABEL_PATH = "windowProperties";	//added
 	private ResourceBundle myResources = ResourceBundle.getBundle(LABEL_PATH);	//added
 	private VBox savedVars = new VBox();
-	Label instructions = new Label(myResources.getString("VARIABLEINSNS"));	//added
+	private Label instructions = new Label(myResources.getString("VARIABLEINSNS"));	//added
 	
 	public VariablesView(ViewType ID) {
 		super(ID);
 		savedVars.getChildren().add(instructions); // added
+		init();
 	}
 	
 	public void update(ArrayList<VariableElem> variables){
@@ -31,19 +32,16 @@ public class VariablesView extends View{
 
 	@Override
 	public Pane getView() {
+		return pane;
+	}
+
+	private Pane init() {
 		Group group = new Group();
 		savedVars.setPrefSize(View.NARROW_WIDTH,View.NARROW_WIDTH);
 		ScrollPane sp = new ScrollPane(savedVars);
 		group.getChildren().add(sp);
-		Pane pane = new Pane(group);
+		pane = new Pane(group);
 		setStyleClass(pane);
 		return pane;
 	}
-//	public Group getView() {
-//		Group group = new Group();
-//		savedVars.setPrefSize(View.NARROW_WIDTH,View.NARROW_WIDTH);
-//		ScrollPane sp = new ScrollPane(savedVars);
-//		group.getChildren().add(sp);
-//		return group;
-//	}
 }

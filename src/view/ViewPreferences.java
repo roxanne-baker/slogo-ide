@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import GUI.GuiObject;
+import GUI.GuiObjectFactory;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

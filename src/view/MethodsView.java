@@ -13,9 +13,11 @@ import javafx.scene.layout.VBox;
 public class MethodsView extends View{
 	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
+	private Pane pane;
 
 	public MethodsView(ViewType ID){
 		super(ID);
+		init();
 	}
  	
 	public void update(List<MethodElem> methodList){
@@ -37,20 +39,16 @@ public class MethodsView extends View{
  
  	@Override
  	public Pane getView() {
- 		Group group = new Group();
+ 		return pane;
+  	}
+
+	private void init() {
+		Group group = new Group();
  		methodViews.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
  		ScrollPane sp = new ScrollPane(methodViews);
  		group.getChildren().add(sp);
- 		Pane pane = new Pane(group);
+ 		pane = new Pane(group);
 		setStyleClass(pane);
- 		return pane;
-  	}
+	}
 }
-// 	public Group getView() {
-// 		Group group = new Group();
-// 		methodViews.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
-// 		ScrollPane sp = new ScrollPane(methodViews);
-// 		group.getChildren().add(sp);
-// 		return group;
-//  	}
 
