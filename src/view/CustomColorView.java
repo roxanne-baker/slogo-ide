@@ -21,6 +21,14 @@ public class CustomColorView{
 		colorGroup.getChildren().add(colorSquare);
 		return colorGroup;
 	}
+	public int getSize(){
+		return colorSize;
+		
+	}
+	
+	public Object getColorObject(){
+		return colorObject;
+	}
 
 	
 }

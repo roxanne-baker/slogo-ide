@@ -5,12 +5,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class ShapeFactory {
-	private double cellSize;
-	public ShapeFactory(double cSize){
-		cellSize = cSize;
+	public ShapeFactory(){
+
 	}
 	
-	public Shape createNewShape(String shape){
+	public Shape createNewShape(String shape,double cellSize){
 		switch(shape){
 		case("SQUARE"):{
 			return new Rectangle(cellSize,cellSize);

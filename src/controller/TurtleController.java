@@ -166,7 +166,6 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public double getCurrentAgentOrientation() {
-		System.out.println(agentMap.get(currentAgentNameProperty.getValue()).getOrientation());
 		return agentMap.get(currentAgentNameProperty.getValue()).getOrientation();
 	}
 	@Override
