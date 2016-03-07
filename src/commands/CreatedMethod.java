@@ -18,13 +18,13 @@ public class CreatedMethod extends Command implements Executable {
 		this.paramNames = paramNames;
 		this.commands = commands;
 		numParams = paramNames.length;
-		System.out.println(numParams);
 		
 //		for (int i=0; i<numParams; i++) {
 //			if (variablesController.getVariable(paramNames[i]) == null) {
 //				variablesController.addVariable(paramNames[i], "0");
 //			}
 //		}
+
 	}
 	
 	public double execute(List<Object> params) {
@@ -38,7 +38,6 @@ public class CreatedMethod extends Command implements Executable {
 	public String getMethodCommands() { 
 		return commands;
 	}
-	
 	public String checkParamTypes(List<Object> params) {
 		for (int i=1; i<params.size(); i++) {
 			Object command = params.get(i);

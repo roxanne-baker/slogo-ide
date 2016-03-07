@@ -12,8 +12,8 @@ public class Turtle extends Agent{
 	private static final String RESOURCE_DIR = "TurtleProperties";
 	private static final String OBSERVER_DIR = "updateObserver";
 	private static final String TURTLE_IMAGE_PATH = "turtle.png";
-	private static final List<String> MUTABLE_LIST = Arrays.asList("PENWIDTH","PENCOLOR","PENUP","IMAGEPATH");
-	private static final List<String> OBSERVER_LIST = Arrays.asList("NAME","VISIBLE","SIZE","ORIENTATION");
+	private static final List<String> MUTABLE_LIST = Arrays.asList("PENWIDTH","PENCOLOR","PENUP","IMAGEPATH", "PENSTYLE");
+	private static final List<String> OBSERVER_LIST = Arrays.asList("NAME","VISIBLE","XPOSITION","YPOSITION","ORIENTATION","SIZE");
 
 	public Turtle(String name, double defaultXlocation, double defaultYlocation, View obsView) {
 		super(name, defaultXlocation, defaultYlocation, obsView);

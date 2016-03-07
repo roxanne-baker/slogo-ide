@@ -4,16 +4,17 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import javafx.scene.Group;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 
 public class Drawer {
+	private static final double OFFSET = 8;
 	private Pane agentGroup;
 	private List<ImageView> stampList;
 	private List<Node> lineList;
@@ -26,7 +27,7 @@ public class Drawer {
 		
 
 	}
-	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color){
+	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color, double dash){
 
 		Line line = new Line();
 		line.setStartX(oldX);
@@ -35,6 +36,9 @@ public class Drawer {
 		line.setEndY(newY);
 		line.setStrokeWidth(thickness);
 		line.setStroke(color);
+		line.getStrokeDashArray().removeAll();
+		line.getStrokeDashArray().add(dash);
+		line.setStrokeDashOffset(OFFSET);
 		lineList.add(line);
 		agentGroup.getChildren().add(line);
 	}
@@ -59,9 +63,18 @@ public class Drawer {
 		agentGroup.getChildren().add(img);
 		if (!agentViewList.contains(img)){
 			agentViewList.add(img);
+			
 		
 		}
+	}
 
+	public void addSelectEffect(ImageView img){
+		System.out.println("Add select effect");
+		img.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
+	}
+	public void removeSelectEffect(ImageView imageView) {
+		System.out.println("Remove select effect");
+		imageView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)");
 	}
 	public void removeImage(ImageView agentView) {
 		agentGroup.getChildren().remove(agentView);
@@ -87,4 +100,9 @@ public class Drawer {
 			agentGroup.getChildren().remove(stamp);
 		}
 	}
+	public void removeSelectEffectForNonSelectedTurtles(ImageView imageView) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

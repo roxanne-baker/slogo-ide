@@ -30,13 +30,20 @@ public interface IAgentController {
 	void setCurrentAgentImage(String imagePath);
 	void setCurrentAgentPenUp(boolean isUp);
 	boolean isCurrentAgentPenUp();
+	void setCurrentAgentPenColor(int colorIndex);
+	void setCurrentAgentPenThickness(int thickness);
+	void setCurrentAgentShape(int shapeIndex);
+	void setColorPalette(int colorIndex, int red, int green, int blue);
+	int getCurrentAgentColorIndex();
+	int getCurrentAgentShapeIndex();
 	void setCurrentAgentVisible(boolean isVisible);
 	void changeCurrentAgentOrientation(double changeDegrees);
 	double getCurrentAgentOrientation();
 	void stampCurrentAgent();
+	void clearStamps(); //maybe somewhere else?
 
-	void changeCurrentAgentSize(double size); //extensions
-	double getCurrentAgentSize(); //extension
+	void changeCurrentAgentSize(double size); //don't think we need these
+	double getCurrentAgentSize(); //don't think we need these
 	Agent getCurrentAgent(String agentName);
 	String getCurrentAgentName();
 
