@@ -71,6 +71,8 @@ public class Interpreter extends Observable {
 	private String errorMessage = new String();
 	private double returnResult; 
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
+	private final char OPEN_BRACKET = '[';
+	private final char CLOSED_BRACKET = ']';
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
@@ -156,7 +158,7 @@ public class Interpreter extends Observable {
     
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
-    		System.out.println(wholeText);
+    		//System.out.println("LEFTOVER: " + wholeText);
     		if (!wholeText.equals("")) { 
     			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
     				processTree(root);
@@ -308,7 +310,6 @@ public class Interpreter extends Observable {
 //        		commandStack.push(cur);
 //    		}
     	} 
-    	System.out.println(cutFirst(text));
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
     
@@ -354,10 +355,12 @@ public class Interpreter extends Observable {
     }
     
     private String takeList(String s) { 
+    	//System.out.println("what you cut: " + s.substring(1, endParenIndex(s)).trim());
     	return s.substring(1, endParenIndex(s)).trim();
     }
     
     private String cutList(String s) { 
+    	System.out.println("whatever is left after cutting list " + s.substring(endParenIndex(s)+1).trim());
     	return s.substring(endParenIndex(s)+1).trim();
     }
     
@@ -373,22 +376,33 @@ public class Interpreter extends Observable {
     
     private int endParenIndex(String s) {
     	int lastClosed = 0;
+    	//int lastOpen = 0; 
     	int openCount = 0;
     	int closedCount = 0;
-    	for (int i=0; i<s.length();i++) { 
-    		if (s.charAt(i) == '[' && i < s.indexOf(']')) { 
+    	for (int i=0; i<s.length();i++) {
+    		// maybe  && i < s.indexOf(']')
+    		if (s.charAt(i) == OPEN_BRACKET) { 
     			openCount++;
-    		}
-    	}
-    	for (int i=0; i<s.length();i++) { 
-    		if (s.charAt(i) == ']') { 
+    			//lastOpen = i; 
+    		} else if (s.charAt(i) == CLOSED_BRACKET) { 
     			lastClosed = i; 
-    			closedCount++;
-    			if (closedCount == openCount) { 
+    			closedCount++; 
+    			String between = s.substring(0, lastClosed);
+    			if ((between.indexOf(OPEN_BRACKET) == -1 && between.indexOf(CLOSED_BRACKET) == -1) ||
+    					openCount == closedCount) { 
     				break;
     			}
     		}
     	}
+//    	for (int i=0; i<s.length();i++) { 
+//    		if (s.charAt(i) == ']') { 
+//    			lastClosed = i; 
+//    			closedCount++;
+//    			if (closedCount == openCount) { 
+//    				break;
+//    			}
+//    		}
+//    	}
     	return lastClosed; 
     }
 	
