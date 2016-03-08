@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -39,8 +41,8 @@ public class ViewAgents extends View{
 	private Pane agentPane;
 	private Boolean isSelectedAgentToggle;
 	private HashMap<ImageView,Agent> imageAgentMap;
-	private StringProperty currentAgentNameProperty;
-	protected HashMap<String, Agent> agentMap;
+	private IntegerProperty currentAgentNameProperty;
+	protected HashMap<Integer, Agent> agentMap;
 	private ColorPicker colorPicker;
 
 	
@@ -48,8 +50,8 @@ public class ViewAgents extends View{
 		super(id);
 		backgroundColor = DEFAULT_COLOR;
 		isSelectedAgentToggle = false;
-		currentAgentNameProperty = new SimpleStringProperty();
-		agentMap = new HashMap<String,Agent>();
+		currentAgentNameProperty = new SimpleIntegerProperty();
+		agentMap = new HashMap<Integer,Agent>();
 		imageAgentMap = new HashMap<ImageView,Agent>();
 
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
@@ -188,14 +190,14 @@ public class ViewAgents extends View{
 	public double getHeight() {
 		return WIDE_WIDTH;
 	}
-	public StringProperty getCurrentAgentNameProperty() {
+	public IntegerProperty getCurrentAgentNameProperty() {
 		return currentAgentNameProperty;
 	}
 	public void updateCurrentAgentView(){
 		update(agentMap.get(currentAgentNameProperty.getValue()),updateResources.getString("CURRENT"));
 
 	}
-	public void updateAgentMap(HashMap<String, Agent> newAgentMap) {
+	public void updateAgentMap(HashMap<Integer, Agent> newAgentMap) {
 		agentMap = newAgentMap;
 	}
 	

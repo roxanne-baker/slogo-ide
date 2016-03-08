@@ -12,16 +12,16 @@ import view.Agent;
 public interface IAgentController {
 	int getNumAgents();
 	List<Agent> getAgents();
-	List<String> getAgentNames();
-	void addAgent(String agentName); 
-	void removeAgent(String agentName);
-	boolean isAgent(String name); 
-	boolean isValidAgentName(String name);
+	List<Integer> getAgentNames();
+	void addAgent(Integer agentName); 
+	void removeAgent(Integer agentName);
+	boolean isAgent(Integer name); 
+	boolean isValidAgentName(Integer name);
 	
 	//Specific to current agent
-	void setCurrentAgent(String agentName);
+	void setCurrentAgent(Integer agentName);
 
-	String getCurrentAgent();
+	Integer getCurrentAgent();
 	void moveCurrentAgent(double changeX,double changeY);
 	double getCurrentAgentXPosition();
 	double getCurrentAgentYPosition();
@@ -44,8 +44,8 @@ public interface IAgentController {
 
 	void changeCurrentAgentSize(double size); //don't think we need these
 	double getCurrentAgentSize(); //don't think we need these
-	Agent getCurrentAgent(String agentName);
-	String getCurrentAgentName();
+	Agent getCurrentAgent(Integer agentName);
+	Integer getCurrentAgentName();
 
 	
 	

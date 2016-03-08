@@ -1,8 +1,6 @@
 package commands;
 
 import java.util.List;
-
-import controller.ColorPickerController;
 import controller.TurtleController;
 
 public class SetPenSize extends Command implements Executable {

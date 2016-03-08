@@ -1,13 +1,7 @@
 package controller;
 
 import java.util.List;
-import java.util.Observer;
-
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import model.ColorPickerModel;
-import view.CustomColor;
-import view.View;
 import view.ViewAgentPreferences;
 import view.ViewAgents;
 

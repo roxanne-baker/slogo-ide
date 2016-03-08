@@ -2,18 +2,20 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
+import commands.CreatedMethod;
+
 public class MethodModel extends Model {
-	private Map<String, String> savedMethods;
+	private Map<String, CreatedMethod> savedMethods;
 	
 	public MethodModel() {
-		savedMethods = new HashMap<String, String>();
+		savedMethods = new HashMap<String, CreatedMethod>();
 	}
 	
-	public void addMethod(String methodName, String methodText){
-		savedMethods.put(methodName, methodText);
+	public void addMethod(String methodName, CreatedMethod method){
+		savedMethods.put(methodName, method);
 	}
 	
-	public Map<String, String> getMethods() {
+	public Map<String, CreatedMethod> getMethods() {
 		return savedMethods;
 	}
 

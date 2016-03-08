@@ -13,7 +13,7 @@ public class TurtleTester extends Application{
 
 		ViewAgentPreferences prefView= new ViewAgentPreferences("PrefView");
 		TurtleController tTracker = new TurtleController(prefView, agentView);
-		tTracker.addAgent("Melissa");
+		tTracker.addAgent(1);
 		System.out.println(tTracker.getCurrentAgentName());
 //		tTracker.addAgent("Bob");
 //		tTracker.setCurrentAgent("Bob");

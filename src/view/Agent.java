@@ -5,10 +5,13 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,13 +38,13 @@ public abstract class Agent extends Observable{
 	private DoubleProperty oldXPosition;
 	private BooleanProperty isVisible;
 	private double penThickness;
-	private StringProperty nameProperty;
-	private DoubleProperty idProperty;
+	private IntegerProperty nameProperty;
+	private IntegerProperty idProperty;
 	private DoubleProperty sizeProperty;
 	private ResourceBundle myResources;
 	private String penStyle;
 	
-	public Agent(String name, double defaultXlocation, double defaultYlocation,View obsView){
+	public Agent(Integer name, double defaultXlocation, double defaultYlocation,View obsView){
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
 		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
 		oldXPosition = new SimpleDoubleProperty(defaultXlocation);
@@ -56,7 +59,7 @@ public abstract class Agent extends Observable{
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
 		currentShapeIndex = 0;
 		oldImageView = agentImageView;
-		nameProperty = new SimpleStringProperty(name);
+		nameProperty = new SimpleIntegerProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		penStyle = myResources.getString("SOLID");
 
@@ -167,15 +170,19 @@ public abstract class Agent extends Observable{
 		return imgCopy;
 
 	}
-	public StringProperty getNameProperty() {
+	public IntegerProperty getNameProperty() {
 		return nameProperty;
 	}
 	
-	public String getName(){
+	public IntegerProperty getIDProperty() {
+		return idProperty;
+	}
+	
+	public Integer getName(){
 		return nameProperty.getValue();
 	}
 
-	public void changeName(String newName) {
+	public void changeName(Integer newName) {
 		nameProperty.set(newName);
 		
 	}

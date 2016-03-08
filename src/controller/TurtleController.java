@@ -7,6 +7,8 @@ import view.Agent;
 import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
@@ -15,8 +17,8 @@ import javafx.scene.paint.Color;
 
 public class TurtleController extends Controller implements IAgentController{
 
-	private HashMap<String,Agent> agentMap;
-	private StringProperty currentAgentNameProperty;
+	private HashMap<Integer,Agent> agentMap;
+	private IntegerProperty currentAgentNameProperty;
 	private ViewAgentPreferences preferencesView;
 	private ViewAgents agentView;
 	private double observerWidth;
@@ -27,17 +29,17 @@ public class TurtleController extends Controller implements IAgentController{
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
 		agentView = obsView;
-		agentMap = new HashMap<String,Agent>();
+		agentMap = new HashMap<Integer,Agent>();
 		observerWidth = obsView.getWidth();
 		observerHeight = obsView.getHeight();
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
-		currentAgentNameProperty = new SimpleStringProperty();
+		currentAgentNameProperty = new SimpleIntegerProperty();
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
 		
-		addAgent("Melissa"); //always start with one agent
+		addAgent(1); //always start with one agent
 		
 
 		
@@ -58,23 +60,23 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public List<Agent> getAgents() {
 		ArrayList<Agent> agentList = new ArrayList<Agent>();
-		for(String key: agentMap.keySet()){
+		for(Integer key: agentMap.keySet()){
 			agentList.add(agentMap.get(key));
 		}
 		return agentList;
 	}
 
 	@Override
-	public List<String> getAgentNames() {
-		ArrayList<String> agentNames = new ArrayList<String>();
-		for (String key: agentMap.keySet()){
+	public List<Integer> getAgentNames() {
+		List<Integer> agentNames = new ArrayList<>();
+		for (Integer key: agentMap.keySet()){
 			agentNames.add(key);
 		}
 		return agentNames;
 	}
 
 	@Override
-	public void addAgent(String agentName) {
+	public void addAgent(Integer agentName) {
 		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,agentView); //starts in middle of screen
 		agentMap.put(agentName, newTurtle);
 		updateAgentMapInViews();
@@ -84,7 +86,7 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public void removeAgent(String agentName) {
+	public void removeAgent(Integer agentName) {
 		agentMap.remove(agentName);
 		if(currentAgentNameProperty.getValue().equals(agentName)){
 			currentAgentNameProperty.setValue(null);
@@ -98,7 +100,7 @@ public class TurtleController extends Controller implements IAgentController{
 		preferencesView.updateAgentMap(agentMap);
 		agentView.updateAgentMap(agentMap);
 	}
-	public void renameAgent(String oldName, String newName){ //needs to throw an error
+	public void renameAgent(Integer oldName, Integer newName){ //needs to throw an error
 		if (isValidAgentName(newName)){
 		Agent keepAgent = agentMap.get(oldName);
 		keepAgent.changeName(newName);
@@ -113,15 +115,15 @@ public class TurtleController extends Controller implements IAgentController{
 
 		
 	}
-	public String getCurrentAgent() { //needs to throw an error if null
+	public Integer getCurrentAgent() { //needs to throw an error if null
 		if (currentAgentNameProperty.getValue()==null){
 			return null;
 		}
 		return currentAgentNameProperty.getValue();
 	}
 	@Override
-	public boolean isAgent(String name) {
-		for (String key: agentMap.keySet()){
+	public boolean isAgent(Integer name) {
+		for (Integer key: agentMap.keySet()){
 			if (key.equals(name)){
 				return true;
 			}
@@ -130,7 +132,7 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public void setCurrentAgent(String agentName) {
+	public void setCurrentAgent(Integer agentName) {
 		currentAgentNameProperty.setValue(agentName);	
 		preferencesView.updateCurrentAgentSelection();
 		agentView.updateCurrentAgentView();
@@ -171,7 +173,7 @@ public class TurtleController extends Controller implements IAgentController{
 		return agentMap.get(currentAgentNameProperty.getValue()).getOrientation();
 	}
 	@Override
-	public boolean isValidAgentName(String name) {
+	public boolean isValidAgentName(Integer name) {
 		if(isAgent(name)){
 			return false;
 		}
@@ -201,11 +203,11 @@ public class TurtleController extends Controller implements IAgentController{
 		return agentMap.get(currentAgentNameProperty.getValue()).getYPosition();
 	}
 	@Override
-	public Agent getCurrentAgent(String agentName) {
+	public Agent getCurrentAgent(Integer agentName) {
 		return agentMap.get(currentAgentNameProperty.getValue());
 	}
 	@Override
-	public String getCurrentAgentName() {
+	public Integer getCurrentAgentName() {
 		return currentAgentNameProperty.getValue();
 	}
 	@Override
@@ -233,13 +235,26 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public int getCurrentAgentColorIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		List<Color> customColors = preferencesView.getColorPalette().getCustomColorList();
+		for (int i=0; i<customColors.size(); i++) {
+			if (customColors.get(i).equals(agentMap.get(currentAgentNameProperty.getValue()).getPenColor())) {
+				return i;
+			}
+		}
+		//COLOR INDEX NOT FOUND
+		return -1;
 	}
 
 	@Override
 	public int getCurrentAgentShapeIndex() {
-		// TODO Auto-generated method stub
+//		// TODO Auto-generated method stub
+//		List<Color> customColors = preferencesView.getColorPalette().getCustomColorList();
+//		for (int i=0; i<customColors.size(); i++) {
+//			if (customColors.get(i).equals(agentMap.get(currentAgentNameProperty.getValue()).getPenColor())) {
+//				return i;
+//			}
+//		}
+		
 		return 0;
 	}
 

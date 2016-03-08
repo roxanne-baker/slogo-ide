@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -26,10 +28,10 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class ViewAgentPreferences extends View{
-	private HashMap<String, Agent> agentMap;
+	private HashMap<Integer, Agent> agentMap;
 	private Group viewGroup;
 	private HBox allPreferencesBox;
-	private StringProperty currentAgentNameProperty;
+	private IntegerProperty currentAgentNameProperty;
 	private HBox customColorBox;
 	private List<HBox> customColorBoxes;
 	private CustomColorPalette colorPalette;
@@ -40,8 +42,8 @@ public class ViewAgentPreferences extends View{
 	public ViewAgentPreferences(String id) {
 		super(id);
 		viewGroup = new Group();
-		agentMap = new HashMap<String,Agent>();
-		currentAgentNameProperty = new SimpleStringProperty();
+		agentMap = new HashMap<Integer,Agent>();
+		currentAgentNameProperty = new SimpleIntegerProperty();
 		colorPalette = new CustomColorPalette();
 		guiObjects = new ArrayList<>();
 		customColorBoxes = new ArrayList<>();
@@ -73,7 +75,7 @@ public class ViewAgentPreferences extends View{
 		List<Node> mutableGuiObjectList = new ArrayList<Node>();
 
 		
-		if(currentAgentNameProperty.getValue()!=null){
+		if(currentAgentNameProperty.getValue()!=null && currentAgentNameProperty.getValue() != 0){
 			populateObserverLabelList(agentMap.get(currentAgentNameProperty.getValue()), observerLabelList);
 			populateMutableGuiObjectList(agentMap.get(currentAgentNameProperty.getValue()),mutableGuiObjectList);
 			
@@ -89,13 +91,13 @@ public class ViewAgentPreferences extends View{
 
 	private void setUpAgentDropDown() {
 		ComboBox<String> agentDropDown = new ComboBox<String>();
-		for (String name: agentMap.keySet()){
-			agentDropDown.getItems().add(name);
+		for (Integer name: agentMap.keySet()){
+			agentDropDown.getItems().add(""+name);
 		}
-		agentDropDown.setValue(currentAgentNameProperty.getValue());
+		agentDropDown.setValue(""+currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
-            	currentAgentNameProperty.setValue(newValue);
+            	currentAgentNameProperty.setValue(Integer.parseInt(newValue));
 				updateView();
             }
 		});
@@ -145,13 +147,13 @@ public class ViewAgentPreferences extends View{
 			}
 		}
 	}
-	public void updateAgentMap(Map<String,Agent> newAgentMap){
-		agentMap = (HashMap<String, Agent>) newAgentMap;
+	public void updateAgentMap(HashMap<Integer,Agent> newAgentMap){
+		agentMap = (HashMap<Integer, Agent>) newAgentMap;
 		updateView();
 	}
 
 
-	public StringProperty getCurrentAgentNameProperty() {
+	public IntegerProperty getCurrentAgentNameProperty() {
 		return currentAgentNameProperty;
 	}
 

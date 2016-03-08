@@ -10,8 +10,15 @@ public class CustomColorPalette {
 	private List<Color> customColorList;
 	public CustomColorPalette(){
 		customColorList = new ArrayList<>();
-		customColorList.add(Color.rgb(50, 100, 100));
-		customColorList.add(Color.rgb(30, 100, 30));
+		customColorList.add(Color.rgb(0, 0, 0));
+		customColorList.add(Color.rgb(255, 255, 255));
+		customColorList.add(Color.rgb(255, 0, 0));
+		customColorList.add(Color.rgb(0, 0, 255));
+		customColorList.add(Color.rgb(0, 128, 0));
+		customColorList.add(Color.rgb(255, 255, 0));
+		customColorList.add(Color.rgb(0, 255, 255));
+		customColorList.add(Color.rgb(255, 0, 255));
+		customColorList.add(Color.rgb(128, 128, 128));
 	}
 	public List<Color> getCustomColorList(){
 		return customColorList;
