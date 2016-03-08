@@ -113,12 +113,12 @@ public class Interpreter extends Observable {
     	}
     	else { 
     		c = commandsMap.get(parsedFirst);
-    		if (c.getNumParams() == 0) { 
-    			c.execute(NO_PARAMS_LIST);
-    			callBuildTree(cutFirst(text));
-    			return;
-    		}
     	}
+		if (c.getNumParams() == 0) { 
+			c.execute(NO_PARAMS_LIST);
+			callBuildTree(cutFirst(text));
+			return;
+		}
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
