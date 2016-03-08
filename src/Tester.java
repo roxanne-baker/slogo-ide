@@ -36,7 +36,7 @@ public class Tester extends Application{
 		HashMap<String,Controller> hm = new HashMap<String,Controller>();
 		hm.put("Variables",vc);
 		hm.put("Agent", tc);
-		Interpreter ip = new Interpreter(hm);
+		//Interpreter ip = new Interpreter(hm);
 		//consoleView.setInterpreter(ip);
 		tc.addAgent("Melissa");
 		tc.moveCurrentAgent(0, 500);

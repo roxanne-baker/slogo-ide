@@ -79,6 +79,8 @@ public class Interpreter extends Observable {
 		variableController = (VariablesController) controllers.get("Variables");
 		colorPickerController = (ColorPickerController) controllers.get("ColorPicker");
 		methodController = (MethodsController) controllers.get("Methods");
+		initializeCommandsMap();
+		initializeLangs();
 	}
 	
 	public void addLang(String language) { 
@@ -92,18 +94,22 @@ public class Interpreter extends Observable {
 	}
 	
 	public void run(String userInput) { 
-		initializeLangs();
-		initializeCommandsMap();
 		callBuildTree(userInput);
 	}
     
     private void callBuildTree(String text) { 
     	String parsedFirst = parseText(takeFirst(text));
-    	if (errorCommandName(parsedFirst)) { 
+    	if (errorCommandName(parsedFirst) && errorCommandName(takeFirst(text))) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return;
     	}
-    	Command c = commandsMap.get(parsedFirst);
+    	Command c;
+    	if (!errorCommandName(takeFirst(text))) {
+    		c = commandsMap.get(takeFirst(text));
+    	}
+    	else { 
+    		c = commandsMap.get(parsedFirst);
+    	}
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
@@ -143,24 +149,19 @@ public class Interpreter extends Observable {
     	}
     }
     
-    private String takeFirst(String text) { 
-    	String[] split = text.split(WHITESPACE);
-    	return split[0];
-    }
-    
     private void processTree(ParseNode root) { 
     	Stack<ParseNode> treeStack = new Stack<ParseNode>(); 
     	combThruTree(root, treeStack);
     	fillCommandStackParams(treeStack);
     }
     
-    private boolean stopBuild(String text, Stack<ParseNode> commandStack, ParseNode root) { 
-    	String parsedFirst = parseText(takeFirst(text));
+    private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
-    		if (!text.equals("")) { 
-    			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
+    		if (!wholeText.equals("")) { 
+    			System.out.println(wholeText);
+    			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
     				processTree(root);
-    				callBuildTree(text);
+    				callBuildTree(wholeText);
     			}
     			else if (parsedFirst.equals("Constant") || parsedFirst.equals("Variable")){ 
     				sendError("Too many parameters!");
@@ -170,11 +171,15 @@ public class Interpreter extends Observable {
     		}
     		return true; 
     	}
-    	else if (text.length() == 0 && !commandStack.isEmpty()) {
+    	else if (wholeText.length() == 0 && !commandStack.isEmpty()) {
     		sendError("Not enough parameters!"); 
         	return true; 
     	} 
-    	else if (parsedFirst.equals("Variable")) { 
+    	return false;
+    }
+    
+    private boolean invalidVariable(String text, String parsedFirst, Stack<ParseNode> commandStack) { 
+    	if (parsedFirst.equals("Variable")) { 
     		if (commandStack.peek().getCommand().isNeedsVarName()) {
     			return false;
     		}
@@ -186,22 +191,80 @@ public class Interpreter extends Observable {
         		return true;
     		}
     	}
-    	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart")) { 
-    		if (parsedFirst.equals("Command")) { 
-    			System.out.println(!errorCommandName(takeFirst(text)));
-    			if (commandStack.peek().getCommand().isNeedsVarName() || !errorCommandName(takeFirst(text))) { 
-    				return false; 
-    			} else if (errorCommandName(parsedFirst)) { 
-    				return true; 
-    			} else { 
-    				sendError(String.format("%s is not a valid command", takeFirst(text)));
-    				return true;
-    			}
+    	return false;
+    }
+    
+    private boolean invalidCommandName(String text, String parsedFirst, Stack<ParseNode> commandStack) { 
+    	if (parsedFirst.equals("Command")) { 
+    		if (commandStack.peek().getCommand().isNeedsVarName() || !errorCommandName(takeFirst(text))) { 
+    			return false; 
+    		} else if (!errorCommandName(parsedFirst)) { 
+    			return false; 
+    		} else { 
+    			sendError(String.format("%s is not a valid command", takeFirst(text)));
+    			return true;
     		}
+    	} 
+    	return false; 
+    }
+    
+    private boolean invalidInput(String text, String parsedFirst) { 
+    	if (parsedFirst.equals("NO MATCH")) {
     		sendError(String.format("%s is not a valid input", takeFirst(text)));
     		return true;
     	}
-    	return false;
+    	return false; 
+    }
+    
+    private boolean stopBuild(String text, Stack<ParseNode> commandStack, ParseNode root) { 
+    	String parsedFirst = parseText(takeFirst(text));
+//  	if (commandStack.isEmpty()) { 
+//    		if (!text.equals("")) { 
+//    			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
+//    				processTree(root);
+//    				callBuildTree(text);
+//    			}
+//    			else if (parsedFirst.equals("Constant") || parsedFirst.equals("Variable")){ 
+//    				sendError("Too many parameters!");
+//    			}
+//    		} else { 
+//				processTree(root);
+//    		}
+//    		return true; 
+//    	}
+//    	else if (text.length() == 0 && !commandStack.isEmpty()) {
+//    		sendError("Not enough parameters!"); 
+//        	return true; 
+//    	} 
+    	return cutStackAndString(text, parsedFirst, commandStack, root) || 
+    			invalidVariable(text, parsedFirst, commandStack) || 
+    			invalidCommandName(text, parsedFirst, commandStack) || invalidInput(text, parsedFirst); 
+//    	else if (parsedFirst.equals("Variable")) { 
+//    		if (commandStack.peek().getCommand().isNeedsVarName()) {
+//    			return false;
+//    		}
+//    		try {
+//    			@SuppressWarnings("unused")
+//				double val = Double.parseDouble((String) variableController.getVariable(takeFirst(text)));
+//    		} catch(Exception e) { 
+//        		sendError(String.format("%s is not a valid variable", takeFirst(text)));
+//        		return true;
+//    		}
+//    	}
+//    	else if (!parsedFirst.equals("Constant") && !parsedFirst.equals("ListStart")) { 
+//    		if (parsedFirst.equals("Command")) { 
+//    			if (commandStack.peek().getCommand().isNeedsVarName() || !errorCommandName(takeFirst(text))) { 
+//    				return false; 
+//    			} else { 
+//    				sendError(String.format("%s is not a valid command", takeFirst(text)));
+//    				return true;
+//    			}
+//    		} else if (!errorCommandName(parsedFirst)) { 
+//    			return false; 
+//    		}
+//    		sendError(String.format("%s is not a valid input", takeFirst(text)));
+//    		return true;
+//    	} 
     }
     
     private void buildExprTree(String text, Stack<ParseNode> commandStack, ParseNode root) { 
@@ -216,13 +279,14 @@ public class Interpreter extends Observable {
     		attachNode(cur, commandStack);
     	} 
     	else if (parsedFirst.equals("Variable")) { 
-    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
-    			cur = new ParseNode(first);
-    		}
-    		else { 
-    			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
-    		}
-    		attachNode(cur, commandStack);
+    		makeAttachVariableNode(first, commandStack);
+//    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
+//    			cur = new ParseNode(first);
+//    		}
+//    		else { 
+//    			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
+//    		}
+//    		attachNode(cur, commandStack);
    		} 
     	else if (parsedFirst.equals("ListStart")) { 
     		cur = new ParseNode(takeList(text));
@@ -231,20 +295,48 @@ public class Interpreter extends Observable {
     		return;
     	}
     	else { 
-    		if (commandStack.peek().getCommand().isNeedsVarName()) { 
-    			cur = new ParseNode(first);
-    			attachNode(cur, commandStack);
-    		} else { 
-    			if (commandsMap.containsKey(first)) { 
-    				cur = new ParseNode(commandsMap.get(first));
-    			} else { 
-            		cur = new ParseNode(commandsMap.get(parsedFirst));
-    			}
-        		attachNode(cur, commandStack);
-        		commandStack.push(cur);
-    		}
+    		makeAttachCommandStringNode(first, parsedFirst, commandStack);
+//    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) { 
+//    			cur = new ParseNode(first);
+//    			attachNode(cur, commandStack);
+//    		} else { 
+//    			if (commandsMap.containsKey(first)) { 
+//    				cur = new ParseNode(commandsMap.get(first));
+//    			} else { 
+//            		cur = new ParseNode(commandsMap.get(parsedFirst));
+//    			}
+//        		attachNode(cur, commandStack);
+//        		commandStack.push(cur);
+//    		}
     	} 
 		buildExprTree(cutFirst(text), commandStack, root); 
+    }
+    
+    private void makeAttachVariableNode(String first, Stack<ParseNode> commandStack) { 
+    	ParseNode cur;
+    	if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
+			cur = new ParseNode(first);
+		}
+		else { 
+			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
+		}
+		attachNode(cur, commandStack);
+    }
+    
+    private void makeAttachCommandStringNode(String first, String parsedFirst, Stack<ParseNode> commandStack) { 
+    	ParseNode cur;
+		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) { 
+			cur = new ParseNode(first);
+			attachNode(cur, commandStack);
+		} else { 
+			if (commandsMap.containsKey(first)) { 
+				cur = new ParseNode(commandsMap.get(first));
+			} else { 
+        		cur = new ParseNode(commandsMap.get(parsedFirst));
+			}
+    		attachNode(cur, commandStack);
+    		commandStack.push(cur);
+		}
     }
     
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {
@@ -262,8 +354,18 @@ public class Interpreter extends Observable {
     private String cutList(String s) { 
     	return s.substring(endParenIndex(s)+1).trim();
     }
+    
+    private String takeFirst(String text) { 
+    	String[] split = text.split(WHITESPACE);
+    	return split[0].trim();
+    }
+    
+    private String cutFirst(String text) { 
+    	String first = text.split(WHITESPACE)[0];
+    	return text.substring(first.length()).trim(); 
+    }
+    
     private int endParenIndex(String s) {
-    	//int endIndex = s.length() - new StringBuilder(s).reverse().toString().indexOf("]") - 1;
     	int lastClosed = 0;
     	int openCount = 0;
     	int closedCount = 0;
@@ -388,11 +490,6 @@ public class Interpreter extends Observable {
 		commandsMap.put("Equal", new Equal());
 		commandsMap.put("NotEqual", new NotEqual());
 	}
-    
-    private String cutFirst(String text) { 
-    	String first = text.split(WHITESPACE)[0];
-    	return text.substring(first.length()).trim(); 
-    }
     
     public void addCommandToMap(CreatedMethod method) { 
     	commandsMap.put(method.getMethodName(), method);
