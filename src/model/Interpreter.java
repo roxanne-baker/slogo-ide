@@ -140,7 +140,8 @@ public class Interpreter extends Observable {
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
     		if (!wholeText.equals("")) { 
-    			if (!parsedFirst.equals("Constant") && commandsMap.containsKey(parsedFirst)) { 
+    			System.out.println(wholeText);
+    			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
     				processTree(root);
     				callBuildTree(wholeText);
     			}
@@ -249,7 +250,6 @@ public class Interpreter extends Observable {
     }
     
     private void buildExprTree(String text, Stack<ParseNode> commandStack, ParseNode root) { 
-    	System.out.println(text);
     	if (stopBuild(text, commandStack, root)) {
     		return; 
     	}
@@ -261,13 +261,14 @@ public class Interpreter extends Observable {
     		attachNode(cur, commandStack);
     	} 
     	else if (parsedFirst.equals("Variable")) { 
-    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
-    			cur = new ParseNode(first);
-    		}
-    		else { 
-    			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
-    		}
-    		attachNode(cur, commandStack);
+    		makeAttachVariableNode(first, commandStack);
+//    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
+//    			cur = new ParseNode(first);
+//    		}
+//    		else { 
+//    			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
+//    		}
+//    		attachNode(cur, commandStack);
    		} 
     	else if (parsedFirst.equals("ListStart")) { 
     		cur = new ParseNode(takeList(text));
@@ -276,20 +277,48 @@ public class Interpreter extends Observable {
     		return;
     	}
     	else { 
-    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) { 
-    			cur = new ParseNode(first);
-    			attachNode(cur, commandStack);
-    		} else { 
-    			if (commandsMap.containsKey(first)) { 
-    				cur = new ParseNode(commandsMap.get(first));
-    			} else { 
-            		cur = new ParseNode(commandsMap.get(parsedFirst));
-    			}
-        		attachNode(cur, commandStack);
-        		commandStack.push(cur);
-    		}
+    		makeAttachCommandStringNode(first, parsedFirst, commandStack);
+//    		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) { 
+//    			cur = new ParseNode(first);
+//    			attachNode(cur, commandStack);
+//    		} else { 
+//    			if (commandsMap.containsKey(first)) { 
+//    				cur = new ParseNode(commandsMap.get(first));
+//    			} else { 
+//            		cur = new ParseNode(commandsMap.get(parsedFirst));
+//    			}
+//        		attachNode(cur, commandStack);
+//        		commandStack.push(cur);
+//    		}
     	} 
 		buildExprTree(cutFirst(text), commandStack, root); 
+    }
+    
+    private void makeAttachVariableNode(String first, Stack<ParseNode> commandStack) { 
+    	ParseNode cur;
+    	if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) {
+			cur = new ParseNode(first);
+		}
+		else { 
+			cur = new ParseNode(Double.parseDouble((String) variableController.getVariable(first)));
+		}
+		attachNode(cur, commandStack);
+    }
+    
+    private void makeAttachCommandStringNode(String first, String parsedFirst, Stack<ParseNode> commandStack) { 
+    	ParseNode cur;
+		if (commandStack.peek().getCommand().isNeedsVarName() && commandStack.peek().getNumParamsFilled() == 0) { 
+			cur = new ParseNode(first);
+			attachNode(cur, commandStack);
+		} else { 
+			if (commandsMap.containsKey(first)) { 
+				cur = new ParseNode(commandsMap.get(first));
+			} else { 
+        		cur = new ParseNode(commandsMap.get(parsedFirst));
+			}
+    		attachNode(cur, commandStack);
+    		commandStack.push(cur);
+		}
     }
     
     private void attachNode(ParseNode cur, Stack<ParseNode> commandStack) {
@@ -319,7 +348,6 @@ public class Interpreter extends Observable {
     }
     
     private int endParenIndex(String s) {
-    	//int endIndex = s.length() - new StringBuilder(s).reverse().toString().indexOf("]") - 1;
     	int lastClosed = 0;
     	int openCount = 0;
     	int closedCount = 0;
