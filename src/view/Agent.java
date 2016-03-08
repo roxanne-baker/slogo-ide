@@ -36,6 +36,7 @@ public abstract class Agent extends Observable{
 	private BooleanProperty isVisible;
 	private double penThickness;
 	private StringProperty nameProperty;
+	private DoubleProperty idProperty;
 	private DoubleProperty sizeProperty;
 	private ResourceBundle myResources;
 	private String penStyle;

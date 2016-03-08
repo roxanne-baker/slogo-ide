@@ -47,10 +47,12 @@ import commands.SetBackground;
 import commands.SetHeading;
 import commands.SetPalette;
 import commands.SetPenColor;
+import commands.SetPenSize;
 import commands.SetXY;
 import commands.ShowTurtle;
 import commands.ShowingQuery;
 import commands.Sine;
+import commands.Stamp;
 import commands.Sum;
 import commands.Tangent;
 import commands.Towards;
@@ -378,6 +380,8 @@ public class Interpreter extends Observable {
 		commandsMap.put("SetPalette", new SetPalette(colorPickerController));
 		commandsMap.put("SetBackground", new SetBackground(colorPickerController));
 		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
+		commandsMap.put("SetPenSize", new SetPenSize(turtleController));
+		commandsMap.put("Stamp", new Stamp(turtleController));
 	}
 	
     private void addControlStructureCommands() { 

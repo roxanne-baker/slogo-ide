@@ -217,13 +217,12 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public void setCurrentAgentPenColor(int colorIndex) {
 		Color penColor = preferencesView.getColorPalette().getCustomColorList().get(colorIndex);
-		this.getCurrentAgent(getCurrentAgent()).setPenColor(penColor);
+		agentMap.get(currentAgentNameProperty.getValue()).setPenColor(penColor);
 	}
 
 	@Override
-	public void setCurrentAgentPenThickness(int thickness) {
-		// TODO Auto-generated method stub
-		
+	public void setCurrentAgentPenThickness(double thickness) {
+		agentMap.get(currentAgentNameProperty.getValue()).setPenThickness(thickness);
 	}
 
 	@Override

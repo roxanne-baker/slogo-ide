@@ -31,7 +31,7 @@ public class MakeVar extends Command implements Executable {
 		if (!(name instanceof String)) {
 			return String.format(errors.getString("WrongParamType"), name.toString());
 		}
-		Object value = params.get(0);
+		Object value = params.get(1);
 		if (!(value instanceof Integer || value instanceof Double)) {
 			return String.format(errors.getString("WrongParamType"), value.toString());
 		}	
