@@ -97,6 +97,10 @@ public class Interpreter extends Observable {
     private void callBuildTree(String text) { 
     	if (text.trim().length() == 0) return;
     	String parsedFirst = parseText(takeFirst(text));
+    	if (parsedFirst.equals("Constant")) { 
+    		returnResult =  Double.parseDouble(takeFirst(text));
+    		return;
+    	}
     	if (errorCommandName(parsedFirst) && errorCommandName(takeFirst(text))) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return;
@@ -152,6 +156,7 @@ public class Interpreter extends Observable {
     
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
+    		System.out.println(wholeText);
     		if (!wholeText.equals("")) { 
     			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
     				processTree(root);
@@ -303,6 +308,7 @@ public class Interpreter extends Observable {
 //        		commandStack.push(cur);
 //    		}
     	} 
+    	System.out.println(cutFirst(text));
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
     
