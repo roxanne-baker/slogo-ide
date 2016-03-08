@@ -13,6 +13,7 @@ public class For extends Command implements Executable {
 	
 	public For(Interpreter interpreter, VariablesController variableController) {
 		this.interpreter = interpreter;
+		this.variableController = variableController;
 		numParams = 2;
 	}
 	

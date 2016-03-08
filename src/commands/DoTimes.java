@@ -4,12 +4,8 @@ import java.util.List;
 
 import model.Interpreter;
 
-
-
 public class DoTimes extends ControlCommand implements Executable {
-
 	Interpreter interpreter;
-	
 	public DoTimes(Interpreter interpreter) {
 		this.interpreter = interpreter;
 		numParams = 2;
@@ -18,6 +14,7 @@ public class DoTimes extends ControlCommand implements Executable {
 	public double execute(List<Object> params) {
 		// WANT TO GET MAX VALUE FOR VARIABLE
 		String varLimitExpr = (String) params.get(0);
+		System.out.println(varLimitExpr);
 		int endVarNameIndex = varLimitExpr.indexOf(" ");
 		String varName = varLimitExpr.substring(0, endVarNameIndex);
 		//String varLimitCommand = varLimitExpr.substring(endVarNameIndex+1);
