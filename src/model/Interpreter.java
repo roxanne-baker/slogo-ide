@@ -20,6 +20,7 @@ import commands.Cosine;
 import commands.CreatedMethod;
 import commands.Difference;
 import commands.Divide;
+import commands.DoTimes;
 import commands.Equal;
 import commands.For;
 import commands.Forward;
@@ -441,6 +442,7 @@ public class Interpreter extends Observable {
     	commandsMap.put("IfElse", new IfElse(this));
     	commandsMap.put("For", new For(this, variableController));
     	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
+    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     }
     
 	private void addTurtleCommands() {

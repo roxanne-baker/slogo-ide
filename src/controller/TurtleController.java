@@ -130,7 +130,8 @@ public class TurtleController extends Controller implements IAgentController{
 		}
 		return false;
 	}
-
+	
+	
 	@Override
 	public void setCurrentAgent(Integer agentName) {
 		currentAgentNameProperty.setValue(agentName);	
@@ -213,7 +214,6 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public void moveCurrentAgent(double changeX, double changeY) {
 		agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX, changeY);
-		
 	}
 
 	@Override

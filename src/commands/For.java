@@ -13,6 +13,7 @@ public class For extends Command implements Executable {
 	
 	public For(Interpreter interpreter, VariablesController variableController) {
 		this.interpreter = interpreter;
+		this.variableController = variableController;
 		numParams = 2;
 	}
 	
@@ -27,9 +28,9 @@ public class For extends Command implements Executable {
 		double increment = Double.parseDouble(forLoopCondition[3]);
 		
 		String commands = (String) params.get(1);
-		
+		System.out.println(variableController == null);
+		System.out.println(varName);		
 		for (double i=start; i<end; i+= increment) {
-			//interpreter.run("MAKE "+varName+" "+i);
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}

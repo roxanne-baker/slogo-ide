@@ -19,6 +19,10 @@ public class Drawer {
 	private List<ImageView> stampList;
 	private List<Node> lineList;
 	private List<ImageView> agentViewList;
+
+	private final int OFFSET_X = 250;
+	private final int OFFSET_Y = 250;
+	
 	public Drawer(Pane agentPane){
 		agentGroup = agentPane;
 		stampList = new ArrayList<ImageView>();
@@ -30,10 +34,10 @@ public class Drawer {
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color, double dash){
 
 		Line line = new Line();
-		line.setStartX(oldX);
-		line.setStartY(oldY);
-		line.setEndX(newX);
-		line.setEndY(newY);
+		line.setStartX(oldX + OFFSET_X);
+		line.setStartY(oldY + OFFSET_Y);
+		line.setEndX(newX + OFFSET_X);
+		line.setEndY(newY + OFFSET_Y);
 		line.setStrokeWidth(thickness);
 		line.setStroke(color);
 		line.getStrokeDashArray().removeAll();
@@ -47,13 +51,13 @@ public class Drawer {
 	 * Need to make a copy of ImageView to stamp it otherwise run into duplicate children issue
 	 */
 	public void stampImage(ImageView img, double xPosition, double yPosition){
-		setLocation(img, xPosition, yPosition);
+		setLocation(img, xPosition - OFFSET_X, yPosition - OFFSET_Y);
 		stampList.add(img);
 		agentGroup.getChildren().add(img);
 	}
 	private void setLocation(ImageView img, double xPosition, double yPosition) {
-		img.setLayoutX(xPosition -  img.getBoundsInParent().getWidth()/2);
-		img.setLayoutY(yPosition - img.getBoundsInParent().getHeight()/2);
+		img.setLayoutX(xPosition + OFFSET_X -  img.getBoundsInParent().getWidth()/2);
+		img.setLayoutY(yPosition + OFFSET_Y - img.getBoundsInParent().getHeight()/2);
 
 	}
 	

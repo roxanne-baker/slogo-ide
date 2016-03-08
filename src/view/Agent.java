@@ -45,10 +45,10 @@ public abstract class Agent extends Observable{
 	private String penStyle;
 	
 	public Agent(Integer name, double defaultXlocation, double defaultYlocation,View obsView){
-		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
-		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
-		oldXPosition = new SimpleDoubleProperty(defaultXlocation);
-		oldYPosition = new SimpleDoubleProperty(defaultYlocation);
+		agentXPosition = new SimpleDoubleProperty(0);
+		agentYPosition = new SimpleDoubleProperty(0);
+		oldXPosition = new SimpleDoubleProperty(0);
+		oldYPosition = new SimpleDoubleProperty(0);
 		agentPenUp = false; //default value pen is down
 		penColor = DEFAULT_PEN_COLOR;
 		penThickness = DEFAULT_PEN_THICKNESS;
