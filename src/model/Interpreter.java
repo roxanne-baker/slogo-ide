@@ -158,7 +158,6 @@ public class Interpreter extends Observable {
     
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
-    		//System.out.println("LEFTOVER: " + wholeText);
     		if (!wholeText.equals("")) { 
     			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
     				processTree(root);
@@ -355,12 +354,10 @@ public class Interpreter extends Observable {
     }
     
     private String takeList(String s) { 
-    	//System.out.println("what you cut: " + s.substring(1, endParenIndex(s)).trim());
     	return s.substring(1, endParenIndex(s)).trim();
     }
     
     private String cutList(String s) { 
-    	System.out.println("whatever is left after cutting list " + s.substring(endParenIndex(s)+1).trim());
     	return s.substring(endParenIndex(s)+1).trim();
     }
     
