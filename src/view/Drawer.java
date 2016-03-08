@@ -32,7 +32,6 @@ public class Drawer {
 
 	}
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color, double dash){
-
 		Line line = new Line();
 		line.setStartX(oldX + OFFSET_X);
 		line.setStartY(oldY + OFFSET_Y);

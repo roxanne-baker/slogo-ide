@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import controller.TurtleController;
 import controller.VariablesController;
 import commands.ArcTangent;
 import commands.Back;
+import commands.ClearScreen;
 import commands.Command;
 import commands.Cosine;
 import commands.CreatedMethod;
@@ -61,6 +63,8 @@ import commands.Sum;
 import commands.Tangent;
 import commands.To;
 import commands.Towards;
+import commands.TurtleCommand;
+import commands.TurtleQueryCommands;
 
 public class Interpreter extends Observable {
 
@@ -74,6 +78,7 @@ public class Interpreter extends Observable {
 	private MethodsController methodController;
 	private String errorMessage = new String();
 	private double returnResult; 
+	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
 		turtleController = (TurtleController) controllers.get("Agent"); 
@@ -99,7 +104,12 @@ public class Interpreter extends Observable {
 	}
     
     private void callBuildTree(String text) { 
+    	if (text.trim().length() == 0) return;
     	String parsedFirst = parseText(takeFirst(text));
+    	if (parsedFirst.equals("Constant")) { 
+    		returnResult =  Double.parseDouble(takeFirst(text));
+    		return;
+    	}
     	if (errorCommandName(parsedFirst) && errorCommandName(takeFirst(text))) { 
     		sendError(String.format("%s is not a valid command", takeFirst(text)));
     		return;
@@ -110,6 +120,11 @@ public class Interpreter extends Observable {
     	}
     	else { 
     		c = commandsMap.get(parsedFirst);
+    		if (c.getNumParams() == 0) { 
+    			c.execute(NO_PARAMS_LIST);
+    			callBuildTree(cutFirst(text));
+    			return;
+    		}
     	}
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
@@ -158,8 +173,8 @@ public class Interpreter extends Observable {
     
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
+    		System.out.println(wholeText);
     		if (!wholeText.equals("")) { 
-    			System.out.println(wholeText);
     			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
     				processTree(root);
     				callBuildTree(wholeText);
@@ -310,6 +325,7 @@ public class Interpreter extends Observable {
 //        		commandStack.push(cur);
 //    		}
     	} 
+    	System.out.println(cutFirst(text));
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
     
@@ -335,6 +351,12 @@ public class Interpreter extends Observable {
 			} else { 
         		cur = new ParseNode(commandsMap.get(parsedFirst));
 			}
+			// may want to check for turtlequery/turtle command here
+        	if (cur.getCommand().getNumParams() == 0) { 
+        		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
+        		attachNode(cur, commandStack);
+        		return;
+        	}
     		attachNode(cur, commandStack);
     		commandStack.push(cur);
 		}
@@ -441,6 +463,7 @@ public class Interpreter extends Observable {
     	commandsMap.put("If", new If(this));
     	commandsMap.put("IfElse", new IfElse(this));
     	commandsMap.put("For", new For(this, variableController));
+    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
     	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     }
@@ -458,6 +481,7 @@ public class Interpreter extends Observable {
 		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
 		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
 		commandsMap.put("Home", new Home(turtleController));
+		commandsMap.put("ClearScreen", new ClearScreen(turtleController));
 	}
 	
 	private void addTurtleQueries() {
