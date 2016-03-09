@@ -37,6 +37,8 @@ public class Workspace implements Observer {
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
+	private CustomColorPalette customColorPalette = new CustomColorPalette();
+	private CustomImagePalette customImagePalette = new CustomImagePalette();
 	private Group group = new Group();
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
@@ -61,12 +63,11 @@ public class Workspace implements Observer {
 	}
 	
 	private void initPalettes() {
-		CustomColorPalette customColorPalette = new CustomColorPalette();
-		CustomImagePalette customImagePalette = new CustomImagePalette();
+
 		((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		
-		//((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
+		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
 
 		
 	}

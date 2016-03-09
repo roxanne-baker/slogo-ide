@@ -20,7 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
- * This view displays all the agents and updates when the update method is called by the Agent Observables.
+ * This view displays all the agents and updates when the update method is called by the Agent Observables. This class keeps tracks of all the images on the screen and maps them to an Agent object.
  * @author Melissa Zhang
  *
  */
@@ -95,7 +95,7 @@ public class ViewAgents extends View{
 		
 		if(((Agent) agent).isVisible()){
 			if (updateType == updateResources.getString("STAMP")){
-				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.stampImage(getImageCopy((Agent) agent), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("MOVE")){
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
@@ -104,12 +104,12 @@ public class ViewAgents extends View{
 				}
 
 			}else if (updateType == updateResources.getString("INITIAL")){ 
-				ImageView agentImageView = addToImageMapAndAddHandler(agent);
+				ImageView agentImageView = createNewImageViewWithHandler(agent);
 				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("IMAGEVIEW")){
 				imageAgentMap.remove(((Agent) agent).getOldImageView());
-				ImageView newAgentImageView = addToImageMapAndAddHandler(agent);
+				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
 				drawer.setNewImage(((Agent) agent).getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("CURRENT")){
@@ -128,8 +128,17 @@ public class ViewAgents extends View{
 
 			
 	}
-	private ImageView addToImageMapAndAddHandler(Observable agent) {
-		ImageView newAgentImageView = ((Agent) agent).getImageView();
+	private ImageView getImageCopy(Agent agent) {
+		ImageView imageCopy = (ImageView) imagePalette.getPaletteObject(((Agent) agent).getCurrentImageIndex());
+		return imageCopy;
+	}
+	private ImageView createNewImageViewWithHandler(Observable agent) {
+		ImageView newAgentImageView;
+		if (((Agent) agent).getCurrentImageIndex()<0){ //use Default imageview
+			newAgentImageView = ((Agent) agent).getImageView();
+		}else{
+			newAgentImageView = (ImageView) imagePalette.getPaletteObject(((Agent) agent).getCurrentImageIndex());
+		}
 		addImageHandler(newAgentImageView);
 		imageAgentMap.put(newAgentImageView, (Agent) agent);
 		return newAgentImageView;
@@ -148,9 +157,7 @@ public class ViewAgents extends View{
 
 		     @Override
 		     public void handle(MouseEvent event) {
-		         System.out.println("Turtle selected");
 		         update(imageAgentMap.get(img),updateResources.getString("CURRENT"));
-		         //get rid of effect for other turtles
 		     }
 
 

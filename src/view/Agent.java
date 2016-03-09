@@ -53,7 +53,7 @@ public abstract class Agent extends Observable{
 		isVisible = new SimpleBooleanProperty(true);
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
-		currentImageIndex = -1; //no index chosen
+		currentImageIndex = -1; 
 		oldImageView = agentImageView;
 		nameProperty = new SimpleStringProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
