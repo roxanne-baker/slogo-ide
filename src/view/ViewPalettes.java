@@ -29,7 +29,10 @@ public class ViewPalettes extends View{
 		paletteList = new ArrayList<Palette>();
 		for (Palette palette: newPaletteList){
 			paletteList.add(palette);
+			
 		}
+		setUpPalettes();
+		
 	}
 	@Override
 	public Pane getView() {
@@ -39,6 +42,7 @@ public class ViewPalettes extends View{
 	}
 
 	private void setUpPalettes() {
+		System.out.println(paletteList);
 		for (Palette palette: paletteList){
 			Label label = new Label(myResources.getString(palette.getPaletteName() + "LABEL"));
 			vbox.getChildren().addAll(label,palette.getPaletteViewGroup());	

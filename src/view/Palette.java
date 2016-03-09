@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import controller.Controller;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public abstract class Palette extends Controller{
 	
@@ -30,12 +33,19 @@ public abstract class Palette extends Controller{
 	}
 	public Group getPaletteViewGroup(){
 		HBox hbox = new HBox();
-		for (int index = 0; index < paletteObjectList.size(); index++){
-			hbox.getChildren().add((Node) getPaletteObject(index));
+		for (int index = 0; index < getPaletteList().size(); index++){
+			VBox elemBox = new VBox();
+			elemBox.setAlignment(Pos.CENTER);
+			Node objectView = getPaletteObjectView(index);
+			Label indexLabel = new Label(Integer.toString(index));
+			elemBox.getChildren().addAll(objectView,indexLabel);
+			hbox.getChildren().add(elemBox);
 		}
 		paletteGroup.getChildren().add(hbox);
 		return paletteGroup;
 	}
+	
+	public abstract Node getPaletteObjectView(int index);
 	
 	public void addToPalette(Object obj, int index){
 		paletteObjectList.set(index, obj);
@@ -51,6 +61,7 @@ public abstract class Palette extends Controller{
 			for (Object obj: customList){
 				paletteObjectList.add(obj);
 			}
+			
 		}
 
 
