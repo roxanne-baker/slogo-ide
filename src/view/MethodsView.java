@@ -14,7 +14,7 @@ public class MethodsView extends View{
 	private Pane pane;
 
 	public MethodsView(ViewType ID){
-		super(ID);
+		super(ID, null);
 		init();
 	}
  	

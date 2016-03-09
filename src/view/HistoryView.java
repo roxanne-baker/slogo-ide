@@ -13,7 +13,7 @@ public class HistoryView extends View implements Observer{
 	private Pane pane;
 
 	public HistoryView(ViewType ID){
-		super(ID);
+		super(ID, null);
 		init();
 		setStyleClass(pane);
 	}

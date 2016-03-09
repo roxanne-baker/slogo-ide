@@ -17,7 +17,7 @@ public class ViewPalettes extends View{
 	private VBox vbox;
 
 	public ViewPalettes(ViewType ID) {
-		super(ID);
+		super(ID, null);
 		viewPane = new Pane();
 		paletteList = new ArrayList<Palette>();
 		myResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);

@@ -45,7 +45,7 @@ public class ViewAgents extends View{
 
 	
 	public ViewAgents(ViewType ID) {
-		super(ID);
+		super(ID, null);
 		backgroundColor = DEFAULT_COLOR;
 		isSelectedAgentToggle = false;
 		currentAgentNameProperty = new SimpleStringProperty();

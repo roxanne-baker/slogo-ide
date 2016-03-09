@@ -14,7 +14,7 @@ public class VariablesView extends View{
 	private Label instructions = new Label(myResources.getString("VARIABLEINSNS"));	//added
 	
 	public VariablesView(ViewType ID) {
-		super(ID);
+		super(ID, null);
 		savedVars.getChildren().add(instructions); // added
 		init();
 	}

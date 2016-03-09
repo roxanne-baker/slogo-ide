@@ -33,7 +33,7 @@ public class ViewPreferences extends View{
 	private static final int PADDING = 10;
 	
 	public ViewPreferences(ViewType ID) {
-		super(ID);
+		super(ID, null);
 //		viewGroup = new Group();
 		viewGroup = new Pane();
 		agentMap = new HashMap<String,Agent>();

@@ -32,7 +32,7 @@ public class ViewWindowPreferences extends View{
 	
 
 	public ViewWindowPreferences(ViewType ID) {
-		super(ID);
+		super(ID, null);
 		guiList = new ArrayList<Node>();
 		viewGroup = new Group();
 		windowPreferencesBox = new HBox();

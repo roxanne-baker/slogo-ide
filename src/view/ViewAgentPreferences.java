@@ -34,8 +34,8 @@ public class ViewAgentPreferences extends View{
 
 	private Pane pane;
 	
-	public ViewAgentPreferences(ViewType ID) {
-		super(ID);
+	public ViewAgentPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
+		super(ID, savedPreferences);
 
 		viewGroup = new Group();
 		pane = new Pane(viewGroup);

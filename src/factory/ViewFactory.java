@@ -1,15 +1,7 @@
 package factory;
 
-import view.ConsoleView;
-import view.HistoryView;
-import view.MethodsView;
-import view.VariablesView;
-import view.View;
-import view.ViewAgents;
-import view.ViewPalettes;
-import view.ViewType;
-import view.ViewAgentPreferences;
-import view.ViewWindowPreferences;
+import view.*;
+import java.util.*;
 
 public class ViewFactory {
 	private HistoryView historyView; 
@@ -20,11 +12,16 @@ public class ViewFactory {
 	private ViewAgentPreferences preferencesView;
 	private ViewWindowPreferences windowPreferencesView;
 	private ViewPalettes palettesView;
+	private Map<String,List<Object>> savedPreferences;
+	
+	public ViewFactory(Map<String,List<Object>> savedPreferences){
+		this.savedPreferences = savedPreferences;
+	}
 	
 	public View createView(ViewType ID){
 		switch(ID){
 		case CONSOLE:
-			consoleView = new ConsoleView(ID,historyView);
+			consoleView = new ConsoleView(ID,historyView,savedPreferences);
 			return consoleView;
 		case HISTORY:
 			historyView = new HistoryView(ID);

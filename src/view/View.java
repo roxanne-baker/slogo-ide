@@ -1,9 +1,6 @@
 
 package view;
-import java.util.Observer;
-import java.util.ResourceBundle;
-import java.util.Observable;
-import javafx.scene.Group;
+import java.util.*;
 import javafx.scene.layout.Pane;
 
 public abstract class View extends Observable implements Observer{
@@ -14,7 +11,7 @@ public abstract class View extends Observable implements Observer{
 	private ViewType viewType;
 
 	
-	public View(ViewType ID){
+	public View(ViewType ID, Map<String,List<Object>> savedPreferences){
 		viewType = ID;
 		updateResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 	}
