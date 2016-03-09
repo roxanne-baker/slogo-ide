@@ -21,6 +21,7 @@ public class ViewPalettes extends View{
 		viewPane = new Pane();
 		paletteList = new ArrayList<Palette>();
 		myResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
+		vbox = new VBox();
 		viewPane.getChildren().add(vbox);
 	}
 	

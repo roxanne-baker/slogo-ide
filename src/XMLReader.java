@@ -1,52 +1,25 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.Validator;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-
-/**
- * 
- * @author Michelle
- *
- * This class reads in XML files and passes the user input to the simulations.
- * In the case of faulty user input, XMLReader utilizes the SimulationOptional class to throw an error message on the scene in the main class.
- * 
- * XML files contain the following info:
- * --name of the simulation it represents, as well as a title for the simulation and the simulation's "author"
- * --settings for global configuration parameters specific to the simulation
- * --dimensions of the grid and the initial configuration of the states for the cells in the grid
- * 
- */
 
 public class XMLReader {
 	private String file;
 	private Document doc;	
-	private Validator validator;
-	
-	private Integer gridSize;
-	private Integer numCells;
-	private Boolean gridType;
-	private Boolean cellType;
-	
-	private String simType;
-    private NodeList listParam;
-    private Element attributes;
-    
-	private List<String> columns;
-	private NodeList colTag;
+	private Element rootElem;
 
 	public XMLReader() {
 		file = chooseFile();
+		readFile();
 	}
 
 	public String chooseFile(){
@@ -69,7 +42,7 @@ public class XMLReader {
 	 * If the XML file contains faulty user input, the method will instead return an error message to be displayed on the Stage in the main method.
 	 */
 	
-	public void getSimulation(Map myParams){
+	private void readFile(){
 		try{
 			File inputFile = new File(file);
 	        DocumentBuilderFactory dbFactory 
@@ -77,22 +50,49 @@ public class XMLReader {
 	        dbFactory.setIgnoringElementContentWhitespace(true);
 	        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();	        
 	        doc = dBuilder.parse(inputFile);       
-	        //simulation type
-	        Element simulation2 = (Element) doc.getElementsByTagName("info").item(0) ;
-	        simType = simulation2.getElementsByTagName("name").item(0).getTextContent();	        	        
-	        //getting nodes
-			listParam = doc.getElementsByTagName("parameters");
-	        attributes = (Element) listParam.item(0);
-//	        if (attributes.getElementsByTagName("custom").getLength() == 0) {
-//	        	parseRandom(myParams);
-//		        return randomSim();
-//	        } else {
-//	        	parseCustom(attributes);
-//	        	return customSim();
-//	        }
+	        rootElem = (Element) doc.getElementsByTagName("preferences").item(0);
+	        
 		} catch(Exception e){	
-			//return new SimulationOptional(null, e);
+			//
 		}			
+	}
+	
+	private String getNodeValue(Element nodeElem, String tagName){ 
+		return nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim();
+	}
+	
+	private List<String> getListElem(Element nodeElem,String tagName){
+		List<String> elems = new ArrayList<String>();
+		Element parentElem = (Element) rootElem.getElementsByTagName(tagName).item(0);
+		NodeList elemList = parentElem.getElementsByTagName("row");
+		for(int i=0; i<elemList.getLength(); i++){
+			String val = elemList.item(i).getNodeValue().trim();
+			elems.add(val);
+		}
+		return elems;
+	}
+	
+	public Color getBackground(){
+		return Color.valueOf(getNodeValue(rootElem,"background"));
+	}
+	
+	public List<String> getImageList(){
+		ArrayList<String> images = new ArrayList<String>();
+		Element imagesElem = (Element) rootElem.getElementsByTagName("images").item(0);
+		NodeList imagesList = imagesElem.getElementsByTagName("row");
+		for(int i=0; i<imagesList.getLength(); i++){
+			String imgName = imagesList.item(i).getNodeValue().trim();
+			images.add(imgName);
+		}
+		return images;
+	}
+	
+	public int getTurtleCount(){
+		return Integer.parseInt(getNodeValue(rootElem,"turtles"));
+	}
+	
+	public String getLanguage(){
+		return getNodeValue(rootElem,"language");
 	}
 }
 	

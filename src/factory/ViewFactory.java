@@ -6,6 +6,7 @@ import view.MethodsView;
 import view.VariablesView;
 import view.View;
 import view.ViewAgents;
+import view.ViewPalettes;
 import view.ViewType;
 import view.ViewAgentPreferences;
 import view.ViewWindowPreferences;
@@ -18,6 +19,7 @@ public class ViewFactory {
 	private ViewAgents agentsView; 
 	private ViewAgentPreferences preferencesView;
 	private ViewWindowPreferences windowPreferencesView;
+	private ViewPalettes palettesView;
 	
 	public View createView(ViewType ID){
 		switch(ID){
@@ -42,6 +44,9 @@ public class ViewFactory {
 		case WINDOWPREFERENCES:
 			windowPreferencesView = new ViewWindowPreferences(ID);
 			return windowPreferencesView;
+		case PALETTES:
+			palettesView = new ViewPalettes(ID);
+			return palettesView;
 		default:
 			return null;
 		}

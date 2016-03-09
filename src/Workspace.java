@@ -31,7 +31,7 @@ public class Workspace implements Observer {
 	private static final int COORD2 = View.WIDE_WIDTH+View.NARROW_WIDTH+PADDING;
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
-	private ViewType[] views = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES};
+	private ViewType[] views = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES, ViewType.PALETTES};
 	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
 
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
@@ -112,6 +112,7 @@ public class Workspace implements Observer {
 			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
+			System.out.println(type);
 			Pane viewGroup = view.getView();
 			viewGroup.setLayoutX(coords[0]);
 			viewGroup.setLayoutY(coords[1]);
@@ -157,6 +158,9 @@ public class Workspace implements Observer {
 			break;
 		case WINDOWPREFERENCES:
 			coords = new int[]{COORD0,COORD0};
+			break;
+		case PALETTES:
+			coords = new int[]{COORD2+View.NARROW_WIDTH,COORD0+MENU_OFFSET};
 			break;
 		}
 		return coords;
