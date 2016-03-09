@@ -1,6 +1,7 @@
 import java.util.*;
 
 import controller.Controller;
+import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
@@ -64,9 +65,10 @@ public class Workspace implements Observer {
 	
 	private void initPalettes() {
 
-		((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
-		((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
-		
+		//((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
+		//((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
+		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
+		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
 
 		

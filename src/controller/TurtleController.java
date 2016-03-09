@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import view.Agent;
+import view.CustomColorPalette;
+import view.CustomImagePalette;
 import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
@@ -22,6 +24,8 @@ public class TurtleController extends Controller implements IAgentController{
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
+	private CustomColorPalette colorPalette;
+	private CustomImagePalette imagePalette;
 
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
@@ -71,10 +75,12 @@ public class TurtleController extends Controller implements IAgentController{
 	public void addAgent(String agentName) {
 		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,agentView); //starts in middle of screen
 		agentMap.put(agentName, newTurtle);
-		updateAgentMapInViews();
+		updateAgentMapInDisplayViews();
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
+		newTurtle.setColorPalette(colorPalette);
+		newTurtle.setImagePalette(imagePalette);
 	}
 
 	@Override
@@ -83,12 +89,12 @@ public class TurtleController extends Controller implements IAgentController{
 		if(currentAgentNameProperty.getValue().equals(agentName)){
 			currentAgentNameProperty.setValue(null);
 		}
-		updateAgentMapInViews();
+		updateAgentMapInDisplayViews();
 
 		
 	}
 
-	private void updateAgentMapInViews() {
+	private void updateAgentMapInDisplayViews() {
 		preferencesView.updateAgentMap(agentMap);
 		agentView.updateAgentMap(agentMap);
 	}
@@ -102,9 +108,7 @@ public class TurtleController extends Controller implements IAgentController{
 		if(currentAgentNameProperty.getValue().equals(oldName)){
 			currentAgentNameProperty.setValue(newName);
 		}
-		updateAgentMapInViews();
-
-
+		updateAgentMapInDisplayViews();
 		
 	}
 	public String getCurrentAgent() { //needs to throw an error if null
@@ -222,7 +226,7 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public void setCurrentAgentShape(int shapeIndex) {
+	public void setCurrentAgentShapeIndex(int shapeIndex) {
 		agentMap.get(currentAgentNameProperty.getValue()).setCurrentImageIndex(shapeIndex);
 		
 	}
@@ -237,6 +241,15 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public void clearStamps() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void setColorPalette(CustomColorPalette customColorPalette) {
+		colorPalette = customColorPalette;
+	}
+
+	public void setImagePalette(CustomImagePalette customImagePalette) {
+		imagePalette = customImagePalette;
 		
 	}
 	

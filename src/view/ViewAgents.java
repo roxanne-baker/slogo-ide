@@ -92,15 +92,15 @@ public class ViewAgents extends View{
 
 	@Override
 	public void update(Observable agent, Object updateType) {
-		
+		AgentElem agentView = ((Agent) agent).getAgentView();
 		if(((Agent) agent).isVisible()){
 			if (updateType == updateResources.getString("STAMP")){
-				drawer.stampImage(getImageCopy((Agent) agent), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.stampImage(agentView.getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("MOVE")){
-				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 				if(!((Agent) agent).isPenUp()){
-					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor(),Integer.parseInt(updateResources.getString(((Agent) agent).getPenStyle()+"DASH")));
+					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(updateResources.getString(((Agent) agent).getPenStyle()+"DASH")));
 				}
 
 			}else if (updateType == updateResources.getString("INITIAL")){ 
@@ -108,37 +108,29 @@ public class ViewAgents extends View{
 				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("IMAGEVIEW")){
-				imageAgentMap.remove(((Agent) agent).getOldImageView());
+				imageAgentMap.remove(agentView.getOldImageView());
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
-				drawer.setNewImage(((Agent) agent).getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("CURRENT")){
 				currentAgentNameProperty.setValue(((Agent) agent).getName());
 				if(isSelectedAgentToggle){
-					drawer.addSelectEffect(((Agent) agent).getImageView());
-					drawer.removeSelectEffectForNonSelectedTurtles(((Agent) agent).getImageView());
+					drawer.addSelectEffect(agentView.getImageView());
+					drawer.removeSelectEffectForNonSelectedTurtles(agentView.getImageView());
 				}else{
-					drawer.removeSelectEffect(((Agent) agent).getImageView());
+					drawer.removeSelectEffect(agentView.getImageView());
 				}
 			}
 		}else if(updateType == updateResources.getString("VISIBLE")){
-			drawer.removeImage(((Agent) agent).getImageView());
+			drawer.removeImage(agentView.getImageView());
 			
 		}
 
 			
 	}
-	private ImageView getImageCopy(Agent agent) {
-		ImageView imageCopy = (ImageView) imagePalette.getPaletteObject(((Agent) agent).getCurrentImageIndex());
-		return imageCopy;
-	}
+
 	private ImageView createNewImageViewWithHandler(Observable agent) {
-		ImageView newAgentImageView;
-		if (((Agent) agent).getCurrentImageIndex()<0){ //use Default imageview
-			newAgentImageView = ((Agent) agent).getImageView();
-		}else{
-			newAgentImageView = (ImageView) imagePalette.getPaletteObject(((Agent) agent).getCurrentImageIndex());
-		}
+		ImageView newAgentImageView = (((Agent) agent).getAgentView().getImageView());
 		addImageHandler(newAgentImageView);
 		imageAgentMap.put(newAgentImageView, (Agent) agent);
 		return newAgentImageView;

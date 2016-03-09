@@ -9,25 +9,19 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public abstract class Agent extends Observable{
 	private static final String DEFAULT_IMAGE_PATH = "dot.png";
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final int DEFAULT_PEN_THICKNESS = 2;
-	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	private static final double DEFAULT_SIZE = 50;
 	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
 	private int currentImageIndex;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
 	private boolean agentPenUp;
-	private Color penColor;
 	private int  penColorIndex;
-	private ImageView agentImageView;
-	private ImageView oldImageView;
 	private DoubleProperty orientation; 
 	private StringProperty agentImagePath;
 	private DoubleProperty oldYPosition;
@@ -38,27 +32,30 @@ public abstract class Agent extends Observable{
 	private DoubleProperty sizeProperty;
 	private ResourceBundle myResources;
 	private String penStyle;
+	private AgentElem agentView;
+	private CustomColorPalette myColorPalette;
+	private CustomImagePalette myImagePalette;
 	
 	public Agent(String name, double defaultXlocation, double defaultYlocation,View obsView){
+		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
 		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
 		oldXPosition = new SimpleDoubleProperty(defaultXlocation);
 		oldYPosition = new SimpleDoubleProperty(defaultYlocation);
 		agentPenUp = false; //default value pen is down
-		penColor = DEFAULT_PEN_COLOR;
 		penColorIndex = -1; //no index chosen
 		penThickness = DEFAULT_PEN_THICKNESS;
 		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); 
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = new SimpleBooleanProperty(true);
-		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
-		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
 		currentImageIndex = -1; 
-		oldImageView = agentImageView;
 		nameProperty = new SimpleStringProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		penStyle = myResources.getString("SOLID");
 
+		agentView = new AgentElem(this);
+		this.addObserver(agentView);
+		
 	}
 	public double getXPosition(){
 		return agentXPosition.doubleValue();
@@ -93,13 +90,7 @@ public abstract class Agent extends Observable{
 	public void setPenUp(boolean penBool){
 		agentPenUp = penBool;
 	}
-	public void setPenColor(Color color){
-		penColor = color;
-	}
-	
-	public Color getPenColor(){
-		return penColor;
-	}
+
 	
 	public void setPenThickness(double thickness){
 		penThickness = thickness;
@@ -123,17 +114,14 @@ public abstract class Agent extends Observable{
 	}
 	
 	public void setImagePath(String imagePath){
-		oldImageView = agentImageView;
-		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
 		agentImagePath.setValue(imagePath);
+		agentView.updateImageView();
+
 		setChanged();
 		notifyObservers(myResources.getString("IMAGEVIEW"));
 
 	}
-	public ImageView getImageView(){
-		
-		return agentImageView;
-	}
+
 	public DoubleProperty getOrientationProperty(){
 		return orientation;
 	}
@@ -142,7 +130,7 @@ public abstract class Agent extends Observable{
 	}
 	public void changeOrientation(double degreeChange){
 		orientation.setValue(orientation.doubleValue() +  degreeChange);
-		agentImageView.setRotate(orientation.doubleValue());
+		agentView.setRotate(orientation.doubleValue());
 	}
 	public DoubleProperty getSizeProperty(){
 		return sizeProperty;
@@ -160,12 +148,7 @@ public abstract class Agent extends Observable{
 	public double getOldYPosition(){
 		return oldYPosition.doubleValue();
 	}
-	public ImageView getImageCopy() {
-		ImageView imgCopy = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
-		imgCopy.setRotate(orientation.doubleValue());
-		return imgCopy;
 
-	}
 	public StringProperty getNameProperty() {
 		return nameProperty;
 	}
@@ -197,9 +180,7 @@ public abstract class Agent extends Observable{
 	public abstract List<String> getObserverProperties();
 	
 
-	public ImageView getOldImageView() {
-		return oldImageView;
-	}
+
 	public BooleanProperty getVisibleProperty() {
 		return isVisible;
 	}
@@ -207,15 +188,29 @@ public abstract class Agent extends Observable{
 		return currentImageIndex;
 	}
 
-	public void setCurrentImageIndex(int imsageIndex){
-		currentImageIndex = imsageIndex;
+	public void setCurrentImageIndex(int imageIndex){
+		currentImageIndex = imageIndex;
+		setImagePath((String) myImagePalette.getPaletteObject(currentImageIndex));
+
 	}
 	public void setPenColorIndex(int colorIndex) {
 		penColorIndex = colorIndex;
+		agentView.setPenColor((Color) ((CustomColor) myColorPalette.getPaletteObject(penColorIndex)).getColor());
+
+		
 	}
 	public int getPenColorIndex() {
 		return penColorIndex;
 	}
+	public AgentElem getAgentView() {
+		return agentView;
+	}
+	public void setColorPalette(CustomColorPalette colorPalette) {
+		myColorPalette = colorPalette;
+	}
 
+	public void setImagePalette(CustomImagePalette imagePalette) {
+		myImagePalette = imagePalette;
+	}
 	
 }	
