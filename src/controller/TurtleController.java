@@ -22,6 +22,7 @@ public class TurtleController extends Controller implements IAgentController{
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
+
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
@@ -32,19 +33,13 @@ public class TurtleController extends Controller implements IAgentController{
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
 		currentAgentNameProperty = new SimpleStringProperty();
+		
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
 		
-		addAgent("Melissa"); //always start with one agent
+		addAgent("Melissa"); //always start with one agent on screen
 		
-
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} 
 
 
 	}
@@ -140,9 +135,6 @@ public class TurtleController extends Controller implements IAgentController{
 		agentMap.get(currentAgentNameProperty.getValue()).setImagePath(imagePath);		
 	}
 
-//	public ImageView getCurrentAgentImageView(ImageView image) {
-//		return agentMap.get(currentAgentNameProperty).getImageView();
-//	}
 
 	@Override
 	public void setCurrentAgentPenUp(boolean isUp) {
@@ -214,32 +206,32 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void setCurrentAgentPenColor(int colorIndex) {
-		// TODO Auto-generated method stub
+		agentMap.get(currentAgentNameProperty.getValue()).setPenColorIndex(colorIndex);
 		
 	}
+	@Override
+	public int getCurrentAgentColorIndex() {
+		return agentMap.get(currentAgentNameProperty.getValue()).getPenColorIndex();
+	}
+
 
 	@Override
-	public void setCurrentAgentPenThickness(int thickness) {
-		// TODO Auto-generated method stub
+	public void setCurrentAgentPenThickness(double thickness) {
+		agentMap.get(currentAgentNameProperty.getValue()).setPenThickness(thickness);;
 		
 	}
 
 	@Override
 	public void setCurrentAgentShape(int shapeIndex) {
-		// TODO Auto-generated method stub
+		agentMap.get(currentAgentNameProperty.getValue()).setCurrentImageIndex(shapeIndex);
 		
 	}
 
-	@Override
-	public int getCurrentAgentColorIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int getCurrentAgentShapeIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 	agentMap.get(currentAgentNameProperty.getValue()).getCurrentImageIndex();
+
 	}
 
 	@Override
@@ -247,12 +239,10 @@ public class TurtleController extends Controller implements IAgentController{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
-	@Override
-	public void setColorPalette(int colorIndex, int red, int green, int blue) {
-		// TODO Auto-generated method stub
-		
-	}
+
+
 
 
 

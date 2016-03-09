@@ -1,5 +1,8 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
@@ -8,7 +11,7 @@ import javafx.scene.layout.VBox;
 
 public class ViewPalettes extends View{
 	private static final String PALETTE_PROPERTIES = "Palettes";
-	private static final int PALETTE_SIZE = 15;
+	private List<Palette> paletteList;
 	private ResourceBundle myResources;
 	private Pane viewPane;
 	private VBox vbox;
@@ -16,28 +19,31 @@ public class ViewPalettes extends View{
 	public ViewPalettes(ViewType ID) {
 		super(ID);
 		viewPane = new Pane();
+		paletteList = new ArrayList<Palette>();
 		myResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 		viewPane.getChildren().add(vbox);
 	}
-
+	
+	public void setPaletteList(List<Palette> newPaletteList){
+		paletteList = new ArrayList<Palette>();
+		for (Palette palette: newPaletteList){
+			paletteList.add(palette);
+		}
+	}
 	@Override
 	public Pane getView() {
-		setUpColorPalette();
-		setUpShapePalette();
+		setUpPalettes();
 		
 		return viewPane;
 	}
 
-	private void setUpShapePalette() {
-		Label shapeLabel = new Label(myResources.getString("SHAPESLABEL"));
-		ShapePalette shapePalette = new ShapePalette(myResources.getString("SHAPES"),PALETTE_SIZE);
-		vbox.getChildren().addAll(shapeLabel,shapePalette.getPaletteViewGroup());
+	private void setUpPalettes() {
+		for (Palette palette: paletteList){
+			Label label = new Label(myResources.getString(palette.getPaletteName() + "LABEL"));
+			vbox.getChildren().addAll(label,palette.getPaletteViewGroup());	
+		}
 	}
 
-	private void setUpColorPalette() {
-		Label colorLabel = new Label(myResources.getString("CUSTOMCOLORSLABEL"));
-		CustomColorPalette colorPalette = new CustomColorPalette(myResources.getString("CUSTOMCOLORS"),PALETTE_SIZE);
-		vbox.getChildren().addAll(colorLabel, colorPalette.getPaletteViewGroup());
-	}
+
 
 }

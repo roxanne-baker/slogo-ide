@@ -31,9 +31,8 @@ public interface IAgentController {
 	void setCurrentAgentPenUp(boolean isUp);
 	boolean isCurrentAgentPenUp();
 	void setCurrentAgentPenColor(int colorIndex);
-	void setCurrentAgentPenThickness(int thickness);
+	void setCurrentAgentPenThickness(double thickness);
 	void setCurrentAgentShape(int shapeIndex);
-	void setColorPalette(int colorIndex, int red, int green, int blue);
 	int getCurrentAgentColorIndex();
 	int getCurrentAgentShapeIndex();
 	void setCurrentAgentVisible(boolean isVisible);

@@ -94,12 +94,16 @@ public class Drawer {
 		}
 	}
 	public void clearAllStamps(){
-		for (Node stamp: stampList){
+		for (ImageView stamp: stampList){
 			agentGroup.getChildren().remove(stamp);
 		}
 	}
-	public void removeSelectEffectForNonSelectedTurtles(ImageView imageView) {
-		// TODO Auto-generated method stub
+	public void removeSelectEffectForNonSelectedTurtles(ImageView selectedImageView) {
+		for (ImageView img: agentViewList){
+			if (!img.equals(selectedImageView)){
+				removeSelectEffect(img);
+			}
+		}
 		
 	}
 

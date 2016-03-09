@@ -11,7 +11,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
+import view.CustomColorPalette;
+import view.CustomImagePalette;
 import view.View;
+import view.ViewAgents;
+import view.ViewPalettes;
 import view.ViewType;
 import view.ConsoleView;
 import view.HistoryView;
@@ -29,6 +33,7 @@ public class Workspace implements Observer {
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES};
 	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
+
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
@@ -49,11 +54,23 @@ public class Workspace implements Observer {
 		initWindowMenu();
 		initControllers();
 		initInterpreters();
+		initPalettes();
 		myScene = new Scene(pane);
 		myScene.getStylesheets().add("resources/style/style.css");
 		return myScene;
 	}
 	
+	private void initPalettes() {
+		CustomColorPalette customColorPalette = new CustomColorPalette();
+		CustomImagePalette customImagePalette = new CustomImagePalette();
+		((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
+		((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
+		
+		//((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
+
+		
+	}
+
 	private void initWindowMenu(){
 		HBox viewMenu = new HBox();
 		Button newWorkspaceBtn = new Button(myResources.getString("NEWWORKSPACEBUTTON"));

@@ -40,6 +40,8 @@ public class ViewAgents extends View{
 	private HashMap<ImageView,Agent> imageAgentMap;
 	private StringProperty currentAgentNameProperty;
 	protected HashMap<String, Agent> agentMap;
+	private CustomImagePalette imagePalette;
+	private CustomColorPalette colorPalette;
 
 	
 	public ViewAgents(ViewType ID) {
@@ -50,8 +52,9 @@ public class ViewAgents extends View{
 		agentMap = new HashMap<String,Agent>();
 		imageAgentMap = new HashMap<ImageView,Agent>();
 
-		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);    
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
+		
 		agentPane = new Pane();
 		drawer = new Drawer(agentPane);
 
@@ -63,10 +66,8 @@ public class ViewAgents extends View{
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		agentPane.getChildren().add(agentViewPreferences);
-		setUpColorPicker();
-		setUpClearButton();
-		setUpSelectAgentToggle();
-		
+
+
 
 	}
 	public void setBackgroundColor(Color color){
@@ -91,7 +92,7 @@ public class ViewAgents extends View{
 
 	@Override
 	public void update(Observable agent, Object updateType) {
-
+		
 		if(((Agent) agent).isVisible()){
 			if (updateType == updateResources.getString("STAMP")){
 				drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
@@ -109,7 +110,7 @@ public class ViewAgents extends View{
 			}else if (updateType == updateResources.getString("IMAGEVIEW")){
 				imageAgentMap.remove(((Agent) agent).getOldImageView());
 				ImageView newAgentImageView = addToImageMapAndAddHandler(agent);
-				drawer.setNewImage(newAgentImageView,((Agent) agent).getImageView(),((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.setNewImage(((Agent) agent).getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("CURRENT")){
 				currentAgentNameProperty.setValue(((Agent) agent).getName());
@@ -136,6 +137,9 @@ public class ViewAgents extends View{
 			
 	@Override
 	public Pane getView() {
+		setUpColorPicker();
+		setUpClearButton();
+		setUpSelectAgentToggle();
 		return agentPane;
 
 	}
@@ -196,6 +200,12 @@ public class ViewAgents extends View{
 	public void updateAgentMap(HashMap<String, Agent> newAgentMap) {
 		agentMap = newAgentMap;
 		
+	}
+	public void setColorPalette(CustomColorPalette customColorPalette) {
+		colorPalette = customColorPalette;
+	}
+	public void setImagePalette(CustomImagePalette customImagePalette) {
+		imagePalette = customImagePalette;
 	}
 
 	
