@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
@@ -16,13 +17,14 @@ public class ViewPalettes extends View{
 	private Pane viewPane;
 	private VBox vbox;
 
-	public ViewPalettes(ViewType ID) {
-		super(ID, null);
+	public ViewPalettes(ViewType ID, Map<String,List<Object>> savedPreferences) {
+		super(ID, savedPreferences);
 		viewPane = new Pane();
 		paletteList = new ArrayList<Palette>();
 		myResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 		vbox = new VBox();
 		viewPane.getChildren().add(vbox);
+		setUpPalettes();
 	}
 	
 	public void setPaletteList(List<Palette> newPaletteList){
@@ -36,7 +38,6 @@ public class ViewPalettes extends View{
 	}
 	@Override
 	public Pane getView() {
-		setUpPalettes();
 		
 		return viewPane;
 	}

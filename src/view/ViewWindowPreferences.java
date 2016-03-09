@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
@@ -31,8 +32,8 @@ public class ViewWindowPreferences extends View{
 	private ComboBox<String> languageDropDown;
 	
 
-	public ViewWindowPreferences(ViewType ID) {
-		super(ID, null);
+	public ViewWindowPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
+		super(ID, savedPreferences);
 		guiList = new ArrayList<Node>();
 		viewGroup = new Group();
 		windowPreferencesBox = new HBox();

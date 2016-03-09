@@ -1,4 +1,6 @@
 package view;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -16,12 +18,15 @@ public class ConsoleView extends View {
 	private ResourceBundle cssResources;
 	Pane pane;
 	
-	public ConsoleView(ViewType ID, HistoryView history) {
-		super(ID, null);
-		historyView = history;
+	public ConsoleView(ViewType ID, Map<String,List<Object>> savedPreferences) {
+		super(ID, savedPreferences);
 		buttonResources = ResourceBundle.getBundle(BUTTON_LABEL_PATH);
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 		init();
+	}
+	
+	public void setHistoryView(HistoryView hv){
+		historyView = hv;
 	}
 	
 	@Override

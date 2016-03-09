@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 public class ViewAgentPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
-	private HBox allPreferencesBox;
+	private HBox allPreferencesBox = new HBox();
 	private StringProperty currentAgentNameProperty;
 	private static final int PADDING = 10;
 

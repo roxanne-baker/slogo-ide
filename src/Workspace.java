@@ -4,6 +4,7 @@ import controller.Controller;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
+import factory.ViewFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -44,6 +45,7 @@ public class Workspace implements Observer {
 	private Scene myScene;
 	private Stage myStage;
 	private ResourceBundle myResources = ResourceBundle.getBundle("windowProperties");
+	private Map<String,List<Object>> savedPreferences = new HashMap<String,List<Object>>();
 	
 	public Workspace(Stage stage){
 		myStage = stage;
@@ -105,15 +107,17 @@ public class Workspace implements Observer {
 	}
 	
 	private void initViews(){
-		ViewFactory viewFactory = new ViewFactory();
+		ViewFactory viewFactory = new ViewFactory(savedPreferences);
 		for(ViewType type: views){
 			View view = viewFactory.createView(type);
 			if(type==ViewType.VARIABLES){
 				((VariablesView)view).addObserver(this);
 			}
+			if(type==ViewType.CONSOLE){
+				((ConsoleView)view).setHistoryView((HistoryView)viewMap.get(ViewType.HISTORY));
+			}
 			int[] coords = getViewCoords(type);
 			viewMap.put(type,view);
-			System.out.println(type);
 			Pane viewGroup = view.getView();
 			viewGroup.setLayoutX(coords[0]);
 			viewGroup.setLayoutY(coords[1]);

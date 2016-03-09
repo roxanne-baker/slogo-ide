@@ -13,8 +13,8 @@ public class VariablesView extends View{
 	private VBox savedVars = new VBox();
 	private Label instructions = new Label(myResources.getString("VARIABLEINSNS"));	//added
 	
-	public VariablesView(ViewType ID) {
-		super(ID, null);
+	public VariablesView(ViewType ID, Map<String,List<Object>> savedPreferences) {
+		super(ID, savedPreferences);
 		savedVars.getChildren().add(instructions); // added
 		init();
 	}

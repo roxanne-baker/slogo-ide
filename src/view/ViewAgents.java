@@ -1,6 +1,9 @@
 package view;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -32,8 +35,10 @@ public class ViewAgents extends View{
 
 	private Drawer drawer;
 	private Color backgroundColor;
+	private StringProperty backgroundColorString = new SimpleStringProperty();
 	private ResourceBundle updateResources;
 	private ResourceBundle windowResources;
+	private ResourceBundle preferenceResources = ResourceBundle.getBundle("preferencesdefault");
 	private HBox agentViewPreferences;
 	private Pane agentPane;
 	private Boolean isSelectedAgentToggle;
@@ -42,11 +47,11 @@ public class ViewAgents extends View{
 	protected HashMap<String, Agent> agentMap;
 	private CustomImagePalette imagePalette;
 	private CustomColorPalette colorPalette;
+	private Map<String,List<Object>> savedPreferences;
 
 	
-	public ViewAgents(ViewType ID) {
-		super(ID, null);
-		backgroundColor = DEFAULT_COLOR;
+	public ViewAgents(ViewType ID, Map<String,List<Object>> savedPreferences) {
+		super(ID, savedPreferences);
 		isSelectedAgentToggle = false;
 		currentAgentNameProperty = new SimpleStringProperty();
 		agentMap = new HashMap<String,Agent>();
@@ -66,13 +71,20 @@ public class ViewAgents extends View{
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		agentPane.getChildren().add(agentViewPreferences);
+		
+		this.savedPreferences = savedPreferences;
+		//initPreferences(savedPreferences);
+		setBackgroundColor(Color.valueOf(preferenceResources.getString("BACKGROUNDCOLOR")));
 
 
-
+	}
+	private void initPreferences(Map<String, List<Object>> savedPreferences) {
+		savedPreferences.put("background", Arrays.asList(new StringProperty[]{backgroundColorString}));
 	}
 	public void setBackgroundColor(Color color){
 		agentPane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		backgroundColor = color;
+		//backgroundColorString.setValue(backgroundColor.toString());
 	}
 	public Color getBackgroundColor(){
 		return backgroundColor;

@@ -2,6 +2,7 @@ package view;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
@@ -13,8 +14,8 @@ public class MethodsView extends View{
 	private VBox methodViews = new VBox();
 	private Pane pane;
 
-	public MethodsView(ViewType ID){
-		super(ID, null);
+	public MethodsView(ViewType ID, Map<String,List<Object>> savedPreferences){
+		super(ID, savedPreferences);
 		init();
 	}
  	

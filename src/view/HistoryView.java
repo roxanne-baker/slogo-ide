@@ -1,5 +1,7 @@
 package view;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.scene.Group;
@@ -12,8 +14,8 @@ public class HistoryView extends View implements Observer{
 	private Interpreter interpreter;
 	private Pane pane;
 
-	public HistoryView(ViewType ID){
-		super(ID, null);
+	public HistoryView(ViewType ID, Map<String,List<Object>> savedPreferences){
+		super(ID, savedPreferences);
 		init();
 		setStyleClass(pane);
 	}
