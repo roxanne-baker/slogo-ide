@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -21,12 +20,12 @@ public abstract class Agent extends Observable{
 	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	private static final double DEFAULT_SIZE = 50;
 	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
-	private static final String[] shapeList = {"IMAGE","SQUARE","TRIANGLE","HEXAGON"};
-	private int currentShapeIndex;
+	private int currentImageIndex;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
 	private boolean agentPenUp;
 	private Color penColor;
+	private int  penColorIndex;
 	private ImageView agentImageView;
 	private ImageView oldImageView;
 	private DoubleProperty orientation; 
@@ -47,13 +46,14 @@ public abstract class Agent extends Observable{
 		oldYPosition = new SimpleDoubleProperty(defaultYlocation);
 		agentPenUp = false; //default value pen is down
 		penColor = DEFAULT_PEN_COLOR;
+		penColorIndex = -1; //no index chosen
 		penThickness = DEFAULT_PEN_THICKNESS;
 		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); 
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = new SimpleBooleanProperty(true);
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
-		currentShapeIndex = 0;
+		currentImageIndex = -1; //no index chosen
 		oldImageView = agentImageView;
 		nameProperty = new SimpleStringProperty(name);
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
@@ -203,14 +203,19 @@ public abstract class Agent extends Observable{
 	public BooleanProperty getVisibleProperty() {
 		return isVisible;
 	}
-	public int getCurrentShapeIndex(){
-		return currentShapeIndex;
+	public int getCurrentImageIndex(){
+		return currentImageIndex;
 	}
-	public String getCurrentShape(){
-		return shapeList[currentShapeIndex];
+
+	public void setCurrentImageIndex(int imsageIndex){
+		currentImageIndex = imsageIndex;
 	}
-	public void setCurrentShapeIndex(int index){
-		currentShapeIndex = index;
+	public void setPenColorIndex(int colorIndex) {
+		penColorIndex = colorIndex;
 	}
+	public int getPenColorIndex() {
+		return penColorIndex;
+	}
+
 	
 }	

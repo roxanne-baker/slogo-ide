@@ -3,26 +3,41 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 
-public class CustomColorPalette {
-	private List<CustomColor> customColorList = Arrays.asList(new CustomColor(50,100,100),new CustomColor(30,100,30));
-	public CustomColorPalette(){
-	
+import javafx.scene.Group;
+import javafx.scene.layout.HBox;
+
+public class CustomColorPalette extends Palette{
+	private static final List<Object> DEFAULT_COLORS = Arrays.asList((Object)new CustomColor(40,50,60),(Object)new CustomColor(50,60,70));
+	private static final int SIZE = 10;
+
+	public CustomColorPalette() {
+		super();
+		super.paletteName = getResourceBundle().getString("IMAGES");
+
+		setNewPaletteList(DEFAULT_COLORS);
 	}
-	public List<CustomColor> getCustomColorList(){
-		return customColorList;
-	}
-	public void addCustomColor(CustomColor color){
-		customColorList.add(color);
-	}
+
+
 	public void replaceCustomColor(int index, CustomColor color){
-		if (index > customColorList.size() || index < 0){
+		if (index > getPaletteList().size() || index < 0){
 			//don't add color; maybe through error?
 		}else{
-			customColorList.set(index, color);
+			getPaletteList().set(index, color);
 		}
 	}
-	public CustomColor getCustomColor(int index){
-		return customColorList.get(index);
+	@Override
+	public Group getPaletteViewGroup(){
+		HBox hbox = new HBox();
+		for (int index = 0; index < getPaletteList().size(); index++){
+			CustomColorElem colorView = new CustomColorElem((CustomColor) getPaletteObject(index),SIZE);
+
+			hbox.getChildren().add(colorView.getView());
+		}
+		super.paletteGroup.getChildren().add(hbox);
+		return super.paletteGroup;
 	}
+
+
+
 	
 }
