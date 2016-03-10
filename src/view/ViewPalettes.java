@@ -7,30 +7,36 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewPalettes extends View{
+	private static final int CONSOLEX = 0;
+	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final String PALETTE_PROPERTIES = "Palettes";
 	private List<Palette> paletteList;
 	private ResourceBundle myResources;
-	private Pane viewPane;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private VBox vbox;
 	private Button fileButton;
 	private FileChooser fileChooser;
 
-	public ViewPalettes(ViewType ID) {
-		super(ID);
-		viewPane = new Pane();
+	public ViewPalettes(ViewType ID, Preferences savedPreferences) {
+		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		paletteList = new ArrayList<Palette>();
 		myResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 		fileChooser = new FileChooser();
 		fileChooser.setTitle(myResources.getString("IMAGECHOOSERLABEL"));
 		fileButton = new Button(myResources.getString("IMAGECHOOSERBUTTON"));
 		vbox = new VBox();
-		viewPane.getChildren().add(vbox);
+		vbox.getStyleClass().addAll(cssResources.getString("VBOXVIEW"),cssResources.getString("DISPLAYVIEW"));
+		vbox.setPrefSize(NARROW_WIDTH,NARROW_WIDTH);
+		setPane(vbox);
+		setUpPalettes();
+		setUpImageChooser();
 	}
 	
 	public void setPaletteList(List<Palette> newPaletteList){
@@ -42,13 +48,7 @@ public class ViewPalettes extends View{
 		setUpPalettes();
 		
 	}
-	@Override
-	public Pane getView() {
-		setUpPalettes();
-		setUpImageChooser();
 
-		return viewPane;
-	}
 
 	private void setUpImageChooser() {
 		Stage stage = new Stage();
@@ -62,6 +62,7 @@ public class ViewPalettes extends View{
 						imagePaletteIndex = i;
 				}
 				paletteList.get(imagePaletteIndex).addToPalette(file.getPath(), paletteList.get(imagePaletteIndex).getPaletteSize());
+
 			}
 		});	
 		vbox.getChildren().add(fileButton);
@@ -69,8 +70,11 @@ public class ViewPalettes extends View{
 
 	private void setUpPalettes() {
 		for (Palette palette: paletteList){
+			VBox paletteDisplay = new VBox();
+			paletteDisplay.getStyleClass().add(cssResources.getString("VBOX"));
 			Label label = new Label(myResources.getString(palette.getPaletteName() + "LABEL"));
-			vbox.getChildren().addAll(label,palette.getPaletteViewGroup());	
+			paletteDisplay.getChildren().addAll(label,palette.getPaletteViewGroup());	
+			vbox.getChildren().add(paletteDisplay);
 		}
 	}
 

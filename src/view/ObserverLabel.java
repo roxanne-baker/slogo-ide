@@ -13,6 +13,7 @@ public class ObserverLabel implements Observer{
 	private Label observerLabel;
 	private Object labelText;
 	private Label myLabel;
+	
 	public ObserverLabel(String name, String resources, Object text){
 		labelName = name;
 		myResources = ResourceBundle.getBundle(resources);

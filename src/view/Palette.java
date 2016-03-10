@@ -21,8 +21,9 @@ public abstract class Palette extends Controller{
 	private Group paletteGroup;
 	private ResourceBundle myResources = ResourceBundle.getBundle("Palettes");
 	
-	public Palette(){
-		paletteObjectListProperty = new SimpleListProperty<Object>();
+
+	public Palette(ObservableList<Object> objectList){
+		paletteObjectListProperty = new SimpleListProperty<Object>(objectList);
 		paletteGroup = new Group();
 	}
 	public String getPaletteName(){
@@ -75,11 +76,11 @@ public abstract class Palette extends Controller{
 	public Object getPaletteObject(int index){
 		return paletteObjectListProperty.get(index);
 	}
-	public void setNewPaletteList(ObservableList<Object> customList){
-			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
 
-			
-		}
+//	public void setNewPaletteList(ObservableList<Object> customList){
+//			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
+//
+//	}
 	public int getPaletteSize() {
 		return paletteObjectListProperty.size();
 	}

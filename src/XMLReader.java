@@ -1,24 +1,30 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class XMLReader {
 	private String file;
 	private Document doc;	
 	private Element rootElem;
+	private Stage window;
 
-	public XMLReader() {
-		file = chooseFile();
+	public XMLReader(Stage stage) {
+		window = stage;
+		file = "src/XML/default.xml";
 		readFile();
 	}
 
@@ -27,7 +33,7 @@ public class XMLReader {
 		fileChooser.setTitle("Open XML File");		
 		fileChooser.getExtensionFilters().addAll(
 		        new ExtensionFilter("XML Files", "*.xml"));		
-		File file = fileChooser.showOpenDialog(null);
+		File file = fileChooser.showOpenDialog(window);
 		String fileName = "";
 		if (file != null) {
 			fileName = file.getPath();
@@ -57,42 +63,44 @@ public class XMLReader {
 		}			
 	}
 	
-	private String getNodeValue(Element nodeElem, String tagName){ 
-		return nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim();
+	private boolean isSingleElem(String tagName){	
+		int length = rootElem.getElementsByTagName(tagName).item(0).getChildNodes().getLength();
+		return length==1;
 	}
 	
-	private List<String> getListElem(Element nodeElem,String tagName){
-		List<String> elems = new ArrayList<String>();
+	private String getNodeValue(Element nodeElem, String tagName){ 
+		return nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim();
+
+		//return Arrays.asList(new String[]{nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim()});
+	}
+	
+	private ObservableList<String> getListElem(Element nodeElem,String tagName){
+		ObservableList<String> elems = FXCollections.observableArrayList();
 		Element parentElem = (Element) rootElem.getElementsByTagName(tagName).item(0);
 		NodeList elemList = parentElem.getElementsByTagName("row");
 		for(int i=0; i<elemList.getLength(); i++){
-			String val = elemList.item(i).getNodeValue().trim();
+			String val = elemList.item(i).getTextContent().trim();
 			elems.add(val);
 		}
 		return elems;
 	}
 	
-	public Color getBackground(){
-		return Color.valueOf(getNodeValue(rootElem,"background"));
-	}
-	
-	public List<String> getImageList(){
-		ArrayList<String> images = new ArrayList<String>();
-		Element imagesElem = (Element) rootElem.getElementsByTagName("images").item(0);
-		NodeList imagesList = imagesElem.getElementsByTagName("row");
-		for(int i=0; i<imagesList.getLength(); i++){
-			String imgName = imagesList.item(i).getNodeValue().trim();
-			images.add(imgName);
-		}
-		return images;
-	}
-	
-	public int getTurtleCount(){
-		return Integer.parseInt(getNodeValue(rootElem,"turtles"));
-	}
-	
-	public String getLanguage(){
-		return getNodeValue(rootElem,"language");
+	public Map<String,Object> getPreferences(){
+		Map<String,Object> preferences = new HashMap<String,Object>();
+		for(int i=0; i<rootElem.getChildNodes().getLength();i++){
+			String tagName = rootElem.getChildNodes().item(i).getNodeName();
+        	if(tagName!="#text"){
+        		if(isSingleElem(tagName)){
+    				preferences.put(tagName, getNodeValue(rootElem,tagName));
+    			}
+    			else{
+    				preferences.put(tagName, getListElem(rootElem,tagName));
+    
+    			}
+        		System.out.println(rootElem.getChildNodes().item(i).getNodeName());
+        	}
+        }
+		return preferences;
 	}
 }
 	

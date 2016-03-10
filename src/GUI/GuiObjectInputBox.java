@@ -24,6 +24,7 @@ public class GuiObjectInputBox extends GuiObject{
 	private static final String FILE_TYPE = ".png";
 	private static final double MAXWIDTH = 150;
 	private BiConsumer<Observable,String> setValueFunction;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	
 	public GuiObjectInputBox(String name, 
 			String resourceBundle, Agent agent, BiConsumer<Observable, String> myFunction) {
@@ -47,9 +48,8 @@ public class GuiObjectInputBox extends GuiObject{
 		initializeButton.setMaxWidth(MAXWIDTH);
 		
 		VBox XMLControls = new VBox();
+		XMLControls.getStyleClass().add(cssResources.getString("VBOX"));
 		XMLControls.getChildren().addAll(userInputFileString, initializeButton,fileErrorLabel);
-		XMLControls.setSpacing(5);
-		XMLControls.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		
 		return XMLControls;
 	}

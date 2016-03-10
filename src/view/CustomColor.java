@@ -13,7 +13,7 @@ public class CustomColor {
 		
 		colorProperty = new SimpleObjectProperty<Color>(Color.rgb(r, g, b));
 	}
-	
+
 	public int getRed(){
 		return (int) colorProperty.getValue().getRed();
 	}

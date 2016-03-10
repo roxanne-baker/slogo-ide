@@ -14,6 +14,7 @@ public class Forward extends TurtleCommand implements Executable {
 	
 	public double execute(List<Object> params) {
 		double distance = (Double) params.get(0);
+		System.out.println(getTurtleController());
 		double orientation = getTurtleController().getCurrentAgentOrientation();
 		double changeX = distance*Math.sin(Math.toRadians(orientation));
 		double changeY = -distance*Math.cos(Math.toRadians(orientation));

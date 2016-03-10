@@ -1,6 +1,9 @@
 package view;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -25,7 +28,8 @@ import javafx.scene.paint.Color;
  *
  */
 public class ViewAgents extends View{
-	private static final Color DEFAULT_COLOR = Color.WHITE;
+	private static final int CONSOLEX = NARROW_WIDTH;
+	private static final int CONSOLEY = MENU_OFFSET;
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final String WINDOW_PROPERTIES = "windowProperties";
 	private static final double MAX_PREFERENCE_HEIGHT = 40;
@@ -34,17 +38,20 @@ public class ViewAgents extends View{
 	private Color backgroundColor;
 	private ResourceBundle updateResources;
 	private ResourceBundle windowResources;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private HBox agentViewPreferences;
 	private Pane agentPane;
 	private Boolean isSelectedAgentToggle;
 	private HashMap<ImageView,Agent> imageAgentMap;
 	private StringProperty currentAgentNameProperty;
 	protected HashMap<String, Agent> agentMap;
+	private Preferences savedPreferences;
 
 	
-	public ViewAgents(ViewType ID) {
-		super(ID);
-		backgroundColor = DEFAULT_COLOR;
+	public ViewAgents(ViewType ID, Preferences savedPreferences) {
+		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		isSelectedAgentToggle = false;
 		currentAgentNameProperty = new SimpleStringProperty();
 		agentMap = new HashMap<String,Agent>();
@@ -53,24 +60,28 @@ public class ViewAgents extends View{
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);    
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		
-		agentPane = new Pane();
+		agentPane = getPane();
+		agentPane.setId((cssResources.getString("AGENTVIEW")));
 		drawer = new Drawer(agentPane);
 
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
-		agentPane.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
-		setStyleClass(agentPane);
 
+		
 		agentViewPreferences = new HBox();
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
-		agentPane.getChildren().add(agentViewPreferences);
-
+		setPane(agentViewPreferences);
+		
+		this.savedPreferences = savedPreferences;
+		setBackgroundColor(Color.valueOf(savedPreferences.getPreference("background").toString()));
 
 
 	}
+
 	public void setBackgroundColor(Color color){
 		agentPane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		backgroundColor = color;
+		savedPreferences.setPreference("background", backgroundColor.toString());
 	}
 	public Color getBackgroundColor(){
 		return backgroundColor;
@@ -110,7 +121,6 @@ public class ViewAgents extends View{
 				imageAgentMap.remove(agentView.getOldImageView());
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
 				drawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-			
 			}else if (updateType == updateResources.getString("CURRENT")){
 				currentAgentNameProperty.setValue(((Agent) agent).getName());
 				if(isSelectedAgentToggle){
@@ -140,8 +150,8 @@ public class ViewAgents extends View{
 		setUpColorPicker();
 		setUpClearButton();
 		setUpSelectAgentToggle();
-		return agentPane;
-
+		//return agentPane;
+		return super.getView();
 	}
 	private void addImageHandler(ImageView img){
 		img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

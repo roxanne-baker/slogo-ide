@@ -27,21 +27,25 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
+
 	private static final String UPDATE_PROPERTIES = "updateObserver";
+	private static final int CONSOLEX = 0;
+	private static final int CONSOLEY = MENU_OFFSET;
 	private HashMap<String, Agent> agentMap;
-	private Group viewGroup;
-	private HBox allPreferencesBox;
+	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
 	private static final int PADDING = 15;
 	private Pane pane;
 	private ResourceBundle updateResources;
-	
-	public ViewAgentPreferences(ViewType ID) {
-		super(ID);
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
-		viewGroup = new Group();
-		pane = new Pane(viewGroup);
-		setStyleClass(pane);
+	
+	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
+		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
+		setPane(allPreferencesBox);
+		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
@@ -61,12 +65,12 @@ public class ViewAgentPreferences extends View{
 	@Override
 	public Pane getView() {
 		updateView();
-		return pane;
+		return super.getView();
 	}
 	private void updateView() {
-		viewGroup.getChildren().remove(allPreferencesBox);
-		allPreferencesBox = new HBox();
-		allPreferencesBox.setPadding(new Insets(PADDING,PADDING,PADDING,PADDING));
+
+		allPreferencesBox.getChildren().clear();
+		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
 		
 		setUpAgentDropDown();
 		
@@ -84,10 +88,6 @@ public class ViewAgentPreferences extends View{
 			addToAgentPrefBox(observerBox, observerLabelList);
 			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
 			}
-
-		
-
-		viewGroup.getChildren().add(allPreferencesBox);
 	}
 
 	private void setUpAgentDropDown() {
@@ -95,7 +95,7 @@ public class ViewAgentPreferences extends View{
 		for (String name: agentMap.keySet()){
 			agentDropDown.getItems().add(name);
 		}
-		agentDropDown.setValue(currentAgentNameProperty.getValue());
+		agentDropDown.setValue("TURTLE"+currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
             	currentAgentNameProperty.setValue(newValue);

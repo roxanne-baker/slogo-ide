@@ -37,6 +37,7 @@ public abstract class Agent extends Observable{
 	private CustomImagePalette myImagePalette;
 	
 	public Agent(String name, double defaultXlocation, double defaultYlocation){
+
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
 		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
@@ -227,4 +228,5 @@ public abstract class Agent extends Observable{
 	public CustomColorPalette getColorPalette(){
 		return myColorPalette;
 	}
+
 }	

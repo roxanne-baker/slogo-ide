@@ -1,26 +1,24 @@
 package view;
 import java.io.File;
-
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CustomImagePalette extends Palette{
-	private static final ObservableList<Object> DEFAULT_IMAGEPATHS = FXCollections.observableArrayList("turtle.png","dot.png");
+
+	private static final String IMAGES_DIR = "images/";
 	private static final int SIZE = 20;
 
-	public CustomImagePalette() {
-		super();
+	public CustomImagePalette(ObservableList<Object> images) {
+		super(images);
 		super.paletteName = getResourceBundle().getString("IMAGES");
-		super.setNewPaletteList(DEFAULT_IMAGEPATHS);
 	}
 
 	@Override
 	public Node getPaletteObjectView(int index) {
 		String imagePath = (String) getPaletteObject(index);
-		File f = new File("images/"+ imagePath);
+		File f = new File(IMAGES_DIR+ imagePath);
 		ImageView imageView = null;
 		if (f.isFile()){
 			imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),SIZE,SIZE,true,true));
