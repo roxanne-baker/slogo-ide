@@ -12,6 +12,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -75,7 +76,7 @@ public class XMLSaver {
 				saveSingleElem(prefName,prefMap.get(prefName));
 			}
 			else{
-				saveListElem(prefName,(List<Object>)prefMap.get(prefName));
+				saveListElem(prefName,(ObservableList<Object>)prefMap.get(prefName));
 			}
 		}
 	}
@@ -91,7 +92,7 @@ public class XMLSaver {
 		rootElem.appendChild(elem);
 	}
 	
-	private void saveListElem(String tagName, List<Object> values){
+	private void saveListElem(String tagName, ObservableList<Object> values){
 		Element elem = doc.createElement(tagName);
 		for(Object val: values){
 			Element row = doc.createElement("row");

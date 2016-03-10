@@ -5,6 +5,7 @@ import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -45,8 +46,8 @@ public class Workspace implements Observer {
 	public Workspace(Stage stage, Preferences preferences){
 		myStage = stage;
 		myPreferences = preferences;
-		customColorPalette = new CustomColorPalette((List<Object>) preferences.getPreference("colors"));
-		customImagePalette = new CustomImagePalette((List<Object>) preferences.getPreference("images"));
+		customColorPalette = new CustomColorPalette((ObservableList<Object>) preferences.getPreference("colors"));
+		customImagePalette = new CustomImagePalette((ObservableList<Object>) preferences.getPreference("images"));
 	}
 	
 	public Scene init(){
@@ -71,7 +72,6 @@ public class Workspace implements Observer {
 	}
 	
 	private void initPalettes() {
-		System.out.println("setting up palettes");
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
@@ -81,12 +81,20 @@ public class Workspace implements Observer {
 
 	private void initWindowMenu(){
 		HBox viewMenu = new HBox();
+		
 		Button newWorkspaceBtn = new Button(myResources.getString("NEWWORKSPACEBUTTON"));
 		newWorkspaceBtn.setOnMouseClicked(e->openWorkspace());
-		Button savePrefBtn = new Button("Save Preferences");
+		
+		Button savePrefBtn = new Button(myResources.getString("SAVEPREFBUTTON"));
 		savePrefBtn.setOnMouseClicked(e->savePreferences());
-		viewMenu.getChildren().addAll(newWorkspaceBtn,savePrefBtn);
+		
+		Button loadPrefBtn = new Button("Load Preferences");
+		loadPrefBtn.setOnMouseClicked(e->loadPreferences());
+		
+		viewMenu.getChildren().addAll(newWorkspaceBtn,savePrefBtn,loadPrefBtn);
 		viewMenu.setLayoutX(WINDOW_PREF_OFFSET);
+		
+		
 		for(ViewType type: views){
 			if(type!=ViewType.AGENT){
 				CheckBox item = new CheckBox(type.name());
@@ -97,7 +105,13 @@ public class Workspace implements Observer {
 		}
 		group.getChildren().addAll(viewMenu);
 	}
-	
+	private void loadPreferences(){
+		Stage newStage = new Stage();
+		XMLReader reader = new XMLReader(newStage,false);
+		newStage.setScene(new Workspace(newStage,new Preferences(reader.getPreferences())).init());
+		myStage.close();
+		newStage.show();
+	}
 	private void savePreferences(){
 		XMLSaver saver = new XMLSaver(myStage,myPreferences);
 	}
@@ -127,9 +141,6 @@ public class Workspace implements Observer {
 			if(type==ViewType.CONSOLE){
 				((ViewConsole)view).setHistoryView((ViewHistory)viewMap.get(ViewType.HISTORY));
 			}
-//			if(type==ViewType.AGENT){
-//				((ViewAgents)view).setBackgroundColor(Color.valueOf(info.get("background").toString()));
-//			}
 			int[] coords = new int[]{view.getX(),view.getY()};
 			viewMap.put(type,view);
 			Pane viewGroup = view.getView();
@@ -141,7 +152,7 @@ public class Workspace implements Observer {
 	
 	private void openWorkspace(){
 		Stage newStage = new Stage();
-		XMLReader reader = new XMLReader(newStage);
+		XMLReader reader = new XMLReader(newStage,true);
 		newStage.setScene(new Workspace(newStage,new Preferences(reader.getPreferences())).init());
 		newStage.show();
 	}
@@ -154,37 +165,6 @@ public class Workspace implements Observer {
 			closeView(viewMap.get(view));
 		}
 	}
-	
-//	private int[] getViewCoords(ViewType type){
-//		int[] coords = new int[2];
-//		switch(type){
-//		case AGENT:
-//			coords = new int[]{COORD0,COORD0+MENU_OFFSET};
-//			break;
-//		case CONSOLE:
-//			coords = new int[]{COORD0,COORD1+MENU_OFFSET};
-//			break;
-//		case HISTORY:
-//			coords = new int[]{COORD1,COORD0+MENU_OFFSET};
-//			break;
-//		case METHODS:
-//			coords = new int[]{COORD2,COORD0+MENU_OFFSET};
-//			break;
-//		case VARIABLES:
-//			coords = new int[]{COORD2,COORD1+MENU_OFFSET};
-//			break;
-//		case PREFERENCES:
-//			coords = new int[]{COORD0,COORD2+MENU_OFFSET};
-//			break;
-//		case WINDOWPREFERENCES:
-//			coords = new int[]{COORD0,COORD0};
-//			break;
-//		case PALETTES:
-//			coords = new int[]{COORD2+View.NARROW_WIDTH,COORD0+MENU_OFFSET};
-//			break;
-//		}
-//		return coords;
-//	}
 	
 	private void initControllers(){
 		ControllerFactory controllerFactory = new ControllerFactory(modelMap,viewMap);
@@ -219,7 +199,7 @@ public class Workspace implements Observer {
 	private void displayView(View view){
 		Pane viewGroup = view.getView();
 		if(!group.getChildren().contains(viewGroup)){
-			int[] coords = new int[]{view.getX(),view.getY()};//getViewCoords(view.getType());
+			int[] coords = new int[]{view.getX(),view.getY()};
 			viewGroup.setLayoutX(coords[0]);
 			viewGroup.setLayoutY(coords[1]);
 			group.getChildren().add(viewGroup);

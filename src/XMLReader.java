@@ -3,10 +3,13 @@ import java.util.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -19,9 +22,14 @@ public class XMLReader {
 	private Element rootElem;
 	private Stage window;
 
-	public XMLReader(Stage stage) {
+	public XMLReader(Stage stage, boolean defaultPrefs) {
 		window = stage;
-		file = chooseFile();
+		if(defaultPrefs){
+			file = "src/XML/default.xml";
+		}
+		else{
+			file = chooseFile();
+		}
 		readFile();
 	}
 
@@ -71,8 +79,8 @@ public class XMLReader {
 		//return Arrays.asList(new String[]{nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim()});
 	}
 	
-	private List<String> getListElem(Element nodeElem,String tagName){
-		List<String> elems = new ArrayList<String>();
+	private ObservableList<String> getListElem(Element nodeElem,String tagName){
+		ObservableList<String> elems = FXCollections.observableArrayList();
 		Element parentElem = (Element) rootElem.getElementsByTagName(tagName).item(0);
 		NodeList elemList = parentElem.getElementsByTagName("row");
 		for(int i=0; i<elemList.getLength(); i++){

@@ -30,15 +30,14 @@ public abstract class Agent extends Observable{
 	private double penThickness;
 	private StringProperty nameProperty;
 	private DoubleProperty sizeProperty;
-	private ResourceBundle myResources;
+	private ResourceBundle updateResources;
 	private String penStyle;
 	private AgentElem agentView;
 	private CustomColorPalette myColorPalette;
 	private CustomImagePalette myImagePalette;
-	private Preferences preferences;
 	
-	public Agent(String name, double defaultXlocation, double defaultYlocation,View obsView){
-		//this.preferences = preferences;
+	public Agent(String name, double defaultXlocation, double defaultYlocation){
+
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
 		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
@@ -52,14 +51,19 @@ public abstract class Agent extends Observable{
 		isVisible = new SimpleBooleanProperty(true);
 		currentImageIndex = -1; 
 		nameProperty = new SimpleStringProperty(name);
-		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
-		penStyle = myResources.getString("SOLID");
+		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+		penStyle = updateResources.getString("SOLID");
 
 		agentView = new AgentElem(this);
-		this.addObserver(agentView);
-		
+	
 		
 	}
+	public void initialize() {
+		setChanged();
+		notifyObservers(updateResources.getString("INITIAL"));
+		
+	}
+
 	public double getXPosition(){
 		return agentXPosition.doubleValue();
 	}
@@ -79,12 +83,12 @@ public abstract class Agent extends Observable{
 		agentXPosition.setValue(agentXPosition.doubleValue() + x);
 		agentYPosition.setValue(agentYPosition.doubleValue() + y);
 		setChanged();
-		notifyObservers(myResources.getString("MOVE"));
+		notifyObservers(updateResources.getString("MOVE"));
 
 	}
 	public void leaveStamp(){
 		setChanged();
-		notifyObservers(myResources.getString("STAMP"));
+		notifyObservers(updateResources.getString("STAMP"));
 	}
 	public boolean isPenUp(){
 		return agentPenUp;
@@ -119,10 +123,8 @@ public abstract class Agent extends Observable{
 	public void setImagePath(String imagePath){
 		agentImagePath.setValue(imagePath);
 		agentView.updateImageView();
-		//myImagePalette.add(imagePath);
-		System.out.println("updating Agent Display View");
 		setChanged();
-		notifyObservers(myResources.getString("IMAGEVIEW"));
+		notifyObservers(updateResources.getString("IMAGEVIEW"));
 
 	}
 
@@ -168,9 +170,9 @@ public abstract class Agent extends Observable{
 	public void setVisible(boolean isVis) {
 		isVisible.setValue(isVis);
 		setChanged();
-		notifyObservers(myResources.getString("VISIBLE"));
+		notifyObservers(updateResources.getString("VISIBLE"));
 		setChanged();
-		notifyObservers(myResources.getString("UPDATE"));
+		notifyObservers(updateResources.getString("UPDATE"));
 		
 	}
 	public boolean isVisible(){
@@ -194,7 +196,6 @@ public abstract class Agent extends Observable{
 
 	public void setCurrentImageIndex(int imageIndex){
 		currentImageIndex = imageIndex;
-		System.out.println(currentImageIndex);
 		setImagePath((String) myImagePalette.getPaletteObject(currentImageIndex));
 
 	}
@@ -212,14 +213,20 @@ public abstract class Agent extends Observable{
 	}
 	public void setColorPalette(CustomColorPalette colorPalette) {
 		myColorPalette = colorPalette;
+		setChanged();
+		notifyObservers(updateResources.getString("COLORPALETTE"));
 	}
 
 	public void setImagePalette(CustomImagePalette imagePalette) {
 		myImagePalette = imagePalette;
+		setChanged();
+		notifyObservers(updateResources.getString("IMAGEPALETTE"));
 	}
-	
-	public CustomImagePalette getImagePalette() {
+	public CustomImagePalette getImagePalette(){
 		return myImagePalette;
 	}
-	
+	public CustomColorPalette getColorPalette(){
+		return myColorPalette;
+	}
+
 }	

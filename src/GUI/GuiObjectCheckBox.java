@@ -12,7 +12,6 @@ public class GuiObjectCheckBox extends GuiObject{
 	private boolean isChecked;
 	private CheckBox checkBox;
 	private BiConsumer<Observable, Boolean> setCheckedLambda;
-	private boolean isNewSelection;
 	
 	public GuiObjectCheckBox(String name, String resourceBundle, Agent agent,BiConsumer<Observable,Boolean> lambda) {
 		super(name, resourceBundle, agent);
@@ -27,7 +26,6 @@ public class GuiObjectCheckBox extends GuiObject{
 	        public void changed(ObservableValue<? extends Boolean> ov,
 	            Boolean old_val, Boolean new_val) {
 	        		isChecked = new_val;
-	        		isNewSelection = true;        		
 	        		setCheckedLambda.accept(getObservable(), isChecked);
 
 	        }
@@ -39,17 +37,5 @@ public class GuiObjectCheckBox extends GuiObject{
 		return isChecked;
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		
-		return isNewSelection;
-	}
-
-
-	@Override
-	public void setIsNewSelection(boolean b) {
-		isNewSelection = b;
-		
-	}
 
 }

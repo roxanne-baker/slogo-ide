@@ -45,16 +45,5 @@ public class GuiObjectColorPicker extends GuiObject{
 		return vbox;
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setIsNewSelection(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

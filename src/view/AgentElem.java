@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -9,11 +10,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class AgentElem implements Observer{
+	private static final String IMAGES_DIR = "images/";
 	Agent myAgent;
 	private ImageView agentImageView;
 	private ImageView oldImageView;
 	private ResourceBundle myResources;
 	private Color penColor;
+	private ImageView imgCopy;
 	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	public AgentElem(Agent agent){
@@ -22,6 +25,7 @@ public class AgentElem implements Observer{
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myAgent.getImagePath()),myAgent.getSize(),myAgent.getSize(),true,true));
 		oldImageView = agentImageView;
 		penColor = DEFAULT_PEN_COLOR;
+		imgCopy = new ImageView();
 
 
 	}
@@ -39,7 +43,8 @@ public class AgentElem implements Observer{
 		return oldImageView;
 	}
 	public ImageView getImageCopy() {
-		ImageView imgCopy = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myAgent.getImagePath()),myAgent.getSize(),myAgent.getSize(),true,true));
+		imgCopy = new ImageView();
+		getImageViewFromFile(imgCopy, myAgent.getImagePath());
 		imgCopy.setRotate(myAgent.getOrientation());
 		return imgCopy;
 
@@ -50,9 +55,23 @@ public class AgentElem implements Observer{
 	}
 	public void updateImageView(){	
 		oldImageView = agentImageView;
-		System.out.println("Updating AgentView");
-		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myAgent.getImagePath()),myAgent.getSize(),myAgent.getSize(),true,true));
+		agentImageView = getImageViewFromFile(agentImageView, myAgent.getImagePath());
+	}
 
+	private  ImageView getImageViewFromFile(ImageView agentView, String imagePath) {
+		File resourceFile = new File(IMAGES_DIR+ imagePath);
+		if (resourceFile.isFile()){
+			agentView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),myAgent.getSize(),myAgent.getSize(),true,true));
+		}else{
+			File imageFile = new File((String) myAgent.getImagePalette().getPaletteObject(myAgent.getCurrentImageIndex()));
+			if (imageFile.isFile()){
+				agentView = new ImageView(new Image(imageFile.toURI().toString(),myAgent.getSize(),myAgent.getSize(),true,true));
+			}else {
+				//TODO Throw Image not found error
+			}
+			
+		}return agentView;
+		
 	}
 
 	public void setRotate(Double value) {

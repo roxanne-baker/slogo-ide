@@ -117,6 +117,7 @@ public class ViewAgents extends View{
 				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == updateResources.getString("IMAGEVIEW")){
+				
 				imageAgentMap.remove(agentView.getOldImageView());
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
 				drawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());

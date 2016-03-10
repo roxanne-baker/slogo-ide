@@ -3,7 +3,6 @@ package view;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Button;
@@ -50,13 +49,20 @@ public class ViewPalettes extends View{
 		
 	}
 
+
 	private void setUpImageChooser() {
 		Stage stage = new Stage();
+		
 		fileButton.setOnAction(evt -> {
 			List<File> fileList = fileChooser.showOpenMultipleDialog(stage);
 			for (File file: fileList){
-				//TODO use reflection here
-				paletteList.get(1).addToPalette(file.getPath().substring(file.getPath().lastIndexOf('/')+1), paletteList.get(1).getPaletteSize());
+				int imagePaletteIndex = 0;
+				for (int i = 0; i < paletteList.size(); i++){
+					if (paletteList.get(i).getPaletteName().equals(myResources.getString("IMAGES")));
+						imagePaletteIndex = i;
+				}
+				paletteList.get(imagePaletteIndex).addToPalette(file.getPath(), paletteList.get(imagePaletteIndex).getPaletteSize());
+
 			}
 		});	
 		vbox.getChildren().add(fileButton);

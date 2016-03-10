@@ -1,11 +1,14 @@
 package controller;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import view.Agent;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
+import view.Palette;
 import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
@@ -13,9 +16,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-
 public class TurtleController extends Controller implements IAgentController{
-
+	private static final String PALETTE_PROPERTIES = "Palettes";
 	private HashMap<String,Agent> agentMap;
 	private StringProperty currentAgentNameProperty;
 	private ViewAgentPreferences preferencesView;
@@ -26,6 +28,9 @@ public class TurtleController extends Controller implements IAgentController{
 	private double offsetY;
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
+	private List<String> initialTurtleList;
+	private ResourceBundle paletteResources;
+
 
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
@@ -37,14 +42,33 @@ public class TurtleController extends Controller implements IAgentController{
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
 		currentAgentNameProperty = new SimpleStringProperty();
-		
+		paletteResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
+
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
 		
-		
+		initialTurtleList = Arrays.asList("Melissa");
+		populateTurtles();
 	}
 	
+	private void populateTurtles() {
+		for (String turtleName: initialTurtleList){
+			addAgent(turtleName);
+		}
+	}
+	
+	public void setInitialTurtleList(List<String> turtleList){
+		initialTurtleList = turtleList;
+		removeAllAgents();
+		populateTurtles();
+	}
+
+	private void removeAllAgents() {
+		agentMap = new HashMap<String,Agent>();
+		updateAgentMapInDisplayViews();
+	}
+
 	@Override
 	public int getNumAgents() {
 		return agentMap.keySet().size();
@@ -70,7 +94,10 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void addAgent(String agentName) {
-		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,agentView); //starts in middle of screen
+		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY); //starts in middle of screen
+		newTurtle.addObserver(preferencesView);
+		newTurtle.addObserver(agentView);
+		newTurtle.initialize();
 		agentMap.put(agentName, newTurtle);
 		updateAgentMapInDisplayViews();
 		if (getNumAgents()==1){
@@ -243,14 +270,27 @@ public class TurtleController extends Controller implements IAgentController{
 
 	public void setColorPalette(CustomColorPalette customColorPalette) {
 		colorPalette = customColorPalette;
+		addPaletteToTurtles(customColorPalette);
 	}
+
 
 	public void setImagePalette(CustomImagePalette customImagePalette) {
 		imagePalette = customImagePalette;
+		addPaletteToTurtles(customImagePalette);
 		
 	}
 	
-
+	private void addPaletteToTurtles(Palette palette) {
+		for (String name: agentMap.keySet()){
+			if (palette.getPaletteName() == paletteResources.getString("CUSTOMCOLORS")){
+				agentMap.get(name).setColorPalette((CustomColorPalette) palette);
+				
+			}if (palette.getPaletteName() == paletteResources.getString("IMAGES")){
+				agentMap.get(name).setImagePalette((CustomImagePalette) palette);
+			}
+		}
+		
+	}
 
 
 

@@ -9,13 +9,9 @@ import GUI.GuiObject;
 import GUI.GuiObjectFactory;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -26,7 +22,6 @@ import javafx.scene.layout.VBox;
  */
 public class ViewPreferences extends View{
 	private HashMap<String, Agent> agentMap;
-//	private Group viewGroup;
 	private Pane viewGroup;
 	private VBox preferencesBox;
 	private String currentAgent;
@@ -34,7 +29,6 @@ public class ViewPreferences extends View{
 	
 	public ViewPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
-//		viewGroup = new Group();
 		viewGroup = new Pane();
 		agentMap = new HashMap<String,Agent>();
 		currentAgent = null;
@@ -53,10 +47,7 @@ public class ViewPreferences extends View{
 	updateView();
 	return viewGroup;
 	}
-//	public Group getView() {
-//		updateView();
-//		return viewGroup;
-//	}
+
 	private void updateView() {
 		viewGroup.getChildren().remove(preferencesBox);
 		preferencesBox = new VBox();
@@ -73,9 +64,8 @@ public class ViewPreferences extends View{
             }
 		});
 		preferencesBox.getChildren().add(agentDropDown);
-//		for (Agent agent: agentList){
-			VBox agentPrefBox = new VBox();
-			List<Node> observerLabelList = new ArrayList<Node>();
+		VBox agentPrefBox = new VBox();
+		List<Node> observerLabelList = new ArrayList<Node>();
 			if(currentAgent!=null){
 			System.out.println(currentAgent);
 			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
@@ -86,9 +76,7 @@ public class ViewPreferences extends View{
 			addToAgentPrefBox(agentPrefBox, observerLabelList);
 			addToAgentPrefBox(agentPrefBox, mutableGuiObjectList);
 			}
-			preferencesBox.getChildren().add(agentPrefBox);
-
-//		}
+		preferencesBox.getChildren().add(agentPrefBox);
 
 
 		viewGroup.getChildren().add(preferencesBox);
