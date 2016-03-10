@@ -81,7 +81,7 @@ public class ViewAgentPreferences extends View{
 	private void setUpAgentDropDown() {
 		ComboBox<String> agentDropDown = new ComboBox<String>();
 		for (String name: agentMap.keySet()){
-			agentDropDown.getItems().add("TURTLE"+name);
+			agentDropDown.getItems().add(name);
 		}
 		agentDropDown.setValue("TURTLE"+currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {

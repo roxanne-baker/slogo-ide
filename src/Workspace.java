@@ -32,7 +32,7 @@ public class Workspace implements Observer {
 
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
-	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
+	private HashMap<ViewType, Controller> controllerMap = new HashMap<ViewType,Controller>();
 	private CustomColorPalette customColorPalette;
 	private CustomImagePalette customImagePalette;
 	private Group group = new Group();
