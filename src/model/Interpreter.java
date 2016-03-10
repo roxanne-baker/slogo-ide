@@ -115,7 +115,7 @@ public class Interpreter extends Observable {
     		c = commandsMap.get(parsedFirst);
     	}
 		if (c.getNumParams() == 0) { 
-			c.execute(NO_PARAMS_LIST);
+			returnResult = c.execute(NO_PARAMS_LIST);
 			callBuildTree(cutFirst(text));
 			return;
 		}

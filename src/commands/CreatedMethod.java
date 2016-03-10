@@ -32,7 +32,6 @@ public class CreatedMethod extends Command implements Executable {
 		for (int i=0; i<paramNames.length; i++) {
 			variablesController.addVariable(paramNames[i], ""+params.get(i));
 		}
-		System.out.println(commands);
 		interpreter.run(commands);
 		return 0;
 	}	
