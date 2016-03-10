@@ -1,10 +1,12 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import controller.Controller;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,12 +17,13 @@ import javafx.scene.layout.VBox;
 public abstract class Palette extends Controller{
 	
 	protected String paletteName;
-	protected List<Object> paletteObjectList;
-	protected Group paletteGroup;
+	private ListProperty<Object> paletteObjectListProperty;
+	private Group paletteGroup;
 	private ResourceBundle myResources = ResourceBundle.getBundle("Palettes");
 	
-	public Palette(List<Object> objectList){
-		paletteObjectList = objectList;
+
+	public Palette(ObservableList<Object> objectList){
+		paletteObjectListProperty = new SimpleListProperty<Object>(objectList);
 		paletteGroup = new Group();
 	}
 	public String getPaletteName(){
@@ -30,7 +33,8 @@ public abstract class Palette extends Controller{
 		return myResources;
 	}
 	public List<Object> getPaletteList(){
-		return paletteObjectList;
+
+		return paletteObjectListProperty.getValue();
 	}
 	public Group getPaletteViewGroup(){
 		paletteGroup.getChildren().removeAll();
@@ -54,31 +58,36 @@ public abstract class Palette extends Controller{
 	public abstract Node getPaletteObjectView(int index);
 	
 	public void addToPalette(Object obj, int index){
-		if (index >= paletteObjectList.size()){ //add new object at next available spot
-			paletteObjectList.add(obj);
+		if (index >= paletteObjectListProperty.size()){ //add new object at next available spot
+			paletteObjectListProperty.add(obj);
 			
 		}else if (index <0){
 			//throw error
 		}
 		else{ //replace already existing object
-			paletteObjectList.set(index, obj);
+			paletteObjectListProperty.set(index, obj);
 
 		}
 		updateViewGroup();
 	}
 	public void removeFromPalette(int index){
-		paletteObjectList.remove(index);
+		paletteObjectListProperty.remove(index);
 	}
 	public Object getPaletteObject(int index){
-		return paletteObjectList.get(index);
-	}
-	public void setNewPaletteList(List<Object> customList){
-		paletteObjectList = customList;
-			
-		}
-	public int getPaletteSize() {
-		return paletteObjectList.size();
+		return paletteObjectListProperty.get(index);
 	}
 
+//	public void setNewPaletteList(ObservableList<Object> customList){
+//			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
+//
+//	}
+	public int getPaletteSize() {
+		return paletteObjectListProperty.size();
+	}
+
+
+	public ListProperty<Object> getPaletteListProperty() {
+		return paletteObjectListProperty;
+	}
 
 }

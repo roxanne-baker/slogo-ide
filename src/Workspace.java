@@ -5,6 +5,7 @@ import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -45,8 +46,8 @@ public class Workspace implements Observer {
 	public Workspace(Stage stage, Preferences preferences){
 		myStage = stage;
 		myPreferences = preferences;
-		customColorPalette = new CustomColorPalette((List<Object>) preferences.getPreference("colors"));
-		customImagePalette = new CustomImagePalette((List<Object>) preferences.getPreference("images"));
+		customColorPalette = new CustomColorPalette((ObservableList<Object>) preferences.getPreference("colors"));
+		customImagePalette = new CustomImagePalette((ObservableList<Object>) preferences.getPreference("images"));
 	}
 	
 	public Scene init(){
@@ -71,7 +72,6 @@ public class Workspace implements Observer {
 	}
 	
 	private void initPalettes() {
-		System.out.println("setting up palettes");
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));

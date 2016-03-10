@@ -38,8 +38,10 @@ public class GuiObjectFactory {
 				return new GuiObjectCheckBox(type,agent.getResourceString(),agent,(a,b)->((Agent) a).setVisible(b));
 			}
 			case("IMAGEPATH"):{
-				return new GuiObjectInputBox(type, agent.getResourceString(), agent, (a,b)->((Agent)a).setImagePath(b));
+				if (agent.getImagePalette()==null){return null;}
+				return new GuiObjectDropDown(type, agent.getResourceString(), agent, agent.getImagePath(),agent.getImagePalette().getPaletteListProperty(), (a,b)->((Agent)a).setCurrentImageIndex(b));
 			}
+
 			case("HELP"):{
 				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, null , HELP_FILE);
 			}

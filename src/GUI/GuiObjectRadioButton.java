@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import view.Agent;
 
 public class GuiObjectRadioButton extends GuiObject{
+	private static final double PADDING = 10;
 	private String initialToggle;
 	private ArrayList<RadioButton> buttonList;
 	private ToggleGroup radioButtonGroup;
@@ -69,6 +71,7 @@ public class GuiObjectRadioButton extends GuiObject{
 		
 		radioLabel = new Label(getResourceBundle().getString(getObjectName()+"LABEL"));
 		VBox stateControls = new VBox();
+		stateControls.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		stateControls.getChildren().add(radioLabel);
 		for(RadioButton button: buttonList){
 			stateControls.getChildren().add(button);

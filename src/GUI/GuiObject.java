@@ -33,8 +33,6 @@ public abstract class GuiObject {
 	
 	public abstract Object createObjectAndReturnObject();
 		
-	public abstract boolean isNewSelected();
-	
-	public abstract void setIsNewSelection(boolean b);
+
 	
 }

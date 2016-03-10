@@ -8,7 +8,9 @@ import javafx.scene.paint.Paint;
 
 public class CustomColor {
 	private ObjectProperty<Color> colorProperty;
+	
 	public CustomColor(int r, int g, int b){
+		
 		colorProperty = new SimpleObjectProperty<Color>(Color.rgb(r, g, b));
 	}
 

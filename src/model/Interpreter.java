@@ -76,9 +76,9 @@ public class Interpreter extends Observable {
 	private final char CLOSED_BRACKET = ']';
 	
 	public Interpreter(Map<ViewType, Controller> controllerMap) {
-		turtleController = (TurtleController) controllerMap.get("Agent"); 
-		variableController = (VariablesController) controllerMap.get("Variables");
-		methodController = (MethodsController) controllerMap.get("Methods");
+		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
+		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
+		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
 		initializeCommandsMap();
 		initializeLangs();
 	}

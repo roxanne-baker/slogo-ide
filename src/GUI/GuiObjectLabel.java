@@ -17,16 +17,6 @@ public class GuiObjectLabel extends GuiObject{
 		return myLabel;
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public void setIsNewSelection(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

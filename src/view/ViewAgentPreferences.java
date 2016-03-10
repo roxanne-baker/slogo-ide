@@ -27,11 +27,16 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
+
+	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET;
 	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
+	private static final int PADDING = 15;
+	private Pane pane;
+	private ResourceBundle updateResources;
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	
@@ -43,11 +48,17 @@ public class ViewAgentPreferences extends View{
 		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
+		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+
 	}
 
 	@Override
 	public void update(Observable agent, Object updateType) {
-
+		if (updateType == updateResources.getString("COLORPALETTE") ){
+			updateView();
+		}else if (updateType == updateResources.getString("IMAGEPALETTE")){
+			updateView();
+		}
 		
 	}
 
@@ -57,6 +68,7 @@ public class ViewAgentPreferences extends View{
 		return super.getView();
 	}
 	private void updateView() {
+
 		allPreferencesBox.getChildren().clear();
 		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
 		
@@ -81,7 +93,7 @@ public class ViewAgentPreferences extends View{
 	private void setUpAgentDropDown() {
 		ComboBox<String> agentDropDown = new ComboBox<String>();
 		for (String name: agentMap.keySet()){
-			agentDropDown.getItems().add("TURTLE"+name);
+			agentDropDown.getItems().add(name);
 		}
 		agentDropDown.setValue("TURTLE"+currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
