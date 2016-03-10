@@ -13,7 +13,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 
 
-		XMLReader reader = new XMLReader(primaryStage);
+		XMLReader reader = new XMLReader(primaryStage,true);
 		Workspace UI = new Workspace(primaryStage,new Preferences(reader.getPreferences()));
 		Scene myScene = UI.init();
         primaryStage.setScene(myScene);

@@ -22,9 +22,14 @@ public class XMLReader {
 	private Element rootElem;
 	private Stage window;
 
-	public XMLReader(Stage stage) {
+	public XMLReader(Stage stage, boolean defaultPrefs) {
 		window = stage;
-		file = "src/XML/default.xml";
+		if(defaultPrefs){
+			file = "src/XML/default.xml";
+		}
+		else{
+			file = chooseFile();
+		}
 		readFile();
 	}
 
