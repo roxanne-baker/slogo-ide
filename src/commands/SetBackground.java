@@ -2,13 +2,13 @@ package commands;
 
 import java.util.List;
 
-import controller.ColorPickerController;
+import controller.BackgroundController;
 
 public class SetBackground extends Command implements Executable {
 
-	ColorPickerController colorPickerController;
+	BackgroundController colorPickerController;
 	
-	public SetBackground(ColorPickerController colorPickerController) {
+	public SetBackground(BackgroundController colorPickerController) {
 		numParams = 1;
 		this.colorPickerController = colorPickerController;
 	}

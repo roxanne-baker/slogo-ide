@@ -92,7 +92,6 @@ public class ViewAgents extends View{
 
 	@Override
 	public void update(Observable agent, Object updateType) {
-
 //		if(((Agent) agent).isVisible()){
 		if (updateType == updateResources.getString("STAMP")){
 			drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
@@ -164,13 +163,22 @@ public class ViewAgents extends View{
 		});
 	}
 	
+	
+	public void clearScreen() {
+		drawer.clearAllLines();
+		drawer.clearAllStamps();
+	}
+	
+	public int clearStamps() {
+		return drawer.clearAllStamps();
+	}
+	
 
 	private void setUpClearButton() {
 		Button clearButton = new Button(windowResources.getString("CLEARBUTTON"));
 		clearButton.setOnAction(new EventHandler() {
             public void handle(Event t) {
-                drawer.clearAllLines();  
-                drawer.clearAllStamps();
+                clearScreen();
             }
         });
 		agentViewPreferences.getChildren().add(clearButton);

@@ -50,7 +50,7 @@ public class Drawer {
 	 * Need to make a copy of ImageView to stamp it otherwise run into duplicate children issue
 	 */
 	public void stampImage(ImageView img, double xPosition, double yPosition){
-		setLocation(img, xPosition - OFFSET_X, yPosition - OFFSET_Y);
+		setLocation(img, xPosition, yPosition);
 		stampList.add(img);
 		agentGroup.getChildren().add(img);
 	}
@@ -66,8 +66,6 @@ public class Drawer {
 		agentGroup.getChildren().add(img);
 		if (!agentViewList.contains(img)){
 			agentViewList.add(img);
-			
-		
 		}
 	}
 
@@ -98,10 +96,16 @@ public class Drawer {
 			agentGroup.getChildren().remove(line);
 		}
 	}
-	public void clearAllStamps(){
-		for (Node stamp: stampList){
-			agentGroup.getChildren().remove(stamp);
+	public int clearAllStamps(){
+		if (!stampList.isEmpty()) {
+			
+			for (Node stamp: stampList){
+				agentGroup.getChildren().remove(stamp);
+			}
+			stampList.clear();
+			return 1;
 		}
+		return 0;
 	}
 	public void removeSelectEffectForNonSelectedTurtles(ImageView imageView) {
 		// TODO Auto-generated method stub

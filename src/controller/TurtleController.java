@@ -2,6 +2,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import view.Agent;
 import view.Turtle;
@@ -25,6 +27,7 @@ public class TurtleController extends Controller implements IAgentController{
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
+	private List<Integer> activeAgentList;
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
@@ -34,13 +37,14 @@ public class TurtleController extends Controller implements IAgentController{
 		observerHeight = obsView.getHeight();
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
+		activeAgentList  = new ArrayList<>();
 		currentAgentNameProperty = new SimpleIntegerProperty();
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
 		
 		addAgent(1); //always start with one agent
-		
+		activeAgentList.add(1);
 
 		
 		try {
@@ -51,6 +55,32 @@ public class TurtleController extends Controller implements IAgentController{
 
 
 	}
+	
+	public void setActiveAgents(List<Integer> activeAgents) {
+		activeAgentList = new ArrayList<>();
+		List<Integer> agentNames = getAgentNames();
+		for (Integer agentID : agentNames) {
+			if (activeAgents.contains(agentID)) {
+//				agentMap.get(agentID).setActive(true);
+				activeAgentList.add(agentID);
+				activeAgents.remove(agentID);
+			}
+//			else {
+//				agentMap.get(agentID).setActive(false);
+//			}
+		}
+		for (Integer agentToAdd : activeAgents) {
+			addAgent(agentToAdd);
+//			agentMap.get(agentToAdd).setActive(true);
+			activeAgentList.add(agentToAdd);
+		}
+	}
+	
+	public List<Integer> getActiveAgents() {
+		return activeAgentList;
+	}
+	
+	
 	
 	@Override
 	public int getNumAgents() {
@@ -110,17 +140,16 @@ public class TurtleController extends Controller implements IAgentController{
 		if(currentAgentNameProperty.getValue().equals(oldName)){
 			currentAgentNameProperty.setValue(newName);
 		}
-		updateAgentMapInViews();
-
-
-		
+		updateAgentMapInViews();	
 	}
+	
 	public Integer getCurrentAgent() { //needs to throw an error if null
 		if (currentAgentNameProperty.getValue()==null){
 			return null;
 		}
 		return currentAgentNameProperty.getValue();
 	}
+	
 	@Override
 	public boolean isAgent(Integer name) {
 		for (Integer key: agentMap.keySet()){
@@ -131,6 +160,13 @@ public class TurtleController extends Controller implements IAgentController{
 		return false;
 	}
 	
+	
+	public void changeProperty(Consumer<Agent> turtleMethod) {
+		for (Integer agentID : activeAgentList) {
+			setCurrentAgent(agentID);
+			turtleMethod.accept(agentMap.get(currentAgentNameProperty.getValue()));
+		}
+	}
 	
 	@Override
 	public void setCurrentAgent(Integer agentName) {
@@ -211,11 +247,15 @@ public class TurtleController extends Controller implements IAgentController{
 	public Integer getCurrentAgentName() {
 		return currentAgentNameProperty.getValue();
 	}
+	
 	@Override
 	public void moveCurrentAgent(double changeX, double changeY) {
-		agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX, changeY);
+//		for (Integer agentID : activeAgentList) {
+//			setCurrentAgent(agentID);
+			agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX, changeY);
+//		}
 	}
-
+	
 	@Override
 	public void setCurrentAgentPenColor(int colorIndex) {
 		Color penColor = preferencesView.getColorPalette().getCustomColorList().get(colorIndex);
@@ -230,7 +270,6 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public void setCurrentAgentShape(int shapeIndex) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -244,7 +283,7 @@ public class TurtleController extends Controller implements IAgentController{
 		//COLOR INDEX NOT FOUND
 		return -1;
 	}
-
+	
 	@Override
 	public int getCurrentAgentShapeIndex() {
 //		// TODO Auto-generated method stub

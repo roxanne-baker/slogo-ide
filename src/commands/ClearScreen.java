@@ -2,18 +2,23 @@ package commands;
 
 import java.util.List;
 
+import controller.BackgroundController;
 import controller.TurtleController;
 
 public class ClearScreen extends Command implements Executable {
 
+	BackgroundController backgroundController;
 	TurtleController turtleController;
-	public ClearScreen(TurtleController turtleController) {
+	
+	public ClearScreen(TurtleController turtleController, BackgroundController bgController) {
 		this.turtleController = turtleController;
+		this.backgroundController = bgController;
 		numParams = 0;
 	}
 
 	public double execute(List<Object> params) {
-		// NEED TO DO
+		backgroundController.clearScreen();
+		
 		double currX = turtleController.getCurrentAgentXPosition();
 		double currY = turtleController.getCurrentAgentYPosition();
 

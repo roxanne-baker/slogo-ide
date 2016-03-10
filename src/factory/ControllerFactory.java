@@ -2,7 +2,7 @@ package factory;
 
 import java.util.*;
 
-import controller.ColorPickerController;
+import controller.BackgroundController;
 import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
@@ -37,7 +37,7 @@ public class ControllerFactory {
 		case "Agent":
 			return new TurtleController((ViewAgentPreferences)allViews.get("Preferences"),(ViewAgents)view);
 		case "ColorPicker":
-			return new ColorPickerController((ViewAgentPreferences)allViews.get("Preferences"), (ViewAgents)allViews.get("Agent"));
+			return new BackgroundController((ViewAgentPreferences)allViews.get("Preferences"), (ViewAgents)allViews.get("Agent"));
 		}
 		return null;
 	}

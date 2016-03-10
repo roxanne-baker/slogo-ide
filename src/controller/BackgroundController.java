@@ -5,13 +5,13 @@ import javafx.scene.paint.Color;
 import view.ViewAgentPreferences;
 import view.ViewAgents;
 
-public class ColorPickerController extends Controller {
+public class BackgroundController extends Controller {
 
 	ViewAgentPreferences myPenModel;
 	ViewAgents myBackgroundModel;
 	Color colorToAdd;
 	
-	public ColorPickerController(ViewAgentPreferences penModel, ViewAgents backgroundModel) {
+	public BackgroundController(ViewAgentPreferences penModel, ViewAgents backgroundModel) {
 		myPenModel = penModel;
 		myBackgroundModel = backgroundModel;
 	}
@@ -33,8 +33,12 @@ public class ColorPickerController extends Controller {
 		return customColors.get(index);	
 	}
 	
-	public void setColorForPenColor(int index) {
-		myBackgroundModel.setColor(getNextColor(index));
+	public void clearScreen() {
+		myBackgroundModel.clearScreen();
+	}
+	
+	public double clearStamps() {
+		return (double) myBackgroundModel.clearStamps();
 	}
 	
 	public void setColorForBackgroundView(int index) {

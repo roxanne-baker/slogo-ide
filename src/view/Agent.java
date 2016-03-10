@@ -43,6 +43,7 @@ public abstract class Agent extends Observable{
 	private DoubleProperty sizeProperty;
 	private ResourceBundle myResources;
 	private String penStyle;
+	private boolean isActive;
 	
 	public Agent(Integer name, double defaultXlocation, double defaultYlocation,View obsView){
 		agentXPosition = new SimpleDoubleProperty(0);
@@ -219,6 +220,12 @@ public abstract class Agent extends Observable{
 	}
 	public void setCurrentShapeIndex(int index){
 		currentShapeIndex = index;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 }	
