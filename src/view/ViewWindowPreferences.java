@@ -1,9 +1,11 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
@@ -12,8 +14,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class ViewWindowPreferences extends View{
 	private static final int CONSOLEX = 0;
@@ -21,12 +27,14 @@ public class ViewWindowPreferences extends View{
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
 	private static final double PADDING = 10;
+	private static final String WINDOW_PROPERTIES = "windowProperties";
 	private List<Node> guiList;
 	private String currentLanguage;
 	private HBox windowPreferencesBox;
 	private Interpreter myInterpreter;
 	private ComboBox<String> languageDropDown;
 	private Preferences savedPreferences;
+	private ResourceBundle windowResources;
 	
 
 	public ViewWindowPreferences(ViewType ID, Preferences savedPreferences) {
@@ -40,6 +48,7 @@ public class ViewWindowPreferences extends View{
 		myInterpreter = null;
 		currentLanguage = savedPreferences.getPreference("language").toString();
 		languageDropDown = new ComboBox<String>();
+		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		createView();
 	}
 
@@ -60,9 +69,21 @@ public class ViewWindowPreferences extends View{
 		}
 		
 		createLanguagesComboBox();
+		createCommandsFileChooser();
 
 	}
 	
+	private void createCommandsFileChooser() {
+		FileChooser fileChooser = new FileChooser();
+		Stage stage = new Stage();
+		Button fileButton = new Button(windowResources.getString("COMMANDSBUTTON"));
+		fileButton.setOnAction(evt -> {
+			File file = fileChooser.showOpenDialog(stage);
+		});
+		windowPreferencesBox.getChildren().add(fileButton);
+	}
+
+
 	private void createLanguagesComboBox() {
 		for (String language: LANGUAGES_LIST){
 			languageDropDown.getItems().add(language);
