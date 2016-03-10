@@ -64,3 +64,6 @@
 	-fx-font-family: "Andale Mono";
 	-fx-mark-color: #43609c;
 }
+.window-menu{
+	-fx-spacing: 10;
+}

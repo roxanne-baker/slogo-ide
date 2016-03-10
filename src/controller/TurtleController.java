@@ -28,7 +28,6 @@ public class TurtleController extends Controller implements IAgentController{
 	private double offsetY;
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
-	private List<String> initialTurtleList;
 	private ResourceBundle paletteResources;
 
 
@@ -47,27 +46,9 @@ public class TurtleController extends Controller implements IAgentController{
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
-		
-		initialTurtleList = Arrays.asList("Melissa");
-		populateTurtles();
-	}
-	
-	private void populateTurtles() {
-		for (String turtleName: initialTurtleList){
-			addAgent(turtleName);
-		}
-	}
-	
-	public void setInitialTurtleList(List<String> turtleList){
-		initialTurtleList = turtleList;
-		removeAllAgents();
-		populateTurtles();
-	}
 
-	private void removeAllAgents() {
-		agentMap = new HashMap<String,Agent>();
-		updateAgentMapInDisplayViews();
 	}
+	
 
 	@Override
 	public int getNumAgents() {

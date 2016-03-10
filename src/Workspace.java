@@ -25,7 +25,7 @@ import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
-	private static final int WINDOW_PREF_OFFSET = 200;
+	private static final int WINDOW_PREF_OFFSET = 1000;
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = ViewType.values();
