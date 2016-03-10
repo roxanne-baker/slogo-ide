@@ -1,4 +1,4 @@
-package view;
+package GUI;
 import java.util.Observable;
 import java.util.function.BiConsumer;
 
@@ -9,6 +9,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import view.Agent;
 
 
 public class GuiObjectColorPicker extends GuiObject{

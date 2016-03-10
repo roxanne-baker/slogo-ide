@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import GUI.GuiObject;
+import GUI.GuiObjectFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -34,9 +36,13 @@ public class ViewAgentPreferences extends View{
 	private CustomColorPalette colorPalette;
 	private static final int PADDING = 10;
 	private static final int COLOR_CELL_SIZE = 10;
-	public ViewAgentPreferences(String id) {
-		super(id);
+	private Pane pane;
+	
+	public ViewAgentPreferences(ViewType ID) {
+		super(ID);
 		viewGroup = new Group();
+		pane = new Pane(viewGroup);
+		setStyleClass(pane);
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
 		colorPalette = new CustomColorPalette();
@@ -51,8 +57,6 @@ public class ViewAgentPreferences extends View{
 	@Override
 	public Pane getView() {
 		updateView();
-		Pane pane = new Pane(viewGroup);
-		setStyleClass(pane);
 		return pane;
 	}
 	private void updateView() {

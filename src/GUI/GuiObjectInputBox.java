@@ -1,4 +1,4 @@
-package view;
+package GUI;
 
 import java.io.File;
 import java.util.Observable;
@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import view.Agent;
 
 public class GuiObjectInputBox extends GuiObject{
 

@@ -8,14 +8,15 @@ import javafx.scene.layout.*;
 import model.Interpreter;
 
 public class HistoryView extends View implements Observer{
-	String id;
-	VBox vb = new VBox(2);
+	private VBox vb = new VBox(2);
 	private Interpreter interpreter;
-	
-	public HistoryView(String id) {
-		super(id);
-	}
+	private Pane pane;
 
+	public HistoryView(ViewType ID){
+		super(ID);
+		init();
+		setStyleClass(pane);
+	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
@@ -41,19 +42,14 @@ public class HistoryView extends View implements Observer{
 	
 	@Override
 	public Pane getView() {
+		return pane;
+	}
+
+	private void init() {
 		Group group = new Group();
 		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
 		ScrollPane sp = new ScrollPane(vb);
 		group.getChildren().add(sp);
-		Pane pane = new Pane(group);
-		setStyleClass(pane);
-		return pane;
+		pane = new Pane(group);
 	}
-//	public Group getView() {
-//		Group group = new Group();
-//		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
-//		ScrollPane sp = new ScrollPane(vb);
-//		group.getChildren().add(sp);
-//		return group;
-//	}
 }

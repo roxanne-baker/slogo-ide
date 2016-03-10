@@ -13,6 +13,7 @@ import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
+import view.ViewType;
 import commands.ArcTangent;
 import commands.Back;
 import commands.ClearScreen;
