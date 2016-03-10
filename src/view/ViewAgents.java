@@ -68,7 +68,6 @@ public class ViewAgents extends View{
 
 		
 		agentViewPreferences = new HBox();
-		agentViewPreferences.getStyleClass().add(cssResources.getString("DISPLAYVIEW"));
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		setPane(agentViewPreferences);
@@ -121,12 +120,6 @@ public class ViewAgents extends View{
 				imageAgentMap.remove(agentView.getOldImageView());
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
 				drawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-				((Agent)agent).getImagePalette().add(((Agent)agent).getImagePath());
-				System.out.println(((Agent)agent).getImagePath());
-				for(Object path: ((Agent)agent).getImagePalette().getPaletteList()){
-					System.out.println(path.toString());
-				}
-				savedPreferences.setPreference("images", ((Agent)agent).getImagePalette().getPaletteList());
 			}else if (updateType == updateResources.getString("CURRENT")){
 				currentAgentNameProperty.setValue(((Agent) agent).getName());
 				if(isSelectedAgentToggle){

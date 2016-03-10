@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CustomImagePalette extends Palette{
-	private static List<Object> imageList = Arrays.asList("turtle.png","dot.png");
+	private List<Object> imageList;
 	private static final int SIZE = 20;
 
 	public CustomImagePalette(List<Object> images) {

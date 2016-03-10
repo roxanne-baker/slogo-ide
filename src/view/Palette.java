@@ -72,10 +72,7 @@ public abstract class Palette extends Controller{
 		return paletteObjectList.get(index);
 	}
 	public void setNewPaletteList(List<Object> customList){
-			paletteObjectList = new ArrayList<Object>();
-			for (Object obj: customList){
-				paletteObjectList.add(obj);
-			}
+		paletteObjectList = customList;
 			
 		}
 	public int getPaletteSize() {

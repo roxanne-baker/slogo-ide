@@ -32,6 +32,7 @@ public class ViewPalettes extends View{
 		fileChooser.setTitle(myResources.getString("IMAGECHOOSERLABEL"));
 		fileButton = new Button(myResources.getString("IMAGECHOOSERBUTTON"));
 		vbox = new VBox();
+		vbox.setPrefSize(NARROW_WIDTH,NARROW_WIDTH);
 		setPane(vbox);
 		setUpPalettes();
 		setUpImageChooser();
@@ -46,12 +47,6 @@ public class ViewPalettes extends View{
 		setUpPalettes();
 		
 	}
-//	@Override
-//	public Pane getView() {
-//		setUpPalettes();
-//		setUpImageChooser();
-//		return viewPane;
-//	}
 
 	private void setUpImageChooser() {
 		Stage stage = new Stage();
@@ -59,7 +54,7 @@ public class ViewPalettes extends View{
 			List<File> fileList = fileChooser.showOpenMultipleDialog(stage);
 			for (File file: fileList){
 				//TODO use reflection here
-				paletteList.get(1).addToPalette(file.getPath(), paletteList.get(1).getPaletteSize());
+				paletteList.get(1).addToPalette(file.getPath().substring(file.getPath().lastIndexOf('/')+1), paletteList.get(1).getPaletteSize());
 			}
 		});	
 		vbox.getChildren().add(fileButton);

@@ -26,8 +26,8 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
-	private static final int CONSOLEX = MENU_OFFSET;
-	private static final int CONSOLEY = 0;
+	private static final int CONSOLEX = 0;
+	private static final int CONSOLEY = MENU_OFFSET;
 	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
@@ -61,6 +61,7 @@ public class ViewAgentPreferences extends View{
 		allPreferencesBox.getChildren().clear();
 		//viewGroup.getChildren().remove(allPreferencesBox);
 		allPreferencesBox = new VBox();
+		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
 		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		
 		setUpAgentDropDown();
@@ -82,15 +83,14 @@ public class ViewAgentPreferences extends View{
 
 		
 		setPane(allPreferencesBox);
-		//viewGroup.getChildren().add(allPreferencesBox);
 	}
 
 	private void setUpAgentDropDown() {
 		ComboBox<String> agentDropDown = new ComboBox<String>();
 		for (String name: agentMap.keySet()){
-			agentDropDown.getItems().add(name);
+			agentDropDown.getItems().add("TURTLE"+name);
 		}
-		agentDropDown.setValue(currentAgentNameProperty.getValue());
+		agentDropDown.setValue("TURTLE"+currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
             	currentAgentNameProperty.setValue(newValue);

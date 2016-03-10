@@ -11,13 +11,16 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class XMLReader {
 	private String file;
 	private Document doc;	
 	private Element rootElem;
+	private Stage window;
 
-	public XMLReader() {
+	public XMLReader(Stage stage) {
+		window = stage;
 		file = chooseFile();
 		readFile();
 	}
@@ -27,7 +30,7 @@ public class XMLReader {
 		fileChooser.setTitle("Open XML File");		
 		fileChooser.getExtensionFilters().addAll(
 		        new ExtensionFilter("XML Files", "*.xml"));		
-		File file = fileChooser.showOpenDialog(null);
+		File file = fileChooser.showOpenDialog(window);
 		String fileName = "";
 		if (file != null) {
 			fileName = file.getPath();

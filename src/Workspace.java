@@ -76,7 +76,7 @@ public class Workspace implements Observer {
 	private void initTurtles(){
 		int numTurtles = Integer.parseInt(myPreferences.getPreference("turtles").toString());
 		for(int i=0; i<numTurtles; i++){
-			((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent("TURTLE"+Integer.toString(i));
+			((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent(Integer.toString(i+1));
 		}
 	}
 	
@@ -93,7 +93,10 @@ public class Workspace implements Observer {
 		HBox viewMenu = new HBox();
 		Button newWorkspaceBtn = new Button(myResources.getString("NEWWORKSPACEBUTTON"));
 		newWorkspaceBtn.setOnMouseClicked(e->openWorkspace());
-		viewMenu.getChildren().add(newWorkspaceBtn);
+		Button savePrefBtn = new Button("Save Preferences");
+		savePrefBtn.setOnMouseClicked(e->savePreferences());
+		viewMenu.getChildren().addAll(newWorkspaceBtn,savePrefBtn);
+		viewMenu.setLayoutX(WINDOW_PREF_OFFSET);
 		for(ViewType type: views){
 			if(type!=ViewType.AGENT){
 				CheckBox item = new CheckBox(type.name());
@@ -103,9 +106,11 @@ public class Workspace implements Observer {
 			}
 		}
 		group.getChildren().addAll(viewMenu);
-		viewMenu.setLayoutX(WINDOW_PREF_OFFSET);
 	}
 	
+	private void savePreferences(){
+		XMLSaver saver = new XMLSaver(myStage,myPreferences);
+	}
 	private void initInterpreters() {
 		Interpreter ip = new Interpreter(controllerMap);
 		((ViewConsole) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
@@ -146,7 +151,7 @@ public class Workspace implements Observer {
 	
 	private void openWorkspace(){
 		Stage newStage = new Stage();
-		XMLReader reader = new XMLReader();
+		XMLReader reader = new XMLReader(newStage);
 		newStage.setScene(new Workspace(newStage,new Preferences(reader.getPreferences())).init());
 		newStage.show();
 	}

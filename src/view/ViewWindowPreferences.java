@@ -32,6 +32,7 @@ public class ViewWindowPreferences extends View{
 
 	public ViewWindowPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
+		this.savedPreferences = savedPreferences;
 		setX(CONSOLEX);
 		setY(CONSOLEY);
 		guiList = new ArrayList<Node>();

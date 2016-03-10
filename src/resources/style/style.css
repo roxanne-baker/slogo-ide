@@ -42,8 +42,7 @@
 }
 
 .view {
-	-fx-border-color: blue;
-	-fx-border-width:3;
+	-fx-border-color: black;
+	-fx-border-width:1;
 	-fx-border-style: solid;
-	-fx-padding: 0;
 }

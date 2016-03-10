@@ -15,6 +15,8 @@ public class Preferences {
 		return preferences.get(prefName);
 	}
 	
-	
+	public Map<String,Object> getPreferenceMap(){
+		return preferences;
+	}
 
 }

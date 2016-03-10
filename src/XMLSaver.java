@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,12 +12,35 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import view.Preferences;
+
 public class XMLSaver {
 	private Document doc;	
 	private Element rootElem;
+	private Stage window;
+	private Preferences preferences;
 	
-	public XMLSaver() {
-		// TODO Auto-generated constructor stub
+	public XMLSaver(Stage stage, Preferences preferences) {
+		this.preferences = preferences;
+		window = stage;
+		String file = chooseFile();
+		saveFile(file);
+	}
+	
+	public String chooseFile(){
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save XML File");		
+		fileChooser.getExtensionFilters().addAll(
+		        new ExtensionFilter("XML Files", "*.xml"));		
+		File file = fileChooser.showSaveDialog(window);
+		String fileName = "";
+		if (file != null) {
+			fileName = file.getPath();
+		}
+		return fileName;
 	}
 	
 	private void saveFile(String filePath){
@@ -28,7 +52,7 @@ public class XMLSaver {
 	        rootElem = doc.createElement("preferences");
 	        doc.appendChild(rootElem);
 	        
-	        //save specific preferences
+	        savePreferences();
 	        
 	        TransformerFactory transformerFactory =
 	                TransformerFactory.newInstance();
@@ -42,6 +66,23 @@ public class XMLSaver {
 		} catch(Exception e){	
 			e.printStackTrace();
 		}			
+	}
+	
+	public void savePreferences(){
+		Map<String,Object> prefMap = preferences.getPreferenceMap();
+		for(String prefName: prefMap.keySet()){
+			if(isSingleElem(preferences.getPreferenceMap().get(prefName))){
+				saveSingleElem(prefName,prefMap.get(prefName));
+			}
+			else{
+				saveListElem(prefName,(List<Object>)prefMap.get(prefName));
+			}
+		}
+	}
+	
+	private boolean isSingleElem(Object obj){
+		System.out.println(obj.toString()+" "+(obj.getClass()==String.class));
+		return obj.getClass()==String.class;
 	}
 	
 	private void saveSingleElem(String tagName, Object value){
