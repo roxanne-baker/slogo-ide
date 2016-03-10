@@ -3,7 +3,6 @@ package commands;
 
 import java.util.List;
 import controller.TurtleController;
-import view.Agent;
 
 public class HideTurtle extends TurtleQueryCommands implements Executable {
 
@@ -12,8 +11,7 @@ public class HideTurtle extends TurtleQueryCommands implements Executable {
 	}
 	
 	public double execute(List<Object> params) {
-//		getTurtleController().setCurrentAgentVisible(false);
-		getTurtleController().changeProperty(((Agent agent) -> agent.setVisible(false)));
+		getTurtleController().setCurrentAgentVisible(false);
 		return 0;
 	}
 	

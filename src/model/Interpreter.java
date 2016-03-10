@@ -287,7 +287,6 @@ public class Interpreter extends Observable {
     
     private void buildExprTree(String text, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (stopBuild(text, commandStack, root)) {
-    		System.out.println("TEXT: "+text);
     		return; 
     	}
     	String first = takeFirst(text); 
@@ -356,9 +355,7 @@ public class Interpreter extends Observable {
 			}
 			// may want to check for turtlequery/turtle command here
         	if (cur.getCommand().getNumParams() == 0) { 
-        		returnResult = cur.getCommand().execute(NO_PARAMS_LIST);
-        		System.out.println("return: "+returnResult);
-        		cur.setValue(returnResult);
+        		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
         		attachNode(cur, commandStack);
         		return;
         	}
@@ -461,6 +458,8 @@ public class Interpreter extends Observable {
 		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
 		commandsMap.put("SetPenSize", new SetPenSize(turtleController));
 		commandsMap.put("Stamp", new Stamp(turtleController));
+		commandsMap.put("ClearStamps",  new ClearStamps(backgroundController));
+		commandsMap.put("Tell", new Tell(turtleController));
 	}
 	
     private void addControlStructureCommands() { 
@@ -471,11 +470,10 @@ public class Interpreter extends Observable {
     	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
     	commandsMap.put("DoTimes", new DoTimes(this, variableController));
-    	commandsMap.put("Tell", new Tell(turtleController));
     }
     
 	private void addTurtleCommands() {
-		commandsMap.put("Forward", new Forward(turtleController, this));
+		commandsMap.put("Forward", new Forward(turtleController));
 		commandsMap.put("Back", new Back(turtleController));
 		commandsMap.put("Left", new Left(turtleController));
 		commandsMap.put("Right", new Right(turtleController));
@@ -488,7 +486,6 @@ public class Interpreter extends Observable {
 		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
 		commandsMap.put("Home", new Home(turtleController));
 		commandsMap.put("ClearScreen", new ClearScreen(turtleController, backgroundController));
-		commandsMap.put("ClearStamps", new ClearStamps(backgroundController));
 	}
 	
 	private void addTurtleQueries() {
