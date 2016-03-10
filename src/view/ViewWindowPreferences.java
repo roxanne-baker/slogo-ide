@@ -44,6 +44,7 @@ public class ViewWindowPreferences extends View{
 		setY(CONSOLEY);
 		guiList = new ArrayList<Node>();
 		windowPreferencesBox = new HBox();
+		windowPreferencesBox.getStyleClass().add("window-menu");
 		setPane(windowPreferencesBox);
 		myInterpreter = null;
 		currentLanguage = savedPreferences.getPreference("language").toString();
@@ -70,15 +71,28 @@ public class ViewWindowPreferences extends View{
 		
 		createLanguagesComboBox();
 		createCommandsFileChooser();
+		createFileSaver();
 
 	}
 	
+	private void createFileSaver() {
+		Button fileSaver = new Button(windowResources.getString("COMMANDSSAVERBUTTON"));
+		fileSaver.setOnAction(evt -> {
+			//TODO Carolyn add code
+		
+		});
+		windowPreferencesBox.getChildren().add(fileSaver);
+
+	}
+
+
 	private void createCommandsFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		Stage stage = new Stage();
-		Button fileButton = new Button(windowResources.getString("COMMANDSBUTTON"));
+		Button fileButton = new Button(windowResources.getString("COMMANDSLOADERBUTTON"));
 		fileButton.setOnAction(evt -> {
 			File file = fileChooser.showOpenDialog(stage);
+			//TODO: Carolyn add Code
 		});
 		windowPreferencesBox.getChildren().add(fileButton);
 	}
