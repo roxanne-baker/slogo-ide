@@ -59,15 +59,12 @@ public class Workspace implements Observer {
 		initControllers();
 		initPalettes();
 		initInterpreters();
-		((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent("Melissa"); //always start with one agent on screen
-
 		myScene = new Scene(pane);
 		myScene.getStylesheets().add("resources/style/style.css");
 		return myScene;
 	}
 	
 	private void initPalettes() {
-		System.out.println("setting up palettes");
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));

@@ -2,7 +2,6 @@ package view;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,16 +46,22 @@ public class ViewPalettes extends View{
 	public Pane getView() {
 		setUpPalettes();
 		setUpImageChooser();
+
 		return viewPane;
 	}
 
 	private void setUpImageChooser() {
 		Stage stage = new Stage();
+		
 		fileButton.setOnAction(evt -> {
 			List<File> fileList = fileChooser.showOpenMultipleDialog(stage);
 			for (File file: fileList){
-				//TODO use reflection here
-				paletteList.get(1).addToPalette(file.getPath(), paletteList.get(1).getPaletteSize());
+				int imagePaletteIndex = 0;
+				for (int i = 0; i < paletteList.size(); i++){
+					if (paletteList.get(i).getPaletteName().equals(myResources.getString("IMAGES")));
+						imagePaletteIndex = i;
+				}
+				paletteList.get(imagePaletteIndex).addToPalette(file.getPath(), paletteList.get(imagePaletteIndex).getPaletteSize());
 			}
 		});	
 		vbox.getChildren().add(fileButton);

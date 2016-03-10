@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.ResourceBundle;
 
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
@@ -26,13 +27,14 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
+	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
 	private HBox allPreferencesBox;
 	private StringProperty currentAgentNameProperty;
-	private static final int PADDING = 10;
-
+	private static final int PADDING = 15;
 	private Pane pane;
+	private ResourceBundle updateResources;
 	
 	public ViewAgentPreferences(ViewType ID) {
 		super(ID);
@@ -42,11 +44,17 @@ public class ViewAgentPreferences extends View{
 		setStyleClass(pane);
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
+		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
+
 	}
 
 	@Override
 	public void update(Observable agent, Object updateType) {
-
+		if (updateType == updateResources.getString("COLORPALETTE") ){
+			updateView();
+		}else if (updateType == updateResources.getString("IMAGEPALETTE")){
+			updateView();
+		}
 		
 	}
 
@@ -58,7 +66,7 @@ public class ViewAgentPreferences extends View{
 	private void updateView() {
 		viewGroup.getChildren().remove(allPreferencesBox);
 		allPreferencesBox = new HBox();
-		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
+		allPreferencesBox.setPadding(new Insets(PADDING,PADDING,PADDING,PADDING));
 		
 		setUpAgentDropDown();
 		

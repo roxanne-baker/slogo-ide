@@ -50,7 +50,6 @@ public class AgentElem implements Observer{
 	}
 	public void updateImageView(){	
 		oldImageView = agentImageView;
-		System.out.println("Updating AgentView");
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myAgent.getImagePath()),myAgent.getSize(),myAgent.getSize(),true,true));
 
 	}
