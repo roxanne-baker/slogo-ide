@@ -12,7 +12,7 @@ public class Stamp extends Command implements Executable {
 		this.turtleController = turtleController;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		turtleController.stampCurrentAgent();
 		return turtleController.getCurrentAgentShapeIndex();
 	}

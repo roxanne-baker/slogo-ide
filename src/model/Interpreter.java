@@ -127,7 +127,7 @@ public class Interpreter extends Observable {
     		c = commandsMap.get(parsedFirst);
     	}
 		if (c.getNumParams() == 0) { 
-			returnResult = c.execute(NO_PARAMS_LIST);
+			returnResult = (double) c.execute(NO_PARAMS_LIST);
 			callBuildTree(cutFirst(text));
 			return;
 		}
@@ -144,18 +144,30 @@ public class Interpreter extends Observable {
     		ParseNode cur = stack.pop();
     		if (cur.allParamsHaveValue()) { 
     			List<Object> params = cur.extractParamsFromNode();
-    			String error = cur.getCommand().checkParamTypes(params);
-    			if (error != null) {
-    				sendError(error);
-    				return;
-    			}
-    			else {
+//    			String error = cur.getCommand().checkParamTypes(params);
+//    			if (error != null) {
+//    				sendError(error);
+//    				return;
+//    			}
+//    			else {
     				result = cur.getCommand().execute(cur.extractParamsFromNode());
     				cur.setValue(result);
-    			}
+//    			}
     		}
     	}
-    	returnResult = (double) result;
+    	if (result instanceof double[]) {
+    		double[] resultArray = (double[]) result;
+    		if (resultArray == null || resultArray.length == 0) {
+    			returnResult = 0;
+    		}
+    		else {
+    			returnResult = resultArray[resultArray.length-1];
+    		}
+    	}
+    	else {
+    		returnResult = (double) result;
+    	}
+ //   	returnResult = (double) result;
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -478,8 +490,8 @@ public class Interpreter extends Observable {
 	
     private void addControlStructureCommands() { 
     	commandsMap.put("Repeat", new Repeat(this));
-    	commandsMap.put("If", new If(this));
-    	commandsMap.put("IfElse", new IfElse(this));
+    	commandsMap.put("If", new If(this, turtleController));
+    	commandsMap.put("IfElse", new IfElse(this, turtleController));
     	commandsMap.put("For", new For(this, variableController));
     	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
@@ -518,7 +530,7 @@ public class Interpreter extends Observable {
 		commandsMap.put("Quotient", new Divide());
 		commandsMap.put("Remainder", new Remainder());
 		commandsMap.put("Minus", new Minus());
-		commandsMap.put("Random", new RandomCommand());
+		commandsMap.put("Random", new RandomCommand(turtleController));
 		commandsMap.put("Sine", new Sine());
 		commandsMap.put("Cosine", new Cosine());
 		commandsMap.put("Tangent", new Tangent());

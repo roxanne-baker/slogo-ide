@@ -22,14 +22,14 @@ public interface IAgentController {
 	void setCurrentAgent(Integer agentName);
 
 	Integer getCurrentAgent();
-	void moveCurrentAgent(double changeX,double changeY);
-	double getCurrentAgentXPosition();
+	void moveCurrentAgent(double[] changeX,double[] changeY);
+	double[] getCurrentAgentXPosition();
 	double getCurrentAgentYPosition();
 
 
 	void setCurrentAgentImage(String imagePath);
 	void setCurrentAgentPenUp(boolean isUp);
-	boolean isCurrentAgentPenUp();
+	double isCurrentAgentPenUp();
 	void setCurrentAgentPenColor(int colorIndex);
 	void setCurrentAgentPenThickness(double thickness);
 	void setCurrentAgentShape(int shapeIndex);

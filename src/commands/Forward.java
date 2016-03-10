@@ -1,8 +1,10 @@
 
 package commands;
 
+import java.util.Arrays;
 import java.util.List;
 import controller.TurtleController;
+import view.Agent;
 
 public class Forward extends TurtleCommand implements Executable {
 
@@ -12,14 +14,24 @@ public class Forward extends TurtleCommand implements Executable {
 		setTurtleController(turtleController);
 	}
 	
-	public double execute(List<Object> params) {
-		double distance = (Double) params.get(0);
-		double orientation = getTurtleController().getCurrentAgentOrientation();
-		double changeX = distance*Math.sin(Math.toRadians(orientation));
-		double changeY = -distance*Math.cos(Math.toRadians(orientation));
+	public Object execute(List<Object> params) {
+		double[] distance = new double[getTurtleController().getActiveAgents().size()];
+		double[] orientation = getTurtleController().getAgentProperties((Agent agent) -> agent.getOrientation());
+		double[] changeX = new double[getTurtleController().getActiveAgents().size()];
+		double[] changeY = new double[getTurtleController().getActiveAgents().size()];
 		
-		getTurtleController().moveCurrentAgent(changeX, changeY);
-	
+		List<Integer> activeAgents = getTurtleController().getActiveAgents();
+		for (int i=0; i<activeAgents.size(); i++) {
+			if (params.get(0) instanceof Double) {
+				distance[i] = (Double) params.get(0);
+			}
+			else {
+				distance[i] = ((double[]) params.get(0))[i];		
+			}
+			changeX[i] = distance[i]*Math.sin(Math.toRadians(orientation[i]));
+			changeY[i] = -distance[i]*Math.cos(Math.toRadians(orientation[i]));	
+		}		
+		getTurtleController().moveCurrentAgent(changeX, changeY);			
 		return distance;
 	}
 }

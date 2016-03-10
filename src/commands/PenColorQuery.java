@@ -11,7 +11,7 @@ public class PenColorQuery extends TurtleQueryCommands implements Executable{
 		super(turtleController);
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		return turtleController.getCurrentAgentColorIndex();
 	}
 }

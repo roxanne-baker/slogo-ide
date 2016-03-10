@@ -11,7 +11,7 @@ public interface Executable {
 	 * This could be a change in the position/color of a 
 	 * particular turtle, the addition of a variable, etc.
 	 **/
-	public double execute(List<Object> params);
+	public Object execute(List<Object> params);
 	
 	/**
 	 * This method will take the user input and determine if there

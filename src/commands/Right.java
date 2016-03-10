@@ -1,8 +1,11 @@
+
 package commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 import controller.TurtleController;
+import view.Agent;
 
 public class Right extends TurtleCommand implements Executable {
 
@@ -10,11 +13,16 @@ public class Right extends TurtleCommand implements Executable {
 		setTurtleController(turtleController);
 		numParams = 1;
 	}
-	
-	public double execute(List<Object> params) {
-		double changeDegrees = (Double) params.get(0) % 360;
-		getTurtleController().changeCurrentAgentOrientation(changeDegrees);
-	
+		
+	public Object execute(List<Object> params) {
+		double[] changeDegrees = new double[getTurtleController().getActiveAgents().size()];
+		if (params.get(0) instanceof Double) {
+			Arrays.fill(changeDegrees, (double) params.get(0));
+		}
+		else {
+			changeDegrees = (double[]) params.get(0);
+		}			
+		getTurtleController().changeTurtleProperty(changeDegrees, (Agent agent, Double degrees) -> agent.changeOrientation(degrees));
 		return changeDegrees;
-	}	
+	}
 }

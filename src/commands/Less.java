@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Less extends Command implements Executable {
@@ -8,15 +9,54 @@ public class Less extends Command implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		if ((Double) params.get(0) < (Double) params.get(1)) {
-			return 1;
+//	public Object execute(List<Object> params) {
+//		if ((Double) params.get(0) < (Double) params.get(1)) {
+//			return 1;
+//		}
+//		else {
+//			return 0;
+//		}
+//	}
+	
+	public Object execute(List<Object> params) {
+		if (params.get(0) instanceof Double && params.get(1) instanceof Double) {
+			System.out.println("SSS: "+params.get(0)+" "+params.get(1));
+			return ((Double) params.get(0) < (Double) params.get(1)) ? 1 : 0;
+		}
+		else if (params.get(1) instanceof Double) {
+			return logicForFirstExprArrayOnly((double[]) params.get(0), (double) params.get(1));
+		}
+		else if (params.get(0) instanceof Double) {
+			return logicForSecondExprArrayOnly((double[]) params.get(1), (double) params.get(0));
 		}
 		else {
-			return 0;
+			return logicForFirstExprAndSecondExprArray((double[]) params.get(0), (double[]) params.get(1));
 		}
 	}
+	
+	private double[] logicForFirstExprAndSecondExprArray(double[] firstExprArray, double[] secondExprArray) {
+		for (int i=0; i<firstExprArray.length; i++) {
+			firstExprArray[i] = firstExprArray[i] < secondExprArray[i] ? 1 : 0;
+		}
+		System.out.println("TTT: "+Arrays.toString(firstExprArray)+" "+Arrays.toString(secondExprArray));
+		return firstExprArray;
+	}
+	
+	private double[] logicForFirstExprArrayOnly(double[] firstExprArray, double secondExprVal) {
+		for (int i=0; i<firstExprArray.length; i++) {
+			firstExprArray[i] = firstExprArray[i] < secondExprVal ? 1 : 0;
+		}
+		System.out.println("UUU: "+Arrays.toString(firstExprArray));
+		return firstExprArray;
+	}
+	
+	private double[] logicForSecondExprArrayOnly(double[] secondExprArray, double firstExprVal) {
+		for (int i=0; i<secondExprArray.length; i++) {
+			secondExprArray[i] = secondExprArray[i] < secondExprArray[i] ? 0 : 1;
+		}
+		System.out.println("VVV: "+Arrays.toString(secondExprArray));
+		return secondExprArray;
+	}	
 	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {

@@ -13,7 +13,7 @@ public class SetBackground extends Command implements Executable {
 		this.colorPickerController = colorPickerController;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		colorPickerController.setColorForBackgroundView(paramToInt(params.get(0)));
 		return paramToInt(params.get(0));
 	}

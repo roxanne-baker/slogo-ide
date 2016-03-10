@@ -9,7 +9,7 @@ public class Pi extends Command implements Executable {
 		numParams = 0;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
 		return Math.PI;
 	}

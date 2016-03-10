@@ -90,8 +90,13 @@ public abstract class Agent extends Observable{
 		setChanged();
 		notifyObservers(myResources.getString("STAMP"));
 	}
-	public boolean isPenUp(){
-		return agentPenUp;
+	public Double isPenUp(){
+		if (isVisible.getValue().TRUE) {
+			return 0.0;
+		}
+		else {
+			return 1.0;
+		}
 	}
 	
 	public void setPenUp(boolean penBool){
@@ -194,8 +199,13 @@ public abstract class Agent extends Observable{
 		notifyObservers(myResources.getString("UPDATE"));
 		
 	}
-	public boolean isVisible(){
-		return isVisible.getValue();
+	public Double isVisible(){
+		if (isVisible.getValue().TRUE) {
+			return 1.0;
+		}
+		else {
+			return 0.0;
+		}
 	}
 	
 	public abstract List<String> getMutableProperties();

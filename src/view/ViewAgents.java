@@ -100,10 +100,10 @@ public class ViewAgents extends View{
 			drawer.stampImage(((Agent) agent).getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 		
 		}else if (updateType == updateResources.getString("MOVE")){
-			if (((Agent) agent).isVisible()) {
+			if (((Agent) agent).isVisible().compareTo(1.0) == 0) {
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());					
 			}
-			if(!((Agent) agent).isPenUp()){
+			if(((Agent) agent).isPenUp().compareTo(0.0) == 0){
 				drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),((Agent) agent).getPenColor(),Integer.parseInt(updateResources.getString(((Agent) agent).getPenStyle()+"DASH")));
 			}
 
@@ -127,7 +127,7 @@ public class ViewAgents extends View{
 		}
 //		}
 		if(updateType == updateResources.getString("VISIBLE")){
-			if (((Agent) agent).isVisible()) {
+			if (((Agent) agent).isVisible().compareTo(1.0) == 0) {
 				drawer.moveImage(((Agent) agent).getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			}
 			else {

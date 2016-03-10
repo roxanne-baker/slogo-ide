@@ -15,7 +15,7 @@ public class DoTimes extends ControlCommand implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		String varLimitExpr = (String) params.get(0);
 		//System.out.println(varLimitExpr);
 		String varName = varLimitExpr.split(" ")[0];

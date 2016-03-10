@@ -8,12 +8,41 @@ public class Divide extends MathCommand implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		double numerator = (Double) params.get(0);
-		double denominator = (Double) params.get(1);
-		return numerator / denominator;
+	public Object execute(List<Object> params) {
+		if (params.get(0) instanceof Double && params.get(1) instanceof Double) {
+			return (Double) params.get(0) - (Double) params.get(1);
+		}
+		else if (params.get(0) instanceof Double) {
+			return differenceForDivisorArrayOnly((double[]) params.get(1), (double) params.get(0));
+		}
+		else if (params.get(1) instanceof Double) {
+			return differenceForDividendArrayOnly((double[]) params.get(0), (double) params.get(1));
+		}
+		else {
+			return differenceForDivisorAndDividendArray((double[]) params.get(0), (double[]) params.get(1));
+		}
 	}
+	
+	private double[] differenceForDivisorAndDividendArray(double[] divisorArray, double[] dividendArray) {
+		for (int i=0; i<divisorArray.length; i++) {
+			divisorArray[i] /= dividendArray[i];
+		}
+		return divisorArray;
+	}
+	
+	private double[] differenceForDivisorArrayOnly(double[] divisorArray, double dividendVal) {
+		for (int i=0; i<divisorArray.length; i++) {
+			divisorArray[i] /= (double) dividendVal;
+		}
+		return divisorArray;
+	}
+	
+	private double[] differenceForDividendArrayOnly(double[] dividendArray, double divisorVal) {
+		for (int i=0; i<dividendArray.length; i++) {
+			dividendArray[i] = divisorVal / dividendArray[i];
+		}
+		return dividendArray;
+	}	
 	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {

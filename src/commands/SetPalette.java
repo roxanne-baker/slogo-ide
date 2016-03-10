@@ -13,7 +13,7 @@ public class SetPalette extends Command implements Executable {
 		this.colorPickerController = colorPickerController;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		colorPickerController.addColor(paramToInt(params.get(0)),
 				paramToInt(params.get(1)), paramToInt(params.get(2)), paramToInt(params.get(3)));
 		return paramToInt(params.get(0));

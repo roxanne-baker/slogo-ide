@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import view.Agent;
 import view.Turtle;
@@ -57,23 +58,19 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 	
 	public void setActiveAgents(List<Integer> activeAgents) {
-		activeAgentList = new ArrayList<>();
-		List<Integer> agentNames = getAgentNames();
-		for (Integer agentID : agentNames) {
-			if (activeAgents.contains(agentID)) {
+		activeAgentList = activeAgents;
+		System.out.println(activeAgentList);
+		for (Integer agentID : activeAgents) {
+			if (!agentMap.containsKey(agentID) ) {
+				addAgent(agentID);
 //				agentMap.get(agentID).setActive(true);
-				activeAgentList.add(agentID);
-				activeAgents.remove(agentID);
+//				activeAgentList.add(agentID);
 			}
 //			else {
 //				agentMap.get(agentID).setActive(false);
 //			}
 		}
-		for (Integer agentToAdd : activeAgents) {
-			addAgent(agentToAdd);
-//			agentMap.get(agentToAdd).setActive(true);
-			activeAgentList.add(agentToAdd);
-		}
+		System.out.println(agentMap);
 	}
 	
 	public List<Integer> getActiveAgents() {
@@ -168,6 +165,36 @@ public class TurtleController extends Controller implements IAgentController{
 		}
 	}
 	
+	public double[] getAgentProperties(Function<Agent, Double> propertyToGet) {
+		double[] allAgentVals = new double[activeAgentList.size()];
+
+		for (int i=0; i < allAgentVals.length; i++) {
+			setCurrentAgent(activeAgentList.get(i));
+			allAgentVals[i] = propertyToGet.apply(agentMap.get(currentAgentNameProperty.getValue()));
+		}
+		return allAgentVals;
+	}
+	
+	public void changeTurtleProperty(double[] changePropertyValues, BiConsumer<Agent, Double> changeProperty) {
+		for (int i=0; i<activeAgentList.size(); i++) {
+			setCurrentAgent(activeAgentList.get(i));
+			changeProperty.accept(agentMap.get(currentAgentNameProperty.getValue()), changePropertyValues[i]);
+		}
+	}
+	
+//	public double[] getCurrentAgentXPosition() {	
+//		double[] allXVals = new double[activeAgentList.size()];
+//		for (int i=0; i< allXVals.length; i++) {
+//			setCurrentAgent(activeAgentList.get(i));
+//			allXVals[i] = agentMap.get(currentAgentNameProperty.getValue()).getXPosition();
+//		}
+//		
+//		return allXVals;
+//	}
+	
+	
+	
+	
 	@Override
 	public void setCurrentAgent(Integer agentName) {
 		currentAgentNameProperty.setValue(agentName);	
@@ -190,7 +217,7 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public boolean isCurrentAgentPenUp() {
+	public double isCurrentAgentPenUp() {
 		return agentMap.get(currentAgentNameProperty.getValue()).isPenUp();
 	}
 
@@ -232,8 +259,14 @@ public class TurtleController extends Controller implements IAgentController{
 		return agentMap.get(currentAgentNameProperty.getValue()).getSize();		
 	}
 	@Override
-	public double getCurrentAgentXPosition() {
-		return agentMap.get(currentAgentNameProperty.getValue()).getXPosition();
+	public double[] getCurrentAgentXPosition() {	
+		double[] allXVals = new double[activeAgentList.size()];
+		for (int i=0; i< allXVals.length; i++) {
+			setCurrentAgent(activeAgentList.get(i));
+			allXVals[i] = agentMap.get(currentAgentNameProperty.getValue()).getXPosition();
+		}
+		
+		return allXVals;
 	}
 	@Override
 	public double getCurrentAgentYPosition() {
@@ -249,10 +282,15 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 	
 	@Override
-	public void moveCurrentAgent(double changeX, double changeY) {
+	public void moveCurrentAgent(double[] changeX, double[] changeY) {
 //		for (Integer agentID : activeAgentList) {
+		System.out.println("ACTIVE AGENTS: "+activeAgentList);
+		for (int i=0; i<changeX.length; i++) {
+			setCurrentAgent(activeAgentList.get(i));
+			agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX[i], changeY[i]);			
+		}
 //			setCurrentAgent(agentID);
-			agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX, changeY);
+//			agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX, changeY);
 //		}
 	}
 	

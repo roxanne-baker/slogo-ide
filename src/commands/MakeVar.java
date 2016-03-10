@@ -16,11 +16,16 @@ public class MakeVar extends Command implements Executable {
 		this.variableController = variableController;
 	}
 	
-	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		// what if expression not a number?  need to account for later
+	public Object execute(List<Object> params) {
 		String name = (String) params.get(0);
-		double valueNum = (double) params.get(1);
+		double valueNum;
+		if (params.get(1) instanceof Double) {
+			valueNum = (double) params.get(1);
+		}
+		else {
+			double[] valueArray = (double[]) params.get(1);
+			valueNum = valueArray[valueArray.length-1];
+		}
 		String value = Double.toString(valueNum);
 		variableController.addVariable(name, value);
 		return valueNum;

@@ -17,7 +17,7 @@ public class For extends Command implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		// WANT TO GET MAX VALUE FOR VARIABLE
 		String variableStartEndIncrement = (String) params.get(0);
 		String[] forLoopCondition = variableStartEndIncrement.split(" ");

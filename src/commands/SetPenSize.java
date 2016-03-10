@@ -12,7 +12,7 @@ public class SetPenSize extends Command implements Executable {
 		this.turtleController = turtleController;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		turtleController.setCurrentAgentPenThickness((double) params.get(0));
 		return (double) params.get(0);
 	}

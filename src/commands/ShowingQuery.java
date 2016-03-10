@@ -3,6 +3,7 @@ package commands;
 import java.util.List;
 
 import controller.TurtleController;
+import view.Agent;
 
 public class ShowingQuery extends TurtleQueryCommands implements Executable{
 	
@@ -11,13 +12,7 @@ public class ShowingQuery extends TurtleQueryCommands implements Executable{
 		numParams = 0;
 	}
 	
-	public double execute(List<Object> params) {
-		// NEED CHECK FOR TURTLE SHOWING
-		if (getTurtleController().isCurrentAgentPenUp()) {
-			return 0;
-		}
-		else {
-			return 1;
-		}
+	public Object execute(List<Object> params) {
+		return getTurtleController().getAgentProperties((Agent agent) -> agent.isVisible());
 	}
 }

@@ -13,7 +13,7 @@ public class ClearStamps extends Command implements Executable {
 		numParams = 0;
 	}
 
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		return backgroundController.clearStamps();
 	}
 

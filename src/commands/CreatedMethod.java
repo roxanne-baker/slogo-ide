@@ -28,7 +28,7 @@ public class CreatedMethod extends Command implements Executable {
 
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		for (int i=0; i<paramNames.length; i++) {
 			variablesController.addVariable(paramNames[i], ""+params.get(i));
 		}
