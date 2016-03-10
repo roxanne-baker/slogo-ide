@@ -28,6 +28,8 @@ import javafx.scene.paint.Color;
  *
  */
 public class ViewAgents extends View{
+	private static final int CONSOLEX = NARROW_WIDTH;
+	private static final int CONSOLEY = MENU_OFFSET;
 	private static final Color DEFAULT_COLOR = Color.WHITE;
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final String WINDOW_PROPERTIES = "windowProperties";
@@ -38,6 +40,7 @@ public class ViewAgents extends View{
 	private StringProperty backgroundColorString = new SimpleStringProperty();
 	private ResourceBundle updateResources;
 	private ResourceBundle windowResources;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private ResourceBundle preferenceResources = ResourceBundle.getBundle("preferencesdefault");
 	private HBox agentViewPreferences;
 	private Pane agentPane;
@@ -52,6 +55,8 @@ public class ViewAgents extends View{
 	
 	public ViewAgents(ViewType ID, Map<String,List<Object>> savedPreferences) {
 		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		isSelectedAgentToggle = false;
 		currentAgentNameProperty = new SimpleStringProperty();
 		agentMap = new HashMap<String,Agent>();
@@ -60,17 +65,17 @@ public class ViewAgents extends View{
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);    
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		
-		agentPane = new Pane();
+		agentPane = getPane();
 		drawer = new Drawer(agentPane);
 
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
-		agentPane.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
-		setStyleClass(agentPane);
 
+		
 		agentViewPreferences = new HBox();
+		agentViewPreferences.getStyleClass().add(cssResources.getString("DISPLAYVIEW"));
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
-		agentPane.getChildren().add(agentViewPreferences);
+		setPane(agentViewPreferences);
 		
 		this.savedPreferences = savedPreferences;
 		//initPreferences(savedPreferences);
@@ -161,8 +166,8 @@ public class ViewAgents extends View{
 		setUpColorPicker();
 		setUpClearButton();
 		setUpSelectAgentToggle();
-		return agentPane;
-
+		//return agentPane;
+		return super.getView();
 	}
 	private void addImageHandler(ImageView img){
 		img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

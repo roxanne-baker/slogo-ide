@@ -1,21 +1,19 @@
 package view;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
-import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-
-public class MethodsView extends View{
+public class ViewMethods extends View{
+	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH+NARROW_WIDTH;
+	private static final int CONSOLEY = MENU_OFFSET;
 	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
-	private Pane pane;
 
-	public MethodsView(ViewType ID, Map<String,List<Object>> savedPreferences){
+	public ViewMethods(ViewType ID, Map<String,List<Object>> savedPreferences){
 		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		init();
 	}
  	
@@ -35,19 +33,11 @@ public class MethodsView extends View{
  			methodViews.getChildren().add(methodView.getTextBox());
  		}
  	}
- 
- 	@Override
- 	public Pane getView() {
- 		return pane;
-  	}
 
 	private void init() {
-		Group group = new Group();
  		methodViews.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
  		ScrollPane sp = new ScrollPane(methodViews);
- 		group.getChildren().add(sp);
- 		pane = new Pane(group);
-		setStyleClass(pane);
+ 		setPane(sp);
 	}
 }
 

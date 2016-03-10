@@ -1,23 +1,21 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-import javafx.scene.Group;
+import java.util.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Interpreter;
 
-public class HistoryView extends View implements Observer{
+public class ViewHistory extends View implements Observer{
+	private static final int CONSOLEX =NARROW_WIDTH+WIDE_WIDTH;
+	private static final int CONSOLEY = MENU_OFFSET;
 	private VBox vb = new VBox(2);
 	private Interpreter interpreter;
-	private Pane pane;
 
-	public HistoryView(ViewType ID, Map<String,List<Object>> savedPreferences){
+	public ViewHistory(ViewType ID, Map<String,List<Object>> savedPreferences){
 		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		init();
-		setStyleClass(pane);
 	}
 	
 	@Override
@@ -41,17 +39,10 @@ public class HistoryView extends View implements Observer{
 		ip.addObserver(this);
 	}
 	
-	
-	@Override
-	public Pane getView() {
-		return pane;
-	}
 
 	private void init() {
-		Group group = new Group();
 		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
 		ScrollPane sp = new ScrollPane(vb);
-		group.getChildren().add(sp);
-		pane = new Pane(group);
+		setPane(sp);
 	}
 }

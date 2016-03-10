@@ -26,9 +26,11 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
+	private static final int CONSOLEX = MENU_OFFSET;
+	private static final int CONSOLEY = 0;
 	private HashMap<String, Agent> agentMap;
 	private Group viewGroup;
-	private HBox allPreferencesBox = new HBox();
+	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
 	private static final int PADDING = 10;
 
@@ -36,10 +38,12 @@ public class ViewAgentPreferences extends View{
 	
 	public ViewAgentPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
 		super(ID, savedPreferences);
-
-		viewGroup = new Group();
-		pane = new Pane(viewGroup);
-		setStyleClass(pane);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
+		//viewGroup = new Group();
+		
+		//pane = new Pane(viewGroup);
+		//setStyleClass(pane);
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
 	}
@@ -53,11 +57,12 @@ public class ViewAgentPreferences extends View{
 	@Override
 	public Pane getView() {
 		updateView();
-		return pane;
+		return super.getView();
 	}
 	private void updateView() {
-		viewGroup.getChildren().remove(allPreferencesBox);
-		allPreferencesBox = new HBox();
+		allPreferencesBox.getChildren().clear();
+		//viewGroup.getChildren().remove(allPreferencesBox);
+		allPreferencesBox = new VBox();
 		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		
 		setUpAgentDropDown();
@@ -78,8 +83,8 @@ public class ViewAgentPreferences extends View{
 			}
 
 		
-
-		viewGroup.getChildren().add(allPreferencesBox);
+		setPane(allPreferencesBox);
+		//viewGroup.getChildren().add(allPreferencesBox);
 	}
 
 	private void setUpAgentDropDown() {

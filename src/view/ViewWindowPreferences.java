@@ -11,20 +11,17 @@ import model.Interpreter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 public class ViewWindowPreferences extends View{
+	private static final int CONSOLEX = 0;
+	private static final int CONSOLEY = 0;
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
 	private static final String DEFAULT_LANGUAGE = "English";
 	private static final double PADDING = 10;
-	private Group viewGroup;
-	private Pane pane;
 	private List<Node> guiList;
 	private String currentLanguage;
 	private HBox windowPreferencesBox;
@@ -34,21 +31,17 @@ public class ViewWindowPreferences extends View{
 
 	public ViewWindowPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
 		super(ID, savedPreferences);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		guiList = new ArrayList<Node>();
-		viewGroup = new Group();
 		windowPreferencesBox = new HBox();
+		setPane(windowPreferencesBox);
 		myInterpreter = null;
 		currentLanguage = DEFAULT_LANGUAGE;
 		languageDropDown = new ComboBox<String>();
 		createView();
-		pane = new Pane(viewGroup);
-		setStyleClass(pane);
 	}
 
-	@Override
-	public Pane getView() {
-		return pane;
-	}
 
 	private void createView() {
 		GuiObjectFactory guiFactory = new GuiObjectFactory();
@@ -66,8 +59,7 @@ public class ViewWindowPreferences extends View{
 		}
 		
 		createLanguagesComboBox();
-		
-		viewGroup.getChildren().add(windowPreferencesBox);
+
 	}
 	
 	private void createLanguagesComboBox() {

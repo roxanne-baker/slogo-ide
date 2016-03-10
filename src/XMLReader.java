@@ -1,6 +1,5 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class XMLReader {
+	private String[] xmlElems = new String[]{"background","images","turtles","language"};
 	private String file;
 	private Document doc;	
 	private Element rootElem;
@@ -20,6 +20,7 @@ public class XMLReader {
 	public XMLReader() {
 		file = chooseFile();
 		readFile();
+		Map<String,Object> prefMap = getPreferences();
 	}
 
 	public String chooseFile(){
@@ -57,8 +58,15 @@ public class XMLReader {
 		}			
 	}
 	
+	private boolean isSingleElem(String tagName){	
+		int length = rootElem.getElementsByTagName(tagName).item(0).getChildNodes().getLength();
+		return length==1;
+	}
+	
 	private String getNodeValue(Element nodeElem, String tagName){ 
 		return nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim();
+
+		//return Arrays.asList(new String[]{nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim()});
 	}
 	
 	private List<String> getListElem(Element nodeElem,String tagName){
@@ -66,15 +74,29 @@ public class XMLReader {
 		Element parentElem = (Element) rootElem.getElementsByTagName(tagName).item(0);
 		NodeList elemList = parentElem.getElementsByTagName("row");
 		for(int i=0; i<elemList.getLength(); i++){
-			String val = elemList.item(i).getNodeValue().trim();
+			String val = elemList.item(i).getTextContent().trim();
 			elems.add(val);
 		}
 		return elems;
 	}
 	
-	public Color getBackground(){
-		return Color.valueOf(getNodeValue(rootElem,"background"));
+	public Map<String,Object> getPreferences(){
+		Map<String,Object> preferences = new HashMap<String,Object>();
+		for(String tagName: xmlElems){
+			if(isSingleElem(tagName)){
+				preferences.put(tagName, getNodeValue(rootElem,tagName));
+			}
+			else{
+				preferences.put(tagName, getListElem(rootElem,tagName));
+
+			}
+		}
+		return preferences;
 	}
+	
+//	public Color getBackground(){
+//		return Color.valueOf(getNodeValue(rootElem,"background"));
+//	}
 	
 	public List<String> getImageList(){
 		ArrayList<String> images = new ArrayList<String>();
@@ -87,13 +109,13 @@ public class XMLReader {
 		return images;
 	}
 	
-	public int getTurtleCount(){
-		return Integer.parseInt(getNodeValue(rootElem,"turtles"));
-	}
-	
-	public String getLanguage(){
-		return getNodeValue(rootElem,"language");
-	}
+//	public int getTurtleCount(){
+//		return Integer.parseInt(getNodeValue(rootElem,"turtles"));
+//	}
+//	
+//	public String getLanguage(){
+//		return getNodeValue(rootElem,"language");
+//	}
 }
 	
 

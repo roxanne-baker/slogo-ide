@@ -1,29 +1,29 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class ViewPalettes extends View{
+	private static final int CONSOLEX = 0;
+	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final String PALETTE_PROPERTIES = "Palettes";
 	private List<Palette> paletteList;
 	private ResourceBundle myResources;
-	private Pane viewPane;
 	private VBox vbox;
 
 	public ViewPalettes(ViewType ID, Map<String,List<Object>> savedPreferences) {
 		super(ID, savedPreferences);
-		viewPane = new Pane();
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		paletteList = new ArrayList<Palette>();
 		myResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 		vbox = new VBox();
-		viewPane.getChildren().add(vbox);
+		setPane(vbox);
 		setUpPalettes();
 	}
 	
@@ -35,11 +35,6 @@ public class ViewPalettes extends View{
 		}
 		setUpPalettes();
 		
-	}
-	@Override
-	public Pane getView() {
-		
-		return viewPane;
 	}
 
 	private void setUpPalettes() {

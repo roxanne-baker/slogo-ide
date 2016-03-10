@@ -3,6 +3,7 @@
     	-fx-spacing: 10;
     	-fx-alignment: center;
 }
+
 .code {
 	-fx-font-family: "Andale Mono";
 }
@@ -28,7 +29,6 @@
 	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,2,2 );
 }
 
-
 .combo-box {
 	-fx-font-family: "Andale Mono";
    	-fx-font-size: 1em;
@@ -42,9 +42,8 @@
 }
 
 .view {
-	-fx-background-color: #FFFFFF;
-	-fx-border-color: #43609c;
-	-fx-border-width: 2px;
+	-fx-border-color: blue;
+	-fx-border-width:3;
 	-fx-border-style: solid;
-	-fx-padding: 10;
+	-fx-padding: 0;
 }

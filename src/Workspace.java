@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
@@ -18,9 +19,9 @@ import view.View;
 import view.ViewAgents;
 import view.ViewPalettes;
 import view.ViewType;
-import view.ConsoleView;
-import view.HistoryView;
-import view.VariablesView;
+import view.ViewConsole;
+import view.ViewHistory;
+import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
@@ -46,10 +47,11 @@ public class Workspace implements Observer {
 	private Stage myStage;
 	private ResourceBundle myResources = ResourceBundle.getBundle("windowProperties");
 	private Map<String,List<Object>> savedPreferences = new HashMap<String,List<Object>>();
-	
+	private Map<String,Object> info;
 	public Workspace(Stage stage){
 		myStage = stage;
-		//pane.setLayoutY();
+		XMLReader r = new XMLReader();
+		info = r.getPreferences();
 	}
 	
 	public Scene init(){
@@ -68,7 +70,6 @@ public class Workspace implements Observer {
 
 		((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
-		
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
 
 		
@@ -93,8 +94,8 @@ public class Workspace implements Observer {
 	
 	private void initInterpreters() {
 		Interpreter ip = new Interpreter(controllerMap);
-		((ConsoleView) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
-		((HistoryView) viewMap.get(ViewType.HISTORY)).setInterpreter(ip);
+		((ViewConsole) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
+		((ViewHistory) viewMap.get(ViewType.HISTORY)).setInterpreter(ip);
 		((ViewWindowPreferences) viewMap.get(ViewType.WINDOWPREFERENCES)).setInterpreter(ip);
 	}
 
@@ -109,14 +110,18 @@ public class Workspace implements Observer {
 	private void initViews(){
 		ViewFactory viewFactory = new ViewFactory(savedPreferences);
 		for(ViewType type: views){
+			System.out.println(type);
 			View view = viewFactory.createView(type);
 			if(type==ViewType.VARIABLES){
-				((VariablesView)view).addObserver(this);
+				((ViewVariables)view).addObserver(this);
 			}
 			if(type==ViewType.CONSOLE){
-				((ConsoleView)view).setHistoryView((HistoryView)viewMap.get(ViewType.HISTORY));
+				((ViewConsole)view).setHistoryView((ViewHistory)viewMap.get(ViewType.HISTORY));
 			}
-			int[] coords = getViewCoords(type);
+			if(type==ViewType.AGENT){
+				((ViewAgents)view).setBackgroundColor(Color.valueOf(info.get("background").toString()));
+			}
+			int[] coords = new int[]{view.getX(),view.getY()};
 			viewMap.put(type,view);
 			Pane viewGroup = view.getView();
 			viewGroup.setLayoutX(coords[0]);
@@ -140,36 +145,36 @@ public class Workspace implements Observer {
 		}
 	}
 	
-	private int[] getViewCoords(ViewType type){
-		int[] coords = new int[2];
-		switch(type){
-		case AGENT:
-			coords = new int[]{COORD0,COORD0+MENU_OFFSET};
-			break;
-		case CONSOLE:
-			coords = new int[]{COORD0,COORD1+MENU_OFFSET};
-			break;
-		case HISTORY:
-			coords = new int[]{COORD1,COORD0+MENU_OFFSET};
-			break;
-		case METHODS:
-			coords = new int[]{COORD2,COORD0+MENU_OFFSET};
-			break;
-		case VARIABLES:
-			coords = new int[]{COORD2,COORD1+MENU_OFFSET};
-			break;
-		case PREFERENCES:
-			coords = new int[]{COORD0,COORD2+MENU_OFFSET};
-			break;
-		case WINDOWPREFERENCES:
-			coords = new int[]{COORD0,COORD0};
-			break;
-		case PALETTES:
-			coords = new int[]{COORD2+View.NARROW_WIDTH,COORD0+MENU_OFFSET};
-			break;
-		}
-		return coords;
-	}
+//	private int[] getViewCoords(ViewType type){
+//		int[] coords = new int[2];
+//		switch(type){
+//		case AGENT:
+//			coords = new int[]{COORD0,COORD0+MENU_OFFSET};
+//			break;
+//		case CONSOLE:
+//			coords = new int[]{COORD0,COORD1+MENU_OFFSET};
+//			break;
+//		case HISTORY:
+//			coords = new int[]{COORD1,COORD0+MENU_OFFSET};
+//			break;
+//		case METHODS:
+//			coords = new int[]{COORD2,COORD0+MENU_OFFSET};
+//			break;
+//		case VARIABLES:
+//			coords = new int[]{COORD2,COORD1+MENU_OFFSET};
+//			break;
+//		case PREFERENCES:
+//			coords = new int[]{COORD0,COORD2+MENU_OFFSET};
+//			break;
+//		case WINDOWPREFERENCES:
+//			coords = new int[]{COORD0,COORD0};
+//			break;
+//		case PALETTES:
+//			coords = new int[]{COORD2+View.NARROW_WIDTH,COORD0+MENU_OFFSET};
+//			break;
+//		}
+//		return coords;
+//	}
 	
 	private void initControllers(){
 		ControllerFactory controllerFactory = new ControllerFactory(modelMap,viewMap);
@@ -204,7 +209,7 @@ public class Workspace implements Observer {
 	private void displayView(View view){
 		Pane viewGroup = view.getView();
 		if(!group.getChildren().contains(viewGroup)){
-			int[] coords = getViewCoords(view.getType());
+			int[] coords = new int[]{view.getX(),view.getY()};//getViewCoords(view.getType());
 			viewGroup.setLayoutX(coords[0]);
 			viewGroup.setLayoutY(coords[1]);
 			group.getChildren().add(viewGroup);

@@ -1,6 +1,6 @@
 package controller;
 import view.MethodElem;
-import view.MethodsView;
+import view.ViewMethods;
 import view.VariableElem;
 import java.util.*;
 
@@ -10,9 +10,9 @@ import model.MethodModel;
 
 public class MethodsController extends Controller implements Observer {
 	private MethodModel model;
-	private MethodsView view;
+	private ViewMethods view;
 	
-	public MethodsController(MethodModel model, MethodsView view) {
+	public MethodsController(MethodModel model, ViewMethods view) {
 		this.model = model;
 		this.view = view;
 	}

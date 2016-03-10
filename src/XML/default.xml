@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <preferences>
-	<background></background>
+	<background>#cc3333</background>
 	<images>
-		<row></row>
+		<row>turtle.png</row>
+		<row>dot.png</row>
 	</images>
-	<turtles></turtles>
-	<language></language>
+	<turtles>1</turtles>
+	<language>English</language>
 </preferences>
