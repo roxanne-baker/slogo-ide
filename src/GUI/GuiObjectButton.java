@@ -21,7 +21,7 @@ public class GuiObjectButton extends GuiObject{
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		button = new Button(getResourceString().getString(buttonName));
+		button = new Button(getResourceBundle().getString(buttonName));
 		button.setOnAction(evt -> curBool = onAction);
 		return button;
 	}

@@ -34,7 +34,7 @@ public class GuiObjectColorPicker extends GuiObject{
                 setValueFunction.accept(getObservable(), colorPicker.getValue());    
             }
         });
-        colorPickerLabel = new Label(getResourceString().getString(getObjectName()+"LABEL"));
+        colorPickerLabel = new Label(getResourceBundle().getString(getObjectName()+"LABEL"));
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(colorPickerLabel,colorPicker);
 		vbox.setSpacing(5);

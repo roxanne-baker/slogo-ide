@@ -1,4 +1,5 @@
 package view;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +19,21 @@ public class CustomImagePalette extends Palette{
 
 	@Override
 	public Node getPaletteObjectView(int index) {
-		ImageView imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream((String) getPaletteObject(index)),SIZE,SIZE,true,true));
+		String imagePath = (String) getPaletteObject(index);
+		File f = new File("images/"+ imagePath);
+		ImageView imageView = null;
+		if (f.isFile()){
+			imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),SIZE,SIZE,true,true));
+		}else{
+			File imageFile = new File((String) getPaletteObject(index));
+			if (imageFile.isFile()){
+				imageView = new ImageView(new Image(imageFile.toURI().toString(),SIZE,SIZE,true,true));
+			}else {
+				//TODO Throw Image not found error
+			}
+			
+		}
+			
 		return imageView;
 	}
 

@@ -42,10 +42,7 @@ public class TurtleController extends Controller implements IAgentController{
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
 		
-		addAgent("Melissa"); //always start with one agent on screen
 		
-
-
 	}
 	
 	@Override
@@ -209,12 +206,12 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public void setCurrentAgentPenColor(int colorIndex) {
+	public void setCurrentAgentPenColorIndex(int colorIndex) {
 		agentMap.get(currentAgentNameProperty.getValue()).setPenColorIndex(colorIndex);
 		
 	}
 	@Override
-	public int getCurrentAgentColorIndex() {
+	public int getCurrentAgentPenColorIndex() {
 		return agentMap.get(currentAgentNameProperty.getValue()).getPenColorIndex();
 	}
 
@@ -226,7 +223,7 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public void setCurrentAgentShapeIndex(int shapeIndex) {
+	public void setCurrentAgentShapeIndex(int shapeIndex) { //actually images
 		agentMap.get(currentAgentNameProperty.getValue()).setCurrentImageIndex(shapeIndex);
 		
 	}

@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
+import view.CustomColor;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.View;
@@ -54,19 +55,19 @@ public class Workspace implements Observer {
 	public Scene init(){
 		initModels();
 		initViews();
-		initWindowMenu();
+		initWindowMenu();	
 		initControllers();
-		initInterpreters();
 		initPalettes();
+		initInterpreters();
+		((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent("Melissa"); //always start with one agent on screen
+
 		myScene = new Scene(pane);
 		myScene.getStylesheets().add("resources/style/style.css");
 		return myScene;
 	}
 	
 	private void initPalettes() {
-
-		//((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
-		//((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
+		System.out.println("setting up palettes");
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));

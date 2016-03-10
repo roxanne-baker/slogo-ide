@@ -40,8 +40,6 @@ public class ViewAgents extends View{
 	private HashMap<ImageView,Agent> imageAgentMap;
 	private StringProperty currentAgentNameProperty;
 	protected HashMap<String, Agent> agentMap;
-	private CustomImagePalette imagePalette;
-	private CustomColorPalette colorPalette;
 
 	
 	public ViewAgents(ViewType ID) {
@@ -199,12 +197,6 @@ public class ViewAgents extends View{
 	public void updateAgentMap(HashMap<String, Agent> newAgentMap) {
 		agentMap = newAgentMap;
 		
-	}
-	public void setColorPalette(CustomColorPalette customColorPalette) {
-		colorPalette = customColorPalette;
-	}
-	public void setImagePalette(CustomImagePalette customImagePalette) {
-		imagePalette = customImagePalette;
 	}
 
 	

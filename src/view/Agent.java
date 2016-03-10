@@ -56,6 +56,7 @@ public abstract class Agent extends Observable{
 		agentView = new AgentElem(this);
 		this.addObserver(agentView);
 		
+		
 	}
 	public double getXPosition(){
 		return agentXPosition.doubleValue();
@@ -116,7 +117,7 @@ public abstract class Agent extends Observable{
 	public void setImagePath(String imagePath){
 		agentImagePath.setValue(imagePath);
 		agentView.updateImageView();
-
+		System.out.println("updating Agent Display View");
 		setChanged();
 		notifyObservers(myResources.getString("IMAGEVIEW"));
 
@@ -190,6 +191,7 @@ public abstract class Agent extends Observable{
 
 	public void setCurrentImageIndex(int imageIndex){
 		currentImageIndex = imageIndex;
+		System.out.println(currentImageIndex);
 		setImagePath((String) myImagePalette.getPaletteObject(currentImageIndex));
 
 	}

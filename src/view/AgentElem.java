@@ -15,7 +15,6 @@ public class AgentElem implements Observer{
 	private ResourceBundle myResources;
 	private Color penColor;
 	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
-
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	public AgentElem(Agent agent){
 		myAgent = agent;
@@ -51,6 +50,7 @@ public class AgentElem implements Observer{
 	}
 	public void updateImageView(){	
 		oldImageView = agentImageView;
+		System.out.println("Updating AgentView");
 		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myAgent.getImagePath()),myAgent.getSize(),myAgent.getSize(),true,true));
 
 	}

@@ -32,8 +32,13 @@ public abstract class Palette extends Controller{
 		return paletteObjectList;
 	}
 	public Group getPaletteViewGroup(){
+		paletteGroup.getChildren().removeAll();
+		updateViewGroup();
+		return paletteGroup;
+	}
+	private void updateViewGroup() {
 		HBox hbox = new HBox();
-		for (int index = 0; index < getPaletteList().size(); index++){
+		for (int index = 0; index < getPaletteSize(); index++){
 			VBox elemBox = new VBox();
 			elemBox.setAlignment(Pos.CENTER);
 			Node objectView = getPaletteObjectView(index);
@@ -41,14 +46,24 @@ public abstract class Palette extends Controller{
 			elemBox.getChildren().addAll(objectView,indexLabel);
 			hbox.getChildren().add(elemBox);
 		}
+
 		paletteGroup.getChildren().add(hbox);
-		return paletteGroup;
 	}
 	
 	public abstract Node getPaletteObjectView(int index);
 	
 	public void addToPalette(Object obj, int index){
-		paletteObjectList.set(index, obj);
+		if (index >= paletteObjectList.size()){ //add new object at next available spot
+			paletteObjectList.add(obj);
+			
+		}else if (index <0){
+			//throw error
+		}
+		else{ //replace already existing object
+			paletteObjectList.set(index, obj);
+
+		}
+		updateViewGroup();
 	}
 	public void removeFromPalette(int index){
 		paletteObjectList.remove(index);
@@ -63,6 +78,9 @@ public abstract class Palette extends Controller{
 			}
 			
 		}
+	public int getPaletteSize() {
+		return paletteObjectList.size();
+	}
 
 
 }
