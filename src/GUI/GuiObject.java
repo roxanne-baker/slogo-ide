@@ -23,7 +23,7 @@ public abstract class GuiObject {
 		return objectVisibility;
 	}
 
-	public ResourceBundle getResourceString(){
+	public ResourceBundle getResourceBundle(){
 		return myResources;
 	}
 
@@ -33,8 +33,6 @@ public abstract class GuiObject {
 	
 	public abstract Object createObjectAndReturnObject();
 		
-	public abstract boolean isNewSelected();
-	
-	public abstract void setIsNewSelection(boolean b);
+
 	
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<preferences>
+	<background>#FFFFFF</background>
+	<colors>
+		<row>red</row>
+		<row>orange</row>
+		<row>yellow</row>
+		<row>green</row>
+		<row>blue</row>
+		<row>purple</row>
+	</colors>
+	<images>
+		<row>turtle.png</row>
+		<row>dot.png</row>
+	</images>
+	<turtles>2</turtles>
+	<language>English</language>
+</preferences>

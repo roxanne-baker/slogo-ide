@@ -1,27 +1,35 @@
 package view;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Interpreter;
 
-public class ConsoleView extends View {
+public class ViewConsole extends View {
+	private static final int CONSOLEX = NARROW_WIDTH;
+	private static final int CONSOLEY = WIDE_WIDTH+MENU_OFFSET;
 	private static final String BUTTON_LABEL_PATH = "windowProperties";
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
-	private HistoryView historyView;
+	private ViewHistory historyView;
 	private Interpreter interpreter;
 	private ResourceBundle buttonResources;
 	private ResourceBundle cssResources;
 	Pane pane;
 	
-	public ConsoleView(ViewType ID, HistoryView history) {
-		super(ID);
-		historyView = history;
+	public ViewConsole(ViewType ID, Preferences savedPreferences) {
+		super(ID, savedPreferences);
 		buttonResources = ResourceBundle.getBundle(BUTTON_LABEL_PATH);
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
+		setX(CONSOLEX);
+		setY(CONSOLEY);
 		init();
+	}
+	
+	public void setHistoryView(ViewHistory hv){
+		historyView = hv;
 	}
 	
 	@Override
@@ -33,16 +41,17 @@ public class ConsoleView extends View {
 		interpreter = ip; 
 	}
 
-	@Override
-	public Pane getView() {
-		return pane;
-	}
-
 	private void init() {
-		Group group = new Group();
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
 		console.getStyleClass().add(cssResources.getString("CODE"));
+		HBox buttons = initButtons(console);
+		vb.getChildren().addAll(console,buttons);
+		vb.setPrefSize(View.WIDE_WIDTH, View.NARROW_WIDTH);
+		setPane(vb);
+	}
+
+	private HBox initButtons(TextArea console) {
 		Button runBtn = new Button(buttonResources.getString("RUNBUTTON"));
 		runBtn.setOnMouseClicked(e->{
 			HistoryElem hist = new HistoryElem(console.getText(), historyView);
@@ -55,11 +64,7 @@ public class ConsoleView extends View {
 		HBox buttons = new HBox();
 		buttons.getStyleClass().add(cssResources.getString("HBOX"));
 		buttons.getChildren().addAll(runBtn,clearBtn);
-		vb.getChildren().addAll(console,buttons);
-		vb.setPrefSize(View.WIDE_WIDTH, View.NARROW_WIDTH);
-		group.getChildren().add(vb);
-		pane = new Pane(group);
-		setStyleClass(pane);
+		return buttons;
 	}
 
 }

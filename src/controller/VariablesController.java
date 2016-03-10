@@ -1,6 +1,6 @@
 package controller;
 import view.VariableElem;
-import view.VariablesView;
+import view.ViewVariables;
 import java.util.*;
 
 import model.VariableModel;
@@ -8,9 +8,9 @@ import model.VariableModel;
 
 public class VariablesController extends Controller implements Observer {
 	private VariableModel model;
-	private VariablesView view;
+	private ViewVariables view;
 	
-	public VariablesController(VariableModel model, VariablesView view) {
+	public VariablesController(VariableModel model, ViewVariables view) {
 		this.model = model;
 		this.view = view;
 	}

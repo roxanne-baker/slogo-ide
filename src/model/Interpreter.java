@@ -13,6 +13,7 @@ import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
+import view.ViewType;
 import commands.ArcTangent;
 import commands.Back;
 import commands.ClearScreen;
@@ -77,11 +78,10 @@ public class Interpreter extends Observable {
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
 	
-	public Interpreter(HashMap<String,Controller> controllers) {
-
-		turtleController = (TurtleController) controllers.get(turtleControllerName); 
-		variableController = (VariablesController) controllers.get(variableControllerName);
-		methodController = (MethodsController) controllers.get(methodControllerName);
+	public Interpreter(Map<ViewType, Controller> controllerMap) {
+		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
+		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
+		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
 		initializeCommandsMap();
 		initializeLangs();
 	}
