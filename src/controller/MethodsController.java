@@ -1,7 +1,7 @@
 package controller;
+
 import view.MethodElem;
 import view.ViewMethods;
-import view.VariableElem;
 import java.util.*;
 
 import commands.CreatedMethod;

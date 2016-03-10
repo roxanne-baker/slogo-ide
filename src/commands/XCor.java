@@ -8,6 +8,7 @@ public class XCor extends TurtleQueryCommands implements Executable{
 
 	public XCor(TurtleController turtleController) {
 		super(turtleController);
+		numParams = 0; 
 	}
 	
 	public double execute(List<Object> params) {

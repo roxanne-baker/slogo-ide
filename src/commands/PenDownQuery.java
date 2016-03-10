@@ -8,6 +8,7 @@ public class PenDownQuery extends TurtleQueryCommands implements Executable{
 	
 	public PenDownQuery(TurtleController turtleController) {
 		super(turtleController);
+		numParams = 0; 
 	}
 	
 	public double execute(List<Object> params) {
