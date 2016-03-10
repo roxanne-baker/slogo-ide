@@ -1,4 +1,4 @@
-package view;
+package GUI;
 
 import java.util.Observable;
 import java.util.function.BiConsumer;
@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import view.Agent;
 
 public class GuiObjectSlider extends GuiObject{
 	private static final double PADDING = 10;

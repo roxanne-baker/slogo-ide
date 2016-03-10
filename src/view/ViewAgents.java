@@ -46,8 +46,8 @@ public class ViewAgents extends View{
 	private ColorPicker colorPicker;
 
 	
-	public ViewAgents(String id) {
-		super(id);
+	public ViewAgents(ViewType ID) {
+		super(ID);
 		backgroundColor = DEFAULT_COLOR;
 		isSelectedAgentToggle = false;
 		currentAgentNameProperty = new SimpleIntegerProperty();
@@ -67,6 +67,9 @@ public class ViewAgents extends View{
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		agentPane.getChildren().add(agentViewPreferences);
+		setUpColorPicker();
+		setUpClearButton();
+		setUpSelectAgentToggle();
 		
 
 	}
@@ -143,9 +146,6 @@ public class ViewAgents extends View{
 			
 	@Override
 	public Pane getView() {
-		setUpColorPicker();
-		setUpClearButton();
-		setUpSelectAgentToggle();
 		return agentPane;
 
 	}

@@ -1,4 +1,4 @@
-package view;
+package GUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import view.Agent;
 
 public class GuiObjectRadioButton extends GuiObject{
 	private String initialToggle;

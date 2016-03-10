@@ -9,9 +9,9 @@ public class TurtleTester extends Application{
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		ViewAgents agentView = new ViewAgents("TurtleView");
+		ViewAgents agentView = new ViewAgents(ViewType.AGENT);
 
-		ViewAgentPreferences prefView= new ViewAgentPreferences("PrefView");
+		ViewAgentPreferences prefView= new ViewAgentPreferences(ViewType.PREFERENCES);
 		TurtleController tTracker = new TurtleController(prefView, agentView);
 		tTracker.addAgent(1);
 		System.out.println(tTracker.getCurrentAgentName());

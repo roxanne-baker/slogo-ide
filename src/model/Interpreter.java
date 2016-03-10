@@ -14,6 +14,7 @@ import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
+import view.ViewType;
 import commands.ArcTangent;
 import commands.Back;
 import commands.ClearScreen;
@@ -81,12 +82,14 @@ public class Interpreter extends Observable {
 	private String errorMessage = new String();
 	private double returnResult; 
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
+	private final char OPEN_BRACKET = '[';
+	private final char CLOSED_BRACKET = ']';
 	
-	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariablesController) controllers.get("Variables");
-		backgroundController = (BackgroundController) controllers.get("ColorPicker");
-		methodController = (MethodsController) controllers.get("Methods");
+	public Interpreter(HashMap<ViewType,Controller> controllers) {
+		turtleController = (TurtleController) controllers.get(ViewType.AGENT); 
+		variableController = (VariablesController) controllers.get(ViewType.VARIABLES);
+		backgroundController = (BackgroundController) controllers.get(ViewType.BACKGROUND);
+		methodController = (MethodsController) controllers.get(ViewType.METHODS);
 		initializeCommandsMap();
 		initializeLangs();
 	}
@@ -122,12 +125,12 @@ public class Interpreter extends Observable {
     	}
     	else { 
     		c = commandsMap.get(parsedFirst);
-    		if (c.getNumParams() == 0) { 
-    			c.execute(NO_PARAMS_LIST);
-    			callBuildTree(cutFirst(text));
-    			return;
-    		}
     	}
+		if (c.getNumParams() == 0) { 
+			returnResult = c.execute(NO_PARAMS_LIST);
+			callBuildTree(cutFirst(text));
+			return;
+		}
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
@@ -175,11 +178,12 @@ public class Interpreter extends Observable {
     
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
-    		System.out.println(wholeText);
     		if (!wholeText.equals("")) { 
-    			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
+    			if (!parsedFirst.equals("Constant")) { 
     				processTree(root);
-    				callBuildTree(wholeText);
+    				if (commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText))) {
+        				callBuildTree(wholeText);
+    				}
     			}
     			else if (parsedFirst.equals("Constant") || parsedFirst.equals("Variable")){ 
     				sendError("Too many parameters!");
@@ -327,7 +331,6 @@ public class Interpreter extends Observable {
 //        		commandStack.push(cur);
 //    		}
     	} 
-    	System.out.println(cutFirst(text));
 		buildExprTree(cutFirst(text), commandStack, root); 
     }
     
@@ -392,22 +395,33 @@ public class Interpreter extends Observable {
     
     private int endParenIndex(String s) {
     	int lastClosed = 0;
+    	//int lastOpen = 0; 
     	int openCount = 0;
     	int closedCount = 0;
-    	for (int i=0; i<s.length();i++) { 
-    		if (s.charAt(i) == '[' && i < s.indexOf(']')) { 
+    	for (int i=0; i<s.length();i++) {
+    		// maybe  && i < s.indexOf(']')
+    		if (s.charAt(i) == OPEN_BRACKET) { 
     			openCount++;
-    		}
-    	}
-    	for (int i=0; i<s.length();i++) { 
-    		if (s.charAt(i) == ']') { 
+    			//lastOpen = i; 
+    		} else if (s.charAt(i) == CLOSED_BRACKET) { 
     			lastClosed = i; 
-    			closedCount++;
-    			if (closedCount == openCount) { 
+    			closedCount++; 
+    			String between = s.substring(0, lastClosed);
+    			if ((between.indexOf(OPEN_BRACKET) == -1 && between.indexOf(CLOSED_BRACKET) == -1) ||
+    					openCount == closedCount) { 
     				break;
     			}
     		}
     	}
+//    	for (int i=0; i<s.length();i++) { 
+//    		if (s.charAt(i) == ']') { 
+//    			lastClosed = i; 
+//    			closedCount++;
+//    			if (closedCount == openCount) { 
+//    				break;
+//    			}
+//    		}
+//    	}
     	return lastClosed; 
     }
 	

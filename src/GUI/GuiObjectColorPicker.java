@@ -1,11 +1,7 @@
-package view;
-import java.util.List;
+package GUI;
 import java.util.Observable;
 import java.util.function.BiConsumer;
 
-import GUI.GuiObject;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,19 +9,16 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import view.Agent;
 
 
-public class GuiObjectColorPicker extends GuiObject {
+public class GuiObjectColorPicker extends GuiObject{
 	
 	private static final double PADDING = 10;
 	private ColorPicker colorPicker;
 	private BiConsumer<Observable,Color> setValueFunction;
 	private Color initialColor;
 	private Label colorPickerLabel;
-	//private Color mostRecentColor = Color.BLACK;
-//	private ObservableValue<CustomColor> mostRecentColor;
-//	private List<CustomColor> customColors;
-	
 	public GuiObjectColorPicker(String name, String resourceBundle,
 			Agent agent, Color color, BiConsumer<Observable,Color> myFunction) {
 		super(name, resourceBundle, agent);
@@ -36,6 +29,11 @@ public class GuiObjectColorPicker extends GuiObject {
 	@Override
 	public Object createObjectAndReturnObject() {
 		colorPicker = new ColorPicker(initialColor);
+        colorPicker.setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                setValueFunction.accept(getObservable(), colorPicker.getValue());    
+            }
+        });
         colorPickerLabel = new Label(getResourceString().getString(getObjectName()+"LABEL"));
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(colorPickerLabel,colorPicker);
@@ -55,9 +53,5 @@ public class GuiObjectColorPicker extends GuiObject {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public List<Color> getCustomColors() {
-		return this.colorPicker.getCustomColors();
-	}
-	
+
 }

@@ -15,29 +15,31 @@ import view.MethodsView;
 import view.VariablesView;
 import view.View;
 import view.ViewAgents;
+import view.ViewType;
 import view.ViewAgentPreferences;
 
 public class ControllerFactory {
-	private static HashMap<String,Model> allModels;
-	private static HashMap<String,View> allViews;
+	private static HashMap<ViewType,Model> allModels;
+	private static HashMap<ViewType,View> allViews;
 	
-	public ControllerFactory(HashMap<String,Model> models,HashMap<String,View> views){
+	public ControllerFactory(HashMap<ViewType,Model> models,HashMap<ViewType,View> views){
 		allModels = models;
 		allViews = views;
 	}
 	
-	public Controller createController(String ID){
+	public Controller createController(ViewType ID){
 		Model model = allModels.get(ID);
 		View view = allViews.get(ID);
 		switch(ID){
-		case "Variables":
+		case VARIABLES:
 			return new VariablesController((VariableModel)model,(VariablesView)view);
-		case "Methods":
+		case METHODS:
 			return new MethodsController((MethodModel)model,(MethodsView)view);
-		case "Agent":
-			return new TurtleController((ViewAgentPreferences)allViews.get("Preferences"),(ViewAgents)view);
-		case "ColorPicker":
-			return new BackgroundController((ViewAgentPreferences)allViews.get("Preferences"), (ViewAgents)allViews.get("Agent"));
+//<<<<<<< HEAD
+		case BACKGROUND:
+			return new BackgroundController((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES), (ViewAgents)allViews.get(ViewType.AGENT));
+		case AGENT:
+			return new TurtleController((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view);
 		}
 		return null;
 	}

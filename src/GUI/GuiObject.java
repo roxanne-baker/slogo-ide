@@ -1,9 +1,9 @@
-package view;
+package GUI;
 
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-abstract class GuiObject {
+public abstract class GuiObject {
 	private String objectName;
 	private Boolean objectVisibility;
 	private ResourceBundle myResources;

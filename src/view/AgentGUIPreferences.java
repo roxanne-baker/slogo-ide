@@ -3,6 +3,8 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
+import GUI.GuiObject;
+
 
 public abstract class AgentGUIPreferences {
 	Agent agent;

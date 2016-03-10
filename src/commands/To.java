@@ -23,7 +23,14 @@ public class To extends Command implements Executable {
 	
 	public double execute(List<Object> params) {
 		String methodName = ((String) params.get(0)).trim();
-		String[] varNamesArray = ((String) params.get(1)).split(" ");
+		String paramNames = ((String) params.get(1)).trim();
+		String[] varNamesArray;
+		if (paramNames.isEmpty()) { 
+			varNamesArray = new String[0];
+		}
+		else { 
+			varNamesArray = ((String) params.get(1)).trim().split(" ");
+		}
 		String commands = (String) params.get(2);
 		CreatedMethod createdMethod = new CreatedMethod(interpreter, variablesController, methodName, varNamesArray, commands);
 		interpreter.addCommandToMap(createdMethod);

@@ -1,7 +1,6 @@
 package model;
 import java.util.HashMap;
 import java.util.Map;
-
 import commands.CreatedMethod;
 
 public class MethodModel extends Model {
