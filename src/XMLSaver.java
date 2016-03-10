@@ -64,7 +64,6 @@ public class XMLSaver {
 	        
 	        
 		} catch(Exception e){	
-			e.printStackTrace();
 		}			
 	}
 	
