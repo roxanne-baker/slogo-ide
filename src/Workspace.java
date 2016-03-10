@@ -5,21 +5,17 @@ import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
-import factory.ViewFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
-import view.CustomColor;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.Preferences;
 import view.View;
-import view.ViewAgents;
 import view.ViewPalettes;
 import view.ViewType;
 import view.ViewConsole;
@@ -28,34 +24,28 @@ import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
-	private static final int MENU_OFFSET = 30;
 	private static final int WINDOW_PREF_OFFSET = 200;
-	private static final int PADDING = 5;
-	private static final int COORD0 = 0;
-	private static final int COORD1 = View.WIDE_WIDTH+PADDING;
-	private static final int COORD2 = View.WIDE_WIDTH+View.NARROW_WIDTH+PADDING;
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
-	private ViewType[] views = {ViewType.PREFERENCES,ViewType.AGENT,ViewType.HISTORY,ViewType.CONSOLE,ViewType.VARIABLES,ViewType.METHODS, ViewType.WINDOWPREFERENCES, ViewType.PALETTES};
+	private ViewType[] views = ViewType.values();
 	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
 
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
-	private CustomColorPalette customColorPalette = new CustomColorPalette();
-	private CustomImagePalette customImagePalette;// = new CustomImagePalette();
+	private CustomColorPalette customColorPalette;
+	private CustomImagePalette customImagePalette;
 	private Group group = new Group();
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
 	private Stage myStage;
 	private ResourceBundle myResources = ResourceBundle.getBundle("windowProperties");
-	private Map<String,List<Object>> savedPreferences = new HashMap<String,List<Object>>();
-	private Map<String,Object> info;
 	private Preferences myPreferences;
 	
 	public Workspace(Stage stage, Preferences preferences){
 		myStage = stage;
 		myPreferences = preferences;
+		customColorPalette = new CustomColorPalette((List<Object>) preferences.getPreference("colors"));
 		customImagePalette = new CustomImagePalette((List<Object>) preferences.getPreference("images"));
 	}
 	

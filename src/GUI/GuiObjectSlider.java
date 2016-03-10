@@ -1,6 +1,7 @@
 package GUI;
 
 import java.util.Observable;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 
 import javafx.beans.value.ChangeListener;
@@ -12,7 +13,6 @@ import javafx.scene.layout.VBox;
 import view.Agent;
 
 public class GuiObjectSlider extends GuiObject{
-	private static final double PADDING = 10;
 	private Slider slider;
 	private double curValue;
 	private Label textLabel;
@@ -20,6 +20,7 @@ public class GuiObjectSlider extends GuiObject{
 	private double minValue;
 	private double maxValue;
 	private double numIncrement;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	private BiConsumer<Observable, Double> setValueToXML;
 	private boolean isNewSelection;
@@ -55,9 +56,8 @@ public class GuiObjectSlider extends GuiObject{
 		);
 
 		VBox vbox = new VBox();
+		vbox.getStyleClass().add(cssResources.getString("VBOX"));
 		vbox.getChildren().addAll(textLabel,slider,numLabel);
-		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		return vbox;
 	}
 

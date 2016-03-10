@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.ResourceBundle;
 
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
@@ -31,17 +32,15 @@ public class ViewAgentPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
-	private static final int PADDING = 10;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	
 	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);
-		//viewGroup = new Group();
-		
-		//pane = new Pane(viewGroup);
-		//setStyleClass(pane);
+		setPane(allPreferencesBox);
+		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
 	}
@@ -59,10 +58,7 @@ public class ViewAgentPreferences extends View{
 	}
 	private void updateView() {
 		allPreferencesBox.getChildren().clear();
-		//viewGroup.getChildren().remove(allPreferencesBox);
-		allPreferencesBox = new VBox();
 		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
-		allPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		
 		setUpAgentDropDown();
 		
@@ -80,9 +76,6 @@ public class ViewAgentPreferences extends View{
 			addToAgentPrefBox(observerBox, observerLabelList);
 			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
 			}
-
-		
-		setPane(allPreferencesBox);
 	}
 
 	private void setUpAgentDropDown() {

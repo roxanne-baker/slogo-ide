@@ -4,6 +4,15 @@
     	-fx-alignment: center;
 }
 
+.vbox {
+	-fx-spacing: 2;
+	-fx-alignment: center-left;
+}
+
+.vbox-view {
+	-fx-spacing: 15;
+}
+
 .code {
 	-fx-font-family: "Andale Mono";
 }
@@ -22,7 +31,6 @@
 
 .button{
 	-fx-font-family: "Andale Mono";
-	-fx-padding: 6;
    	-fx-font-size: 1em;
 	-fx-text-fill: #FFFFFF;
 	-fx-background-color: #43609c;
@@ -39,10 +47,20 @@
 .label {
 	-fx-font-family: "Andale Mono";
    	-fx-font-size: 1em;
+   	-fx-wrap-text: true;
 }
 
 .view {
+	-fx-padding: 5;
+}
+
+#agent-view {
 	-fx-border-color: black;
 	-fx-border-width:1;
 	-fx-border-style: solid;
+}
+
+.radio-button {
+	-fx-font-family: "Andale Mono";
+	-fx-mark-color: #43609c;
 }

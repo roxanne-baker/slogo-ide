@@ -19,7 +19,8 @@ public abstract class Palette extends Controller{
 	protected Group paletteGroup;
 	private ResourceBundle myResources = ResourceBundle.getBundle("Palettes");
 	
-	public Palette(){
+	public Palette(List<Object> objectList){
+		paletteObjectList = objectList;
 		paletteGroup = new Group();
 	}
 	public String getPaletteName(){

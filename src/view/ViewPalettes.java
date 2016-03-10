@@ -18,6 +18,7 @@ public class ViewPalettes extends View{
 	private static final String PALETTE_PROPERTIES = "Palettes";
 	private List<Palette> paletteList;
 	private ResourceBundle myResources;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private VBox vbox;
 	private Button fileButton;
 	private FileChooser fileChooser;
@@ -32,6 +33,7 @@ public class ViewPalettes extends View{
 		fileChooser.setTitle(myResources.getString("IMAGECHOOSERLABEL"));
 		fileButton = new Button(myResources.getString("IMAGECHOOSERBUTTON"));
 		vbox = new VBox();
+		vbox.getStyleClass().addAll(cssResources.getString("VBOXVIEW"),cssResources.getString("DISPLAYVIEW"));
 		vbox.setPrefSize(NARROW_WIDTH,NARROW_WIDTH);
 		setPane(vbox);
 		setUpPalettes();
@@ -62,8 +64,11 @@ public class ViewPalettes extends View{
 
 	private void setUpPalettes() {
 		for (Palette palette: paletteList){
+			VBox paletteDisplay = new VBox();
+			paletteDisplay.getStyleClass().add(cssResources.getString("VBOX"));
 			Label label = new Label(myResources.getString(palette.getPaletteName() + "LABEL"));
-			vbox.getChildren().addAll(label,palette.getPaletteViewGroup());	
+			paletteDisplay.getChildren().addAll(label,palette.getPaletteViewGroup());	
+			vbox.getChildren().add(paletteDisplay);
 		}
 	}
 

@@ -20,7 +20,6 @@ public class ViewWindowPreferences extends View{
 	private static final int CONSOLEY = 0;
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
-	private static final String DEFAULT_LANGUAGE = "English";
 	private static final double PADDING = 10;
 	private List<Node> guiList;
 	private String currentLanguage;

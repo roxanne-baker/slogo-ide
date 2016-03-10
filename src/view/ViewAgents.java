@@ -30,7 +30,6 @@ import javafx.scene.paint.Color;
 public class ViewAgents extends View{
 	private static final int CONSOLEX = NARROW_WIDTH;
 	private static final int CONSOLEY = MENU_OFFSET;
-	private static final Color DEFAULT_COLOR = Color.WHITE;
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final String WINDOW_PROPERTIES = "windowProperties";
 	private static final double MAX_PREFERENCE_HEIGHT = 40;
@@ -62,6 +61,7 @@ public class ViewAgents extends View{
 		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		
 		agentPane = getPane();
+		agentPane.setId((cssResources.getString("AGENTVIEW")));
 		drawer = new Drawer(agentPane);
 
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);

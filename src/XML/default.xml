@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <preferences>
-	<background>#cc3333</background>
+	<background>#FFFFFF</background>
+	<colors>
+		<row>red</row>
+		<row>orange</row>
+		<row>yellow</row>
+		<row>green</row>
+		<row>blue</row>
+		<row>purple</row>
+	</colors>
 	<images>
 		<row>turtle.png</row>
 		<row>dot.png</row>

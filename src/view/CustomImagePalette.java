@@ -8,14 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CustomImagePalette extends Palette{
-	private List<Object> imageList;
 	private static final int SIZE = 20;
 
 	public CustomImagePalette(List<Object> images) {
-		super();
+		super(images);
 		super.paletteName = getResourceBundle().getString("IMAGES");
-		imageList = images;
-		super.setNewPaletteList(imageList);
 	}
 
 	@Override
@@ -36,11 +33,6 @@ public class CustomImagePalette extends Palette{
 		}
 			
 		return imageView;
-	}
-	
-	public void add(String image){
-		imageList.add(image);
-		super.setNewPaletteList(imageList);
 	}
 
 }

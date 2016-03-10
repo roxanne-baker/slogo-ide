@@ -35,8 +35,10 @@ public abstract class Agent extends Observable{
 	private AgentElem agentView;
 	private CustomColorPalette myColorPalette;
 	private CustomImagePalette myImagePalette;
+	private Preferences preferences;
 	
 	public Agent(String name, double defaultXlocation, double defaultYlocation,View obsView){
+		//this.preferences = preferences;
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
 		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
