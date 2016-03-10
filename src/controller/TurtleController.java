@@ -16,7 +16,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-
 public class TurtleController extends Controller implements IAgentController{
 	private static final String PALETTE_PROPERTIES = "Palettes";
 	private HashMap<String,Agent> agentMap;

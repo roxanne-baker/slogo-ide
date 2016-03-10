@@ -39,7 +39,7 @@ public class GuiObjectFactory {
 			}
 			case("IMAGEPATH"):{
 				if (agent.getImagePalette()==null){return null;}
-				return new GuiObjectDropDown(type, agent.getResourceString(), agent, agent.getImagePath(),agent.getImagePalette().getPaletteList(), (a,b)->((Agent)a).setCurrentImageIndex(b));
+				return new GuiObjectDropDown(type, agent.getResourceString(), agent, agent.getImagePath(),agent.getImagePalette().getPaletteListProperty(), (a,b)->((Agent)a).setCurrentImageIndex(b));
 			}
 
 			case("HELP"):{

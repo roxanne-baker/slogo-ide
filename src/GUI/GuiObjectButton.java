@@ -37,16 +37,5 @@ public class GuiObjectButton extends GuiObject{
 		
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setIsNewSelection(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

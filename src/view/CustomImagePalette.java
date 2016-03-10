@@ -1,14 +1,14 @@
 package view;
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CustomImagePalette extends Palette{
-	private static final List<Object> DEFAULT_IMAGEPATHS = Arrays.asList("turtle.png","dot.png");
+	private static final ObservableList<Object> DEFAULT_IMAGEPATHS = FXCollections.observableArrayList("turtle.png","dot.png");
 	private static final int SIZE = 20;
 
 	public CustomImagePalette() {
@@ -36,5 +36,8 @@ public class CustomImagePalette extends Palette{
 			
 		return imageView;
 	}
+
+
+
 
 }

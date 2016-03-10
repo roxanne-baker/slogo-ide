@@ -19,7 +19,6 @@ public class GuiObjectInputBox extends GuiObject{
 	private Button initializeButton;
 	private Labeled fileErrorLabel;
 	private boolean boolInit;
-	private boolean isNewSelection;
 	private static final double PADDING = 10;
 	private static final String FILE_DIRECTORY = "images/";
 	private static final String FILE_TYPE = ".png";
@@ -43,7 +42,6 @@ public class GuiObjectInputBox extends GuiObject{
 		userInputFileString.setMaxWidth(MAXWIDTH);
 		initializeButton = new Button(resources.getString(getObjectName()+"BUTTON"));
 		initializeButton.setOnAction(evt -> {if (checkIfValid(resources,userInputFileString.getText())){
-			setIsNewSelection(true);
 			setValueFunction.accept(getObservable(),userInputFileString.getText());
 		}});
 		initializeButton.setMaxWidth(MAXWIDTH);
@@ -88,14 +86,6 @@ public class GuiObjectInputBox extends GuiObject{
 		return userInputFileString.getText();
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		return isNewSelection;
-	}
-                          
-	@Override
-	public void setIsNewSelection(boolean b) {
-		isNewSelection = b;
-	}
+
 
 }

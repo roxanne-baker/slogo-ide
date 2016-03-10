@@ -22,7 +22,6 @@ public class GuiObjectSlider extends GuiObject{
 	private double numIncrement;
 
 	private BiConsumer<Observable, Double> setValueToXML;
-	private boolean isNewSelection;
 	public GuiObjectSlider(String name, String resourceBundle, Agent agent, double min,double max, double initialValue, double increment, BiConsumer<Observable,Double> setFunction) {
 		super(name, resourceBundle, agent);
 		minValue = min;
@@ -30,7 +29,6 @@ public class GuiObjectSlider extends GuiObject{
 		numIncrement = increment;
 		curValue = initialValue;
 		setValueToXML = setFunction;
-		isNewSelection = false;
 	}
 
 	@Override
@@ -49,7 +47,6 @@ public class GuiObjectSlider extends GuiObject{
 				if(setValueToXML!=null){
 					setValueToXML.accept(getObservable(),curValue);
 				}
-				isNewSelection = true;
 			}
 		}
 		);
@@ -66,16 +63,5 @@ public class GuiObjectSlider extends GuiObject{
 		return curValue;
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return isNewSelection;
-	}
-
-	@Override
-	public void setIsNewSelection(boolean isSelected) {
-		isNewSelection = isSelected;
-		
-	}
 
 }
