@@ -21,7 +21,7 @@ public class DoTimes extends ControlCommand implements Executable {
 		interpreter.run(varLimitCommand);
 		double maxValue = interpreter.getReturnResult();
 		//double maxValue = interpreter.run(varLimitCommand);
-		System.out.println(maxValue);
+		//System.out.println(maxValue);
 		
 		String loopCommands = (String) params.get(1);
 		for (int i=1; i<=maxValue; i++) {

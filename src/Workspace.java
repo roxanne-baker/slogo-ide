@@ -31,7 +31,7 @@ public class Workspace implements Observer {
 	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
-	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
+	private HashMap<String,Controller> controllerMap = new HashMap<String,Controller>();
 	private Group group = new Group();
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
@@ -149,11 +149,11 @@ public class Workspace implements Observer {
 		ControllerFactory controllerFactory = new ControllerFactory(modelMap,viewMap);
 		for(ViewType type: controllers){
 			Controller controller = controllerFactory.createController(type);
-			controllerMap.put(type, controller);
+			controllerMap.put(type.toString(), controller);
 		}
 	}
 	
-	public Map<ViewType, Controller> getControllerMap() { 
+	public Map<String, Controller> getControllerMap() { 
 		return controllerMap;
 	}
 

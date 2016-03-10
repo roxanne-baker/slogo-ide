@@ -13,7 +13,6 @@ import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
-import view.ViewType;
 import commands.ArcTangent;
 import commands.Back;
 import commands.ClearScreen;
@@ -69,6 +68,9 @@ public class Interpreter extends Observable {
 	private TurtleController turtleController;
 	private VariablesController variableController;
 	private MethodsController methodController;
+	private final String turtleControllerName = "AGENT";
+	private final String variableControllerName = "VARIABLES";
+	private final String methodControllerName = "METHODS";
 	private String errorMessage = new String();
 	private double returnResult; 
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
@@ -76,9 +78,10 @@ public class Interpreter extends Observable {
 	private final char CLOSED_BRACKET = ']';
 	
 	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariablesController) controllers.get("Variables");
-		methodController = (MethodsController) controllers.get("Methods");
+
+		turtleController = (TurtleController) controllers.get(turtleControllerName); 
+		variableController = (VariablesController) controllers.get(variableControllerName);
+		methodController = (MethodsController) controllers.get(methodControllerName);
 		initializeCommandsMap();
 		initializeLangs();
 	}
