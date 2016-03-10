@@ -11,7 +11,7 @@ public class ViewHistory extends View implements Observer{
 	private VBox vb = new VBox(2);
 	private Interpreter interpreter;
 
-	public ViewHistory(ViewType ID, Map<String,List<Object>> savedPreferences){
+	public ViewHistory(ViewType ID, Preferences savedPreferences){
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);

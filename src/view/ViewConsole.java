@@ -19,7 +19,7 @@ public class ViewConsole extends View {
 	private ResourceBundle cssResources;
 	Pane pane;
 	
-	public ViewConsole(ViewType ID, Map<String,List<Object>> savedPreferences) {
+	public ViewConsole(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		buttonResources = ResourceBundle.getBundle(BUTTON_LABEL_PATH);
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);

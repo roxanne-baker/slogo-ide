@@ -15,7 +15,7 @@ public class ViewVariables extends View{
 	private VBox savedVars = new VBox();
 	private Label instructions = new Label(myResources.getString("VARIABLEINSNS"));	//added
 	
-	public ViewVariables(ViewType ID, Map<String,List<Object>> savedPreferences) {
+	public ViewVariables(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		savedVars.getChildren().add(instructions); // added
 		setX(CONSOLEX);

@@ -29,14 +29,12 @@ public class ViewAgentPreferences extends View{
 	private static final int CONSOLEX = MENU_OFFSET;
 	private static final int CONSOLEY = 0;
 	private HashMap<String, Agent> agentMap;
-	private Group viewGroup;
 	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
 	private static final int PADDING = 10;
 
-	private Pane pane;
 	
-	public ViewAgentPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
+	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);

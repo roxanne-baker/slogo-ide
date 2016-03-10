@@ -32,7 +32,7 @@ public class ViewPreferences extends View{
 	private String currentAgent;
 	private static final int PADDING = 10;
 	
-	public ViewPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
+	public ViewPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 //		viewGroup = new Group();
 		viewGroup = new Pane();

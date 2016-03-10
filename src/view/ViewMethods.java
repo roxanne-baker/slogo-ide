@@ -10,7 +10,7 @@ public class ViewMethods extends View{
 	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
 
-	public ViewMethods(ViewType ID, Map<String,List<Object>> savedPreferences){
+	public ViewMethods(ViewType ID, Preferences savedPreferences){
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);

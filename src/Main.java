@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.Preferences;
 
 public class Main extends Application {
 
@@ -12,8 +13,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 
 
-
-		Workspace UI = new Workspace(primaryStage);
+		XMLReader reader = new XMLReader();
+		Workspace UI = new Workspace(primaryStage,new Preferences(reader.getPreferences()));
 		Scene myScene = UI.init();
         primaryStage.setScene(myScene);
         primaryStage.show();

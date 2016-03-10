@@ -27,9 +27,10 @@ public class ViewWindowPreferences extends View{
 	private HBox windowPreferencesBox;
 	private Interpreter myInterpreter;
 	private ComboBox<String> languageDropDown;
+	private Preferences savedPreferences;
 	
 
-	public ViewWindowPreferences(ViewType ID, Map<String,List<Object>> savedPreferences) {
+	public ViewWindowPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);
@@ -37,7 +38,7 @@ public class ViewWindowPreferences extends View{
 		windowPreferencesBox = new HBox();
 		setPane(windowPreferencesBox);
 		myInterpreter = null;
-		currentLanguage = DEFAULT_LANGUAGE;
+		currentLanguage = savedPreferences.getPreference("language").toString();
 		languageDropDown = new ComboBox<String>();
 		createView();
 	}
@@ -70,6 +71,7 @@ public class ViewWindowPreferences extends View{
 		languageDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String t, String t1) {                
                 currentLanguage = t1;
+                savedPreferences.setPreference("language", currentLanguage);
 				myInterpreter.addLang(currentLanguage);
             }
 		});

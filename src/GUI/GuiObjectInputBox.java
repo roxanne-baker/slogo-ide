@@ -34,7 +34,7 @@ public class GuiObjectInputBox extends GuiObject{
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		ResourceBundle resources = getResourceString();
+		ResourceBundle resources = getResourceBundle();
 		fileErrorLabel = new Label();
 		fileErrorLabel.setVisible(false);
 		fileErrorLabel.setMaxWidth(MAXWIDTH);

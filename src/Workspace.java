@@ -1,6 +1,7 @@
 import java.util.*;
 
 import controller.Controller;
+import controller.TurtleController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
@@ -13,8 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
+import view.CustomColor;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
+import view.Preferences;
 import view.View;
 import view.ViewAgents;
 import view.ViewPalettes;
@@ -40,7 +43,7 @@ public class Workspace implements Observer {
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType,Controller> controllerMap = new HashMap<ViewType,Controller>();
 	private CustomColorPalette customColorPalette = new CustomColorPalette();
-	private CustomImagePalette customImagePalette = new CustomImagePalette();
+	private CustomImagePalette customImagePalette;// = new CustomImagePalette();
 	private Group group = new Group();
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
@@ -48,28 +51,39 @@ public class Workspace implements Observer {
 	private ResourceBundle myResources = ResourceBundle.getBundle("windowProperties");
 	private Map<String,List<Object>> savedPreferences = new HashMap<String,List<Object>>();
 	private Map<String,Object> info;
-	public Workspace(Stage stage){
+	private Preferences myPreferences;
+	
+	public Workspace(Stage stage, Preferences preferences){
 		myStage = stage;
-		XMLReader r = new XMLReader();
-		info = r.getPreferences();
+		myPreferences = preferences;
+		customImagePalette = new CustomImagePalette((List<Object>) preferences.getPreference("images"));
 	}
 	
 	public Scene init(){
 		initModels();
 		initViews();
-		initWindowMenu();
+		initWindowMenu();	
 		initControllers();
-		initInterpreters();
 		initPalettes();
+		initTurtles();
+		initInterpreters();
+
 		myScene = new Scene(pane);
 		myScene.getStylesheets().add("resources/style/style.css");
 		return myScene;
 	}
 	
+	private void initTurtles(){
+		int numTurtles = Integer.parseInt(myPreferences.getPreference("turtles").toString());
+		for(int i=0; i<numTurtles; i++){
+			((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent("TURTLE"+Integer.toString(i));
+		}
+	}
+	
 	private void initPalettes() {
-
-		((ViewAgents) viewMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
-		((ViewAgents) viewMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
+		System.out.println("setting up palettes");
+		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
+		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
 
 		
@@ -108,19 +122,19 @@ public class Workspace implements Observer {
 	}
 	
 	private void initViews(){
-		ViewFactory viewFactory = new ViewFactory(savedPreferences);
+		ViewFactory viewFactory = new ViewFactory();
 		for(ViewType type: views){
 			System.out.println(type);
-			View view = viewFactory.createView(type);
+			View view = viewFactory.createView(type, myPreferences);
 			if(type==ViewType.VARIABLES){
 				((ViewVariables)view).addObserver(this);
 			}
 			if(type==ViewType.CONSOLE){
 				((ViewConsole)view).setHistoryView((ViewHistory)viewMap.get(ViewType.HISTORY));
 			}
-			if(type==ViewType.AGENT){
-				((ViewAgents)view).setBackgroundColor(Color.valueOf(info.get("background").toString()));
-			}
+//			if(type==ViewType.AGENT){
+//				((ViewAgents)view).setBackgroundColor(Color.valueOf(info.get("background").toString()));
+//			}
 			int[] coords = new int[]{view.getX(),view.getY()};
 			viewMap.put(type,view);
 			Pane viewGroup = view.getView();
@@ -132,7 +146,8 @@ public class Workspace implements Observer {
 	
 	private void openWorkspace(){
 		Stage newStage = new Stage();
-		newStage.setScene(new Workspace(newStage).init());
+		XMLReader reader = new XMLReader();
+		newStage.setScene(new Workspace(newStage,new Preferences(reader.getPreferences())).init());
 		newStage.show();
 	}
 	

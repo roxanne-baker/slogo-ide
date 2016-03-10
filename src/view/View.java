@@ -19,7 +19,7 @@ public abstract class View extends Observable implements Observer{
 	private int y;
 
 	
-	public View(ViewType ID, Map<String,List<Object>> savedPreferences){
+	public View(ViewType ID, Preferences savedPreferences){
 		viewType = ID;
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 		pane.getStyleClass().add(cssResources.getString("DISPLAYVIEW"));

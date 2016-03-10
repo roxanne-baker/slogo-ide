@@ -7,12 +7,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class XMLReader {
-	private String[] xmlElems = new String[]{"background","images","turtles","language"};
 	private String file;
 	private Document doc;	
 	private Element rootElem;
@@ -20,7 +20,6 @@ public class XMLReader {
 	public XMLReader() {
 		file = chooseFile();
 		readFile();
-		Map<String,Object> prefMap = getPreferences();
 	}
 
 	public String chooseFile(){
@@ -82,40 +81,21 @@ public class XMLReader {
 	
 	public Map<String,Object> getPreferences(){
 		Map<String,Object> preferences = new HashMap<String,Object>();
-		for(String tagName: xmlElems){
-			if(isSingleElem(tagName)){
-				preferences.put(tagName, getNodeValue(rootElem,tagName));
-			}
-			else{
-				preferences.put(tagName, getListElem(rootElem,tagName));
-
-			}
-		}
+		for(int i=0; i<rootElem.getChildNodes().getLength();i++){
+			String tagName = rootElem.getChildNodes().item(i).getNodeName();
+        	if(tagName!="#text"){
+        		if(isSingleElem(tagName)){
+    				preferences.put(tagName, getNodeValue(rootElem,tagName));
+    			}
+    			else{
+    				preferences.put(tagName, getListElem(rootElem,tagName));
+    
+    			}
+        		System.out.println(rootElem.getChildNodes().item(i).getNodeName());
+        	}
+        }
 		return preferences;
 	}
-	
-//	public Color getBackground(){
-//		return Color.valueOf(getNodeValue(rootElem,"background"));
-//	}
-	
-	public List<String> getImageList(){
-		ArrayList<String> images = new ArrayList<String>();
-		Element imagesElem = (Element) rootElem.getElementsByTagName("images").item(0);
-		NodeList imagesList = imagesElem.getElementsByTagName("row");
-		for(int i=0; i<imagesList.getLength(); i++){
-			String imgName = imagesList.item(i).getNodeValue().trim();
-			images.add(imgName);
-		}
-		return images;
-	}
-	
-//	public int getTurtleCount(){
-//		return Integer.parseInt(getNodeValue(rootElem,"turtles"));
-//	}
-//	
-//	public String getLanguage(){
-//		return getNodeValue(rootElem,"language");
-//	}
 }
 	
 
