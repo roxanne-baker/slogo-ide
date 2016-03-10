@@ -61,7 +61,6 @@ import commands.TurtleCommand;
 import commands.TurtleQueryCommands;
 
 public class Interpreter extends Observable {
-
 	private Map<String, Command> commandsMap; 
 	private final String WHITESPACE = "\\p{Space}";
     private Parser lang = new Parser();
@@ -69,9 +68,6 @@ public class Interpreter extends Observable {
 	private TurtleController turtleController;
 	private VariablesController variableController;
 	private MethodsController methodController;
-	private final String turtleControllerName = "AGENT";
-	private final String variableControllerName = "VARIABLES";
-	private final String methodControllerName = "METHODS";
 	private String errorMessage = new String();
 	private double returnResult; 
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
@@ -139,7 +135,7 @@ public class Interpreter extends Observable {
     			cur.setValue(result);
     		}
     	}
-    	returnResult = (double) result;
+    	sendResult((double) result);
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -342,7 +338,9 @@ public class Interpreter extends Observable {
 			}
 			// may want to check for turtlequery/turtle command here
         	if (cur.getCommand().getNumParams() == 0) { 
-        		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
+        		double val = cur.getCommand().execute(NO_PARAMS_LIST);
+        		cur.setValue(val);
+        		returnResult = val; 
         		attachNode(cur, commandStack);
         		return;
         	}
@@ -428,6 +426,12 @@ public class Interpreter extends Observable {
 		errorMessage = message;
 		setChanged();
 		notifyObservers("ERROR");
+	}
+	
+	private void sendResult(double d) { 
+		returnResult = d;
+		setChanged();
+		notifyObservers("RESULT");	
 	}
 
 //    private static String readFileToString (String filename) throws FileNotFoundException {
