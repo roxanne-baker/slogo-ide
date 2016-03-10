@@ -1,5 +1,6 @@
 package GUI;
 import java.util.Observable;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 
 import javafx.event.Event;
@@ -19,6 +20,8 @@ public class GuiObjectColorPicker extends GuiObject{
 	private BiConsumer<Observable,Color> setValueFunction;
 	private Color initialColor;
 	private Label colorPickerLabel;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
+	
 	public GuiObjectColorPicker(String name, String resourceBundle,
 			Agent agent, Color color, BiConsumer<Observable,Color> myFunction) {
 		super(name, resourceBundle, agent);
@@ -29,16 +32,16 @@ public class GuiObjectColorPicker extends GuiObject{
 	@Override
 	public Object createObjectAndReturnObject() {
 		colorPicker = new ColorPicker(initialColor);
+		colorPicker.getStyleClass().add("combo-box");
         colorPicker.setOnAction(new EventHandler() {
             public void handle(Event t) {
                 setValueFunction.accept(getObservable(), colorPicker.getValue());    
             }
         });
-        colorPickerLabel = new Label(getResourceString().getString(getObjectName()+"LABEL"));
+        colorPickerLabel = new Label(getResourceBundle().getString(getObjectName()+"LABEL"));
 		VBox vbox = new VBox();
+		vbox.getStyleClass().add(cssResources.getString("VBOX"));
 		vbox.getChildren().addAll(colorPickerLabel,colorPicker);
-		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		return vbox;
 	}
 

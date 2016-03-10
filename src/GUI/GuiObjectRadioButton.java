@@ -67,7 +67,7 @@ public class GuiObjectRadioButton extends GuiObject{
 	        }
 	    });
 		
-		radioLabel = new Label(getResourceString().getString(getObjectName()+"LABEL"));
+		radioLabel = new Label(getResourceBundle().getString(getObjectName()+"LABEL"));
 		VBox stateControls = new VBox();
 		stateControls.getChildren().add(radioLabel);
 		for(RadioButton button: buttonList){
@@ -84,7 +84,7 @@ public class GuiObjectRadioButton extends GuiObject{
 	public String getValue(){
 		RadioButton b = (RadioButton) radioButtonGroup.getSelectedToggle();
 		if (b==null){
-			errorLabel.setText(getResourceString().getString("RadioErrorLabel"));
+			errorLabel.setText(getResourceBundle().getString("RadioErrorLabel"));
 			errorLabel.setVisible(true);
 			errorLabel.setTextFill(Color.RED);
 			return null;

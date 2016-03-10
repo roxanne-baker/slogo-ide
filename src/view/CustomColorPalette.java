@@ -1,28 +1,32 @@
 package view;
 
-import java.util.Arrays;
 import java.util.List;
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
 
-public class CustomColorPalette {
-	private List<CustomColor> customColorList = Arrays.asList(new CustomColor(50,100,100),new CustomColor(30,100,30));
-	public CustomColorPalette(){
+
+public class CustomColorPalette extends Palette{
+	private static final int SIZE = 20;
+
+	public CustomColorPalette(List<Object> colorList) {
+		super(colorList);
+		super.paletteName = getResourceBundle().getString("CUSTOMCOLORS");
+	}
 	
+	@Override
+	public Object getPaletteObject(int index){
+		Color color = Color.web(paletteObjectList.get(index).toString());
+		return new CustomColor((int)(color.getRed()*255),(int)(color.getGreen()*255),(int)(color.getBlue()*255));
 	}
-	public List<CustomColor> getCustomColorList(){
-		return customColorList;
+
+	@Override
+	public Node getPaletteObjectView(int index) {
+		CustomColorElem colorView = new CustomColorElem((CustomColor) getPaletteObject(index),SIZE);
+		
+		return colorView.getView();
 	}
-	public void addCustomColor(CustomColor color){
-		customColorList.add(color);
-	}
-	public void replaceCustomColor(int index, CustomColor color){
-		if (index > customColorList.size() || index < 0){
-			//don't add color; maybe through error?
-		}else{
-			customColorList.set(index, color);
-		}
-	}
-	public CustomColor getCustomColor(int index){
-		return customColorList.get(index);
-	}
+
+
+
 	
 }

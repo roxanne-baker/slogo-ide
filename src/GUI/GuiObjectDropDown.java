@@ -1,20 +1,18 @@
 package GUI;
 
 import java.util.Observable;
-import javafx.scene.control.Label;
 
+public class GuiObjectDropDown extends GuiObject {
 
-public class GuiObjectLabel extends GuiObject{
-	private Label myLabel;
-	public GuiObjectLabel(String name, String resourceBundle, Observable obs) {
+	public GuiObjectDropDown(String name, String resourceBundle, Observable obs) {
 		super(name, resourceBundle, obs);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		myLabel = new Label(getResourceBundle().getString(getObjectName()+ "LABEL"));
-		
-		return myLabel;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -26,7 +24,7 @@ public class GuiObjectLabel extends GuiObject{
 	@Override
 	public void setIsNewSelection(boolean b) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

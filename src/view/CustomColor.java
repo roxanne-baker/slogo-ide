@@ -11,7 +11,7 @@ public class CustomColor {
 	public CustomColor(int r, int g, int b){
 		colorProperty = new SimpleObjectProperty<Color>(Color.rgb(r, g, b));
 	}
-	
+
 	public int getRed(){
 		return (int) colorProperty.getValue().getRed();
 	}
@@ -34,4 +34,8 @@ public class CustomColor {
 	public ObservableValue<? extends Paint> getColorProperty() {
 		return colorProperty;
 	}
+	public Color getColor(){
+		return colorProperty.getValue();
+	}
+
 }

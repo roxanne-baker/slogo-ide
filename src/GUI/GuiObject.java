@@ -23,7 +23,7 @@ public abstract class GuiObject {
 		return objectVisibility;
 	}
 
-	public ResourceBundle getResourceString(){
+	public ResourceBundle getResourceBundle(){
 		return myResources;
 	}
 

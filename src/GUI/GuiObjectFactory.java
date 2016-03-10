@@ -29,7 +29,7 @@ public class GuiObjectFactory {
 			}
 			case("PENCOLOR"):{
 
-				return new GuiObjectColorPicker(type,agent.getResourceString(),agent,agent.getPenColor(), (a,b)-> ((Agent) a).setPenColor(b));
+				return new GuiObjectColorPicker(type,agent.getResourceString(),agent,agent.getAgentView().getPenColor(), (a,b)-> ((Agent) a).getAgentView().setPenColor(b));
 			}
 			case("NAME"):{
 				return new GuiObjectLabel(type, agent.getResourceString(),agent);

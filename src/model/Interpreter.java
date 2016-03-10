@@ -75,10 +75,10 @@ public class Interpreter extends Observable {
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
 	
-	public Interpreter(HashMap<String,Controller> controllers) {
-		turtleController = (TurtleController) controllers.get("Agent"); 
-		variableController = (VariablesController) controllers.get("Variables");
-		methodController = (MethodsController) controllers.get("Methods");
+	public Interpreter(Map<ViewType, Controller> controllerMap) {
+		turtleController = (TurtleController) controllerMap.get("Agent"); 
+		variableController = (VariablesController) controllerMap.get("Variables");
+		methodController = (MethodsController) controllerMap.get("Methods");
 		initializeCommandsMap();
 		initializeLangs();
 	}

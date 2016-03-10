@@ -10,8 +10,8 @@ import model.Interpreter;
 import model.MethodModel;
 import model.Model;
 import model.VariableModel;
-import view.MethodsView;
-import view.VariablesView;
+import view.ViewMethods;
+import view.ViewVariables;
 import view.View;
 import view.ViewAgents;
 import view.ViewType;
@@ -31,9 +31,9 @@ public class ControllerFactory {
 		View view = allViews.get(ID);
 		switch(ID){
 		case VARIABLES:
-			return new VariablesController((VariableModel)model,(VariablesView)view);
+			return new VariablesController((VariableModel)model,(ViewVariables)view);
 		case METHODS:
-			return new MethodsController((MethodModel)model,(MethodsView)view);
+			return new MethodsController((MethodModel)model,(ViewMethods)view);
 		case AGENT:
 			return new TurtleController((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view);
 		}
