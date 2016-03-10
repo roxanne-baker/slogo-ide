@@ -159,9 +159,11 @@ public class Interpreter extends Observable {
     private boolean cutStackAndString(String wholeText, String parsedFirst, Stack<ParseNode> commandStack, ParseNode root) { 
     	if (commandStack.isEmpty()) { 
     		if (!wholeText.equals("")) { 
-    			if (!parsedFirst.equals("Constant") && ( commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText)))) { 
+    			if (!parsedFirst.equals("Constant")) { 
     				processTree(root);
-    				callBuildTree(wholeText);
+    				if (commandsMap.containsKey(parsedFirst) || commandsMap.containsKey(takeFirst(wholeText))) {
+        				callBuildTree(wholeText);
+    				}
     			}
     			else if (parsedFirst.equals("Constant") || parsedFirst.equals("Variable")){ 
     				sendError("Too many parameters!");
