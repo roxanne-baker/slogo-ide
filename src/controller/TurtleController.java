@@ -37,8 +37,8 @@ public class TurtleController extends Controller implements IAgentController{
 		agentMap = new HashMap<String,Agent>();
 		observerWidth = obsView.getWidth();
 		observerHeight = obsView.getHeight();
-		offsetX = observerWidth/2;
-		offsetY = observerHeight/2;
+		offsetX = 0;
+		offsetY = 0;
 		currentAgentNameProperty = new SimpleStringProperty();
 		paletteResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 

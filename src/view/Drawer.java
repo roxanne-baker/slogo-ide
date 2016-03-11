@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -36,18 +37,24 @@ public class Drawer {
 	}
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color, double dash){
 
-		Line line = new Line();
-		line.setStartX(oldX);
-		line.setStartY(oldY);
-		line.setEndX(newX);
-		line.setEndY(newY);
-		line.setStrokeWidth(thickness);
-		line.setStroke(color);
-		line.getStrokeDashArray().removeAll();
-		line.getStrokeDashArray().add(dash);
-		line.setStrokeDashOffset(DASH_OFFSET);
-		lineList.add(line);
-		agentGroup.getChildren().add(line);
+//		Line line = new Line();
+//		line.setStartX(oldX);
+//		line.setStartY(oldY);
+//		line.setEndX(newX);
+//		line.setEndY(newY);
+//		line.setStrokeWidth(thickness);
+//		line.setStroke(color);
+//		line.getStrokeDashArray().removeAll();
+//		line.getStrokeDashArray().add(dash);
+//		line.setStrokeDashOffset(DASH_OFFSET);
+//		
+//		lineList.add(line);
+//		agentGroup.getChildren().add(line);
+//		System.out.println(oldY);
+//		System.out.println(newY);
+//		Animation lineAnimation = makeAnimation(line, oldX, oldY, newX, newY);
+//		lineAnimation.play();
+
 	}
 	/**
 	 * 
@@ -66,9 +73,13 @@ public class Drawer {
 	
 	private Animation makeAnimation(Node imageView, double oldXPosition, double oldYPosition, double xPosition, double yPosition){
 		Path path = new Path();
-		path.getElements().addAll(new MoveTo(oldXPosition,oldYPosition), new LineTo(xPosition, yPosition));
-		PathTransition pathTransition = new PathTransition(Duration.millis(4000), path, imageView);
-		return pathTransition;
+		agentGroup.getChildren().add(path);
+		path.getElements().addAll(new MoveTo(oldXPosition+250,oldYPosition+250), new LineTo(xPosition+250, yPosition+250));
+		path.setStrokeWidth(10);
+		path.setStroke(Color.BLACK);
+		PathTransition pathTransition = new PathTransition(Duration.millis(1000), path, imageView);
+		PathTransition newTransition = new PathTransition(Duration.millis(1000), path, path);
+		return new ParallelTransition(pathTransition,newTransition);
 	
 	}
 	public void initializeImage(ImageView img, double xPosition, double yPosition){
@@ -83,10 +94,9 @@ public class Drawer {
 	}
 	public void moveImage(ImageView img, double oldXPosition, double oldYPosition, double xPosition, double yPosition){
 		//agentGroup.getChildren().remove(img);
-		System.out.println(oldXPosition);
-		System.out.println(oldYPosition);
-		Animation newAnimation = makeAnimation(img, 0, 0, xPosition,yPosition);
+		Animation newAnimation = makeAnimation(img, oldXPosition, oldYPosition, xPosition,yPosition);
 		newAnimation.play();
+
 //		setLocation(img, xPosition, yPosition);
 		//agentGroup.getChildren().add(img);
 
