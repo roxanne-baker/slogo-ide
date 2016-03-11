@@ -4,18 +4,17 @@ package commands;
 import java.util.List;
 
 import controller.TurtleController;
+import view.Agent;
 
 public class PenUp extends TurtleQueryCommands implements Executable {
-
-
+	
 	public PenUp(TurtleController turtleController) {
 		super(turtleController);
 		numParams = 0; 
 	}
 	
-	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		getTurtleController().setCurrentAgentPenUp(true);
-		return 1;
+	public Object execute(List<Object> params) {
+		getTurtleController().changeProperty((Agent agent) -> agent.setPenUp(true));
+		return 0;
 	}	
 }

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -39,8 +39,8 @@ public class ViewAgents extends View{
 	private Pane agentPane;
 	private Boolean isSelectedAgentToggle;
 	private HashMap<ImageView,Agent> imageAgentMap;
-	private StringProperty currentAgentNameProperty;
-	protected HashMap<String, Agent> agentMap;
+	private IntegerProperty currentAgentNameProperty;
+	protected HashMap<Integer, Agent> agentMap;
 	private Preferences savedPreferences;
 
 	
@@ -48,10 +48,12 @@ public class ViewAgents extends View{
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);
+
+		currentAgentNameProperty = new SimpleIntegerProperty();
+		agentMap = new HashMap<Integer,Agent>();
+
 		isSelectedAgentToggle = true;
-		currentAgentNameProperty = new SimpleStringProperty();
 		addListenerToCurrentAgentProperty(currentAgentNameProperty);
-		agentMap = new HashMap<String,Agent>();
 		imageAgentMap = new HashMap<ImageView,Agent>();
 
 		agentPane = getPane();
@@ -70,7 +72,7 @@ public class ViewAgents extends View{
 
 
 	}
-	private void addListenerToCurrentAgentProperty(StringProperty property) {
+	private void addListenerToCurrentAgentProperty(IntegerProperty property) {
 		property.addListener(new ChangeListener<Object>(){
 
 		@Override
@@ -106,20 +108,20 @@ public class ViewAgents extends View{
 	@Override
 	public void update(Observable agent, Object updateType) {
 		AgentElem agentView = ((Agent) agent).getAgentView();
+
 		if(((Agent) agent).isVisible()){
 			if (updateType == UPDATE_RESOURCES.getString("STAMP")){
 				drawer.stampImage(agentView.getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-			
+
 			}else if (updateType == UPDATE_RESOURCES.getString("MOVE")){
 				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 				if(!((Agent) agent).isPenUp()){
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(UPDATE_RESOURCES.getString(((Agent) agent).getPenStyle()+"DASH")));
 				}
-
 			}else if (updateType == UPDATE_RESOURCES.getString("INITIAL")){ 
 				ImageView agentImageView = createNewImageViewWithHandler(agent);
 				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-			
+
 			}else if (updateType == UPDATE_RESOURCES.getString("IMAGEVIEW")){	
 				imageAgentMap.remove(agentView.getOldImageView());
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
@@ -134,7 +136,13 @@ public class ViewAgents extends View{
 				}
 			}
 		}else if(updateType == UPDATE_RESOURCES.getString("VISIBLE")){
-			drawer.removeImage(agentView.getImageView());
+			if (((Agent) agent).isVisible()) {
+				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());			
+			}
+			else {
+				drawer.removeImage(agentView.getImageView());				
+			}
+
 			
 		}
 
@@ -165,13 +173,20 @@ public class ViewAgents extends View{
 		});
 	}
 	
-
+	public void clearScreen() {
+		drawer.clearAllLines();
+		drawer.clearAllStamps();
+	}
+	
+	public int clearStamps() {
+		return drawer.clearAllStamps();
+	}
+	
 	private void setUpClearButton() {
 		Button clearButton = new Button(WINDOW_RESOURCES.getString("CLEARBUTTON"));
 		clearButton.setOnAction(new EventHandler() {
             public void handle(Event t) {
-                drawer.clearAllLines();  
-                drawer.clearAllStamps();
+                clearScreen();
             }
         });
 		agentViewPreferences.getChildren().add(clearButton);
@@ -199,14 +214,14 @@ public class ViewAgents extends View{
 	public double getHeight() {
 		return WIDE_WIDTH;
 	}
-	public StringProperty getCurrentAgentNameProperty() {
+	public IntegerProperty getCurrentAgentNameProperty() {
 		return currentAgentNameProperty;
 	}
 	public void updateCurrentAgentView(){
 		update(agentMap.get(currentAgentNameProperty.getValue()),UPDATE_RESOURCES.getString("CURRENT"));
 
 	}
-	public void updateAgentMap(HashMap<String, Agent> newAgentMap) {
+	public void updateAgentMap(HashMap<Integer, Agent> newAgentMap) {
 		agentMap = newAgentMap;
 		
 	}

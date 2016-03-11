@@ -21,7 +21,7 @@ public class To extends Command implements Executable {
 		needsVarName = true;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		String methodName = ((String) params.get(0)).trim();
 		String paramNames = ((String) params.get(1)).trim();
 		String[] varNamesArray;

@@ -21,7 +21,7 @@ public class ObserverLabel implements Observer{
 	}
 	
 	public Object createAndReturnObserverLabel(){
-		observerLabel = new Label((String) labelText);
+		observerLabel = new Label((String) ""+labelText);
 		myLabel = new Label(myResources.getString(labelName +"LABEL")+": ");
 		HBox hbox = new HBox();
 		hbox.getChildren().addAll(myLabel,observerLabel);

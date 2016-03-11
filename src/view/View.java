@@ -3,9 +3,7 @@ package view;
 import java.util.*;
 
 import javafx.scene.Node;
-import javafx.scene.layout.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public abstract class View extends Observable implements Observer{
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
@@ -23,7 +21,6 @@ public abstract class View extends Observable implements Observer{
 		viewType = ID;
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 		pane.getStyleClass().add(cssResources.getString("DISPLAYVIEW"));
-
 	}
 	
 	public ViewType getType(){
