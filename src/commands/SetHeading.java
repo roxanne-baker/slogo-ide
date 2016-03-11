@@ -9,7 +9,7 @@ import view.Agent;
 public class SetHeading extends TurtleCommand implements Executable {
 
 	public SetHeading(TurtleController turtleController) {
-		setTurtleController(turtleController);
+		super(turtleController);
 		numParams = 1;
 	}
 	

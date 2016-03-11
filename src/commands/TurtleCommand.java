@@ -8,9 +8,13 @@ public abstract class TurtleCommand extends Command implements Executable{
 
 	private TurtleController turtleController;
 	
+	public TurtleCommand(TurtleController turtleController) {
+		this.turtleController = turtleController;
+	}
+	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
+			if (!(param instanceof Integer || param instanceof Double || param instanceof double[])) {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}			
 		}

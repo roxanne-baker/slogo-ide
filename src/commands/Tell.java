@@ -16,9 +16,7 @@ public class Tell extends ControlCommand implements Executable{
 	
 	public Object execute(List<Object> params) {
 		List<Integer> turtleNums = stringToIntList((String) params.get(0));
-		System.out.println("params: "+params.get(0));
 		turtleController.setActiveAgents(turtleNums);
-		System.out.println("yee: "+turtleNums);
 		
 		return turtleNums.get(turtleNums.size()-1)*1.0;
 	}
@@ -28,10 +26,8 @@ public class Tell extends ControlCommand implements Executable{
 		System.out.println("ayyy: "+Arrays.toString(numsAsStringArray)+" "+numsAsStringArray.length);
 		List<Integer> turtleNums = new ArrayList<Integer>();
 		for (int i=0; i<numsAsStringArray.length; i++) {
-			System.out.println("whoo "+numsAsStringArray[i]);
 			turtleNums.add(Integer.parseInt(numsAsStringArray[i]));
 		}
-		System.out.println("TURTLE NUMS: "+turtleNums);
 		return turtleNums;
 	}
 	

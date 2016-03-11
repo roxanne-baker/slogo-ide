@@ -6,21 +6,20 @@ import controller.BackgroundController;
 
 public class SetBackground extends Command implements Executable {
 
-	BackgroundController colorPickerController;
+	BackgroundController backgroundController;
 	
-	public SetBackground(BackgroundController colorPickerController) {
+	public SetBackground(BackgroundController backgroundController) {
 		numParams = 1;
-		this.colorPickerController = colorPickerController;
+		this.backgroundController = backgroundController;
 	}
 	
 	public Object execute(List<Object> params) {
-		colorPickerController.setColorForBackgroundView(paramToInt(params.get(0)));
+		backgroundController.setColorForBackgroundView(paramToInt(params.get(0)));
 		return paramToInt(params.get(0));
 	}
 	
 	private int paramToInt(Object param) {
 		if (!(param instanceof Double || param instanceof Integer)) {
-			System.out.println("Invalid param type!");
 			return -1;
 		}
 		else if (param instanceof Double) {
@@ -36,8 +35,8 @@ public class SetBackground extends Command implements Executable {
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			int intParam = paramToInt(param);
-			if (intParam < 0 || intParam > colorPickerController.getPaletteSize()) {
-				return "Color index out of range!";
+			if (intParam < 0 || intParam > backgroundController.getPaletteSize()) {
+				return String.format(errors.getString("ColorIndex"), backgroundController.getPaletteSize());
 			}
 		}
 		return null;

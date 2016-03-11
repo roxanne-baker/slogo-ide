@@ -10,7 +10,7 @@ import view.Agent;
 public class Left extends TurtleCommand implements Executable {
 
 	public Left(TurtleController turtleController) {
-		setTurtleController(turtleController);
+		super(turtleController);
 		numParams = 1;
 	}
 		

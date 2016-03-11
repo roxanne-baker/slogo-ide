@@ -95,15 +95,15 @@ public class Interpreter extends Observable {
     		ParseNode cur = stack.pop();
     		if (cur.allParamsHaveValue()) { 
     			List<Object> params = cur.extractParamsFromNode();
-//    			String error = cur.getCommand().checkParamTypes(params);
-//    			if (error != null) {
-//    				sendError(error);
-//    				return;
-//    			}
-//    			else {
+    			String error = cur.getCommand().checkParamTypes(params);
+    			if (error != null) {
+    				sendError(error);
+    				return;
+    			}
+    			else {
     				result = cur.getCommand().execute(cur.extractParamsFromNode());
     				cur.setValue(result);
-//    			}
+    			}
     		}
     	}
     	if (result instanceof double[]) {

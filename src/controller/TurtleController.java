@@ -62,6 +62,15 @@ public class TurtleController extends Controller implements IAgentController{
 		} 
 	}
 	
+	
+	public int getColorPaletteSize() {
+		return colorPalette.getPaletteSize();
+	}
+	
+	public int getImagePaletteSize() {
+		return imagePalette.getPaletteSize();
+	}
+	
 	@Override
 	public void setActiveAgents(List<Integer> activeAgents) {
 		activeAgentList = activeAgents;

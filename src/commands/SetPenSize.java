@@ -5,13 +5,13 @@ import java.util.List;
 import controller.TurtleController;
 import view.Agent;
 
-public class SetPenSize extends Command implements Executable {
+public class SetPenSize extends TurtleCommand implements Executable {
 	
 	TurtleController turtleController;
 	
 	public SetPenSize(TurtleController turtleController) {
+		super(turtleController);
 		numParams = 1;
-		this.turtleController = turtleController;
 	}
 	
 	public Object execute(List<Object> params) {

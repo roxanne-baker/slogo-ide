@@ -1,6 +1,5 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 
 import controller.TurtleController;
@@ -9,7 +8,7 @@ import view.Agent;
 public class Towards extends TurtleCommand implements Executable {
 	
 	public Towards(TurtleController turtleController) {
-		setTurtleController(turtleController);
+		super(turtleController);
 		numParams = 2;
 	}
 	

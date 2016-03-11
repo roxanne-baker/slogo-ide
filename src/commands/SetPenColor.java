@@ -35,11 +35,11 @@ public class SetPenColor extends Command implements Executable {
 	}
 	
 	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			double[] intParam = paramToDoubleArray(param);
-//			if (intParam < 0 || intParam > colorPickerController.getNumColors()) {
-//				return "Color index out of range!";
-//			}
+		double[] paramArray = paramToDoubleArray(params.get(0));
+		for (int i=0; i<paramArray.length; i++) {
+			if (paramArray[i] < 0 || paramArray[i] > turtleController.getColorPaletteSize()) {
+				return String.format(errors.getString("ColorIndex"), turtleController.getColorPaletteSize());
+			}
 		}
 		return null;
 	}

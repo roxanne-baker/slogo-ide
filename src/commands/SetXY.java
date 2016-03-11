@@ -9,7 +9,7 @@ import view.Agent;
 public class SetXY extends TurtleCommand implements Executable {
 	
 	public SetXY(TurtleController turtleController) {
-		setTurtleController(turtleController);
+		super(turtleController);
 		numParams = 2;
 	}
 

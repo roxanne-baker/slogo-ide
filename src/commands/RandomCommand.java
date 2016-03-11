@@ -1,12 +1,11 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import controller.TurtleController;
 
-public class RandomCommand extends Command implements Executable {
+public class RandomCommand extends MathCommand implements Executable {
 
 	TurtleController turtleController;
 	public RandomCommand(TurtleController turtleController) {
@@ -15,7 +14,6 @@ public class RandomCommand extends Command implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
 		Random getRandInt = new Random();
 		double[] randomArray = new double[turtleController.getActiveAgents().size()];
 		for (int i=0; i<randomArray.length; i++) {
@@ -31,16 +29,5 @@ public class RandomCommand extends Command implements Executable {
 			}
 		}
 		return randomArray;
-	}
-	
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
-	}
-	
-	
+	}	
 }

@@ -9,19 +9,16 @@ public class Back extends TurtleCommand implements Executable {
 
 
 	public Back(TurtleController turtleController) {
+		super(turtleController);
 		numParams = 1;
-		setTurtleController(turtleController);
 	}
 	
 	public Object execute(List<Object> params) {
-		double[] distance = new double[getTurtleController().getActiveAgents().size()];
+		double[] distance = new double[getTurtleController().getNumActiveAgents()];
 		double[] orientation = getTurtleController().getAgentProperties((Agent agent) -> agent.getOrientation());
-		double[] changeX = new double[getTurtleController().getActiveAgents().size()];
-		double[] changeY = new double[getTurtleController().getActiveAgents().size()];
-		
-		List<Integer> activeAgents = getTurtleController().getActiveAgents();
-		
-		for (int i=0; i<activeAgents.size(); i++) {
+		double[] changeX = new double[getTurtleController().getNumActiveAgents()];
+		double[] changeY = new double[getTurtleController().getNumActiveAgents()];
+		for (int i=0; i<getTurtleController().getNumActiveAgents(); i++) {
 			if (params.get(0) instanceof Double) {
 				distance[i] = (Double) params.get(0);
 			}
