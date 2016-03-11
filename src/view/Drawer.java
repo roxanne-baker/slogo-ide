@@ -14,7 +14,7 @@ import javafx.scene.shape.Line;
 public class Drawer {
 	private static final String NO_SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)";
 	private static final String SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)";
-	private static final double OFFSET = 8;
+	private static final double DASH_OFFSET = 8;
 	private Pane agentGroup;
 	private List<ImageView> stampList;
 	private List<Node> lineList;
@@ -38,7 +38,7 @@ public class Drawer {
 		line.setStroke(color);
 		line.getStrokeDashArray().removeAll();
 		line.getStrokeDashArray().add(dash);
-		line.setStrokeDashOffset(OFFSET);
+		line.setStrokeDashOffset(DASH_OFFSET);
 		lineList.add(line);
 		agentGroup.getChildren().add(line);
 	}
@@ -64,7 +64,6 @@ public class Drawer {
 		if (!agentViewList.contains(img)){
 			agentViewList.add(img);
 			
-		
 		}
 	}
 
@@ -84,8 +83,6 @@ public class Drawer {
 		setLocation(newView, xPosition, yPosition);
 		agentGroup.getChildren().add(newView);
 		agentViewList.add(newView);
-
-		
 	}
 
 	public void clearAllLines() {

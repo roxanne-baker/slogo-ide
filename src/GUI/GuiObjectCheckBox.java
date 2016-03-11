@@ -1,6 +1,7 @@
 package GUI;
 
 import java.util.Observable;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 
 import javafx.beans.value.ChangeListener;
@@ -12,6 +13,7 @@ public class GuiObjectCheckBox extends GuiObject{
 	private boolean isChecked;
 	private CheckBox checkBox;
 	private BiConsumer<Observable, Boolean> setCheckedLambda;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	
 	public GuiObjectCheckBox(String name, String resourceBundle, Agent agent,BiConsumer<Observable,Boolean> lambda) {
 		super(name, resourceBundle, agent);

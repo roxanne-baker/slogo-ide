@@ -5,7 +5,6 @@ import javafx.scene.layout.HBox;
 
 public class MethodElem extends TextBox {
 	
-	
 	public MethodElem(String name, String value, Observer view) {
 		super(name+"\n   "+value);
 	}

@@ -12,11 +12,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -34,8 +31,6 @@ public class ViewAgentPreferences extends View{
 	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
-	private static final int PADDING = 15;
-	private Pane pane;
 	private ResourceBundle updateResources;
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
@@ -48,8 +43,21 @@ public class ViewAgentPreferences extends View{
 		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
+		addListenerToCurrentAgentProperty(currentAgentNameProperty);
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 
+	}
+
+	private void addListenerToCurrentAgentProperty(StringProperty property) {
+			property.addListener(new ChangeListener<Object>(){
+
+			@Override
+			public void changed(ObservableValue<? extends Object> ov,
+					Object oldValue, Object newValue) {
+					updateView();
+			}
+		});
+	
 	}
 
 	@Override
@@ -95,7 +103,7 @@ public class ViewAgentPreferences extends View{
 		for (String name: agentMap.keySet()){
 			agentDropDown.getItems().add(name);
 		}
-		agentDropDown.setValue("TURTLE"+currentAgentNameProperty.getValue());
+		agentDropDown.setValue(currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
             	currentAgentNameProperty.setValue(newValue);
