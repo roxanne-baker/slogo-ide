@@ -245,7 +245,6 @@ public class IntPar {
 		commandsMap.put("Quotient", new Divide());
 		commandsMap.put("Remainder", new Remainder());
 		commandsMap.put("Minus", new Minus());
-		commandsMap.put("Random", new RandomCommand());
 		commandsMap.put("Sine", new Sine());
 		commandsMap.put("Cosine", new Cosine());
 		commandsMap.put("Tangent", new Tangent());

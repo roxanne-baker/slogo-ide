@@ -39,7 +39,7 @@ public class AskWith extends Command implements Executable {
 			currentAgent.add(agentID);
 			turtleController.setActiveAgents(currentAgent);
 			interpreter.run(turtleCondition);
-			if (!isEqual(interpreter.getReturnResult(), 0)) {
+			if (!isEqual(Double.parseDouble(interpreter.getReturnResult()), 0)) {
 				turtlesMeetingCondition.add(agentID);
 			}
 			currentAgent.remove(agentID);

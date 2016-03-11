@@ -45,14 +45,20 @@ public class To extends Command implements Executable {
 				return String.format(errors.getString("WrongParamType"), command.toString());
 			}
 		}
+		String[] varNamesArray;
 		String varNamesParam = (String) params.get(1);
-		String[] varNamesArray = varNamesParam.split(" ");
+		if (varNamesParam.isEmpty()) { 
+			varNamesArray = new String[0];
+		}
+		else { 
+			varNamesArray = ((String) params.get(1)).trim().split(" ");
+		}
 		Pattern p = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
 		for (int i=0; i<varNamesArray.length; i++) {
 			if (!varNamesArray[i].startsWith(":")) {
 				return String.format(errors.getString("VariablePrecededByColon"));	
 			}
-			else if ((p.matcher(varNamesArray[i].substring(1)).find())) {
+			if ((p.matcher(varNamesArray[i].substring(1)).find())) {
 				return String.format(errors.getString("VariableHasInvalidChar"));				
 			}
 		}		

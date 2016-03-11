@@ -23,7 +23,7 @@ public class DoTimes extends ControlCommand implements Executable {
 
 		String varLimitCommand = varLimitExpr.substring(endVarNameIndex+1).trim();
 		interpreter.run(varLimitCommand);
-		double maxValue = interpreter.getReturnResult();
+		double maxValue = Double.parseDouble(interpreter.getReturnResult());
 		
 		String loopCommands = (String) params.get(1);
 		for (int i=1; i<=maxValue; i++) {

@@ -12,7 +12,6 @@ import view.ViewType;
 
 
 public class Interpreter extends Observable {
-
 	private Map<String, Command> commandsMap; 
 	private final String WHITESPACE = "\\p{Space}";
     private Parser lang = new Parser();
@@ -22,7 +21,7 @@ public class Interpreter extends Observable {
 	private BackgroundController backgroundController;
 	private MethodsController methodController;
 	private String errorMessage = new String();
-	private double returnResult; 
+	private String returnResult; 
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
@@ -54,7 +53,7 @@ public class Interpreter extends Observable {
     	if (text.trim().length() == 0) return;
     	String parsedFirst = parseText(takeFirst(text));
     	if (parsedFirst.equals("Constant")) { 
-    		returnResult =  Double.parseDouble(takeFirst(text));
+    		returnResult =  Double.parseDouble(takeFirst(text))+"";
     		return;
     	}
     	if (errorCommandName(parsedFirst) && errorCommandName(takeFirst(text))) { 
@@ -73,10 +72,10 @@ public class Interpreter extends Observable {
 	    	if (result instanceof double[]) {
 	    		double[] resultArray = (double[]) result;
 	    		if (resultArray == null || resultArray.length == 0) {
-	    			returnResult = 0;
+	    			returnResult = 0+"";
 	    		}
 	    		else {
-	    			returnResult = resultArray[resultArray.length-1];
+	    			returnResult = resultArray[resultArray.length-1]+"";
 	    		}
 	    	}
 			callBuildTree(cutFirst(text));
@@ -89,6 +88,7 @@ public class Interpreter extends Observable {
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
+    	int initNodeCount = stack.size();
 		Object result = new Object();
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
@@ -109,19 +109,23 @@ public class Interpreter extends Observable {
     	if (result instanceof double[]) {
     		double[] resultArray = (double[]) result;
     		if (resultArray == null || resultArray.length == 0) {
-    			returnResult = 0;
+    			returnResult = 0+"";
     		}
     		else {
-    			returnResult = resultArray[resultArray.length-1];
+    			returnResult = resultArray[resultArray.length-1]+"";
     		}
     	}
     	else {
     		if (result instanceof Integer) {
-    			returnResult = (int) result+0.0;
+    			returnResult = result + ""; 
+    			//returnResult = Integer.parseInt((Doubl) result)+0.0+"";
     		}
     		else {
-        		returnResult = (double) result;    			
+        		returnResult = result + "";    			
     		}
+    	}
+    	if (initNodeCount == 1) {
+    		sendResult(result+"");
     	}
     }
     
@@ -325,7 +329,9 @@ public class Interpreter extends Observable {
 			}
 			// may want to check for turtlequery/turtle command here
         	if (cur.getCommand().getNumParams() == 0) { 
-        		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
+        		double val = (double) cur.getCommand().execute(NO_PARAMS_LIST);
+        		cur.setValue(val);
+        		returnResult = val+""; 
         		attachNode(cur, commandStack);
         		return;
         	}
@@ -403,7 +409,7 @@ public class Interpreter extends Observable {
 		return errorMessage;
 	}
 	
-	public double getReturnResult() { 
+	public String getReturnResult() { 
 		return returnResult;
 	}
 	
@@ -411,6 +417,14 @@ public class Interpreter extends Observable {
 		errorMessage = message;
 		setChanged();
 		notifyObservers("ERROR");
+	}
+	
+	private void sendResult(String s) { 
+		if (parseText(s).equals("Constant")) { 
+			returnResult = s;
+			setChanged();
+			notifyObservers("RESULT");	
+		}
 	}
 
 //    private static String readFileToString (String filename) throws FileNotFoundException {
@@ -508,7 +522,6 @@ public class Interpreter extends Observable {
 		commandsMap.put("And", new And());
 		commandsMap.put("Or", new Or());
 		commandsMap.put("Not", new Not());
-		
 	}
     
     public void addCommandToMap(CreatedMethod method) { 
