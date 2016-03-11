@@ -1,13 +1,17 @@
 package view;
 
+import javafx.scene.paint.Color;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
+
+
 /**
  * This is a palette object for all the custom colors available for the user.
  * @author Melissa Zhang
  *
  */
+
 
 public class CustomColorPalette extends Palette{
 
@@ -19,7 +23,7 @@ public class CustomColorPalette extends Palette{
 	}
 	
 	@Override
-	public Object getPaletteObject(int index){
+	public CustomColor getPaletteObject(int index){
 		Color color = Color.web(getPaletteList().get(index).toString());
 		return new CustomColor((int)(color.getRed()*255),(int)(color.getGreen()*255),(int)(color.getBlue()*255));
 	}
@@ -30,8 +34,4 @@ public class CustomColorPalette extends Palette{
 		
 		return colorView.getView();
 	}
-
-
-
-	
 }

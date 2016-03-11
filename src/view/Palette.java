@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import controller.Controller;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
@@ -14,8 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Model;
 
-public abstract class Palette extends Controller{
+public abstract class Palette extends Model {
 	
 	protected String paletteName;
 	private ListProperty<Object> paletteObjectListProperty;
@@ -80,6 +80,7 @@ public abstract class Palette extends Controller{
 	public Object getPaletteObject(int index){
 		return paletteObjectListProperty.get(index);
 	}
+
 
 	public int getPaletteSize() {
 		return paletteObjectListProperty.size();

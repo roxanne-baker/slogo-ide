@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import javafx.scene.paint.Color;
 /**
  * This is the super class for all agents. This class keeps track of all the properties of an agent. 
@@ -35,7 +36,9 @@ public abstract class Agent extends Observable{
 	private DoubleProperty oldXPosition;
 	private BooleanProperty isVisible;
 	private DoubleProperty penThickness;
-	private StringProperty nameProperty;
+
+	private IntegerProperty idProperty;
+
 	private DoubleProperty sizeProperty;
 	private ResourceBundle updateResources;
 	private StringProperty penStyle;
@@ -43,7 +46,11 @@ public abstract class Agent extends Observable{
 	private CustomColorPalette myColorPalette;
 	private CustomImagePalette myImagePalette;
 	
-	public Agent(String name, double defaultXlocation, double defaultYlocation){
+	public Agent(Integer name, double defaultXlocation, double defaultYlocation){
+		agentXPosition = new SimpleDoubleProperty(0);
+		agentYPosition = new SimpleDoubleProperty(0);
+		oldXPosition = new SimpleDoubleProperty(0);
+		oldYPosition = new SimpleDoubleProperty(0);
 
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
 		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
@@ -57,7 +64,8 @@ public abstract class Agent extends Observable{
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = new SimpleBooleanProperty(true);
 		currentImageIndex = new SimpleIntegerProperty(DEFAULT_INDEX); 
-		nameProperty = new SimpleStringProperty(name);
+		idProperty = new SimpleIntegerProperty(name);
+
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		penStyle = new SimpleStringProperty(updateResources.getString("SOLID"));
 
@@ -162,18 +170,14 @@ public abstract class Agent extends Observable{
 		return oldYPosition.doubleValue();
 	}
 
-	public StringProperty getNameProperty() {
-		return nameProperty;
+	public IntegerProperty getIDProperty() {
+		return idProperty;
 	}
 	
-	public String getName(){
-		return nameProperty.getValue();
+	public Integer getName(){
+		return idProperty.getValue();
 	}
 
-	public void changeName(String newName) {
-		nameProperty.set(newName);
-		
-	}
 	public void setVisible(boolean isVis) {
 		isVisible.setValue(isVis);
 		setChanged();
@@ -210,7 +214,6 @@ public abstract class Agent extends Observable{
 		penColorIndex.setValue(colorIndex);
 		agentView.setPenColor((Color) ((CustomColor) myColorPalette.getPaletteObject(penColorIndex.getValue())).getColor());
 
-		
 	}
 	public int getPenColorIndex() {
 		return penColorIndex.getValue();

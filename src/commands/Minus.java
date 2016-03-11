@@ -9,8 +9,17 @@ public class Minus extends MathCommand implements Executable {
 		numParams = 1;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		// need to figure out how to communicate with front-end
-		return -((Double) params.get(0));
+		if (params.get(0) instanceof Double) {
+			return -((Double) params.get(0));
+		}
+		else {
+			double[] paramArray = (double[]) params.get(0);
+			for (int i=0; i<paramArray.length; i++) {
+				paramArray[i] *= -1;
+			}
+			return paramArray;
+		}
 	}
 }

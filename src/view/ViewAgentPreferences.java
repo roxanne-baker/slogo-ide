@@ -2,14 +2,13 @@ package view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -24,15 +23,17 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
+	private HashMap<Integer, Agent> agentMap;
+	private IntegerProperty currentAgentIDProperty;
+	private CustomColorPalette colorPalette;
+	
 
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET;
-	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
-	private StringProperty currentAgentNameProperty;
 	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
-	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	
 	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
@@ -40,13 +41,16 @@ public class ViewAgentPreferences extends View{
 		setY(CONSOLEY);
 		setPane(allPreferencesBox);
 		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
-		agentMap = new HashMap<String,Agent>();
-		currentAgentNameProperty = new SimpleStringProperty();
-		addListenerToCurrentAgentProperty(currentAgentNameProperty);
+
+		agentMap = new HashMap<Integer,Agent>();
+		currentAgentIDProperty = new SimpleIntegerProperty();
+
+		addListenerToCurrentAgentProperty(currentAgentIDProperty);
+
 
 	}
 
-	private void addListenerToCurrentAgentProperty(StringProperty property) {
+	private void addListenerToCurrentAgentProperty(IntegerProperty property) {
 			property.addListener(new ChangeListener<Object>(){
 
 			@Override
@@ -55,7 +59,6 @@ public class ViewAgentPreferences extends View{
 					updateView();
 			}
 		});
-	
 	}
 
 	@Override
@@ -77,9 +80,9 @@ public class ViewAgentPreferences extends View{
 
 		allPreferencesBox.getChildren().clear();
 		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
-		
-		setUpAgentDropDown();
-		
+
+		setUpAgentDropDown();		
+
 		VBox observerBox = new VBox();
 		allPreferencesBox.getChildren().add(observerBox);
 
@@ -87,9 +90,9 @@ public class ViewAgentPreferences extends View{
 		List<Node> mutableGuiObjectList = new ArrayList<Node>();
 
 		
-		if(currentAgentNameProperty.getValue()!=null){
-			populateObserverLabelList(agentMap.get(currentAgentNameProperty.getValue()), observerLabelList);
-			populateMutableGuiObjectList(agentMap.get(currentAgentNameProperty.getValue()),mutableGuiObjectList);
+		if(currentAgentIDProperty.getValue()!=null && currentAgentIDProperty.getValue() != 0){
+			populateObserverLabelList(agentMap.get(currentAgentIDProperty.getValue()), observerLabelList);
+			populateMutableGuiObjectList(agentMap.get(currentAgentIDProperty.getValue()),mutableGuiObjectList);
 			
 			addToAgentPrefBox(observerBox, observerLabelList);
 			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
@@ -98,19 +101,17 @@ public class ViewAgentPreferences extends View{
 
 	private void setUpAgentDropDown() {
 		ComboBox<String> agentDropDown = new ComboBox<String>();
-		for (String name: agentMap.keySet()){
-			agentDropDown.getItems().add(name);
+		for (Integer name: agentMap.keySet()){
+			agentDropDown.getItems().add(""+name);
 		}
-		agentDropDown.setValue(currentAgentNameProperty.getValue());
+		agentDropDown.setValue(currentAgentIDProperty.getValue().toString());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
-            	currentAgentNameProperty.setValue(newValue);
 				updateView();
             }
 		});
 		allPreferencesBox.getChildren().add(agentDropDown);
 	}
-
 
 	private void addToAgentPrefBox(Pane agentPrefBox,List<Node> ObjectList) {
 		for (Object object: ObjectList){
@@ -124,7 +125,6 @@ public class ViewAgentPreferences extends View{
 			Object guiObject= objectFactory.createNewGuiObject(property,agent);
 			if (guiObject!= null){
 				mutableGuiObjectList.add((Node) ((GuiObject) guiObject).createObjectAndReturnObject());
-			
 			}
 		}
 	}
@@ -139,18 +139,22 @@ public class ViewAgentPreferences extends View{
 			}
 		}
 	}
-	public void updateAgentMap(Map<String,Agent> newAgentMap){
-		agentMap = (HashMap<String, Agent>) newAgentMap;
+	public void updateAgentMap(HashMap<Integer,Agent> newAgentMap){
+		agentMap = (HashMap<Integer, Agent>) newAgentMap;
 		updateView();
 	}
 
 
-	public StringProperty getCurrentAgentNameProperty() {
-		return currentAgentNameProperty;
+	public IntegerProperty getCurrentAgentNameProperty() {
+		return currentAgentIDProperty;
 	}
 
 	public void updateCurrentAgentSelection() {
 		updateView();
+	}
+
+	public CustomColorPalette getColorPalette() {
+		return colorPalette;
 	}
 
 

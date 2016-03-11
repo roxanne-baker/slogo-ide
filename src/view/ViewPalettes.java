@@ -99,7 +99,6 @@ public class ViewPalettes extends View{
 		
 		try{
 			int intValue = Integer.parseInt(value);
-			System.out.println(intValue);
 			if(intValue<0 || intValue>255){
 				new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
 				return false;

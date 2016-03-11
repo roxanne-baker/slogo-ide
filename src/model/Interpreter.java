@@ -6,71 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Stack;
-
-import commands.XCor;
-import commands.YCor;
-import controller.Controller;
-import controller.MethodsController;
-import controller.TurtleController;
-import controller.VariablesController;
+import controller.*;
+import commands.*;
 import view.ViewType;
-import commands.ArcTangent;
-import commands.Back;
-import commands.ClearScreen;
-import commands.Command;
-import commands.Cosine;
-import commands.CreatedMethod;
-import commands.Difference;
-import commands.Divide;
-import commands.DoTimes;
-import commands.Equal;
-import commands.For;
-import commands.Forward;
-import commands.Greater;
-import commands.Heading;
-import commands.HideTurtle;
-import commands.Home;
-import commands.If;
-import commands.IfElse;
-import commands.Left;
-import commands.Less;
-import commands.Logarithm;
-import commands.MakeVar;
-import commands.Minus;
-import commands.NotEqual;
-import commands.PenDown;
-import commands.PenDownQuery;
-import commands.PenUp;
-import commands.Pi;
-import commands.Power;
-import commands.Product;
-import commands.RandomCommand;
-import commands.Remainder;
-import commands.Repeat;
-import commands.Right;
-import commands.SetHeading;
-import commands.SetXY;
-import commands.ShowTurtle;
-import commands.ShowingQuery;
-import commands.Sine;
-import commands.Sum;
-import commands.Tangent;
-import commands.To;
-import commands.Towards;
-import commands.TurtleCommand;
-import commands.TurtleQueryCommands;
+
 
 public class Interpreter extends Observable {
-
 	private Map<String, Command> commandsMap; 
 	private final String WHITESPACE = "\\p{Space}";
     private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
 	private TurtleController turtleController;
 	private VariablesController variableController;
+	private BackgroundController backgroundController;
 	private MethodsController methodController;
 	private String errorMessage = new String();
-	private double returnResult; 
+	private String returnResult; 
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
@@ -79,6 +30,7 @@ public class Interpreter extends Observable {
 		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
 		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
+		backgroundController = (BackgroundController) controllerMap.get(ViewType.PALETTES);
 		initializeCommandsMap();
 		initializeLangs();
 	}
@@ -101,7 +53,7 @@ public class Interpreter extends Observable {
     	if (text.trim().length() == 0) return;
     	String parsedFirst = parseText(takeFirst(text));
     	if (parsedFirst.equals("Constant")) { 
-    		returnResult =  Double.parseDouble(takeFirst(text));
+    		returnResult =  Double.parseDouble(takeFirst(text))+"";
     		return;
     	}
     	if (errorCommandName(parsedFirst) && errorCommandName(takeFirst(text))) { 
@@ -116,7 +68,16 @@ public class Interpreter extends Observable {
     		c = commandsMap.get(parsedFirst);
     	}
 		if (c.getNumParams() == 0) { 
-			returnResult = c.execute(NO_PARAMS_LIST);
+			Object result = c.execute(NO_PARAMS_LIST);
+	    	if (result instanceof double[]) {
+	    		double[] resultArray = (double[]) result;
+	    		if (resultArray == null || resultArray.length == 0) {
+	    			returnResult = 0+"";
+	    		}
+	    		else {
+	    			returnResult = resultArray[resultArray.length-1]+"";
+	    		}
+	    	}
 			callBuildTree(cutFirst(text));
 			return;
 		}
@@ -127,16 +88,45 @@ public class Interpreter extends Observable {
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
+    	int initNodeCount = stack.size();
 		Object result = new Object();
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
     		ParseNode cur = stack.pop();
     		if (cur.allParamsHaveValue()) { 
-    			result = cur.getCommand().execute(cur.extractParamsFromNode());
-    			cur.setValue(result);
+    			List<Object> params = cur.extractParamsFromNode();
+    			String error = cur.getCommand().checkParamTypes(params);
+    			if (error != null) {
+    				sendError(error);
+    				return;
+    			}
+    			else {
+    				result = cur.getCommand().execute(cur.extractParamsFromNode());
+    				cur.setValue(result);
+    			}
     		}
     	}
-    	returnResult = (double) result;
+    	if (result instanceof double[]) {
+    		double[] resultArray = (double[]) result;
+    		if (resultArray == null || resultArray.length == 0) {
+    			returnResult = 0+"";
+    		}
+    		else {
+    			returnResult = resultArray[resultArray.length-1]+"";
+    		}
+    	}
+    	else {
+    		if (result instanceof Integer) {
+    			returnResult = result + ""; 
+    			//returnResult = Integer.parseInt((Doubl) result)+0.0+"";
+    		}
+    		else {
+        		returnResult = result + "";    			
+    		}
+    	}
+    	if (initNodeCount == 1) {
+    		sendResult(result+"");
+    	}
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -339,7 +329,9 @@ public class Interpreter extends Observable {
 			}
 			// may want to check for turtlequery/turtle command here
         	if (cur.getCommand().getNumParams() == 0) { 
-        		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
+        		double val = (double) cur.getCommand().execute(NO_PARAMS_LIST);
+        		cur.setValue(val);
+        		returnResult = val+""; 
         		attachNode(cur, commandStack);
         		return;
         	}
@@ -417,7 +409,7 @@ public class Interpreter extends Observable {
 		return errorMessage;
 	}
 	
-	public double getReturnResult() { 
+	public String getReturnResult() { 
 		return returnResult;
 	}
 	
@@ -425,6 +417,14 @@ public class Interpreter extends Observable {
 		errorMessage = message;
 		setChanged();
 		notifyObservers("ERROR");
+	}
+	
+	private void sendResult(String s) { 
+		if (parseText(s).equals("Constant")) { 
+			returnResult = s;
+			setChanged();
+			notifyObservers("RESULT");	
+		}
 	}
 
 //    private static String readFileToString (String filename) throws FileNotFoundException {
@@ -448,15 +448,28 @@ public class Interpreter extends Observable {
 		addBooleanOps();
 		addControlStructureCommands();
 		commandsMap.put("MakeVariable", new MakeVar(variableController));
+		commandsMap.put("SetPalette", new SetPalette(backgroundController));
+		commandsMap.put("SetBackground", new SetBackground(backgroundController));
+		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
+		commandsMap.put("SetPenSize", new SetPenSize(turtleController));
+		commandsMap.put("SetShape", new SetShape(turtleController));
+		commandsMap.put("Stamp", new Stamp(turtleController));
+		commandsMap.put("ClearStamps",  new ClearStamps(backgroundController));
+		commandsMap.put("Tell", new Tell(turtleController));
+		commandsMap.put("ID", new TurtleID(turtleController));
+		commandsMap.put("Ask", new Ask(this, turtleController));
+		commandsMap.put("Turtles", new NumTurtles(turtleController));
+		commandsMap.put("AskWith", new AskWith(this, turtleController));
 	}
 	
     private void addControlStructureCommands() { 
     	commandsMap.put("Repeat", new Repeat(this));
-    	commandsMap.put("If", new If(this));
-    	commandsMap.put("IfElse", new IfElse(this));
+    	commandsMap.put("If", new If(this, turtleController));
+    	commandsMap.put("IfElse", new IfElse(this, turtleController));
     	commandsMap.put("For", new For(this, variableController));
-    	commandsMap.put("DoTimes", new DoTimes(this));
+    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
+    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
     }
     
 	private void addTurtleCommands() {
@@ -472,7 +485,7 @@ public class Interpreter extends Observable {
 		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
 		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
 		commandsMap.put("Home", new Home(turtleController));
-		commandsMap.put("ClearScreen", new ClearScreen(turtleController));
+		commandsMap.put("ClearScreen", new ClearScreen(turtleController, backgroundController));
 	}
 	
 	private void addTurtleQueries() {
@@ -481,6 +494,7 @@ public class Interpreter extends Observable {
 		commandsMap.put("Heading", new Heading(turtleController));
 		commandsMap.put("IsPenDown", new PenDownQuery(turtleController));
 		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
+		commandsMap.put("GetPenColor", new PenColorQuery(turtleController));
 	}
 	
 	private void addMathOps() {
@@ -490,7 +504,7 @@ public class Interpreter extends Observable {
 		commandsMap.put("Quotient", new Divide());
 		commandsMap.put("Remainder", new Remainder());
 		commandsMap.put("Minus", new Minus());
-		commandsMap.put("Random", new RandomCommand());
+		commandsMap.put("Random", new RandomCommand(turtleController));
 		commandsMap.put("Sine", new Sine());
 		commandsMap.put("Cosine", new Cosine());
 		commandsMap.put("Tangent", new Tangent());
@@ -505,6 +519,9 @@ public class Interpreter extends Observable {
 		commandsMap.put("GreaterThan", new Greater());
 		commandsMap.put("Equal", new Equal());
 		commandsMap.put("NotEqual", new NotEqual());
+		commandsMap.put("And", new And());
+		commandsMap.put("Or", new Or());
+		commandsMap.put("Not", new Not());
 	}
     
     public void addCommandToMap(CreatedMethod method) { 

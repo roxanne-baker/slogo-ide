@@ -13,7 +13,7 @@ public class ObserverLabelFactory {
 		//binding labels to their properties
 		switch(property){
 		case("NAME"):{
-			labelObject.getObserverLabel().textProperty().bind(agent.getNameProperty());
+			labelObject.getObserverLabel().textProperty().bind(agent.getIDProperty().asString());
 			return myLabel;
 		}
 		case("IMAGEPATH"):{

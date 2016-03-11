@@ -8,8 +8,16 @@ public class Tangent extends MathCommand implements Executable {
 		numParams = 1;
 	}
 	
-	public double execute(List<Object> params) {
-		double degrees = (double) params.get(0);
-		return Math.tan(degrees);
+	public Object execute(List<Object> params) {
+		if (params.get(0) instanceof Double) {
+			return Math.tan(Math.toRadians((double) params.get(0)));
+		}
+		else {
+			double[] paramArray = (double[]) params.get(0);
+			for (int i=0; i<paramArray.length; i++) {
+				paramArray[i] = Math.tan(Math.toRadians(paramArray[i]));
+			}
+			return paramArray;
+		}
 	}
 }

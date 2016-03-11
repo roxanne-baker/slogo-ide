@@ -1,10 +1,12 @@
 package view;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
@@ -82,8 +84,7 @@ public class ViewWindowPreferences extends View{
 	private void createFileSaver() {
 		Button fileSaver = new Button(WINDOW_RESOURCES.getString("COMMANDSSAVERBUTTON"));
 		fileSaver.setOnAction(evt -> {
-			//TODO Carolyn add code
-		
+			// blah 
 		});
 		windowPreferencesBox.getChildren().add(fileSaver);
 
@@ -98,9 +99,24 @@ public class ViewWindowPreferences extends View{
 		Button fileButton = new Button(WINDOW_RESOURCES.getString("COMMANDSLOADERBUTTON"));
 		fileButton.setOnAction(evt -> {
 			File file = fileChooser.showOpenDialog(stage);
-			//TODO: Carolyn add Code
+			myInterpreter.run(readText(file));
 		});
 		windowPreferencesBox.getChildren().add(fileButton);
+	}
+	
+	private static String readText (File file) {
+		StringBuilder sb = new StringBuilder();
+		try { 
+		    Scanner scan = new Scanner(file);
+		    while(scan.hasNextLine()){
+		        String line = scan.nextLine();
+		        sb.append(line);
+		        sb.append("\n");
+		    }
+		} catch (FileNotFoundException e) { 
+			System.out.println("couldn't find the file");
+		}
+		return sb.toString().trim();
 	}
 
 

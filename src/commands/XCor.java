@@ -3,6 +3,7 @@ package commands;
 import java.util.List;
 
 import controller.TurtleController;
+import view.Agent;
 
 public class XCor extends TurtleQueryCommands implements Executable{
 
@@ -11,8 +12,10 @@ public class XCor extends TurtleQueryCommands implements Executable{
 		numParams = 0; 
 	}
 	
-	public double execute(List<Object> params) {
-		return getTurtleController().getCurrentAgentXPosition();
+	public Object execute(List<Object> params) {
+		return getTurtleController().getAgentProperties((Agent agent) -> agent.getXPosition());
+		
+//		return getTurtleController().getCurrentAgentXPosition();
 	}
 }
 

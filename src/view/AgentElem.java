@@ -40,7 +40,7 @@ public class AgentElem {
 	}
 	public ImageView getImageCopy() {
 		imgCopy = new ImageView();
-		getImageViewFromFile(imgCopy, myAgent.getImagePath());
+		imgCopy = getImageViewFromFile(imgCopy, myAgent.getImagePath());
 		imgCopy.setRotate(myAgent.getOrientation());
 		return imgCopy;
 

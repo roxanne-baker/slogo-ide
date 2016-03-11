@@ -21,7 +21,6 @@ public abstract class View extends Observable implements Observer{
 		viewType = ID;
 		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 		pane.getStyleClass().add(cssResources.getString("DISPLAYVIEW"));
-
 	}
 	
 	public ViewType getType(){

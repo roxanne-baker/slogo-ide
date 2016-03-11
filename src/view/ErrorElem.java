@@ -10,6 +10,4 @@ public class ErrorElem extends TextBox {
 		super(errorMessage);
 		addStyleClass(myResources.getString("ERROR"));
 	}
-
-
 }

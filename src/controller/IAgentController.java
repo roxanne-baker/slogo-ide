@@ -1,6 +1,10 @@
 package controller;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
+import javafx.collections.ObservableList;
 import view.Agent;
 
 
@@ -10,43 +14,34 @@ import view.Agent;
  *
  */
 public interface IAgentController {
-	int getNumAgents();
+	int getNumTotalAgents();
+	int getNumActiveAgents();
 	List<Agent> getAgents();
-	List<String> getAgentNames();
-	void addAgent(String agentName); 
-	void removeAgent(String agentName);
-	boolean isAgent(String name); 
-	boolean isValidAgentName(String name);
+	List<Integer> getAgentNames();
+	
+	void setActiveAgents(List<Integer> activeAgents);
+	List<Integer> getActiveAgents();
+	
+	void addAgent(Integer agentName); 
+	void removeAgent(Integer agentName);
+	boolean isAgent(Integer name); 
+	boolean isValidAgentName(Integer name);
 	
 	//Specific to current agent
-	void setCurrentAgent(String agentName);
+	void setCurrentAgent(Integer agentName);
 
-	String getCurrentAgent();
-	void moveCurrentAgent(double changeX,double changeY);
-	double getCurrentAgentXPosition();
-	double getCurrentAgentYPosition();
+	Integer getCurrentAgent();
+	void moveCurrentAgent(double[] changeX,double[] changeY);
 
+	Agent getCurrentAgent(Integer agentName);
+	Integer getCurrentAgentName();
 
-	void setCurrentAgentImage(String imagePath);
-	void setCurrentAgentPenUp(boolean isUp);
-	boolean isCurrentAgentPenUp();
-	void setCurrentAgentPenColorIndex(int colorIndex);
-	void setCurrentAgentPenThickness(double thickness);
-	void setCurrentAgentShapeIndex(int shapeIndex);
-	int getCurrentAgentPenColorIndex();
-	int getCurrentAgentShapeIndex();
-	void setCurrentAgentVisible(boolean isVisible);
-	void changeCurrentAgentOrientation(double changeDegrees);
-	double getCurrentAgentOrientation();
-	void stampCurrentAgent();
-	void clearStamps(); //maybe somewhere else?
-
-	void changeCurrentAgentSize(double size); //don't think we need these
-	double getCurrentAgentSize(); //don't think we need these
-	Agent getCurrentAgent(String agentName);
-	String getCurrentAgentName();
-
+	//change agent properties
+	void changeProperty(Consumer<Agent> turtleMethod);
+	double[] getAgentProperties(Function<Agent, Double> propertyToGet);
+	void changeTurtleProperty(double[] changePropertyValues, BiConsumer<Agent, Double> changeProperty);
 	
+		
 	
 	
 }

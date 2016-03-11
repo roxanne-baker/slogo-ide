@@ -49,11 +49,9 @@ public class ViewAgentsUpdater {
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
 				myDrawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 				
-			}else if (updateType == UPDATE_RESOURCES.getString("CURRENT")){
-				myView.getCurrentAgentNameProperty().setValue(((Agent) agent).getName());
+			}else if (updateType == UPDATE_RESOURCES.getString("ACTIVE")){
 				if(myView.getIsSelectedAgentToggle()){
 					myDrawer.addSelectEffect(agentView.getImageView());
-					myDrawer.removeSelectEffectForNonSelectedTurtles(agentView.getImageView());
 				}else{
 					myDrawer.removeSelectEffect(agentView.getImageView());
 				}
@@ -68,6 +66,7 @@ public class ViewAgentsUpdater {
 		}
 
 	}
+	
 	private ImageView createNewImageViewWithHandler(Observable agent) {
 		ImageView newAgentImageView = (((Agent) agent).getAgentView().getImageView());
 		addImageHandler(newAgentImageView);
@@ -78,7 +77,8 @@ public class ViewAgentsUpdater {
 		img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 		     @Override
 		     public void handle(MouseEvent event) {
-		         updateView(imageAgentMap.get(img),UPDATE_RESOURCES.getString("CURRENT"));   
+		    	 myView.getActiveAgentListProperty().getValue().add(imageAgentMap.get(img).getName());
+		         updateView(imageAgentMap.get(img),UPDATE_RESOURCES.getString("ACTIVE"));   
 		     }
 		});
 	}

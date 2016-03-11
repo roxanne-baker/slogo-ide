@@ -8,11 +8,22 @@ public class Not extends Command implements Executable {
 		numParams = 1;
 	}
 	
-	public double execute(List<Object> params) {
-		if ((double) params.get(0) == 0) {
-			return 0;
+	public Object execute(List<Object> params) {
+		if (params.get(0) instanceof Double) {
+			if (isEqual((double) params.get(0), 0)) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
 		}
-		return 1;
+		else {
+			double[] notValues = (double[]) params.get(0);
+			for (int i=0; i<notValues.length; i++) {
+				notValues[i] = isEqual(notValues[i], 0) ? 1 : 0;
+			}
+			return notValues;
+		}
 	}
 	
 	public String checkParamTypes(List<Object> params) {

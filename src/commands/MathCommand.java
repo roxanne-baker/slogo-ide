@@ -6,7 +6,7 @@ public abstract class MathCommand extends Command implements Executable {
 	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
+			if (!(param instanceof Integer || param instanceof Double || param instanceof double[])) {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}			
 		}
