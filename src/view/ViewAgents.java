@@ -179,6 +179,7 @@ public class ViewAgents extends View{
 	}
 	
 	private void setUpSelectAgentToggle(){
+
 		CheckBox agentToggle = new CheckBox();
 		agentToggle = new CheckBox(UPDATE_RESOURCES.getString("SELECTAGENTLABEL"));
 		agentToggle.setSelected(isSelectedAgentToggle);
