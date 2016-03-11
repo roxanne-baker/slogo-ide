@@ -85,11 +85,11 @@ public class Interpreter extends Observable {
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
 	
-	public Interpreter(HashMap<ViewType,Controller> controllers) {
-		turtleController = (TurtleController) controllers.get(ViewType.AGENT); 
-		variableController = (VariablesController) controllers.get(ViewType.VARIABLES);
-		backgroundController = (BackgroundController) controllers.get(ViewType.BACKGROUND);
-		methodController = (MethodsController) controllers.get(ViewType.METHODS);
+	public Interpreter(Map<ViewType, Controller> controllerMap) {
+		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
+		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
+		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
+		backgroundController = (BackgroundController) controllerMap.get(ViewType.PALETTES);
 		initializeCommandsMap();
 		initializeLangs();
 	}
@@ -127,7 +127,16 @@ public class Interpreter extends Observable {
     		c = commandsMap.get(parsedFirst);
     	}
 		if (c.getNumParams() == 0) { 
-			returnResult = (double) c.execute(NO_PARAMS_LIST);
+			Object result = c.execute(NO_PARAMS_LIST);
+	    	if (result instanceof double[]) {
+	    		double[] resultArray = (double[]) result;
+	    		if (resultArray == null || resultArray.length == 0) {
+	    			returnResult = 0;
+	    		}
+	    		else {
+	    			returnResult = resultArray[resultArray.length-1];
+	    		}
+	    	}
 			callBuildTree(cutFirst(text));
 			return;
 		}
@@ -165,9 +174,13 @@ public class Interpreter extends Observable {
     		}
     	}
     	else {
-    		returnResult = (double) result;
+    		if (result instanceof Integer) {
+    			returnResult = (int) result+0.0;
+    		}
+    		else {
+        		returnResult = (double) result;    			
+    		}
     	}
- //   	returnResult = (double) result;
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {

@@ -1,12 +1,20 @@
 package controller;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+//<<<<<<< HEAD
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+//=======
+import java.util.ResourceBundle;
+//>>>>>>> refs/remotes/origin/master
 
 import view.Agent;
+import view.CustomColorPalette;
+import view.CustomImagePalette;
+import view.Palette;
 import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
@@ -17,18 +25,30 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
 
 
-
 public class TurtleController extends Controller implements IAgentController{
+
 
 	private HashMap<Integer,Agent> agentMap;
 	private IntegerProperty currentAgentNameProperty;
+	private static final String PALETTE_PROPERTIES = "Palettes";
+//	private HashMap<String,Agent> agentMap;
+//	private StringProperty currentAgentNameProperty;
+
 	private ViewAgentPreferences preferencesView;
 	private ViewAgents agentView;
 	private double observerWidth;
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
+//<<<<<<< HEAD
 	private List<Integer> activeAgentList;
+//=======
+	private CustomColorPalette colorPalette;
+	private CustomImagePalette imagePalette;
+	private ResourceBundle paletteResources;
+
+
+//>>>>>>> refs/remotes/origin/master
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
@@ -40,6 +60,8 @@ public class TurtleController extends Controller implements IAgentController{
 		offsetY = observerHeight/2;
 		activeAgentList  = new ArrayList<>();
 		currentAgentNameProperty = new SimpleIntegerProperty();
+		paletteResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
+
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
@@ -53,8 +75,6 @@ public class TurtleController extends Controller implements IAgentController{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
-
-
 	}
 	
 	public void setActiveAgents(List<Integer> activeAgents) {
@@ -76,9 +96,7 @@ public class TurtleController extends Controller implements IAgentController{
 	public List<Integer> getActiveAgents() {
 		return activeAgentList;
 	}
-	
-	
-	
+
 	@Override
 	public int getNumAgents() {
 		return agentMap.keySet().size();
@@ -103,13 +121,23 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
+//<<<<<<< HEAD
 	public void addAgent(Integer agentName) {
-		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY,agentView); //starts in middle of screen
+		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY); //starts in middle of screen
+//=======
+//	public void addAgent(String agentName) {
+//		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY); //starts in middle of screen
+		newTurtle.addObserver(preferencesView);
+		newTurtle.addObserver(agentView);
+		newTurtle.initialize();
+//>>>>>>> refs/remotes/origin/master
 		agentMap.put(agentName, newTurtle);
-		updateAgentMapInViews();
+		updateAgentMapInDisplayViews();
 		if (getNumAgents()==1){
 			setCurrentAgent(agentName);
 		}
+		newTurtle.setColorPalette(colorPalette);
+		newTurtle.setImagePalette(imagePalette);
 	}
 
 	@Override
@@ -118,12 +146,12 @@ public class TurtleController extends Controller implements IAgentController{
 		if(currentAgentNameProperty.getValue().equals(agentName)){
 			currentAgentNameProperty.setValue(null);
 		}
-		updateAgentMapInViews();
+		updateAgentMapInDisplayViews();
 
 		
 	}
 
-	private void updateAgentMapInViews() {
+	private void updateAgentMapInDisplayViews() {
 		preferencesView.updateAgentMap(agentMap);
 		agentView.updateAgentMap(agentMap);
 	}
@@ -137,7 +165,10 @@ public class TurtleController extends Controller implements IAgentController{
 		if(currentAgentNameProperty.getValue().equals(oldName)){
 			currentAgentNameProperty.setValue(newName);
 		}
-		updateAgentMapInViews();	
+//<<<<<<< HEAD
+//		updateAgentMapInViews();	
+//=======
+		updateAgentMapInDisplayViews();
 	}
 	
 	public Integer getCurrentAgent() { //needs to throw an error if null
@@ -207,9 +238,6 @@ public class TurtleController extends Controller implements IAgentController{
 		agentMap.get(currentAgentNameProperty.getValue()).setImagePath(imagePath);		
 	}
 
-//	public ImageView getCurrentAgentImageView(ImageView image) {
-//		return agentMap.get(currentAgentNameProperty).getImageView();
-//	}
 
 	@Override
 	public void setCurrentAgentPenUp(boolean isUp) {
@@ -233,7 +261,6 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public double getCurrentAgentOrientation() {
-		System.out.println(agentMap.get(currentAgentNameProperty.getValue()).getOrientation());
 		return agentMap.get(currentAgentNameProperty.getValue()).getOrientation();
 	}
 	@Override
@@ -294,45 +321,47 @@ public class TurtleController extends Controller implements IAgentController{
 //		}
 	}
 	
-	@Override
-	public void setCurrentAgentPenColor(int colorIndex) {
-		Color penColor = preferencesView.getColorPalette().getCustomColorList().get(colorIndex);
-		agentMap.get(currentAgentNameProperty.getValue()).setPenColor(penColor);
+//	@Override
+//<<<<<<< HEAD
+//	public void setCurrentAgentPenColor(int colorIndex) {
+//		Color penColor = preferencesView.getColorPalette().getCustomColorList().get(colorIndex);
+//		agentMap.get(currentAgentNameProperty.getValue()).setPenColor(penColor);
+//=======
+	public void setCurrentAgentPenColorIndex(int colorIndex) {
+		agentMap.get(currentAgentNameProperty.getValue()).setPenColorIndex(colorIndex);
+		
 	}
+//	@Override
+	public int getCurrentAgentPenColorIndex() {
+		return agentMap.get(currentAgentNameProperty.getValue()).getPenColorIndex();
+	}
+
 
 	@Override
 	public void setCurrentAgentPenThickness(double thickness) {
-		agentMap.get(currentAgentNameProperty.getValue()).setPenThickness(thickness);
+		agentMap.get(currentAgentNameProperty.getValue()).setPenThickness(thickness);;
 	}
 
-	@Override
-	public void setCurrentAgentShape(int shapeIndex) {
-		// TODO Auto-generated method stub
+
+	public void setCurrentAgentShapeIndex(int shapeIndex) { //actually images
+		agentMap.get(currentAgentNameProperty.getValue()).setCurrentImageIndex(shapeIndex);
 	}
 
-	@Override
-	public int getCurrentAgentColorIndex() {
-		List<Color> customColors = preferencesView.getColorPalette().getCustomColorList();
-		for (int i=0; i<customColors.size(); i++) {
-			if (customColors.get(i).equals(agentMap.get(currentAgentNameProperty.getValue()).getPenColor())) {
-				return i;
-			}
-		}
-		//COLOR INDEX NOT FOUND
-		return -1;
-	}
-	
-	@Override
-	public int getCurrentAgentShapeIndex() {
-//		// TODO Auto-generated method stub
+//	@Override
+//	public int getCurrentAgentColorIndex() {
 //		List<Color> customColors = preferencesView.getColorPalette().getCustomColorList();
 //		for (int i=0; i<customColors.size(); i++) {
 //			if (customColors.get(i).equals(agentMap.get(currentAgentNameProperty.getValue()).getPenColor())) {
 //				return i;
 //			}
 //		}
-		
-		return 0;
+//		//COLOR INDEX NOT FOUND
+//		return -1;
+//	}
+
+	@Override
+	public int getCurrentAgentShapeIndex() {
+		return 	agentMap.get(currentAgentNameProperty.getValue()).getCurrentImageIndex();
 	}
 
 	@Override
@@ -341,11 +370,37 @@ public class TurtleController extends Controller implements IAgentController{
 		
 	}
 
+	public void setColorPalette(CustomColorPalette customColorPalette) {
+		colorPalette = customColorPalette;
+		addPaletteToTurtles(customColorPalette);
+	}
+
+
+	public void setImagePalette(CustomImagePalette customImagePalette) {
+		imagePalette = customImagePalette;
+		addPaletteToTurtles(customImagePalette);
+		
+	}
+	
+	private void addPaletteToTurtles(Palette palette) {
+		for (Integer name: agentMap.keySet()){
+			if (palette.getPaletteName() == paletteResources.getString("CUSTOMCOLORS")){
+				agentMap.get(name).setColorPalette((CustomColorPalette) palette);
+				
+			}if (palette.getPaletteName() == paletteResources.getString("IMAGES")){
+				agentMap.get(name).setImagePalette((CustomImagePalette) palette);
+			}
+		}
+		
+	}
+
 	@Override
 	public void setColorPalette(int colorIndex, int red, int green, int blue) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 
 

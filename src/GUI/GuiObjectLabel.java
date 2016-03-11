@@ -12,21 +12,11 @@ public class GuiObjectLabel extends GuiObject{
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		myLabel = new Label(getResourceString().getString(getObjectName()+ "LABEL"));
+		myLabel = new Label(getResourceBundle().getString(getObjectName()+ "LABEL"));
 		
 		return myLabel;
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public void setIsNewSelection(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

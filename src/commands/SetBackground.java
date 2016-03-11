@@ -32,7 +32,7 @@ public class SetBackground extends Command implements Executable {
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			int intParam = paramToInt(param);
-			if (intParam < 0 || intParam > colorPickerController.getNumColors()) {
+			if (intParam < 0 || intParam > colorPickerController.getPaletteSize()) {
 				return "Color index out of range!";
 			}
 		}

@@ -13,7 +13,7 @@ public class Forward extends TurtleCommand implements Executable {
 		numParams = 1;
 		setTurtleController(turtleController);
 	}
-	
+
 	public Object execute(List<Object> params) {
 		double[] distance = new double[getTurtleController().getActiveAgents().size()];
 		double[] orientation = getTurtleController().getAgentProperties((Agent agent) -> agent.getOrientation());

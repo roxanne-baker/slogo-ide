@@ -23,7 +23,7 @@ public class GuiObjectFileOpener extends GuiObject{
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		button = new Button(getResourceString().getString(getObjectName()+"BUTTON"));
+		button = new Button(getResourceBundle().getString(getObjectName()+"BUTTON"));
 		button.setOnAction(new EventHandler() {
             public void handle(Event t) {
 
@@ -62,16 +62,5 @@ public class GuiObjectFileOpener extends GuiObject{
 	
 
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setIsNewSelection(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

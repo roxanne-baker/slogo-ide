@@ -3,6 +3,7 @@ package commands;
 
 import java.util.List;
 import controller.TurtleController;
+import view.Agent;
 
 public class PenColorQuery extends TurtleQueryCommands implements Executable{
 	
@@ -12,6 +13,6 @@ public class PenColorQuery extends TurtleQueryCommands implements Executable{
 	}
 	
 	public Object execute(List<Object> params) {
-		return turtleController.getCurrentAgentColorIndex();
+		return getTurtleController().getAgentProperties((Agent agent) -> agent.getPenColorIndex()+0.0);
 	}
 }

@@ -13,7 +13,7 @@ public class SetPenColor extends Command implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
-		turtleController.setCurrentAgentPenColor(paramToInt(params.get(0)));
+		turtleController.setCurrentAgentPenColorIndex(paramToInt(params.get(0)));
 		return paramToInt(params.get(0));
 	}
 	

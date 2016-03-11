@@ -4,16 +4,16 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 
 public class Drawer {
+	private static final String NO_SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)";
+	private static final String SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)";
 	private static final double OFFSET = 8;
 	private Pane agentGroup;
 	private List<ImageView> stampList;
@@ -70,12 +70,10 @@ public class Drawer {
 	}
 
 	public void addSelectEffect(ImageView img){
-		System.out.println("Add select effect");
-		img.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
+		img.setStyle(SELECT_EFFECT);
 	}
 	public void removeSelectEffect(ImageView imageView) {
-		System.out.println("Remove select effect");
-		imageView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)");
+		imageView.setStyle(NO_SELECT_EFFECT);
 	}
 	public void removeImage(ImageView agentView) {
 		agentGroup.getChildren().remove(agentView);
@@ -96,6 +94,7 @@ public class Drawer {
 			agentGroup.getChildren().remove(line);
 		}
 	}
+//<<<<<<< HEAD
 	public int clearAllStamps(){
 		if (!stampList.isEmpty()) {
 			
@@ -104,11 +103,20 @@ public class Drawer {
 			}
 			stampList.clear();
 			return 1;
+//=======
+//	public void clearAllStamps(){
+//		for (ImageView stamp: stampList){
+//			agentGroup.getChildren().remove(stamp);
+//>>>>>>> refs/remotes/origin/master
 		}
 		return 0;
 	}
-	public void removeSelectEffectForNonSelectedTurtles(ImageView imageView) {
-		// TODO Auto-generated method stub
+	public void removeSelectEffectForNonSelectedTurtles(ImageView selectedImageView) {
+		for (ImageView img: agentViewList){
+			if (!img.equals(selectedImageView)){
+				removeSelectEffect(img);
+			}
+		}
 		
 	}
 

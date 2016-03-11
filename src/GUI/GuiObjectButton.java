@@ -21,7 +21,7 @@ public class GuiObjectButton extends GuiObject{
 
 	@Override
 	public Object createObjectAndReturnObject() {
-		button = new Button(getResourceString().getString(buttonName));
+		button = new Button(getResourceBundle().getString(buttonName));
 		button.setOnAction(evt -> curBool = onAction);
 		return button;
 	}
@@ -37,16 +37,5 @@ public class GuiObjectButton extends GuiObject{
 		
 	}
 
-	@Override
-	public boolean isNewSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setIsNewSelection(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

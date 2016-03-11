@@ -16,7 +16,7 @@ public class SetPalette extends Command implements Executable {
 	public Object execute(List<Object> params) {
 		colorPickerController.addColor(paramToInt(params.get(0)),
 				paramToInt(params.get(1)), paramToInt(params.get(2)), paramToInt(params.get(3)));
-		return paramToInt(params.get(0));
+		return paramToInt(params.get(0))+0.0;
 	}
 	
 	private int paramToInt(Object param) {
@@ -32,7 +32,7 @@ public class SetPalette extends Command implements Executable {
 	
 	public String checkParamTypes(List<Object> params) {
 		int index = paramToInt(params.get(0));
-		if (index < 0 || index > colorPickerController.getNumColors()) {
+		if (index < 0 || index > colorPickerController.getPaletteSize()) {
 			return "Index too high!";
 		}
 		for (Object param : params) {

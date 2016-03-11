@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 import javafx.scene.paint.Color;
+import view.CustomColor;
+import view.CustomColorPalette;
 import view.ViewAgentPreferences;
 import view.ViewAgents;
 
@@ -9,7 +11,7 @@ public class BackgroundController extends Controller {
 
 	ViewAgentPreferences myPenModel;
 	ViewAgents myBackgroundModel;
-	Color colorToAdd;
+	CustomColorPalette myPalette;
 	
 	public BackgroundController(ViewAgentPreferences penModel, ViewAgents backgroundModel) {
 		myPenModel = penModel;
@@ -17,20 +19,15 @@ public class BackgroundController extends Controller {
 	}
 	
 	public void addColor(int index, int redVal, int greenVal, int blueVal) {
-		int numCustomColors = myPenModel.getColorPalette().getCustomColorList().size();
+		int numCustomColors = myPalette.getPaletteSize();
 		Color nextColor = Color.rgb(redVal, greenVal, blueVal);
-		if (numCustomColors == index) {
-			myPenModel.getColorPalette().addCustomColor(nextColor);
-		}
-		else {
-			myPenModel.getColorPalette().replaceCustomColor(index, nextColor);
-		}
-		myPenModel.setUpCustomColors();		
+		myPalette.addToPalette(nextColor, index);	
 	}
 	
 	public Color getNextColor(int index) {
-		List<Color> customColors = myPenModel.getColorPalette().getCustomColorList();
-		return customColors.get(index);	
+		
+		Color customColor = myPalette.getPaletteObject(index).getColor();
+		return customColor;	
 	}
 	
 	public void clearScreen() {
@@ -42,10 +39,14 @@ public class BackgroundController extends Controller {
 	}
 	
 	public void setColorForBackgroundView(int index) {
-		myBackgroundModel.setColor(getNextColor(index));
+		myBackgroundModel.setBackgroundColor(getNextColor(index));
 	}
 	
-	public int getNumColors() {
-		return myPenModel.getColorPalette().getCustomColorList().size();
+	public void setColorPalette(CustomColorPalette palette) {
+		myPalette = palette;
+	}
+	
+	public int getPaletteSize() {
+		return myPalette.getPaletteSize();
 	}
 }

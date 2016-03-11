@@ -29,12 +29,13 @@ public interface IAgentController {
 
 	void setCurrentAgentImage(String imagePath);
 	void setCurrentAgentPenUp(boolean isUp);
+
 	double isCurrentAgentPenUp();
-	void setCurrentAgentPenColor(int colorIndex);
+	void setCurrentAgentPenColorIndex(int colorIndex);
 	void setCurrentAgentPenThickness(double thickness);
-	void setCurrentAgentShape(int shapeIndex);
+	void setCurrentAgentShapeIndex(int shapeIndex);
 	void setColorPalette(int colorIndex, int red, int green, int blue);
-	int getCurrentAgentColorIndex();
+	int getCurrentAgentPenColorIndex();
 	int getCurrentAgentShapeIndex();
 	void setCurrentAgentVisible(boolean isVisible);
 	void changeCurrentAgentOrientation(double changeDegrees);

@@ -3,6 +3,16 @@
     	-fx-spacing: 10;
     	-fx-alignment: center;
 }
+
+.vbox {
+	-fx-spacing: 2;
+	-fx-alignment: center-left;
+}
+
+.vbox-view {
+	-fx-spacing: 15;
+}
+
 .code {
 	-fx-font-family: "Andale Mono";
 }
@@ -21,13 +31,11 @@
 
 .button{
 	-fx-font-family: "Andale Mono";
-	-fx-padding: 6;
    	-fx-font-size: 1em;
 	-fx-text-fill: #FFFFFF;
 	-fx-background-color: #43609c;
 	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,2,2 );
 }
-
 
 .combo-box {
 	-fx-font-family: "Andale Mono";
@@ -39,12 +47,20 @@
 .label {
 	-fx-font-family: "Andale Mono";
    	-fx-font-size: 1em;
+   	-fx-wrap-text: true;
 }
 
 .view {
-	-fx-background-color: #FFFFFF;
-	-fx-border-color: #43609c;
-	-fx-border-width: 2px;
+	-fx-padding: 5;
+}
+
+#agent-view {
+	-fx-border-color: black;
+	-fx-border-width:1;
 	-fx-border-style: solid;
-	-fx-padding: 10;
+}
+
+.radio-button {
+	-fx-font-family: "Andale Mono";
+	-fx-mark-color: #43609c;
 }
