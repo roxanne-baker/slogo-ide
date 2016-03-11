@@ -9,10 +9,11 @@ public class ObserverLabelFactory {
 	public Object createNewObserverLabel(String property, Agent agent){
 		ObserverLabel labelObject = new ObserverLabel(property,agent.getResourceString(), agent.getName());
 		Object myLabel = labelObject.createAndReturnObserverLabel();
-		//binding switch cases
+		
+		//binding labels to their properties
 		switch(property){
 		case("NAME"):{
-			labelObject.getObserverLabel().textProperty().bind(agent.getNameProperty().asString());
+			labelObject.getObserverLabel().textProperty().bind(agent.getIDProperty().asString());
 			return myLabel;
 		}
 		case("IMAGEPATH"):{

@@ -31,6 +31,11 @@ public class ViewHistory extends View implements Observer{
 		if(arg=="CLICKED"){
 			interpreter.run(((HistoryElem) o).getString());
 		}
+		if (arg=="RESULT") { 
+			Interpreter ip = (Interpreter) o;
+			ResultElem resultText = new ResultElem(ip.getReturnResult());
+			vb.getChildren().add(resultText.getTextBox());
+		}
 
 	}
 	

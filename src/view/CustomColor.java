@@ -5,7 +5,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-
+/**
+ * These are objects that have color properties. 
+ * @author Melissa Zhang
+ *
+ */
 public class CustomColor {
 	private ObjectProperty<Color> colorProperty;
 	

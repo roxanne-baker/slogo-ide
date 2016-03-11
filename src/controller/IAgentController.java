@@ -4,6 +4,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javafx.collections.ObservableList;
 import view.Agent;
 
 
@@ -40,6 +41,7 @@ public interface IAgentController {
 	double[] getAgentProperties(Function<Agent, Double> propertyToGet);
 	void changeTurtleProperty(double[] changePropertyValues, BiConsumer<Agent, Double> changeProperty);
 	
+		
 	
 	
 }

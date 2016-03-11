@@ -1,10 +1,12 @@
 package view;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
@@ -15,25 +17,31 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+/**
+ * This class displays all the window preferences for a workspace, such as language. The user can also upload a new Command or XML file here which will update the entire workspace. 
+ * @author Melissa Zhang
+ *
+ */
 
 public class ViewWindowPreferences extends View{
+	private static final String FILECHOOSER_FILTER = "SLOGO";
+	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
 	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH;
 	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
 	private static final double PADDING = 10;
-	private static final String WINDOW_PROPERTIES = "windowProperties";
+	private static final ResourceBundle WINDOW_RESOURCES = ResourceBundle.getBundle("windowProperties");
+	
 	private List<Node> guiList;
 	private String currentLanguage;
 	private VBox windowPreferencesBox;
 	private Interpreter myInterpreter;
 	private ComboBox<String> languageDropDown;
 	private Preferences savedPreferences;
-	private ResourceBundle windowResources;
 	
 
 	public ViewWindowPreferences(ViewType ID, Preferences savedPreferences) {
@@ -48,7 +56,6 @@ public class ViewWindowPreferences extends View{
 		myInterpreter = null;
 		currentLanguage = savedPreferences.getPreference("language").toString();
 		languageDropDown = new ComboBox<String>();
-		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		createView();
 	}
 
@@ -75,10 +82,9 @@ public class ViewWindowPreferences extends View{
 	}
 	
 	private void createFileSaver() {
-		Button fileSaver = new Button(windowResources.getString("COMMANDSSAVERBUTTON"));
+		Button fileSaver = new Button(WINDOW_RESOURCES.getString("COMMANDSSAVERBUTTON"));
 		fileSaver.setOnAction(evt -> {
-			//TODO Carolyn add code
-		
+			// blah 
 		});
 		windowPreferencesBox.getChildren().add(fileSaver);
 
@@ -87,13 +93,30 @@ public class ViewWindowPreferences extends View{
 
 	private void createCommandsFileChooser() {
 		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
+		fileChooser.getExtensionFilters().add(extFilter);
 		Stage stage = new Stage();
-		Button fileButton = new Button(windowResources.getString("COMMANDSLOADERBUTTON"));
+		Button fileButton = new Button(WINDOW_RESOURCES.getString("COMMANDSLOADERBUTTON"));
 		fileButton.setOnAction(evt -> {
 			File file = fileChooser.showOpenDialog(stage);
-			//TODO: Carolyn add Code
+			myInterpreter.run(readText(file));
 		});
 		windowPreferencesBox.getChildren().add(fileButton);
+	}
+	
+	private static String readText (File file) {
+		StringBuilder sb = new StringBuilder();
+		try { 
+		    Scanner scan = new Scanner(file);
+		    while(scan.hasNextLine()){
+		        String line = scan.nextLine();
+		        sb.append(line);
+		        sb.append("\n");
+		    }
+		} catch (FileNotFoundException e) { 
+			System.out.println("couldn't find the file");
+		}
+		return sb.toString().trim();
 	}
 
 

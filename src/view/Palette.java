@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Model;
@@ -19,8 +20,9 @@ public abstract class Palette extends Model {
 	protected String paletteName;
 	private ListProperty<Object> paletteObjectListProperty;
 	private Group paletteGroup;
-	private ResourceBundle myResources = ResourceBundle.getBundle("Palettes");
-	
+	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
+	private static final ResourceBundle DIALOG_RESOURCES = ResourceBundle.getBundle("DialogBox");
+
 
 	public Palette(ObservableList<Object> objectList){
 		paletteObjectListProperty = new SimpleListProperty<Object>(objectList);
@@ -30,7 +32,7 @@ public abstract class Palette extends Model {
 		return paletteName;
 	}
 	public ResourceBundle getResourceBundle(){
-		return myResources;
+		return PALETTE_RESOURCES;
 	}
 	public List<Object> getPaletteList(){
 
@@ -58,12 +60,12 @@ public abstract class Palette extends Model {
 	public abstract Node getPaletteObjectView(int index);
 	
 	public void addToPalette(Object obj, int index){
+		System.out.println("here");
 		if (index >= paletteObjectListProperty.size()){ //add new object at next available spot
 			paletteObjectListProperty.add(obj);
 			
 		}else if (index <0){
-			//throw error
-		}
+			new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("PALETTE"), DIALOG_RESOURCES.getString("PALETTEINFO"));		}
 		else{ //replace already existing object
 			paletteObjectListProperty.set(index, obj);
 
@@ -72,15 +74,13 @@ public abstract class Palette extends Model {
 	}
 	public void removeFromPalette(int index){
 		paletteObjectListProperty.remove(index);
+		updateViewGroup();
 	}
 	public Object getPaletteObject(int index){
 		return paletteObjectListProperty.get(index);
 	}
 
-	public void setNewPaletteList(ObservableList<Object> customList){
-			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
 
-	}
 	public int getPaletteSize() {
 		return paletteObjectListProperty.size();
 	}

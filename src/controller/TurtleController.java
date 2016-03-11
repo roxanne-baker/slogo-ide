@@ -15,45 +15,50 @@ import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-
+/**
+ * This class keeps track of all the turtles on the screen.
+ * @author Melissa Zhang
+ *
+ */
 public class TurtleController extends Controller implements IAgentController{
 
+	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
 	private HashMap<Integer,Agent> agentMap;
-	private IntegerProperty currentAgentNameProperty;
-	private static final String PALETTE_PROPERTIES = "Palettes";
+	private IntegerProperty currentAgentIDProperty;
+	private ListProperty<Integer> activeAgentListProperty;
 
 	private ViewAgentPreferences preferencesView;
-	private ViewAgents agentView;
+	private ViewAgents agentsView;
 	private double observerWidth;
 	private double observerHeight;
 	private double offsetX;
 	private double offsetY;
-	private List<Integer> activeAgentList;
-
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
-	private ResourceBundle paletteResources;
 	
 	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
-		agentView = obsView;
+		agentsView = obsView;
 		agentMap = new HashMap<Integer,Agent>();
 		observerWidth = obsView.getWidth();
 		observerHeight = obsView.getHeight();
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
-		activeAgentList  = new ArrayList<>();
-		currentAgentNameProperty = new SimpleIntegerProperty();
-		paletteResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 
-		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
-		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
-		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
+		currentAgentIDProperty = new SimpleIntegerProperty();
+		activeAgentListProperty = new SimpleListProperty<Integer>();
 		
-		activeAgentList.add(1);
-
+		//bing currentAgentNameProperty to property in agent view
+		prefView.getCurrentAgentNameProperty().bind(currentAgentIDProperty);
+		//bind bidirectionl ActiveAgentListProperty to property in agentView
+		activeAgentListProperty.bindBidirectional(obsView.getActiveAgentListProperty());
+		
 		
 		try {
 			Thread.sleep(2000);
@@ -71,18 +76,25 @@ public class TurtleController extends Controller implements IAgentController{
 		return imagePalette.getPaletteSize();
 	}
 	
+
 	@Override
 	public void setActiveAgents(List<Integer> activeAgents) {
-		activeAgentList = activeAgents;
+		ObservableList<Integer> observableList = FXCollections.observableArrayList(activeAgents);
+		activeAgentListProperty.setValue(observableList);
 		for (Integer agentID : activeAgents) {
 			if (!agentMap.containsKey(agentID) ) {
 				addAgent(agentID);
 			}
 		}
+
 	}
 	
 	@Override
 	public List<Integer> getActiveAgents() {
+		List<Integer> activeAgentList = new ArrayList<Integer>();
+		for (Integer item: activeAgentListProperty.getValue()){
+			activeAgentList.add(item);
+		}
 		return activeAgentList;
 	}
 
@@ -93,7 +105,7 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	@Override
 	public int getNumActiveAgents() {
-		return activeAgentList.size();
+		return activeAgentListProperty.size();
 	}
 
 	@Override
@@ -115,26 +127,30 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 
 	@Override
-	public void addAgent(Integer agentName) {
-		Turtle newTurtle = new Turtle(agentName, offsetX, offsetY); //starts in middle of screen
+	public void addAgent(Integer agentID) {
+		Turtle newTurtle = new Turtle(agentID, offsetX, offsetY); //starts in middle of screen
 
-		newTurtle.addObserver(agentView);
+		newTurtle.addObserver(agentsView);
 		newTurtle.initialize();
 
-		agentMap.put(agentName, newTurtle);
+		agentMap.put(agentID, newTurtle);
 		updateAgentMapInDisplayViews();
 		if (getNumTotalAgents()==1){
-			setCurrentAgent(agentName);
+			setCurrentAgent(agentID);
+			activeAgentListProperty.setValue(FXCollections.observableArrayList(agentID));
+
 		}
 		newTurtle.setColorPalette(colorPalette);
 		newTurtle.setImagePalette(imagePalette);
+		
+		
 	}
 
 	@Override
 	public void removeAgent(Integer agentName) {
 		agentMap.remove(agentName);
-		if(currentAgentNameProperty.getValue().equals(agentName)){
-			currentAgentNameProperty.setValue(null);
+		if(currentAgentIDProperty.getValue().equals(agentName)){
+			currentAgentIDProperty.setValue(null);
 		}
 		updateAgentMapInDisplayViews();
 	}
@@ -142,28 +158,16 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	private void updateAgentMapInDisplayViews() {
 		preferencesView.updateAgentMap(agentMap);
-		agentView.updateAgentMap(agentMap);
+		agentsView.updateAgentMap(agentMap);
 	}
 	
-//	public void renameAgent(Integer oldName, Integer newName){ //needs to throw an error
-//		if (isValidAgentName(newName)){
-//		Agent keepAgent = agentMap.get(oldName);
-//		keepAgent.changeName(newName);
-//		agentMap.remove(oldName);
-//		agentMap.put(newName, keepAgent);
-//		}
-//		if(currentAgentNameProperty.getValue().equals(oldName)){
-//			currentAgentNameProperty.setValue(newName);
-//		}
-//		updateAgentMapInDisplayViews();
-//	}
 	
 	@Override
 	public Integer getCurrentAgent() { //needs to throw an error if null
-		if (currentAgentNameProperty.getValue()==null){
+		if (currentAgentIDProperty.getValue()==null){
 			return null;
 		}
-		return currentAgentNameProperty.getValue();
+		return currentAgentIDProperty.getValue();
 	}
 	
 	@Override
@@ -178,34 +182,34 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	
 	public void changeProperty(Consumer<Agent> turtleMethod) {
-		for (Integer agentID : activeAgentList) {
+		for (Integer agentID : activeAgentListProperty.getValue()) {
 			setCurrentAgent(agentID);
-			turtleMethod.accept(agentMap.get(currentAgentNameProperty.getValue()));
+			turtleMethod.accept(agentMap.get(currentAgentIDProperty.getValue()));
 		}
 	}
 	
 	public double[] getAgentProperties(Function<Agent, Double> propertyToGet) {
-		double[] allAgentVals = new double[activeAgentList.size()];
+		double[] allAgentVals = new double[activeAgentListProperty.getValue().size()];
 
 		for (int i=0; i < allAgentVals.length; i++) {
-			setCurrentAgent(activeAgentList.get(i));
-			allAgentVals[i] = propertyToGet.apply(agentMap.get(currentAgentNameProperty.getValue()));
+			setCurrentAgent(activeAgentListProperty.getValue().get(i));
+			allAgentVals[i] = propertyToGet.apply(agentMap.get(currentAgentIDProperty.getValue()));
 		}
 		return allAgentVals;
 	}
 	
 	public void changeTurtleProperty(double[] changePropertyValues, BiConsumer<Agent, Double> changeProperty) {
-		for (int i=0; i<activeAgentList.size(); i++) {
-			setCurrentAgent(activeAgentList.get(i));
-			changeProperty.accept(agentMap.get(currentAgentNameProperty.getValue()), changePropertyValues[i]);
+		for (int i=0; i<activeAgentListProperty.getValue().size(); i++) {
+			setCurrentAgent(activeAgentListProperty.getValue().get(i));
+			changeProperty.accept(agentMap.get(currentAgentIDProperty.getValue()), changePropertyValues[i]);
 		}
 	}
 	
 	@Override
 	public void setCurrentAgent(Integer agentName) {
-		currentAgentNameProperty.setValue(agentName);	
+		currentAgentIDProperty.setValue(agentName);	
 		preferencesView.updateCurrentAgentSelection();
-		agentView.updateCurrentAgentView();
+
 	}
 
 	@Override
@@ -218,21 +222,23 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public Agent getCurrentAgent(Integer agentName) {
-		return agentMap.get(currentAgentNameProperty.getValue());
+		return agentMap.get(currentAgentIDProperty.getValue());
 	}
 	@Override
 	public Integer getCurrentAgentName() {
-		return currentAgentNameProperty.getValue();
+		return currentAgentIDProperty.getValue();
 	}
 	
 	@Override
 	public void moveCurrentAgent(double[] changeX, double[] changeY) {
 		for (int i=0; i<changeX.length; i++) {
-			setCurrentAgent(activeAgentList.get(i));
-			agentMap.get(currentAgentNameProperty.getValue()).movePosition(changeX[i], changeY[i]);			
+			setCurrentAgent(activeAgentListProperty.getValue().get(i));
+			agentMap.get(currentAgentIDProperty.getValue()).movePosition(changeX[i], changeY[i]);			
 		}
 
 	}
+
+
 
 	public void setColorPalette(CustomColorPalette customColorPalette) {
 		colorPalette = customColorPalette;
@@ -247,14 +253,18 @@ public class TurtleController extends Controller implements IAgentController{
 	}
 	
 	private void addPaletteToTurtles(Palette palette) {
+
 		for (Integer name: agentMap.keySet()){
-			if (palette.getPaletteName() == paletteResources.getString("CUSTOMCOLORS")){
+			if (palette.getPaletteName() == PALETTE_RESOURCES.getString("CUSTOMCOLORS")){
 				agentMap.get(name).setColorPalette((CustomColorPalette) palette);
 				
-			}if (palette.getPaletteName() == paletteResources.getString("IMAGES")){
+			}if (palette.getPaletteName() == PALETTE_RESOURCES.getString("IMAGES")){
 				agentMap.get(name).setImagePalette((CustomImagePalette) palette);
 			}
 		}
 		
 	}
+
+
+
 }

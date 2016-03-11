@@ -6,7 +6,7 @@ import java.util.List;
 import view.Agent;
 
 /**
- * This Factory class creates GuiObjects based on the type of gui object requested.
+ * This Factory class creates GuiObjects that are linked to an agent. 
  * @author Melissa Zhang
  *
  */
@@ -14,8 +14,8 @@ import view.Agent;
 
 public class GuiObjectFactory {
 	private static final String WINDOW_RESOURCES = "windowProperties";
-	private static final String HELP_FILE = "help.html";
 	private static final List<String> PEN_STYLE_LIST = Arrays.asList("SOLID","DASHED","DOTTED");
+	private static final String HELP_URL = "http://www.cs.duke.edu/courses/compsci308/spring16/assign/03_slogo/commands.php";
 
 	public GuiObjectFactory(){
 	}
@@ -43,7 +43,7 @@ public class GuiObjectFactory {
 			}
 
 			case("HELP"):{
-				return new GuiObjectFileOpener(type,WINDOW_RESOURCES, null , HELP_FILE);
+				return new GuiObjectURLOpener(type,WINDOW_RESOURCES, null , HELP_URL);
 			}
 			case("PENSTYLE"):{
 				return new GuiObjectRadioButton(type,agent.getResourceString(), agent, agent.getPenStyle(), PEN_STYLE_LIST, (a,s)->((Agent) a).setPenStyle(s));
