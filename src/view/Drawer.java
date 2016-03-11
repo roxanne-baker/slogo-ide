@@ -14,11 +14,15 @@ import javafx.scene.shape.Line;
 public class Drawer {
 	private static final String NO_SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)";
 	private static final String SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)";
-	private static final double OFFSET = 8;
+	private static final double DASH_OFFSET = 8;
 	private Pane agentGroup;
 	private List<ImageView> stampList;
 	private List<Node> lineList;
 	private List<ImageView> agentViewList;
+
+	private final int OFFSET_X = 250;
+	private final int OFFSET_Y = 250;
+	
 	public Drawer(Pane agentPane){
 		agentGroup = agentPane;
 		stampList = new ArrayList<ImageView>();
@@ -28,17 +32,16 @@ public class Drawer {
 
 	}
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color, double dash){
-
 		Line line = new Line();
-		line.setStartX(oldX);
-		line.setStartY(oldY);
-		line.setEndX(newX);
-		line.setEndY(newY);
+		line.setStartX(oldX + OFFSET_X);
+		line.setStartY(oldY + OFFSET_Y);
+		line.setEndX(newX + OFFSET_X);
+		line.setEndY(newY + OFFSET_Y);
 		line.setStrokeWidth(thickness);
 		line.setStroke(color);
 		line.getStrokeDashArray().removeAll();
 		line.getStrokeDashArray().add(dash);
-		line.setStrokeDashOffset(OFFSET);
+		line.setStrokeDashOffset(DASH_OFFSET);
 		lineList.add(line);
 		agentGroup.getChildren().add(line);
 	}
@@ -52,8 +55,8 @@ public class Drawer {
 		agentGroup.getChildren().add(img);
 	}
 	private void setLocation(ImageView img, double xPosition, double yPosition) {
-		img.setLayoutX(xPosition -  img.getBoundsInParent().getWidth()/2);
-		img.setLayoutY(yPosition - img.getBoundsInParent().getHeight()/2);
+		img.setLayoutX(xPosition + OFFSET_X -  img.getBoundsInParent().getWidth()/2);
+		img.setLayoutY(yPosition + OFFSET_Y - img.getBoundsInParent().getHeight()/2);
 
 	}
 	
@@ -63,8 +66,6 @@ public class Drawer {
 		agentGroup.getChildren().add(img);
 		if (!agentViewList.contains(img)){
 			agentViewList.add(img);
-			
-		
 		}
 	}
 
@@ -84,8 +85,6 @@ public class Drawer {
 		setLocation(newView, xPosition, yPosition);
 		agentGroup.getChildren().add(newView);
 		agentViewList.add(newView);
-
-		
 	}
 
 	public void clearAllLines() {
@@ -93,10 +92,17 @@ public class Drawer {
 			agentGroup.getChildren().remove(line);
 		}
 	}
-	public void clearAllStamps(){
-		for (ImageView stamp: stampList){
-			agentGroup.getChildren().remove(stamp);
+//<<<<<<< HEAD
+	public int clearAllStamps(){
+		if (!stampList.isEmpty()) {
+			
+			for (Node stamp: stampList){
+				agentGroup.getChildren().remove(stamp);
+			}
+			stampList.clear();
+			return 1;
 		}
+		return 0;
 	}
 	public void removeSelectEffectForNonSelectedTurtles(ImageView selectedImageView) {
 		for (ImageView img: agentViewList){

@@ -32,7 +32,6 @@ public class GuiObjectColorPicker extends GuiObject{
 	@Override
 	public Object createObjectAndReturnObject() {
 		colorPicker = new ColorPicker(initialColor);
-		colorPicker.getStyleClass().add("combo-box");
         colorPicker.setOnAction(new EventHandler() {
             public void handle(Event t) {
                 setValueFunction.accept(getObservable(), colorPicker.getValue());    

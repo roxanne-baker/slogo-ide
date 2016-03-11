@@ -2,6 +2,7 @@ package factory;
 
 import java.util.*;
 
+import controller.BackgroundController;
 import controller.Controller;
 import controller.MethodsController;
 import controller.TurtleController;
@@ -22,6 +23,7 @@ public class ControllerFactory {
 	
 	public ControllerFactory(HashMap<ViewType,Model> models,HashMap<ViewType,View> views){
 		allModels = models;
+		System.out.println(models);
 		allViews = views;
 	}
 	
@@ -33,6 +35,8 @@ public class ControllerFactory {
 			return new VariablesController((VariableModel)model,(ViewVariables)view);
 		case METHODS:
 			return new MethodsController((MethodModel)model,(ViewMethods)view);
+		case PALETTES:
+			return new BackgroundController((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES), (ViewAgents)allViews.get(ViewType.AGENT));
 		case AGENT:
 			return new TurtleController((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view);
 		}

@@ -9,6 +9,12 @@
 	-fx-alignment: center-left;
 }
 
+.workspace-menu {
+	-fx-spacing: 5;
+	-fx-background-color: #FFFFFF;
+	-fx-fill-height: true;
+}
+
 .vbox-view {
 	-fx-spacing: 15;
 }
@@ -44,6 +50,13 @@
 	-fx-background-color: #FFFFFF;
 }
 
+.combo-box-base {
+	-fx-font-family: "Andale Mono";
+   	-fx-font-size: 1em;
+	-fx-text-fill: #43609c;
+	-fx-background-color: #FFFFFF;
+	
+}
 .label {
 	-fx-font-family: "Andale Mono";
    	-fx-font-size: 1em;
@@ -60,6 +73,11 @@
 	-fx-border-style: solid;
 }
 
+.check-box {
+	-fx-font-family: "Andale Mono";
+	-fx-mark-color: #43609c;
+	-fx-alignment: center-left;
+}
 .radio-button {
 	-fx-font-family: "Andale Mono";
 	-fx-mark-color: #43609c;

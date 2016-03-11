@@ -16,7 +16,7 @@ public class For extends Command implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
 		// WANT TO GET MAX VALUE FOR VARIABLE
 		String variableStartEndIncrement = (String) params.get(0);
 		String[] forLoopCondition = variableStartEndIncrement.split(" ");
@@ -26,9 +26,9 @@ public class For extends Command implements Executable {
 		double increment = Double.parseDouble(forLoopCondition[3]);
 		
 		String commands = (String) params.get(1);
-		
+		System.out.println(variableController == null);
+		System.out.println(varName);		
 		for (double i=start; i<end; i+= increment) {
-			//interpreter.run("MAKE "+varName+" "+i);
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}

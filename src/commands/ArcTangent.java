@@ -8,8 +8,16 @@ public class ArcTangent extends MathCommand implements Executable {
 		numParams = 1;
 	}
 	
-	public double execute(List<Object> params) {
-		double degrees = (Double) params.get(0);
-		return Math.atan(degrees);
-	}	
+	public Object execute(List<Object> params) {
+		if (params.get(0) instanceof Double) {
+			return Math.atan(Math.toRadians((double) params.get(0)));
+		}
+		else {
+			double[] paramArray = (double[]) params.get(0);
+			for (int i=0; i<paramArray.length; i++) {
+				paramArray[i] = Math.atan(Math.toRadians(paramArray[i]));
+			}
+			return paramArray;
+		}
+	}
 }

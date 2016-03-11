@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import controller.Controller;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
@@ -13,8 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Model;
 
-public abstract class Palette extends Controller{
+public abstract class Palette extends Model {
 	
 	protected String paletteName;
 	private ListProperty<Object> paletteObjectListProperty;
@@ -77,10 +77,10 @@ public abstract class Palette extends Controller{
 		return paletteObjectListProperty.get(index);
 	}
 
-//	public void setNewPaletteList(ObservableList<Object> customList){
-//			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
-//
-//	}
+	public void setNewPaletteList(ObservableList<Object> customList){
+			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
+
+	}
 	public int getPaletteSize() {
 		return paletteObjectListProperty.size();
 	}
