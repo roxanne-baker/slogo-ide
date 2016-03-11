@@ -33,7 +33,7 @@ public class ViewHistory extends View implements Observer{
 		}
 		if (arg=="RESULT") { 
 			Interpreter ip = (Interpreter) o;
-			ResultElem resultText = new ResultElem(ip.getReturnResult()+"");
+			ResultElem resultText = new ResultElem(ip.getReturnResult());
 			vb.getChildren().add(resultText.getTextBox());
 		}
 
