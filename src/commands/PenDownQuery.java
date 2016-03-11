@@ -13,6 +13,6 @@ public class PenDownQuery extends TurtleQueryCommands implements Executable{
 	}
 	
 	public Object execute(List<Object> params) {
-		return getTurtleController().getAgentProperties((Agent agent) -> agent.isVisible());
+		return getTurtleController().getAgentProperties((Agent agent) -> (agent.isVisible() ? 1.0 : 0.0));
 	}
 }

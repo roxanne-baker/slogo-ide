@@ -10,7 +10,7 @@ public class NotEqual extends Command implements Executable {
 	
 	public Object execute(List<Object> params) {
 		if (params.get(0) instanceof Double && params.get(1) instanceof Double) {
-			return ((Double) params.get(0)).compareTo((Double) params.get(1)) != 0 ? 1 : 0;
+			return isEqual((Double) params.get(0), (Double) params.get(1)) ? 1 : 0;
 		}
 		else if (params.get(0) instanceof Double) {
 			return logicForFirstExprArrayOnly((double[]) params.get(1), (double) params.get(0));
@@ -25,14 +25,14 @@ public class NotEqual extends Command implements Executable {
 	
 	private double[] logicForFirstExprAndSecondExprArray(double[] firstExprArray, double[] secondExprArray) {
 		for (int i=0; i<firstExprArray.length; i++) {
-			firstExprArray[i] = ((Double) firstExprArray[i]).compareTo((Double) secondExprArray[i]) != 0 ? 1 : 0;
+			firstExprArray[i] = isEqual(firstExprArray[i], secondExprArray[i]) ? 1 : 0;
 		}
 		return firstExprArray;
 	}
 	
 	private double[] logicForFirstExprArrayOnly(double[] firstExprArray, double secondExprVal) {
 		for (int i=0; i<firstExprArray.length; i++) {
-			firstExprArray[i] = ((Double) firstExprArray[i]).compareTo((Double) secondExprVal) != 0 ? 1 : 0;
+			firstExprArray[i] = isEqual(firstExprArray[i], secondExprVal) ? 1 : 0;
 		}
 		return firstExprArray;
 	}

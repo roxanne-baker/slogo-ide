@@ -5,33 +5,33 @@ import java.util.List;
 import controller.TurtleController;
 import view.Agent;
 
-public class SetPenColor extends Command implements Executable {
+public class SetShape extends Command implements Executable {
 	
 	TurtleController turtleController;
 	
-	public SetPenColor(TurtleController turtleController) {
+	public SetShape(TurtleController turtleController) {
 		numParams = 1;
 		this.turtleController = turtleController;
 	}
 	
 	public Object execute(List<Object> params) {
-		turtleController.changeTurtleProperty(paramToDoubleArray(params.get(0)), (Agent agent, Double index) -> agent.setPenColorIndex(index.intValue()));
+		turtleController.changeTurtleProperty(paramToDoubleArray(params.get(0)), (Agent agent, Double index) -> agent.setCurrentImageIndex(index.intValue()));
 		return paramToDoubleArray(params.get(0));
 	} 
 	
 	private double[] paramToDoubleArray(Object param) {
-		double[] penColorArray = null;
+		double[] shapeArray = null;
 		if (!(param instanceof Double || param instanceof Integer || param instanceof double[])) {
 			System.out.println("Invalid param type!");
 		}
 		else if (param instanceof Double) {
-			penColorArray = new double[turtleController.getActiveAgents().size()];
-			Arrays.fill(penColorArray, ((Double) param));
+			shapeArray = new double[turtleController.getActiveAgents().size()];
+			Arrays.fill(shapeArray, ((Double) param));
 		}
 		else if (param instanceof double[]) {
-			penColorArray = (double[]) param;
+			shapeArray = (double[]) param;
 		}
-		return penColorArray;
+		return shapeArray;
 	}
 	
 	public String checkParamTypes(List<Object> params) {

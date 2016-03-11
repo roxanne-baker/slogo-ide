@@ -118,13 +118,8 @@ public abstract class Agent extends Observable{
 		setChanged();
 		notifyObservers(updateResources.getString("STAMP"));
 	}
-	public Double isPenUp(){
-		if (isVisible.getValue().TRUE) {
-			return 0.0;
-		}
-		else {
-			return 1.0;
-		}
+	public boolean isPenUp(){
+		return agentPenUp;
 	}
 	
 	public void setPenUp(boolean penBool){
@@ -211,13 +206,8 @@ public abstract class Agent extends Observable{
 		notifyObservers(updateResources.getString("UPDATE"));
 		
 	}
-	public Double isVisible(){
-		if (isVisible.getValue().TRUE) {
-			return 1.0;
-		}
-		else {
-			return 0.0;
-		}
+	public boolean isVisible(){
+		return isVisible.getValue();
 	}
 	
 	public abstract List<String> getMutableProperties();
@@ -242,6 +232,7 @@ public abstract class Agent extends Observable{
 	}
 	public void setPenColorIndex(int colorIndex) {
 		penColorIndex = colorIndex;
+		System.out.println("C ind: "+colorIndex);
 		agentView.setPenColor((Color) ((CustomColor) myColorPalette.getPaletteObject(penColorIndex)).getColor());	
 	}
 	public int getPenColorIndex() {

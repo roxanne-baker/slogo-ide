@@ -2,6 +2,7 @@ package commands;
 
 import java.util.List;
 import controller.TurtleController;
+import view.Agent;
 
 public class Stamp extends Command implements Executable {
 	
@@ -13,6 +14,8 @@ public class Stamp extends Command implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
+		turtleController.changeProperty(((Agent agent) -> agent.leaveStamp()));
+		
 		turtleController.stampCurrentAgent();
 		return turtleController.getCurrentAgentShapeIndex();
 	}

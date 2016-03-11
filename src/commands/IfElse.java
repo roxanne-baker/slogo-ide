@@ -22,7 +22,7 @@ public class IfElse extends ControlCommand implements Executable {
 		String falseCommands = (String) params.get(2);
 		if (params.get(0) instanceof Double) {
 			Double ifCondition = (double) params.get(0);
-			if (ifCondition.compareTo(new Double(0.0)) != 0) {
+			if (!isEqual(ifCondition, 0)) {
 				interpreter.run(trueCommands);
 			}
 			else {

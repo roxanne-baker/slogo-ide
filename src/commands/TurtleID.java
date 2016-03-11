@@ -3,17 +3,16 @@ package commands;
 import java.util.List;
 
 import controller.TurtleController;
+import view.Agent;
 
-public class TurtleID {
+public class TurtleID extends TurtleQueryCommands implements Executable{
 
-	TurtleController turtleController;
 	public TurtleID(TurtleController turtleController) {
-		this.turtleController = turtleController;
+		super(turtleController);
 	}
 	
-	public double execute(List<Object> params) {
-		return turtleController.getCurrentAgentName();
+	public Object execute(List<Object> params) {
+		return getTurtleController().getAgentProperties((Agent agent) -> agent.getName()+0.0);
 	}
-	
 	
 }

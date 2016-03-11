@@ -4,15 +4,14 @@ import java.util.List;
 
 import controller.TurtleController;
 
-public class NumTurtles {
+public class NumTurtles extends TurtleQueryCommands implements Executable{
 
-	TurtleController turtleController;
 	public NumTurtles(TurtleController turtleController) {
-		this.turtleController = turtleController;
+		super(turtleController);
 	}
 	
-	public double execute(List<Object> params) {
-		return turtleController.getNumAgents();
+	public Object execute(List<Object> params) {
+		return getTurtleController().getNumAgents()+0.0;
 	}
 	
 	

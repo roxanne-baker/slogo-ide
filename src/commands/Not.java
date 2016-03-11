@@ -18,7 +18,7 @@ public class Not extends Command implements Executable {
 	public Object execute(List<Object> params) {
 		double[] booleanConditionals = null;
 		if (params.get(0) instanceof Double) {
-			if (((Double) params.get(0)).compareTo(new Double(0.0)) == 0) {
+			if (isEqual((double) params.get(0), 0)) {
 				return 1;
 			}
 			else {
@@ -28,7 +28,7 @@ public class Not extends Command implements Executable {
 		else {
 			double[] notValues = (double[]) params.get(0);
 			for (int i=0; i<notValues.length; i++) {
-				notValues[i] = ((Double) notValues[i]).compareTo(new Double(0.0)) == 0 ? 1 : 0;
+				notValues[i] = isEqual(notValues[i], 0) ? 1 : 0;
 			}
 			return notValues;
 		}

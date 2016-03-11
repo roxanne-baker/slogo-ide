@@ -15,7 +15,10 @@ import controller.MethodsController;
 import controller.TurtleController;
 import controller.VariablesController;
 import view.ViewType;
+import commands.And;
 import commands.ArcTangent;
+import commands.Ask;
+import commands.AskWith;
 import commands.Back;
 import commands.ClearScreen;
 import commands.ClearStamps;
@@ -39,7 +42,10 @@ import commands.Less;
 import commands.Logarithm;
 import commands.MakeVar;
 import commands.Minus;
+import commands.Not;
 import commands.NotEqual;
+import commands.NumTurtles;
+import commands.Or;
 import commands.PenColorQuery;
 import commands.PenDown;
 import commands.PenDownQuery;
@@ -56,6 +62,7 @@ import commands.SetHeading;
 import commands.SetPalette;
 import commands.SetPenColor;
 import commands.SetPenSize;
+import commands.SetShape;
 import commands.SetXY;
 import commands.ShowTurtle;
 import commands.ShowingQuery;
@@ -67,6 +74,7 @@ import commands.Tell;
 import commands.To;
 import commands.Towards;
 import commands.TurtleCommand;
+import commands.TurtleID;
 import commands.TurtleQueryCommands;
 
 public class Interpreter extends Observable {
@@ -382,6 +390,7 @@ public class Interpreter extends Observable {
         		cur = new ParseNode(commandsMap.get(parsedFirst));
 			}
 			// may want to check for turtlequery/turtle command here
+			System.out.println(cur.getCommand());
         	if (cur.getCommand().getNumParams() == 0) { 
         		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
         		attachNode(cur, commandStack);
@@ -496,9 +505,14 @@ public class Interpreter extends Observable {
 		commandsMap.put("SetBackground", new SetBackground(backgroundController));
 		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
 		commandsMap.put("SetPenSize", new SetPenSize(turtleController));
+		commandsMap.put("SetShape", new SetShape(turtleController));
 		commandsMap.put("Stamp", new Stamp(turtleController));
 		commandsMap.put("ClearStamps",  new ClearStamps(backgroundController));
 		commandsMap.put("Tell", new Tell(turtleController));
+		commandsMap.put("ID", new TurtleID(turtleController));
+		commandsMap.put("Ask", new Ask(this, turtleController));
+		commandsMap.put("Turtles", new NumTurtles(turtleController));
+		commandsMap.put("AskWith", new AskWith(this, turtleController));
 	}
 	
     private void addControlStructureCommands() { 
@@ -558,6 +572,10 @@ public class Interpreter extends Observable {
 		commandsMap.put("GreaterThan", new Greater());
 		commandsMap.put("Equal", new Equal());
 		commandsMap.put("NotEqual", new NotEqual());
+		commandsMap.put("And", new And());
+		commandsMap.put("Or", new Or());
+		commandsMap.put("Not", new Not());
+		
 	}
     
     public void addCommandToMap(CreatedMethod method) { 

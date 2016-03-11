@@ -14,16 +14,6 @@ public class SetHeading extends TurtleCommand implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
-//		List<Integer> activeAgents = getTurtleController().getActiveAgents();
-//		double[] changeDegrees = new double[]{activeAgents.size()};
-//		if (params.get(0) instanceof Double) {
-//			Arrays.fill(changeDegrees, (double) params.get(0));
-//		}
-//		else {
-//			changeDegrees = (double[]) params.get(0);
-//		}			
-//		getTurtleController().changeTurtleProperty(changeDegrees, (Agent agent, Double degrees) -> agent.changeOrientation(degrees));
-//		return changeDegrees;
 		double[] orientationsToSet = new double[getTurtleController().getActiveAgents().size()];
 		if (params.get(0) instanceof Double) {
 			Arrays.fill(orientationsToSet, (double) params.get(0));
@@ -34,7 +24,6 @@ public class SetHeading extends TurtleCommand implements Executable {
 		getTurtleController().changeTurtleProperty(orientationsToSet,
 				(Agent agent, Double degrees) -> agent.changeOrientation(degrees - agent.getOrientation()));
 		
-
 		return orientationsToSet;
 	}
 }

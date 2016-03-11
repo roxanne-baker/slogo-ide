@@ -26,6 +26,10 @@ public class SetBackground extends Command implements Executable {
 		else if (param instanceof Double) {
 			return ((Double) param).intValue();
 		}
+		else if (param instanceof double[]) {
+			double[] paramArray = (double[]) param;
+			return ((Double) paramArray[paramArray.length-1]).intValue();
+		}
 		return (int) param;
 	}
 	

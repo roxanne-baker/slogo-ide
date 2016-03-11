@@ -66,7 +66,6 @@ public class TurtleController extends Controller implements IAgentController{
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
 		currentAgentNameProperty.bindBidirectional(obsView.getCurrentAgentNameProperty());
 		
-		addAgent(1); //always start with one agent
 		activeAgentList.add(1);
 
 		
@@ -246,7 +245,7 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public double isCurrentAgentPenUp() {
-		return agentMap.get(currentAgentNameProperty.getValue()).isPenUp();
+		return agentMap.get(currentAgentNameProperty.getValue()).isPenUp() ? 1 : 0;
 	}
 
 	@Override
@@ -328,6 +327,7 @@ public class TurtleController extends Controller implements IAgentController{
 //		agentMap.get(currentAgentNameProperty.getValue()).setPenColor(penColor);
 //=======
 	public void setCurrentAgentPenColorIndex(int colorIndex) {
+		System.out.println("D ind: "+colorIndex);
 		agentMap.get(currentAgentNameProperty.getValue()).setPenColorIndex(colorIndex);
 		
 	}

@@ -44,7 +44,7 @@ public class AgentElem implements Observer{
 	}
 	public ImageView getImageCopy() {
 		imgCopy = new ImageView();
-		getImageViewFromFile(imgCopy, myAgent.getImagePath());
+		imgCopy = getImageViewFromFile(imgCopy, myAgent.getImagePath());
 		imgCopy.setRotate(myAgent.getOrientation());
 		return imgCopy;
 

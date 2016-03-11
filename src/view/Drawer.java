@@ -61,6 +61,7 @@ public class Drawer {
 	}
 	
 	public void moveImage(ImageView img, double xPosition, double yPosition){
+		System.out.println("MOVE: "+img);
 		agentGroup.getChildren().remove(img);
 		setLocation(img, xPosition, yPosition);
 		agentGroup.getChildren().add(img);
@@ -103,11 +104,6 @@ public class Drawer {
 			}
 			stampList.clear();
 			return 1;
-//=======
-//	public void clearAllStamps(){
-//		for (ImageView stamp: stampList){
-//			agentGroup.getChildren().remove(stamp);
-//>>>>>>> refs/remotes/origin/master
 		}
 		return 0;
 	}

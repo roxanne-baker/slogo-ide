@@ -104,23 +104,18 @@ public class ViewAgents extends View{
 	@Override
 	public void update(Observable agent, Object updateType) {
 		AgentElem agentView = ((Agent) agent).getAgentView();
-		if((((Agent) agent).isVisible()).compareTo(1.0) == 0){
+		if((((Agent) agent).isVisible())){
 			if (updateType == updateResources.getString("STAMP")){
 				drawer.stampImage(agentView.getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-				System.out.println("aaa");
 			}else if (updateType == updateResources.getString("MOVE")){
 				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-				if((((Agent) agent).isPenUp()).compareTo(0.0) == 0){
+				if(!((Agent) agent).isPenUp()){
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(updateResources.getString(((Agent) agent).getPenStyle()+"DASH")));
 				}
-				System.out.println("bbb");
-
 			}else if (updateType == updateResources.getString("INITIAL")){ 
 				ImageView agentImageView = createNewImageViewWithHandler(agent);
 				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-				System.out.println("ccc");
 			}else if (updateType == updateResources.getString("IMAGEVIEW")){
-				System.out.println("ddd");
 				imageAgentMap.remove(agentView.getOldImageView());
 				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
 				drawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
@@ -132,10 +127,14 @@ public class ViewAgents extends View{
 				}else{
 					drawer.removeSelectEffect(agentView.getImageView());
 				}
-				System.out.println("eee");
 			}
 		}else if(updateType == updateResources.getString("VISIBLE")){
-			drawer.removeImage(agentView.getImageView());
+			if (((Agent) agent).isVisible()) {
+				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());			
+			}
+			else {
+				drawer.removeImage(agentView.getImageView());				
+			}
 			
 		}
 

@@ -1,7 +1,9 @@
 package commands;
 
+import java.util.Arrays;
 import java.util.List;
 import controller.TurtleController;
+import view.Agent;
 
 public class SetPenSize extends Command implements Executable {
 	
@@ -13,13 +15,22 @@ public class SetPenSize extends Command implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
-		turtleController.setCurrentAgentPenThickness((double) params.get(0));
-		return (double) params.get(0);
+		double[] penThicknessToSet = new double[turtleController.getActiveAgents().size()];
+		if (params.get(0) instanceof Double) {
+			Arrays.fill(penThicknessToSet, (double) params.get(0));
+		}
+		else {
+			penThicknessToSet = (double[]) params.get(0);
+		}
+		turtleController.changeTurtleProperty(penThicknessToSet,
+				(Agent agent, Double thickness) -> agent.setPenThickness(thickness));
+		
+		return penThicknessToSet;
 	}
 	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double)) {
+			if (!(param instanceof Integer || param instanceof Double || param instanceof double[])) {
 				return String.format(errors.getString("WrongParamType"), param.toString());
 			}			
 		}

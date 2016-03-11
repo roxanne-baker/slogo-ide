@@ -39,5 +39,12 @@ public abstract class Command implements Executable {
 	public int getNumParams() {
 		return numParams;
 	}
+	
+	protected boolean isEqual(double a, double b) {
+		if (Math.abs(a - b) < 0.00001) {
+			return true;
+		}
+		return false;
+	}
 
 }

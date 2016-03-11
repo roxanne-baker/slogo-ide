@@ -10,7 +10,7 @@ public class Divide extends MathCommand implements Executable {
 	
 	public Object execute(List<Object> params) {
 		if (params.get(0) instanceof Double && params.get(1) instanceof Double) {
-			return (Double) params.get(0) - (Double) params.get(1);
+			return (Double) params.get(0) / (Double) params.get(1);
 		}
 		else if (params.get(0) instanceof Double) {
 			return differenceForDivisorArrayOnly((double[]) params.get(1), (double) params.get(0));

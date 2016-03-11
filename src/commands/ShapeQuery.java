@@ -13,7 +13,7 @@ public class ShapeQuery {
 	}
 	
 	public Object execute(List<Object> params) {
-		return turtleController.getAgentProperties((Agent agent) -> agent.);
+		return turtleController.getAgentProperties((Agent agent) -> agent.getCurrentImageIndex()+0.0);
 	}
 	
 }

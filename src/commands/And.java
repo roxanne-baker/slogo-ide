@@ -39,7 +39,7 @@ public class And extends Command implements Executable {
 		else {
 			double[] nextCondition = (double[]) param;
 			for (int i=0; i<booleanConditionals.length; i++) {
-				if (((Double) nextCondition[i]).compareTo(new Double(0.0)) == 0) {
+				if (isEqual(nextCondition[i], 0)) {
 					booleanConditionals[i] = 0;
 				}
 			}

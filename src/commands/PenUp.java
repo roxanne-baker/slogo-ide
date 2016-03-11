@@ -14,7 +14,7 @@ public class PenUp extends TurtleQueryCommands implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
-		getTurtleController().changeProperty((Agent agent) -> agent.setPenUp(false));
+		getTurtleController().changeProperty((Agent agent) -> agent.setPenUp(true));
 		return 0;
 	}	
 }
