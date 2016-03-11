@@ -3,7 +3,11 @@ package view;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-
+/**
+ * This is a palette object for all the custom colors available for the user.
+ * @author Melissa Zhang
+ *
+ */
 
 public class CustomColorPalette extends Palette{
 

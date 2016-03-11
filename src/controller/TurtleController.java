@@ -14,9 +14,13 @@ import view.ViewAgentPreferences;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
+/*
+ * @
+ */
 public class TurtleController extends Controller implements IAgentController{
-	private static final String PALETTE_PROPERTIES = "Palettes";
+	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
+	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
+
 	private HashMap<String,Agent> agentMap;
 	private StringProperty currentAgentNameProperty;
 	private ViewAgentPreferences preferencesView;
@@ -27,7 +31,6 @@ public class TurtleController extends Controller implements IAgentController{
 	private double offsetY;
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
-	private ResourceBundle paletteResources;
 
 
 	
@@ -40,7 +43,6 @@ public class TurtleController extends Controller implements IAgentController{
 		offsetX = observerWidth/2;
 		offsetY = observerHeight/2;
 		currentAgentNameProperty = new SimpleStringProperty();
-		paletteResources = ResourceBundle.getBundle(PALETTE_PROPERTIES);
 
 		//bind CurrentAgentNameProperty to agentView and prefView currentAgentProperty
 		currentAgentNameProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
@@ -244,8 +246,7 @@ public class TurtleController extends Controller implements IAgentController{
 
 	@Override
 	public void clearStamps() {
-		// TODO Auto-generated method stub
-		
+		agentView.update(agentMap.get(currentAgentNameProperty.getValue()), UPDATE_RESOURCES.getString("CLEARSTAMPS"));
 	}
 
 	public void setColorPalette(CustomColorPalette customColorPalette) {
@@ -262,10 +263,10 @@ public class TurtleController extends Controller implements IAgentController{
 	
 	private void addPaletteToTurtles(Palette palette) {
 		for (String name: agentMap.keySet()){
-			if (palette.getPaletteName() == paletteResources.getString("CUSTOMCOLORS")){
+			if (palette.getPaletteName() == PALETTE_RESOURCES.getString("CUSTOMCOLORS")){
 				agentMap.get(name).setColorPalette((CustomColorPalette) palette);
 				
-			}if (palette.getPaletteName() == paletteResources.getString("IMAGES")){
+			}if (palette.getPaletteName() == PALETTE_RESOURCES.getString("IMAGES")){
 				agentMap.get(name).setImagePalette((CustomImagePalette) palette);
 			}
 		}

@@ -5,7 +5,11 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-
+/**
+ * These are labels that are binded to a specific property of an agent. 
+ * @author Melissa Zhang
+ *
+ */
 
 public class ObserverLabel implements Observer{
 	private String labelName;

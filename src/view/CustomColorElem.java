@@ -3,7 +3,11 @@ package view;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+/**
+ * This is the view for the CustomColor object
+ * @author Melissa Zhang
+ *
+ */
 public class CustomColorElem{
 	private CustomColor colorObject;
 	private Rectangle colorSquare;

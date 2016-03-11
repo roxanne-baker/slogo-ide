@@ -14,13 +14,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
- * This view displays all the agents and updates when the update method is called by the Agent Observables. This class keeps tracks of all the images on the screen and maps them to an Agent object.
+ * This view displays all the agents and updates when the update method is called by the Agent Observables.
  * @author Melissa Zhang
  *
  */
@@ -38,10 +36,10 @@ public class ViewAgents extends View{
 	private HBox agentViewPreferences;
 	private Pane agentPane;
 	private Boolean isSelectedAgentToggle;
-	private HashMap<ImageView,Agent> imageAgentMap;
 	private StringProperty currentAgentNameProperty;
-	protected HashMap<String, Agent> agentMap;
+	private HashMap<String, Agent> agentMap;
 	private Preferences savedPreferences;
+	private ViewAgentsUpdater viewUpdater;
 
 	
 	public ViewAgents(ViewType ID, Preferences savedPreferences) {
@@ -49,15 +47,15 @@ public class ViewAgents extends View{
 		setX(CONSOLEX);
 		setY(CONSOLEY);
 		isSelectedAgentToggle = true;
+		
 		currentAgentNameProperty = new SimpleStringProperty();
 		addListenerToCurrentAgentProperty(currentAgentNameProperty);
+		
 		agentMap = new HashMap<String,Agent>();
-		imageAgentMap = new HashMap<ImageView,Agent>();
-
+		
 		agentPane = getPane();
 		agentPane.setId((cssResources.getString("AGENTVIEW")));
 		drawer = new Drawer(agentPane);
-
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
 
 		agentViewPreferences = new HBox();
@@ -67,8 +65,26 @@ public class ViewAgents extends View{
 		
 		this.savedPreferences = savedPreferences;
 		setBackgroundColor(Color.valueOf(savedPreferences.getPreference("background").toString()));
+		
+		viewUpdater = new ViewAgentsUpdater(this,drawer);
 
+	}
+		
+	@Override
+	public Pane getView() {
+		setUpColorPicker();
+		setUpClearButton();
+		setUpSelectAgentToggle();
+		return super.getView();
+	}
 
+	@Override
+	public void update(Observable agent, Object updateType) {
+		viewUpdater.updateView((Agent)agent, (String) updateType);
+	}
+
+	public StringProperty getCurrentAgentNameProperty() {
+		return currentAgentNameProperty;
 	}
 	private void addListenerToCurrentAgentProperty(StringProperty property) {
 		property.addListener(new ChangeListener<Object>(){
@@ -82,7 +98,7 @@ public class ViewAgents extends View{
 
 }
 
-	public void setBackgroundColor(Color color){
+	private void setBackgroundColor(Color color){
 		agentPane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		backgroundColor = color;
 		savedPreferences.setPreference("background", backgroundColor.toString());
@@ -102,70 +118,7 @@ public class ViewAgents extends View{
         agentViewPreferences.getChildren().add(colorPicker);
 
 	}
-
-	@Override
-	public void update(Observable agent, Object updateType) {
-		AgentElem agentView = ((Agent) agent).getAgentView();
-		if(((Agent) agent).isVisible()){
-			if (updateType == UPDATE_RESOURCES.getString("STAMP")){
-				drawer.stampImage(agentView.getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-			
-			}else if (updateType == UPDATE_RESOURCES.getString("MOVE")){
-				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-				if(!((Agent) agent).isPenUp()){
-					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(UPDATE_RESOURCES.getString(((Agent) agent).getPenStyle()+"DASH")));
-				}
-
-			}else if (updateType == UPDATE_RESOURCES.getString("INITIAL")){ 
-				ImageView agentImageView = createNewImageViewWithHandler(agent);
-				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-			
-			}else if (updateType == UPDATE_RESOURCES.getString("IMAGEVIEW")){	
-				imageAgentMap.remove(agentView.getOldImageView());
-				ImageView newAgentImageView = createNewImageViewWithHandler(agent);
-				drawer.setNewImage(agentView.getOldImageView(),newAgentImageView,((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
-			}else if (updateType == UPDATE_RESOURCES.getString("CURRENT")){
-				currentAgentNameProperty.setValue(((Agent) agent).getName());
-				if(isSelectedAgentToggle){
-					drawer.addSelectEffect(agentView.getImageView());
-					drawer.removeSelectEffectForNonSelectedTurtles(agentView.getImageView());
-				}else{
-					drawer.removeSelectEffect(agentView.getImageView());
-				}
-			}
-		}else if(updateType == UPDATE_RESOURCES.getString("VISIBLE")){
-			drawer.removeImage(agentView.getImageView());
-			
-		}
-
-			
-	}
-
-	private ImageView createNewImageViewWithHandler(Observable agent) {
-		ImageView newAgentImageView = (((Agent) agent).getAgentView().getImageView());
-		addImageHandler(newAgentImageView);
-		imageAgentMap.put(newAgentImageView, (Agent) agent);
-		return newAgentImageView;
-	}
-			
-	@Override
-	public Pane getView() {
-		setUpColorPicker();
-		setUpClearButton();
-		setUpSelectAgentToggle();
-		return super.getView();
-	}
-	private void addImageHandler(ImageView img){
-		img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-		     @Override
-		     public void handle(MouseEvent event) {
-		         update(imageAgentMap.get(img),UPDATE_RESOURCES.getString("CURRENT"));   
-		     }
-		});
-	}
 	
-
 	private void setUpClearButton() {
 		Button clearButton = new Button(WINDOW_RESOURCES.getString("CLEARBUTTON"));
 		clearButton.setOnAction(new EventHandler() {
@@ -193,22 +146,25 @@ public class ViewAgents extends View{
 	    });
 	    agentViewPreferences.getChildren().add(agentToggle);
 	}
-	public double getWidth() {
-		return WIDE_WIDTH;
-	}
-	public double getHeight() {
-		return WIDE_WIDTH;
-	}
-	public StringProperty getCurrentAgentNameProperty() {
-		return currentAgentNameProperty;
-	}
+
 	public void updateCurrentAgentView(){
 		update(agentMap.get(currentAgentNameProperty.getValue()),UPDATE_RESOURCES.getString("CURRENT"));
-
 	}
 	public void updateAgentMap(HashMap<String, Agent> newAgentMap) {
 		agentMap = newAgentMap;
 		
+	}
+
+	public double getWidth() {
+		return WIDE_WIDTH;
+	}
+
+	public double getHeight() {
+		return WIDE_WIDTH;
+	}
+
+	public boolean getIsSelectedAgentToggle() {
+		return isSelectedAgentToggle;
 	}
 
 	

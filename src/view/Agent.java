@@ -5,33 +5,40 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
-
+/**
+ * This is the super class for all agents. This class keeps track of all the properties of an agent. 
+ * @author Melissa Zhang
+ *
+ */
 public abstract class Agent extends Observable{
 	private static final String DEFAULT_IMAGE_PATH = "dot.png";
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final int DEFAULT_PEN_THICKNESS = 2;
 	private static final double DEFAULT_SIZE = 50;
 	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
-	private int currentImageIndex;
+	private static final int DEFAULT_INDEX = 0;
+	private IntegerProperty currentImageIndex;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
-	private boolean agentPenUp;
-	private int  penColorIndex;
+	private BooleanProperty agentPenUp;
+	private IntegerProperty  penColorIndex;
 	private DoubleProperty orientation; 
 	private StringProperty agentImagePath;
 	private DoubleProperty oldYPosition;
 	private DoubleProperty oldXPosition;
 	private BooleanProperty isVisible;
-	private double penThickness;
+	private DoubleProperty penThickness;
 	private StringProperty nameProperty;
 	private DoubleProperty sizeProperty;
 	private ResourceBundle updateResources;
-	private String penStyle;
+	private StringProperty penStyle;
 	private AgentElem agentView;
 	private CustomColorPalette myColorPalette;
 	private CustomImagePalette myImagePalette;
@@ -43,16 +50,16 @@ public abstract class Agent extends Observable{
 		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
 		oldXPosition = new SimpleDoubleProperty(defaultXlocation);
 		oldYPosition = new SimpleDoubleProperty(defaultYlocation);
-		agentPenUp = false; //default value pen is down
-		penColorIndex = -1; //no index chosen
-		penThickness = DEFAULT_PEN_THICKNESS;
+		agentPenUp = new SimpleBooleanProperty(false); //default value pen is down
+		penColorIndex = new SimpleIntegerProperty(DEFAULT_INDEX); 
+		penThickness = new SimpleDoubleProperty(DEFAULT_PEN_THICKNESS);
 		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); 
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = new SimpleBooleanProperty(true);
-		currentImageIndex = -1; 
+		currentImageIndex = new SimpleIntegerProperty(DEFAULT_INDEX); 
 		nameProperty = new SimpleStringProperty(name);
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
-		penStyle = updateResources.getString("SOLID");
+		penStyle = new SimpleStringProperty(updateResources.getString("SOLID"));
 
 		agentView = new AgentElem(this);
 	
@@ -91,26 +98,26 @@ public abstract class Agent extends Observable{
 		notifyObservers(updateResources.getString("STAMP"));
 	}
 	public boolean isPenUp(){
-		return agentPenUp;
+		return agentPenUp.getValue();
 	}
 	
 	public void setPenUp(boolean penBool){
-		agentPenUp = penBool;
+		agentPenUp.setValue(penBool);
 	}
 
 	
 	public void setPenThickness(double thickness){
-		penThickness = thickness;
+		penThickness.setValue(thickness);
 
 	}
 	public double getPenThickness(){
-		return penThickness;
+		return penThickness.getValue();
 	}
 	public void setPenStyle(String style){
-		penStyle = style;
+		penStyle.setValue(style);
 	}
 	public String getPenStyle(){
-		return penStyle;
+		return penStyle.getValue();
 	}
 	
 	public StringProperty getImagePathProperty(){
@@ -191,22 +198,22 @@ public abstract class Agent extends Observable{
 		return isVisible;
 	}
 	public int getCurrentImageIndex(){
-		return currentImageIndex;
+		return currentImageIndex.getValue();
 	}
 
 	public void setCurrentImageIndex(int imageIndex){
-		currentImageIndex = imageIndex;
-		setImagePath((String) myImagePalette.getPaletteObject(currentImageIndex));
+		currentImageIndex.setValue(imageIndex);
+		setImagePath((String) myImagePalette.getPaletteObject(currentImageIndex.getValue()));
 
 	}
 	public void setPenColorIndex(int colorIndex) {
-		penColorIndex = colorIndex;
-		agentView.setPenColor((Color) ((CustomColor) myColorPalette.getPaletteObject(penColorIndex)).getColor());
+		penColorIndex.setValue(colorIndex);
+		agentView.setPenColor((Color) ((CustomColor) myColorPalette.getPaletteObject(penColorIndex.getValue())).getColor());
 
 		
 	}
 	public int getPenColorIndex() {
-		return penColorIndex;
+		return penColorIndex.getValue();
 	}
 	public AgentElem getAgentView() {
 		return agentView;
@@ -227,6 +234,10 @@ public abstract class Agent extends Observable{
 	}
 	public CustomColorPalette getColorPalette(){
 		return myColorPalette;
+	}
+	public void setDefaultImageIndex() {
+		currentImageIndex.setValue(DEFAULT_INDEX);
+		
 	}
 
 }	

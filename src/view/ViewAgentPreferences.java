@@ -19,19 +19,18 @@ import javafx.scene.layout.VBox;
 
 
 /**
- * This class is an extension of the View abstract class. It will display all the Agents properties and will be user interactive. 
+ * This class displays all the Agents properties with some components that can/cannot be changed by the user. 
  * @author Melissa Zhang
  *
  */
 public class ViewAgentPreferences extends View{
 
-	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET;
 	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
 	private StringProperty currentAgentNameProperty;
-	private ResourceBundle updateResources;
+	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	
@@ -44,7 +43,6 @@ public class ViewAgentPreferences extends View{
 		agentMap = new HashMap<String,Agent>();
 		currentAgentNameProperty = new SimpleStringProperty();
 		addListenerToCurrentAgentProperty(currentAgentNameProperty);
-		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 
 	}
 
@@ -62,9 +60,9 @@ public class ViewAgentPreferences extends View{
 
 	@Override
 	public void update(Observable agent, Object updateType) {
-		if (updateType == updateResources.getString("COLORPALETTE") ){
+		if (updateType == UPDATE_RESOURCES.getString("COLORPALETTE") ){
 			updateView();
-		}else if (updateType == updateResources.getString("IMAGEPALETTE")){
+		}else if (updateType == UPDATE_RESOURCES.getString("IMAGEPALETTE")){
 			updateView();
 		}
 		

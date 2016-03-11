@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Turtle extends Agent{
 	private static final String RESOURCE_PROPERTIES = "TurtleProperties";
-
 	private static final String TURTLE_IMAGE_PATH = "turtle.png";
 	private static final List<String> MUTABLE_LIST = Arrays.asList("PENWIDTH","PENCOLOR","PENUP","IMAGEPATH", "PENSTYLE");
 	private static final List<String> OBSERVER_LIST = Arrays.asList("NAME","VISIBLE","XPOSITION","YPOSITION","ORIENTATION","SIZE");

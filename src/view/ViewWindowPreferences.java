@@ -15,10 +15,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+/**
+ * This class displays all the window preferences for a workspace, such as language. The user can also upload a new Command or XML file here which will update the entire workspace. 
+ * @author Melissa Zhang
+ *
+ */
 
 public class ViewWindowPreferences extends View{
 	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH;
@@ -26,14 +30,13 @@ public class ViewWindowPreferences extends View{
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
 	private static final double PADDING = 10;
-	private static final String WINDOW_PROPERTIES = "windowProperties";
+	private static final ResourceBundle WINDOW_RESOURCES = ResourceBundle.getBundle("windowProperties");
 	private List<Node> guiList;
 	private String currentLanguage;
 	private VBox windowPreferencesBox;
 	private Interpreter myInterpreter;
 	private ComboBox<String> languageDropDown;
 	private Preferences savedPreferences;
-	private ResourceBundle windowResources;
 	
 
 	public ViewWindowPreferences(ViewType ID, Preferences savedPreferences) {
@@ -48,7 +51,6 @@ public class ViewWindowPreferences extends View{
 		myInterpreter = null;
 		currentLanguage = savedPreferences.getPreference("language").toString();
 		languageDropDown = new ComboBox<String>();
-		windowResources = ResourceBundle.getBundle(WINDOW_PROPERTIES);
 		createView();
 	}
 
@@ -75,7 +77,7 @@ public class ViewWindowPreferences extends View{
 	}
 	
 	private void createFileSaver() {
-		Button fileSaver = new Button(windowResources.getString("COMMANDSSAVERBUTTON"));
+		Button fileSaver = new Button(WINDOW_RESOURCES.getString("COMMANDSSAVERBUTTON"));
 		fileSaver.setOnAction(evt -> {
 			//TODO Carolyn add code
 		
@@ -88,7 +90,7 @@ public class ViewWindowPreferences extends View{
 	private void createCommandsFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		Stage stage = new Stage();
-		Button fileButton = new Button(windowResources.getString("COMMANDSLOADERBUTTON"));
+		Button fileButton = new Button(WINDOW_RESOURCES.getString("COMMANDSLOADERBUTTON"));
 		fileButton.setOnAction(evt -> {
 			File file = fileChooser.showOpenDialog(stage);
 			//TODO: Carolyn add Code
