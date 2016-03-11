@@ -25,7 +25,6 @@ import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
-	private static final int WINDOW_PREF_OFFSET = 1000;
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = ViewType.values();
@@ -40,7 +39,8 @@ public class Workspace implements Observer {
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
 	private Stage myStage;
-	private ResourceBundle myResources = ResourceBundle.getBundle("windowProperties");
+	private ResourceBundle windowResources = ResourceBundle.getBundle("windowProperties");
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private Preferences myPreferences;
 	
 	public Workspace(Stage stage, Preferences preferences){
@@ -81,18 +81,18 @@ public class Workspace implements Observer {
 
 	private void initWindowMenu(){
 		HBox viewMenu = new HBox();
+		viewMenu.getStyleClass().add(cssResources.getString("WORKSPACEMENU"));
 		
-		Button newWorkspaceBtn = new Button(myResources.getString("NEWWORKSPACEBUTTON"));
+		Button newWorkspaceBtn = new Button(windowResources.getString("NEWWORKSPACEBUTTON"));
 		newWorkspaceBtn.setOnMouseClicked(e->openWorkspace());
 		
-		Button savePrefBtn = new Button(myResources.getString("SAVEPREFBUTTON"));
+		Button savePrefBtn = new Button(windowResources.getString("SAVEPREFBUTTON"));
 		savePrefBtn.setOnMouseClicked(e->savePreferences());
 		
-		Button loadPrefBtn = new Button("Load Preferences");
+		Button loadPrefBtn = new Button(windowResources.getString("LOADPREFBUTTON"));
 		loadPrefBtn.setOnMouseClicked(e->loadPreferences());
 		
 		viewMenu.getChildren().addAll(newWorkspaceBtn,savePrefBtn,loadPrefBtn);
-		viewMenu.setLayoutX(WINDOW_PREF_OFFSET);
 		
 		
 		for(ViewType type: views){

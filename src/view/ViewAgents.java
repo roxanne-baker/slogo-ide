@@ -150,7 +150,6 @@ public class ViewAgents extends View{
 		setUpColorPicker();
 		setUpClearButton();
 		setUpSelectAgentToggle();
-		//return agentPane;
 		return super.getView();
 	}
 	private void addImageHandler(ImageView img){
@@ -179,8 +178,7 @@ public class ViewAgents extends View{
 	}
 	
 	private void setUpSelectAgentToggle(){
-		CheckBox agentToggle = new CheckBox();
-		agentToggle = new CheckBox(updateResources.getString("SELECTAGENTLABEL"));
+		CheckBox agentToggle = new CheckBox(updateResources.getString("SELECTAGENTLABEL"));
 		agentToggle.setSelected(isSelectedAgentToggle);
 	    agentToggle.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    

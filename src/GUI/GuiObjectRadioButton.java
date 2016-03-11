@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import view.Agent;
 
 public class GuiObjectRadioButton extends GuiObject{
-	private static final double PADDING = 10;
 	private String initialToggle;
 	private ArrayList<RadioButton> buttonList;
 	private ToggleGroup radioButtonGroup;
@@ -71,7 +70,6 @@ public class GuiObjectRadioButton extends GuiObject{
 		
 		radioLabel = new Label(getResourceBundle().getString(getObjectName()+"LABEL"));
 		VBox stateControls = new VBox();
-		stateControls.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 		stateControls.getChildren().add(radioLabel);
 		for(RadioButton button: buttonList){
 			stateControls.getChildren().add(button);

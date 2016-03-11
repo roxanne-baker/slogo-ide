@@ -18,19 +18,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ComboBoxBase;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewWindowPreferences extends View{
-	private static final int CONSOLEX = 0;
-	private static final int CONSOLEY = 0;
+	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH;
+	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
 	private static final double PADDING = 10;
 	private static final String WINDOW_PROPERTIES = "windowProperties";
 	private List<Node> guiList;
 	private String currentLanguage;
-	private HBox windowPreferencesBox;
+	private VBox windowPreferencesBox;
 	private Interpreter myInterpreter;
 	private ComboBox<String> languageDropDown;
 	private Preferences savedPreferences;
@@ -43,7 +44,7 @@ public class ViewWindowPreferences extends View{
 		setX(CONSOLEX);
 		setY(CONSOLEY);
 		guiList = new ArrayList<Node>();
-		windowPreferencesBox = new HBox();
+		windowPreferencesBox = new VBox();
 		windowPreferencesBox.getStyleClass().add("window-menu");
 		setPane(windowPreferencesBox);
 		myInterpreter = null;
