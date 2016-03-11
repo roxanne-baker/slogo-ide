@@ -8,15 +8,7 @@ public class Not extends Command implements Executable {
 		numParams = 1;
 	}
 	
-//	public Object execute(List<Object> params) {
-//		if ((double) params.get(0) == 0) {
-//			return 0;
-//		}
-//		return 1;
-//	}
-	
 	public Object execute(List<Object> params) {
-		double[] booleanConditionals = null;
 		if (params.get(0) instanceof Double) {
 			if (isEqual((double) params.get(0), 0)) {
 				return 1;

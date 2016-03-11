@@ -15,9 +15,7 @@ public class Stamp extends Command implements Executable {
 	
 	public Object execute(List<Object> params) {
 		turtleController.changeProperty(((Agent agent) -> agent.leaveStamp()));
-		
-		turtleController.stampCurrentAgent();
-		return turtleController.getCurrentAgentShapeIndex();
+		return turtleController.getAgentProperties((Agent agent) -> agent.getCurrentImageIndex()+0.0);
 	}
 	
 	public String checkParamTypes(List<Object> params) {

@@ -11,13 +11,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-//<<<<<<< HEAD
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-//=======
-//>>>>>>> refs/remotes/origin/master
+
 import javafx.scene.paint.Color;
 
 public abstract class Agent extends Observable{
@@ -52,35 +46,22 @@ public abstract class Agent extends Observable{
 		agentYPosition = new SimpleDoubleProperty(0);
 		oldXPosition = new SimpleDoubleProperty(0);
 		oldYPosition = new SimpleDoubleProperty(0);
-//=======
-//	public Agent(String name, double defaultXlocation, double defaultYlocation){
 
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
-//		agentXPosition = new SimpleDoubleProperty(defaultXlocation);
-//		agentYPosition = new SimpleDoubleProperty(defaultYlocation);
-//		oldXPosition = new SimpleDoubleProperty(defaultXlocation);
-//		oldYPosition = new SimpleDoubleProperty(defaultYlocation);
-//>>>>>>> refs/remotes/origin/master
 		agentPenUp = false; //default value pen is down
 		penColorIndex = -1; //no index chosen
 		penThickness = DEFAULT_PEN_THICKNESS;
 		orientation = new SimpleDoubleProperty(DEFAULT_ORIENTATION); 
 		sizeProperty = new SimpleDoubleProperty(DEFAULT_SIZE);
 		isVisible = new SimpleBooleanProperty(true);
-//<<<<<<< HEAD
+
 		agentImagePath = new SimpleStringProperty(DEFAULT_IMAGE_PATH);
-//		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(agentImagePath.getValue()),sizeProperty.doubleValue(),sizeProperty.doubleValue(),true,true));
-//		currentShapeIndex = 0;
-//		oldImageView = agentImageView;
 		nameProperty = new SimpleIntegerProperty(name);
-//		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
-//		penStyle = myResources.getString("SOLID");
-//=======
+
 		currentImageIndex = -1; 
-//		nameProperty = new SimpleStringProperty(name);
+
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		penStyle = updateResources.getString("SOLID");
-//>>>>>>> refs/remotes/origin/master
 
 		agentView = new AgentElem(this);
 	

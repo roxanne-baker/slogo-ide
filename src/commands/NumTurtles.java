@@ -11,7 +11,7 @@ public class NumTurtles extends TurtleQueryCommands implements Executable{
 	}
 	
 	public Object execute(List<Object> params) {
-		return getTurtleController().getNumAgents()+0.0;
+		return getTurtleController().getNumTotalAgents()+0.0;
 	}
 	
 	

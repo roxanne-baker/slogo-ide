@@ -3,7 +3,6 @@ import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -13,13 +12,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import GUI.GuiObject;
 import GUI.GuiObjectFactory;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -31,10 +27,7 @@ import javafx.scene.layout.VBox;
  */
 public class ViewAgentPreferences extends View{
 	private HashMap<Integer, Agent> agentMap;
-	private Group viewGroup;
 	private IntegerProperty currentAgentNameProperty;
-	private HBox customColorBox;
-	private List<HBox> customColorBoxes;
 	private CustomColorPalette colorPalette;
 	List<GuiObject> guiObjects;
 	
@@ -43,11 +36,10 @@ public class ViewAgentPreferences extends View{
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET;
-//	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
 
-	private static final int PADDING = 15;
-	private Pane pane;
+//	private static final int PADDING = 15;
+//	private Pane pane;
 
 	private ResourceBundle updateResources;
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");

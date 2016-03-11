@@ -1,6 +1,5 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Less extends Command implements Executable {
@@ -8,16 +7,7 @@ public class Less extends Command implements Executable {
 	public Less() {
 		numParams = 2;
 	}
-	
-//	public Object execute(List<Object> params) {
-//		if ((Double) params.get(0) < (Double) params.get(1)) {
-//			return 1;
-//		}
-//		else {
-//			return 0;
-//		}
-//	}
-	
+
 	public Object execute(List<Object> params) {
 		if (params.get(0) instanceof Double && params.get(1) instanceof Double) {
 			return ((Double) params.get(0) < (Double) params.get(1) && 

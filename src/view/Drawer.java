@@ -61,7 +61,6 @@ public class Drawer {
 	}
 	
 	public void moveImage(ImageView img, double xPosition, double yPosition){
-		System.out.println("MOVE: "+img);
 		agentGroup.getChildren().remove(img);
 		setLocation(img, xPosition, yPosition);
 		agentGroup.getChildren().add(img);

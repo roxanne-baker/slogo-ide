@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import controller.Controller;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import model.Model;
 
 public abstract class Palette extends Model {
@@ -27,16 +25,6 @@ public abstract class Palette extends Model {
 	public Palette(ObservableList<Object> objectList){
 		paletteObjectListProperty = new SimpleListProperty<Object>(objectList);
 		paletteGroup = new Group();
-		
-//		paletteObjectListProperty.add(Color.rgb(0, 0, 0));
-//		paletteObjectListProperty.add(Color.rgb(255, 255, 255));
-//		paletteObjectListProperty.add(Color.rgb(255, 0, 0));
-//		paletteObjectListProperty.add(Color.rgb(0, 0, 255));
-//		paletteObjectListProperty.add(Color.rgb(0, 128, 0));
-//		paletteObjectListProperty.add(Color.rgb(255, 255, 0));
-//		paletteObjectListProperty.add(Color.rgb(0, 255, 255));
-//		paletteObjectListProperty.add(Color.rgb(255, 0, 255));
-//		paletteObjectListProperty.add(Color.rgb(128, 128, 128));
 	}
 	public String getPaletteName(){
 		return paletteName;
@@ -89,10 +77,10 @@ public abstract class Palette extends Model {
 		return paletteObjectListProperty.get(index);
 	}
 
-//	public void setNewPaletteList(ObservableList<Object> customList){
-//			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
-//
-//	}
+	public void setNewPaletteList(ObservableList<Object> customList){
+			paletteObjectListProperty.setValue((ObservableList<Object>) customList);
+
+	}
 	public int getPaletteSize() {
 		return paletteObjectListProperty.size();
 	}

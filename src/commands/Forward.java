@@ -1,7 +1,6 @@
 
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 import controller.TurtleController;
 import view.Agent;
