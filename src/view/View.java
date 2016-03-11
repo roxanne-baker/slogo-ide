@@ -11,7 +11,7 @@ public abstract class View extends Observable implements Observer{
 	private static final String CSS_CLASSES_PATH = "CSSClasses";
 	public static int WIDE_WIDTH = 500;
 	public static int NARROW_WIDTH = 250;
-	public static int MENU_OFFSET = 40;
+	public static int MENU_OFFSET = 30;
 	private ResourceBundle cssResources;
 	private ViewType viewType;
 	private Pane pane = new Pane();

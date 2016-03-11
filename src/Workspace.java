@@ -82,6 +82,7 @@ public class Workspace implements Observer {
 	private void initWindowMenu(){
 		HBox viewMenu = new HBox();
 		viewMenu.getStyleClass().add(cssResources.getString("WORKSPACEMENU"));
+		viewMenu.setPrefSize(View.NARROW_WIDTH*3+View.WIDE_WIDTH, View.MENU_OFFSET);
 		
 		Button newWorkspaceBtn = new Button(windowResources.getString("NEWWORKSPACEBUTTON"));
 		newWorkspaceBtn.setOnMouseClicked(e->openWorkspace());
