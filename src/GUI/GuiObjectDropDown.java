@@ -1,19 +1,19 @@
 package GUI;
 
 import java.util.Observable;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class GuiObjectDropDown extends GuiObject {
-	private static final double PADDING = 10;
-	private static final double WIDTH = 150;
+public class GuiObjectDropDown extends GuiObject {	private static final double WIDTH = 150;
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
+	
 	BiConsumer<Observable,Integer> myFunction;
 	private String defaultValue;
 	private ComboBox<String> dropDownObject;
@@ -26,7 +26,7 @@ public class GuiObjectDropDown extends GuiObject {
 		dropDownObject.setMaxWidth(WIDTH);
 		dropDownObject.itemsProperty().bind(list);		
 		dropDownBox = new VBox();
-		dropDownBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
+		dropDownBox.getStyleClass().add(cssResources.getString("VBOX"));
 
 	}
 

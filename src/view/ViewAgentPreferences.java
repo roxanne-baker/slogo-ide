@@ -1,4 +1,5 @@
 package view;
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
@@ -31,57 +30,54 @@ import javafx.scene.layout.VBox;
  *
  */
 public class ViewAgentPreferences extends View{
-//<<<<<<< HEAD
 	private HashMap<Integer, Agent> agentMap;
 	private Group viewGroup;
-//	private HBox allPreferencesBox;
 	private IntegerProperty currentAgentNameProperty;
 	private HBox customColorBox;
 	private List<HBox> customColorBoxes;
 	private CustomColorPalette colorPalette;
 	List<GuiObject> guiObjects;
 	
-//	private static final int PADDING = 10;
 	private static final int COLOR_CELL_SIZE = 10;
-//=======
 
 	private static final String UPDATE_PROPERTIES = "updateObserver";
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET;
 //	private HashMap<String, Agent> agentMap;
 	private VBox allPreferencesBox = new VBox();
-//	private StringProperty currentAgentNameProperty;
+
 	private static final int PADDING = 15;
-//>>>>>>> refs/remotes/origin/master
 	private Pane pane;
+
 	private ResourceBundle updateResources;
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	
-//<<<<<<< HEAD
-//	public ViewAgentPreferences(ViewType ID) {
-//		super(ID);
-//		viewGroup = new Group();
-//		agentMap = new HashMap<Integer,Agent>();
-//		currentAgentNameProperty = new SimpleIntegerProperty();
-//		pane = new Pane(viewGroup);
-//		setStyleClass(pane);
-//		colorPalette = new CustomColorPalette();
-//		guiObjects = new ArrayList<>();
-//		customColorBoxes = new ArrayList<>();
-//=======
 	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		setX(CONSOLEX);
 		setY(CONSOLEY);
 		setPane(allPreferencesBox);
 		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
+
 		agentMap = new HashMap<Integer,Agent>();
 		currentAgentNameProperty = new SimpleIntegerProperty();
+
+		addListenerToCurrentAgentProperty(currentAgentNameProperty);
+
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		guiObjects = new ArrayList<>();
 
+	}
 
-//>>>>>>> refs/remotes/origin/master
+	private void addListenerToCurrentAgentProperty(IntegerProperty property) {
+			property.addListener(new ChangeListener<Object>(){
+
+			@Override
+			public void changed(ObservableValue<? extends Object> ov,
+					Object oldValue, Object newValue) {
+					updateView();
+			}
+		});
 	}
 
 	@Override
@@ -124,14 +120,6 @@ public class ViewAgentPreferences extends View{
 			addToAgentPrefBox(observerBox, observerLabelList);
 			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
 			}
-//<<<<<<< HEAD
-//
-//		viewGroup.getChildren().add(allPreferencesBox);
-//		
-//		setUpCustomColors();
-		
-//=======
-//>>>>>>> refs/remotes/origin/master
 	}
 
 	private void setUpAgentDropDown() {
@@ -139,11 +127,7 @@ public class ViewAgentPreferences extends View{
 		for (Integer name: agentMap.keySet()){
 			agentDropDown.getItems().add(""+name);
 		}
-//<<<<<<< HEAD
-//		agentDropDown.setValue(""+currentAgentNameProperty.getValue());
-//=======
-		agentDropDown.setValue("TURTLE"+currentAgentNameProperty.getValue());
-//>>>>>>> refs/remotes/origin/master
+		agentDropDown.setValue("TURTLE "+currentAgentNameProperty.getValue());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
             	currentAgentNameProperty.setValue(Integer.parseInt(newValue));
@@ -152,26 +136,6 @@ public class ViewAgentPreferences extends View{
 		});
 		allPreferencesBox.getChildren().add(agentDropDown);
 	}
-//<<<<<<< HEAD
-//	public void setUpCustomColors(){
-////		for (HBox customColorBox : customColorBoxes) {
-//			if (allPreferencesBox.getChildren().contains(customColorBox)) {
-//				allPreferencesBox.getChildren().remove(customColorBox);
-//			}			
-////		}
-//		customColorBox = new HBox();
-//		for(Color color: colorPalette.getCustomColorList()){			
-//			Rectangle colorSquare = new Rectangle(10,10);
-//			colorSquare.setStroke(Color.BLACK);
-//			colorSquare.setFill(color);
-//			customColorBox.getChildren().add(colorSquare);
-//		}
-////		customColorBoxes.add(customColorBox);
-//		allPreferencesBox.getChildren().add(customColorBox);
-//	}
-//=======
-//
-//>>>>>>> refs/remotes/origin/master
 
 	private void addToAgentPrefBox(Pane agentPrefBox,List<Node> ObjectList) {
 		for (Object object: ObjectList){

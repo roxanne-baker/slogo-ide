@@ -22,7 +22,7 @@ public class AgentElem implements Observer{
 	public AgentElem(Agent agent){
 		myAgent = agent;
 		myResources = ResourceBundle.getBundle(UPDATE_PROPERTIES );
-		agentImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myAgent.getImagePath()),myAgent.getSize(),myAgent.getSize(),true,true));
+		agentImageView = getImageViewFromFile(agentImageView, myAgent.getImagePath());
 		oldImageView = agentImageView;
 		penColor = DEFAULT_PEN_COLOR;
 		imgCopy = new ImageView();
@@ -50,7 +50,7 @@ public class AgentElem implements Observer{
 
 	}	
 	public ImageView getImageView(){
-		
+		System.out.println(agentImageView.getBoundsInParent().getWidth());
 		return agentImageView;
 	}
 	public void updateImageView(){	
