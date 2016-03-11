@@ -25,12 +25,15 @@ import javafx.stage.Stage;
  */
 
 public class ViewWindowPreferences extends View{
+	private static final String FILECHOOSER_FILTER = "SLOGO";
+	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
 	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH;
 	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
 	private static final double PADDING = 10;
 	private static final ResourceBundle WINDOW_RESOURCES = ResourceBundle.getBundle("windowProperties");
+	
 	private List<Node> guiList;
 	private String currentLanguage;
 	private VBox windowPreferencesBox;
@@ -89,6 +92,8 @@ public class ViewWindowPreferences extends View{
 
 	private void createCommandsFileChooser() {
 		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
+		fileChooser.getExtensionFilters().add(extFilter);
 		Stage stage = new Stage();
 		Button fileButton = new Button(WINDOW_RESOURCES.getString("COMMANDSLOADERBUTTON"));
 		fileButton.setOnAction(evt -> {

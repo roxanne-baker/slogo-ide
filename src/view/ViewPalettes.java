@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
  */
 
 public class ViewPalettes extends View{
+	private static final String FILECHOOSER_FILTER = "Images";
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
@@ -30,6 +32,7 @@ public class ViewPalettes extends View{
 	private static final int RED_INDEX = 0;
 	private static final int GREEN_INDEX = 1;
 	private static final int BLUE_INDEX = 2;
+	private static final List<String> FILTERLIST = Arrays.asList("*.png","*.jpg","*.jpeg", ".gif");
 	private List<Palette> paletteList;
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private VBox vbox;
@@ -133,7 +136,7 @@ public class ViewPalettes extends View{
 	private void setUpImageAdder() {
 		Stage stage = new Stage();
 		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images", "*.png","*.jpg","*.jpeg", ".gif");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
 		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setTitle(PALETTE_RESOURCES.getString("IMAGECHOOSERLABEL"));
 		Button fileButton = new Button(PALETTE_RESOURCES.getString("IMAGECHOOSERBUTTON"));
