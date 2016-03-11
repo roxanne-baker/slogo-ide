@@ -20,7 +20,6 @@ public class Product extends MathCommand implements Executable {
 			for (int i=0; i<productArray.length; i++) {
 				productArray[i] *= product;
 			}
-			System.out.println(Arrays.toString(productArray));
 			return productArray;
 		}
 		return product;

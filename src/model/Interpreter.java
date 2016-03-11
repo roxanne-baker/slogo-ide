@@ -324,7 +324,6 @@ public class Interpreter extends Observable {
         		cur = new ParseNode(commandsMap.get(parsedFirst));
 			}
 			// may want to check for turtlequery/turtle command here
-			System.out.println(cur.getCommand());
         	if (cur.getCommand().getNumParams() == 0) { 
         		cur.setValue(cur.getCommand().execute(NO_PARAMS_LIST));
         		attachNode(cur, commandStack);

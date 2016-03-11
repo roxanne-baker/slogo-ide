@@ -18,7 +18,6 @@ public class CustomColorPalette extends Palette{
 	
 	@Override
 	public CustomColor getPaletteObject(int index){
-		System.out.println("given ind: "+index);
 		Color color = Color.web(getPaletteList().get(index).toString());
 		return new CustomColor((int)(color.getRed()*255),(int)(color.getGreen()*255),(int)(color.getBlue()*255));
 	}

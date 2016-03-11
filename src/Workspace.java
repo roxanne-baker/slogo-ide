@@ -135,7 +135,6 @@ public class Workspace implements Observer {
 	private void initViews(){
 		ViewFactory viewFactory = new ViewFactory();
 		for(ViewType type: views){
-			System.out.println(type);
 			View view = viewFactory.createView(type, myPreferences);
 			if(type==ViewType.VARIABLES){
 				((ViewVariables)view).addObserver(this);

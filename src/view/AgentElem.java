@@ -50,7 +50,6 @@ public class AgentElem implements Observer{
 
 	}	
 	public ImageView getImageView(){
-		System.out.println(agentImageView.getBoundsInParent().getWidth());
 		return agentImageView;
 	}
 	public void updateImageView(){	

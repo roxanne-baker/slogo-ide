@@ -20,7 +20,6 @@ public class Sum extends MathCommand implements Executable {
 			for (int i=0; i<sumArray.length; i++) {
 				sumArray[i] += sum;
 			}
-			System.out.println(Arrays.toString(sumArray));
 			return sumArray;
 		}
 		return sum;

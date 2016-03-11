@@ -74,7 +74,6 @@ public class TurtleController extends Controller implements IAgentController{
 	@Override
 	public void setActiveAgents(List<Integer> activeAgents) {
 		activeAgentList = activeAgents;
-		System.out.println(activeAgentList);
 		for (Integer agentID : activeAgents) {
 			if (!agentMap.containsKey(agentID) ) {
 				addAgent(agentID);
