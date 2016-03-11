@@ -14,10 +14,20 @@ public class Turtle extends Agent{
 	private static final List<String> MUTABLE_LIST = Arrays.asList("PENWIDTH","PENCOLOR","PENUP","IMAGEPATH", "PENSTYLE");
 	private static final List<String> OBSERVER_LIST = Arrays.asList("NAME","VISIBLE","XPOSITION","YPOSITION","ORIENTATION","SIZE");
 
-	public Turtle(String name, double defaultXlocation, double defaultYlocation) {
+//<<<<<<< HEAD
+	public Turtle(Integer name, double defaultXlocation, double defaultYlocation) {
+//		super(name, defaultXlocation, defaultYlocation, obsView);
+//		super.setImagePath(TURTLE_IMAGE_PATH);
+//		super.addObserver(obsView);
+//		ResourceBundle myResources = ResourceBundle.getBundle(OBSERVER_DIR);
+//		setChanged();
+//		notifyObservers(myResources.getString("INITIAL"));
+//=======
+//	public Turtle(String name, double defaultXlocation, double defaultYlocation) {
 		super(name, defaultXlocation, defaultYlocation);
 		super.setImagePath(TURTLE_IMAGE_PATH);		
 
+//>>>>>>> refs/remotes/origin/master
 	}
 
 	@Override

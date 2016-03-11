@@ -8,13 +8,43 @@ public class And extends Command implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
+	public Object execute(List<Object> params) {
+		double[] booleanConditionals = null;
 		for (Object param : params) {
-			if ((double) param == 0) {
-				return 0;
+			if (param instanceof Double) {
+				if ((double) param == 0) {
+					return 0;
+				}
+			}
+			else {
+				booleanConditionals = getBooleanConditional(booleanConditionals, (double[]) param);
 			}
 		}
-		return 1;
+		return changeToZerosAndOnes(booleanConditionals);
+	}
+	
+	private double[] changeToZerosAndOnes(double[] booleanConditional) {
+		for (int i=0; i<booleanConditional.length; i++) {
+			if (booleanConditional[i] != 0) {
+				booleanConditional[i] = 1;
+			}
+		}
+		return booleanConditional;
+	}
+	
+	private double[] getBooleanConditional(double[] booleanConditionals, double[] param) {
+		if (booleanConditionals == null) {
+			booleanConditionals = (double[]) param;
+		}
+		else {
+			double[] nextCondition = (double[]) param;
+			for (int i=0; i<booleanConditionals.length; i++) {
+				if (isEqual(nextCondition[i], 0)) {
+					booleanConditionals[i] = 0;
+				}
+			}
+		}
+		return booleanConditionals;
 	}
 	
 	@Override

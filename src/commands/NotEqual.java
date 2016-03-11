@@ -8,14 +8,33 @@ public class NotEqual extends Command implements Executable {
 		numParams = 2;
 	}
 	
-	public double execute(List<Object> params) {
-		// need to figure out how to communicate with front-end
-		if ((Double) params.get(0) != (Double) params.get(1)) {
-			return 1;
+	public Object execute(List<Object> params) {
+		if (params.get(0) instanceof Double && params.get(1) instanceof Double) {
+			return isEqual((Double) params.get(0), (Double) params.get(1)) ? 1 : 0;
+		}
+		else if (params.get(0) instanceof Double) {
+			return logicForFirstExprArrayOnly((double[]) params.get(1), (double) params.get(0));
+		}
+		else if (params.get(1) instanceof Double) {
+			return logicForFirstExprArrayOnly((double[]) params.get(0), (double) params.get(1));
 		}
 		else {
-			return 0;
+			return logicForFirstExprAndSecondExprArray((double[]) params.get(0), (double[]) params.get(1));
 		}
+	}
+	
+	private double[] logicForFirstExprAndSecondExprArray(double[] firstExprArray, double[] secondExprArray) {
+		for (int i=0; i<firstExprArray.length; i++) {
+			firstExprArray[i] = isEqual(firstExprArray[i], secondExprArray[i]) ? 1 : 0;
+		}
+		return firstExprArray;
+	}
+	
+	private double[] logicForFirstExprArrayOnly(double[] firstExprArray, double secondExprVal) {
+		for (int i=0; i<firstExprArray.length; i++) {
+			firstExprArray[i] = isEqual(firstExprArray[i], secondExprVal) ? 1 : 0;
+		}
+		return firstExprArray;
 	}
 	
 	public String checkParamTypes(List<Object> params) {

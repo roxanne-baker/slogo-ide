@@ -2,6 +2,7 @@ import java.util.*;
 
 import controller.Controller;
 import controller.TurtleController;
+import controller.BackgroundController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
@@ -28,7 +29,7 @@ public class Workspace implements Observer {
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = ViewType.values();
-	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS};
+	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS,ViewType.PALETTES};
 
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
@@ -67,12 +68,13 @@ public class Workspace implements Observer {
 	private void initTurtles(){
 		int numTurtles = Integer.parseInt(myPreferences.getPreference("turtles").toString());
 		for(int i=0; i<numTurtles; i++){
-			((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent(Integer.toString(i+1));
+			((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent(i+1);
 		}
 	}
 	
 	private void initPalettes() {
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
+		((BackgroundController)controllerMap.get(ViewType.PALETTES)).setColorPalette(customColorPalette);	
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
 
@@ -133,7 +135,6 @@ public class Workspace implements Observer {
 	private void initViews(){
 		ViewFactory viewFactory = new ViewFactory();
 		for(ViewType type: views){
-			System.out.println(type);
 			View view = viewFactory.createView(type, myPreferences);
 			if(type==ViewType.VARIABLES){
 				((ViewVariables)view).addObserver(this);

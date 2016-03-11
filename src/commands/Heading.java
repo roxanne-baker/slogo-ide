@@ -4,6 +4,7 @@ package commands;
 import java.util.List;
 
 import controller.TurtleController;
+import view.Agent;
 
 public class Heading extends TurtleQueryCommands implements Executable{
 	
@@ -11,7 +12,7 @@ public class Heading extends TurtleQueryCommands implements Executable{
 		super(turtleController);
 	}
 	
-	public double execute(List<Object> params) {
-		return getTurtleController().getCurrentAgentOrientation();
+	public Object execute(List<Object> params) {
+		return getTurtleController().getAgentProperties((Agent agent) -> agent.getOrientation());
 	}
 }
