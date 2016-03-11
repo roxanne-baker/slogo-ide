@@ -111,14 +111,14 @@ public class ViewAgents extends View{
 				drawer.stampImage(agentView.getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == UPDATE_RESOURCES.getString("MOVE")){
-				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.moveImage(agentView.getImageView(), ((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 				if(!((Agent) agent).isPenUp()){
 					drawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(UPDATE_RESOURCES.getString(((Agent) agent).getPenStyle()+"DASH")));
 				}
 
 			}else if (updateType == UPDATE_RESOURCES.getString("INITIAL")){ 
 				ImageView agentImageView = createNewImageViewWithHandler(agent);
-				drawer.moveImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				drawer.initializeImage(agentImageView, ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == UPDATE_RESOURCES.getString("IMAGEVIEW")){	
 				imageAgentMap.remove(agentView.getOldImageView());

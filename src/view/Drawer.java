@@ -4,11 +4,18 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.Animation;
+import javafx.animation.PathTransition;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
 
 public class Drawer {
@@ -57,7 +64,14 @@ public class Drawer {
 
 	}
 	
-	public void moveImage(ImageView img, double xPosition, double yPosition){
+	private Animation makeAnimation(Node imageView, double oldXPosition, double oldYPosition, double xPosition, double yPosition){
+		Path path = new Path();
+		path.getElements().addAll(new MoveTo(oldXPosition,oldYPosition), new LineTo(xPosition, yPosition));
+		PathTransition pathTransition = new PathTransition(Duration.millis(4000), path, imageView);
+		return pathTransition;
+	
+	}
+	public void initializeImage(ImageView img, double xPosition, double yPosition){
 		agentGroup.getChildren().remove(img);
 		setLocation(img, xPosition, yPosition);
 		agentGroup.getChildren().add(img);
@@ -65,6 +79,17 @@ public class Drawer {
 			agentViewList.add(img);
 			
 		}
+		
+	}
+	public void moveImage(ImageView img, double oldXPosition, double oldYPosition, double xPosition, double yPosition){
+		//agentGroup.getChildren().remove(img);
+		System.out.println(oldXPosition);
+		System.out.println(oldYPosition);
+		Animation newAnimation = makeAnimation(img, 0, 0, xPosition,yPosition);
+		newAnimation.play();
+//		setLocation(img, xPosition, yPosition);
+		//agentGroup.getChildren().add(img);
+
 	}
 
 	public void addSelectEffect(ImageView img){
