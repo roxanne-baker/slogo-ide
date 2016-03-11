@@ -14,6 +14,7 @@ public class Back extends TurtleCommand implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
+		System.out.println("asldkjalskdjasd");
 		double[] distance = new double[getTurtleController().getNumActiveAgents()];
 		double[] orientation = getTurtleController().getAgentProperties((Agent agent) -> agent.getOrientation());
 		double[] changeX = new double[getTurtleController().getNumActiveAgents()];
