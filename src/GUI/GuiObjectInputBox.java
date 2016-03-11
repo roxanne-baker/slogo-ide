@@ -5,7 +5,6 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
@@ -19,7 +18,6 @@ public class GuiObjectInputBox extends GuiObject{
 	private Button initializeButton;
 	private Labeled fileErrorLabel;
 	private boolean boolInit;
-	private static final double PADDING = 10;
 	private static final String FILE_DIRECTORY = "images/";
 	private static final String FILE_TYPE = ".png";
 	private static final double MAXWIDTH = 150;
