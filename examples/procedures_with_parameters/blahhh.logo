@@ -2,20 +2,25 @@ make :numsides 3.0
 make :side 100.0
 make :length 100.0
 make :size 100.0
-to square [:side ]  [ 
+to square [ :side ] [ 
 poly 4 :side
  ]
-to triangle [:side ]  [ 
+to triangle [ :side ] [ 
 poly 3 :side
  ]
-to poly [:length :angle ]  [ 
+to poly [ :length :angle ] [ 
 repeat 100
   [
     fd :length 
     rt :angle
   ]
  ]
-to outlinepoly [:length :angle ]  [ 
+to house [ :size ] [ 
+square :size
+  fd :size rt 30
+  triangle :size
+ ]
+to outlinepoly [ :length :angle ] [ 
 repeat 100
   [
     fd :length 
@@ -24,12 +29,7 @@ repeat 100
     rt product 2 :angle
   ]
  ]
-to house [:size ]  [ 
-square :size
-  fd :size rt 30
-  triangle :size
- ]
-to poly [:numsides :length ]  [ 
+to poly [ :numsides :length ] [ 
 repeat :numsides
   [
     fd :length 
