@@ -54,8 +54,8 @@ public class Workspace implements Observer {
 	public Scene init(){
 		initModels();
 		initViews();
-		initWindowMenu();	
 		initControllers();
+		initWindowMenu();	
 		initPalettes();
 		initTurtles();
 		initInterpreters();
