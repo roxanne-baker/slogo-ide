@@ -1,6 +1,5 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Product extends MathCommand implements Executable {
@@ -9,7 +8,6 @@ public class Product extends MathCommand implements Executable {
 		numParams = 2;
 	}
 	
-	@SuppressWarnings("unused")
 	public Object execute(List<Object> params) {
 		double product = 0;
 		double[] productArray = null;
@@ -26,10 +24,10 @@ public class Product extends MathCommand implements Executable {
 	}
 	
 	private double getProduct(List<Object> params) {
-		double product = 0;
+		double product = 1;
 		for (Object param : params) {
 			if ((param instanceof Double)) {
-				product += (double) param;
+				product *= (double) param;
 			}
 		}
 		return product;		
