@@ -52,9 +52,10 @@ public class ViewAgentsUpdater {
 			}else if (updateType == UPDATE_RESOURCES.getString("ACTIVE")){
 				if(myView.getIsSelectedAgentToggle()){
 					myDrawer.addSelectEffect(agentView.getImageView());
-				}else{
-					myDrawer.removeSelectEffect(agentView.getImageView());
 				}
+				
+			}else if (updateType == UPDATE_RESOURCES.getString("NOTACTIVE")){
+				myDrawer.removeSelectEffect(agentView.getImageView());
 			}
 		}else if(updateType == UPDATE_RESOURCES.getString("VISIBLE")){
 			myDrawer.removeImage(agentView.getImageView());
@@ -68,17 +69,26 @@ public class ViewAgentsUpdater {
 	}
 	
 	private ImageView createNewImageViewWithHandler(Observable agent) {
-		ImageView newAgentImageView = (((Agent) agent).getAgentView().getImageView());
-		addImageHandler(newAgentImageView);
-		imageAgentMap.put(newAgentImageView, (Agent) agent);
-		return newAgentImageView;
+		addImageHandler((((Agent) agent).getAgentView().getImageView()));
+		imageAgentMap.put((((Agent) agent).getAgentView().getImageView()), (Agent) agent);
+		return (((Agent) agent).getAgentView().getImageView());
 	}
 	private void addImageHandler(ImageView img){
 		img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 		     @Override
 		     public void handle(MouseEvent event) {
-		    	 myView.getActiveAgentListProperty().getValue().add(imageAgentMap.get(img).getName());
-		         updateView(imageAgentMap.get(img),UPDATE_RESOURCES.getString("ACTIVE"));   
+		    	 Object agentID =imageAgentMap.get(img).getName();
+		    	 if (!myView.getActiveAgentListProperty().getValue().contains(agentID)){
+		    		 myView.getActiveAgentListProperty().getValue().add((Integer) agentID);
+		    		 updateView(imageAgentMap.get(img),UPDATE_RESOURCES.getString("ACTIVE"));   
+
+		    	 }else{
+		    		 myView.getActiveAgentListProperty().getValue().remove(agentID);
+		    		 updateView(imageAgentMap.get(img),UPDATE_RESOURCES.getString("NOTACTIVE"));   
+
+		    	 }
+		    	 
+
 		     }
 		});
 	}
