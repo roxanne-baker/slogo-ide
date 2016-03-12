@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
-import view.Agent;
+import model.Agent;
 
 public class GuiObjectCheckBox extends GuiObject{
 	private boolean isChecked;

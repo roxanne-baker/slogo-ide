@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Parsing.Interpreter;
 import controller.ControllerTurtle;
-import model.Interpreter;
 
 public class IfElse extends ControlCommand implements Executable {
 

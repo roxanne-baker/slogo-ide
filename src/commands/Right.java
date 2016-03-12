@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class Right extends TurtleCommand implements Executable {
 

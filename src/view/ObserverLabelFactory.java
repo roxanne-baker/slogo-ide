@@ -1,5 +1,6 @@
 package view;
 import javafx.beans.binding.Bindings;
+import model.Agent;
 
 
 public class ObserverLabelFactory {

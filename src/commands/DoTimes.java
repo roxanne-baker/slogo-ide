@@ -2,8 +2,8 @@ package commands;
 
 import java.util.List;
 
+import Parsing.Interpreter;
 import controller.ControllerVariables;
-import model.Interpreter;
 
 public class DoTimes extends ControlCommand implements Executable {
 	Interpreter interpreter;

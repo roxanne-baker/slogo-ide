@@ -1,4 +1,4 @@
-package model;
+package Parsing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +14,8 @@ import view.ViewType;
 public class Interpreter extends Observable {
 	private Map<String, Command> commandsMap; 
 	private final String WHITESPACE = "\\p{Space}";
-    private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
+    private Parser parser;
 	private ControllerTurtle turtleController;
 	private ControllerVariables variableController;
 	private ControllerBackground backgroundController;
@@ -25,24 +25,25 @@ public class Interpreter extends Observable {
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
+	private boolean displayResult = false;
 	
-	public Interpreter(Map<ViewType, Controller> controllerMap) {
+	public Interpreter(Map<ViewType, Controller> controllerMap, Parser parser) {
 		turtleController = (ControllerTurtle) controllerMap.get(ViewType.AGENT); 
 		variableController = (ControllerVariables) controllerMap.get(ViewType.VARIABLES);
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
 		backgroundController = (ControllerBackground) controllerMap.get(ViewType.PALETTES);
+		this.parser = parser;
 		initializeCommandsMap();
 		initializeLangs();
 	}
 	
 	public void addLang(String language) { 
-		System.out.println(language);
-		lang.addPatterns(resourcesPath + language.trim());
+		parser.addPatterns(resourcesPath + language.trim());
 	}
 	
 	private void initializeLangs() { 
-        lang.addPatterns("resources/languages/English");
-        lang.addPatterns("resources/languages/Syntax");
+        parser.addPatterns("English");
+        parser.addPatterns("Syntax");
 	}
 	
 	public void run(String userInput) { 
@@ -106,7 +107,9 @@ public class Interpreter extends Observable {
     			}
     		}
     	}
-    	sendResultAfterParse(result, initSize);
+    	if (displayResult) { 
+    		sendResultAfterParse(result, initSize);
+    	}
     }
     
     private void sendResultAfterParse(Object result, int commandCount) { 
@@ -158,7 +161,9 @@ public class Interpreter extends Observable {
     				sendError("Too many parameters!");
     			}
     		} else { 
+    			displayResult = true;
 				processTree(root);
+				displayResult = false; 
     		}
     		return true; 
     	}
@@ -351,7 +356,7 @@ public class Interpreter extends Observable {
 	}
     
     private String parseText(String s) {
-    	return lang.getSymbol(s);
+    	return parser.getSymbol(s);
     }
     
     private void initializeCommandsMap() { 

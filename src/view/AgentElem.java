@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import model.Agent;
 /**
  * This class keeps track of the agent imageview, its previous imageview, pencolor, and copy of imageview.
  * @author Melissa Zhang

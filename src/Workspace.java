@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import Parsing.Interpreter;
+import Parsing.Parser;
 import controller.Controller;
 import controller.ControllerTurtle;
 import controller.ControllerBackground;
@@ -17,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Interpreter;
 import model.Model;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
@@ -29,6 +30,7 @@ import view.ViewConsole;
 import view.ViewHistory;
 import view.ViewInterpretable;
 import view.ViewVariables;
+import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
 	private static final String STYLE_SHEET = "resources/style/style.css";
@@ -49,6 +51,7 @@ public class Workspace implements Observer {
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
 	private Stage myStage;
+	private Parser parser = new Parser();
 	private Interpreter myInterpreter;
 	private ResourceBundle windowResources = ResourceBundle.getBundle("windowProperties");
 	private Preferences myPreferences;
@@ -63,12 +66,11 @@ public class Workspace implements Observer {
 	public Scene init(){
 		initModels();
 		initViews();
-		initWindowMenu();	
 		initControllers();
+		initInterpreters();
 		initPalettes();
 		initTurtles();
-		initInterpreters();
-
+		initWindowMenu();	
 		myScene = new Scene(pane);
 		myScene.getStylesheets().add(STYLE_SHEET);
 		return myScene;
@@ -86,8 +88,6 @@ public class Workspace implements Observer {
 		((ControllerBackground)controllerMap.get(ViewType.PALETTES)).setColorPalette(customColorPalette);	
 		((ControllerTurtle)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
-
-		
 	}
 	
 	private void initWindowMenu(){
@@ -126,7 +126,6 @@ public class Workspace implements Observer {
 				try {
 					getClass().getDeclaredMethod(resourceString[1].trim()).invoke(this);
 				} catch (Exception e1) {
-					e1.printStackTrace();
 				}
 			});
 			menuFile.getItems().add(item);
@@ -134,8 +133,10 @@ public class Workspace implements Observer {
 		return menuFile;
 	}
 	
-	private void saveCommands(){
-		
+	private void saveCommands() { 
+		LogoFileSaver logoWriter = new LogoFileSaver(myStage, controllerMap, parser);
+		String filePath = logoWriter.chooseFile();
+		logoWriter.saveFile(filePath);
 	}
 	
 	private void loadCommands() {
@@ -172,16 +173,17 @@ public class Workspace implements Observer {
 	}
 	
 	private void savePreferences(){
-		PreferencesSaver saver = new PreferencesSaver(myStage,myPreferences);
+		PreferencesSaver prefSaver = new PreferencesSaver(myStage,myPreferences);
+		String filePath = prefSaver.chooseFile();
+		prefSaver.saveFile(filePath);
 	}
 	
 	private void initInterpreters() {
-		myInterpreter = new Interpreter(controllerMap);
-		for(ViewType type: views){
-			View view = viewMap.get(type);
-			if(view.getClass().getSuperclass()==ViewInterpretable.class)
-				((ViewInterpretable)view).setInterpreter(myInterpreter);
-		}
+		Interpreter ip = new Interpreter(controllerMap, parser);
+		myInterpreter = ip;
+		((ViewConsole) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
+		((ViewHistory) viewMap.get(ViewType.HISTORY)).setInterpreter(ip);
+		((ViewWindowPreferences) viewMap.get(ViewType.WINDOWPREFERENCES)).setInterpreter(ip);
 	}
 
 	private void initModels(){

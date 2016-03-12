@@ -3,7 +3,7 @@ package commands;
 
 import java.util.List;
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class Forward extends TurtleCommand implements Executable {
 
@@ -21,6 +21,9 @@ public class Forward extends TurtleCommand implements Executable {
 		for (int i=0; i<getTurtleController().getNumActiveAgents(); i++) {
 			if (params.get(0) instanceof Double) {
 				distance[i] = (Double) params.get(0);
+			}
+			else if (params.get(0) instanceof Integer) { 
+				distance[i] = (Integer) params.get(0);
 			}
 			else {
 				distance[i] = ((double[]) params.get(0))[i];		

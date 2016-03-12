@@ -4,7 +4,7 @@ import java.util.List;
 
 import controller.ControllerBackground;
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class ClearScreen extends Command implements Executable {
 

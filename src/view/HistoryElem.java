@@ -1,6 +1,6 @@
 package view;
 
-public class HistoryElem extends TextBox implements Clickable{
+public class HistoryElem extends ClickableTextBox {
 
 	public HistoryElem(String text,View view) {
 		super(text);

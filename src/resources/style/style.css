@@ -11,7 +11,7 @@
 }
 
 .vbox {
-	-fx-spacing: 2;
+	-fx-spacing: 3;
 	-fx-font-wrap-text: true;
 }
 
@@ -48,10 +48,10 @@
 .text-box {
 	-fx-background-color: #d7dfee;
 	-fx-padding: 5;
-	-fx-border-radius: 10;
 }
 
 .error {
+	-fx-background-color: white;
 	-fx-fill: #B0171F;
 }
 
@@ -100,8 +100,15 @@
 .result {
 	-fx-fill: #43609c;
 	-fx-font-weight: bold;
+	-fx-background-color: white;
 }
 
 .window-view {
 	-fx-alignment: center;
+}
+
+.clickable-text {
+	-fx-background-color: #d7dfee;
+	-fx-padding: 5;
+	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,1,1 );
 }

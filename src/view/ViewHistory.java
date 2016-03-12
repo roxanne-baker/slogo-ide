@@ -1,9 +1,10 @@
 package view;
 
 import java.util.*;
+
+import Parsing.Interpreter;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import model.Interpreter;
 
 public class ViewHistory extends ViewInterpretable implements Observer{
 	private VBox vb = new VBox();
@@ -44,7 +45,7 @@ public class ViewHistory extends ViewInterpretable implements Observer{
 
 	private void init() {
 		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
-		vb.getStyleClass().add(cssResources.getString("VBOX"));
+		vb.getStyleClass().addAll(cssResources.getString("VBOX"),cssResources.getString("DISPLAYVIEW"));
 		ScrollPane sp = new ScrollPane(vb);
 		setPane(sp);
 	}
