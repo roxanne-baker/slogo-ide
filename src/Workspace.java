@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import controller.Controller;
@@ -6,11 +8,14 @@ import controller.BackgroundController;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
@@ -26,6 +31,8 @@ import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final String FILECHOOSER_FILTER = "SLOGO";
+	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = ViewType.values();
@@ -40,6 +47,7 @@ public class Workspace implements Observer {
 	private ScrollPane pane = new ScrollPane(group);
 	private Scene myScene;
 	private Stage myStage;
+	private Interpreter myInterpreter;
 	private ResourceBundle windowResources = ResourceBundle.getBundle("windowProperties");
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private Preferences myPreferences;
@@ -80,34 +88,66 @@ public class Workspace implements Observer {
 
 		
 	}
-
+	
+	//TO DO: refactor
 	private void initWindowMenu(){
-		HBox viewMenu = new HBox();
-		viewMenu.getStyleClass().add(cssResources.getString("WORKSPACEMENU"));
-		viewMenu.setPrefSize(View.NARROW_WIDTH*3+View.WIDE_WIDTH, View.MENU_OFFSET);
+		MenuBar menu = new MenuBar();
+		Menu menuFile = new Menu("File");
+		MenuItem newWorkspace = new MenuItem("New Workspace");
+		newWorkspace.setOnAction(e->openWorkspace());
+		MenuItem loadPreferences = new MenuItem("Load Preferences");
+		loadPreferences.setOnAction(e->loadPreferences());
+		MenuItem savePreferences = new MenuItem("Save Preferences");
+		savePreferences.setOnAction(e->savePreferences());
+
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
+		fileChooser.getExtensionFilters().add(extFilter);
+		MenuItem loadCommands = new MenuItem(windowResources.getString("COMMANDSLOADERBUTTON"));
+		loadCommands.setOnAction(evt -> {
+			File file = fileChooser.showOpenDialog(myStage);
+			myInterpreter.run(readText(file));
+		});
+		MenuItem saveCommands = new MenuItem(windowResources.getString("COMMANDSSAVERBUTTON"));
+		saveCommands.setOnAction(e->{
+			//blah
+		});
 		
-		Button newWorkspaceBtn = new Button(windowResources.getString("NEWWORKSPACEBUTTON"));
-		newWorkspaceBtn.setOnMouseClicked(e->openWorkspace());
+		menuFile.getItems().addAll(newWorkspace,loadPreferences,savePreferences,loadCommands,saveCommands);
 		
-		Button savePrefBtn = new Button(windowResources.getString("SAVEPREFBUTTON"));
-		savePrefBtn.setOnMouseClicked(e->savePreferences());
-		
-		Button loadPrefBtn = new Button(windowResources.getString("LOADPREFBUTTON"));
-		loadPrefBtn.setOnMouseClicked(e->loadPreferences());
-		
-		viewMenu.getChildren().addAll(newWorkspaceBtn,savePrefBtn,loadPrefBtn);
-		
-		
+		Menu menuView = new Menu("View");
 		for(ViewType type: views){
-			if(type!=ViewType.AGENT){
-				CheckBox item = new CheckBox(type.name());
-				item.setSelected(true);
-				item.setOnAction(e-> toggleView(type,item.isSelected()));
-				viewMenu.getChildren().add(item);	
-			}
+			CheckMenuItem view = new CheckMenuItem(type.toString());
+			menuView.getItems().add(view);
+			view.setSelected(true);
+			view.selectedProperty().addListener(new ChangeListener<Boolean>() {
+		        public void changed(ObservableValue ov,
+		                Boolean old_val, Boolean new_val) {
+		                    viewMap.get(type).getView().setVisible(new_val);
+		                }
+		            });
 		}
-		group.getChildren().addAll(viewMenu);
+		menu.getMenus().addAll(menuFile,menuView);
+		group.getChildren().add(menu);
 	}
+	
+
+	private static String readText (File file) {
+		StringBuilder sb = new StringBuilder();
+		try { 
+		    Scanner scan = new Scanner(file);
+		    while(scan.hasNextLine()){
+		        String line = scan.nextLine();
+		        sb.append(line);
+		        sb.append("\n");
+		    }
+		} catch (FileNotFoundException e) { 
+			System.out.println("couldn't find the file");
+		}
+		return sb.toString().trim();
+	}
+	
+	
 	private void loadPreferences(){
 		Stage newStage = new Stage();
 		XMLReader reader = new XMLReader(newStage,false);
@@ -116,10 +156,11 @@ public class Workspace implements Observer {
 		newStage.show();
 	}
 	private void savePreferences(){
-		XMLSaver saver = new XMLSaver(myStage,myPreferences);
+		PreferencesSaver saver = new PreferencesSaver(myStage,myPreferences);
 	}
 	private void initInterpreters() {
 		Interpreter ip = new Interpreter(controllerMap);
+		myInterpreter = ip;
 		((ViewConsole) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
 		((ViewHistory) viewMap.get(ViewType.HISTORY)).setInterpreter(ip);
 		((ViewWindowPreferences) viewMap.get(ViewType.WINDOWPREFERENCES)).setInterpreter(ip);
@@ -157,15 +198,6 @@ public class Workspace implements Observer {
 		XMLReader reader = new XMLReader(newStage,true);
 		newStage.setScene(new Workspace(newStage,new Preferences(reader.getPreferences())).init());
 		newStage.show();
-	}
-	
-	private void toggleView(ViewType view, boolean isSelected){
-		if(isSelected){
-			displayView(viewMap.get(view));
-		}
-		else{
-			closeView(viewMap.get(view));
-		}
 	}
 	
 	private void initControllers(){

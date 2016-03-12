@@ -1,6 +1,4 @@
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,32 +8,30 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import view.Preferences;
 
-public class XMLSaver {
+public abstract class Saver {
 	private Document doc;	
-	private Element rootElem;
 	private Stage window;
-	private Preferences preferences;
+	private String extensionDescription;
+	private String extension;
 	
-	public XMLSaver(Stage stage, Preferences preferences) {
-		this.preferences = preferences;
+	public Saver(Stage stage, String extensionDescription, String extension) {
 		window = stage;
+		this.extensionDescription = extensionDescription;
+		this.extension = extension;
 		String file = chooseFile();
 		saveFile(file);
 	}
 	
 	public String chooseFile(){
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save XML File");		
+		fileChooser.setTitle("Save a File");		
 		fileChooser.getExtensionFilters().addAll(
-		        new ExtensionFilter("XML Files", "*.xml"));		
+		        new ExtensionFilter(extensionDescription, extension));		
 		File file = fileChooser.showSaveDialog(window);
 		String fileName = "";
 		if (file != null) {
@@ -50,10 +46,8 @@ public class XMLSaver {
 	        dbFactory.setIgnoringElementContentWhitespace(true);
 	        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();	        
 	        doc = dBuilder.newDocument();  
-	        rootElem = doc.createElement("preferences");
-	        doc.appendChild(rootElem);
 	        
-	        savePreferences();
+	        saveInfo(doc);
 	        
 	        TransformerFactory transformerFactory =
 	                TransformerFactory.newInstance();
@@ -68,37 +62,6 @@ public class XMLSaver {
 		}			
 	}
 	
-	public void savePreferences(){
-		Map<String,Object> prefMap = preferences.getPreferenceMap();
-		for(String prefName: prefMap.keySet()){
-			if(isSingleElem(preferences.getPreferenceMap().get(prefName))){
-				saveSingleElem(prefName,prefMap.get(prefName));
-			}
-			else{
-				saveListElem(prefName,(ObservableList<Object>)prefMap.get(prefName));
-			}
-		}
-	}
-	
-	private boolean isSingleElem(Object obj){
-		System.out.println(obj.toString()+" "+(obj.getClass()==String.class));
-		return obj.getClass()==String.class;
-	}
-	
-	private void saveSingleElem(String tagName, Object value){
-		Element elem = doc.createElement(tagName);
-		elem.appendChild(doc.createTextNode(value.toString()));
-		rootElem.appendChild(elem);
-	}
-	
-	private void saveListElem(String tagName, ObservableList<Object> values){
-		Element elem = doc.createElement(tagName);
-		for(Object val: values){
-			Element row = doc.createElement("row");
-			row.appendChild(doc.createTextNode(val.toString()));
-			elem.appendChild(row);
-		}
-		rootElem.appendChild(elem);
-	}
+	public abstract void saveInfo(Document doc);
 	
 }
