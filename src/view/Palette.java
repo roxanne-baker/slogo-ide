@@ -53,14 +53,12 @@ public abstract class Palette extends Model {
 			elemBox.getChildren().addAll(objectView,indexLabel);
 			hbox.getChildren().add(elemBox);
 		}
-
 		paletteGroup.getChildren().add(hbox);
 	}
 	
 	public abstract Node getPaletteObjectView(int index);
 	
 	public void addToPalette(Object obj, int index){
-		System.out.println("here");
 		if (index >= paletteObjectListProperty.size()){ //add new object at next available spot
 			paletteObjectListProperty.add(obj);
 			
