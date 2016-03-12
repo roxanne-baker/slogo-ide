@@ -2,16 +2,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import controller.MethodsController;
+import controller.VariablesController;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Parser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import view.Preferences;
 
 public class LogoFileSaver {
 	private Stage window;
+	private VariablesController variableController; 
+	private MethodsController methodController; 
+	private Parser parser; 
+	PrintWriter writer; 
 	
-	LogoFileSaver(Stage stage) { 
+	LogoFileSaver(Stage stage, VariablesController vc, MethodsController mc, Parser parser) { 
 		window = stage;
+		variableController = vc; 
+		methodController = mc; 
+		this.parser = parser;
 	}
 	
 	public String chooseFile(){
@@ -26,13 +35,13 @@ public class LogoFileSaver {
 		return fileName;
 	}
 	
-	public String text = 
-	
 	public void saveFile(String filePath) { 
 		try {
-			PrintWriter writer = new PrintWriter(filePath);
+			writer = new PrintWriter(filePath);
 			
 		} catch (FileNotFoundException e) {
+			System.out.println("couldn't find file path to save");
 		}
 	}
+
 }

@@ -14,8 +14,8 @@ import view.ViewType;
 public class Interpreter extends Observable {
 	private Map<String, Command> commandsMap; 
 	private final String WHITESPACE = "\\p{Space}";
-    private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
+    private Parser parser;
 	private TurtleController turtleController;
 	private VariablesController variableController;
 	private BackgroundController backgroundController;
@@ -26,23 +26,23 @@ public class Interpreter extends Observable {
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
 	
-	public Interpreter(Map<ViewType, Controller> controllerMap) {
+	public Interpreter(Map<ViewType, Controller> controllerMap, Parser parser) {
 		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
 		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
 		backgroundController = (BackgroundController) controllerMap.get(ViewType.PALETTES);
+		this.parser = parser;
 		initializeCommandsMap();
 		initializeLangs();
 	}
 	
 	public void addLang(String language) { 
-		System.out.println(language);
-		lang.addPatterns(resourcesPath + language.trim());
+		parser.addPatterns(resourcesPath + language.trim());
 	}
 	
 	private void initializeLangs() { 
-        lang.addPatterns("resources/languages/English");
-        lang.addPatterns("resources/languages/Syntax");
+        parser.addPatterns("resources/languages/English");
+        parser.addPatterns("resources/languages/Syntax");
 	}
 	
 	public void run(String userInput) { 
@@ -351,7 +351,7 @@ public class Interpreter extends Observable {
 	}
     
     private String parseText(String s) {
-    	return lang.getSymbol(s);
+    	return parser.getSymbol(s);
     }
     
     private void initializeCommandsMap() { 

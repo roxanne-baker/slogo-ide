@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Interpreter;
 import model.Model;
+import model.Parser;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.Preferences;
@@ -55,11 +56,10 @@ public class Workspace implements Observer {
 		initModels();
 		initViews();
 		initControllers();
-		initWindowMenu();	
+		initInterpreters();
 		initPalettes();
 		initTurtles();
-		initInterpreters();
-
+		initWindowMenu();	
 		myScene = new Scene(pane);
 		myScene.getStylesheets().add("resources/style/style.css");
 		return myScene;
@@ -77,8 +77,6 @@ public class Workspace implements Observer {
 		((BackgroundController)controllerMap.get(ViewType.PALETTES)).setColorPalette(customColorPalette);	
 		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
-
-		
 	}
 
 	private void initWindowMenu(){
@@ -119,7 +117,8 @@ public class Workspace implements Observer {
 		XMLSaver saver = new XMLSaver(myStage,myPreferences);
 	}
 	private void initInterpreters() {
-		Interpreter ip = new Interpreter(controllerMap);
+		Parser parser = new Parser();
+		Interpreter ip = new Interpreter(controllerMap, parser);
 		((ViewConsole) viewMap.get(ViewType.CONSOLE)).setInterpreter(ip);
 		((ViewHistory) viewMap.get(ViewType.HISTORY)).setInterpreter(ip);
 		((ViewWindowPreferences) viewMap.get(ViewType.WINDOWPREFERENCES)).setInterpreter(ip);

@@ -74,7 +74,6 @@ public class ViewWindowPreferences extends View{
 		for (Node node: guiList){
 			windowPreferencesBox.getChildren().add(node);
 		}
-		
 		createLanguagesComboBox();
 		createCommandsFileChooser();
 		createFileSaver();
@@ -110,7 +109,9 @@ public class ViewWindowPreferences extends View{
 		    Scanner scan = new Scanner(file);
 		    while(scan.hasNextLine()){
 		        String line = scan.nextLine();
-		        if (scan.next().equals("#")) continue;
+		        if (line.contains("#")) {
+		        	continue;
+		        }
 		        sb.append(line);
 		        sb.append("\n");
 		    }
