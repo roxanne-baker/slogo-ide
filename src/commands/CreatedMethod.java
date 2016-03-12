@@ -25,7 +25,6 @@ public class CreatedMethod extends Command implements Executable {
 //				variablesController.addVariable(paramNames[i], "0");
 //			}
 //		}
-
 	}
 	
 	public Object execute(List<Object> params) {

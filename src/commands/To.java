@@ -34,7 +34,7 @@ public class To extends Command implements Executable {
 		String commands = (String) params.get(2);
 		CreatedMethod createdMethod = new CreatedMethod(interpreter, variablesController, methodName, varNamesArray, commands);
 		interpreter.addCommandToMap(createdMethod);
-		methodController.addMethod(methodName, createdMethod);	
+		methodController.addMethod(methodName + " " + paramNames, createdMethod);	
 		return 0;
 	}	
 	

@@ -10,8 +10,8 @@ public class MethodModel extends Model {
 		savedMethods = new HashMap<String, CreatedMethod>();
 	}
 	
-	public void addMethod(String methodName, CreatedMethod method){
-		savedMethods.put(methodName, method);
+	public void addMethod(String methodNameParams, CreatedMethod method){
+		savedMethods.put(methodNameParams, method);
 	}
 	
 	public Map<String, CreatedMethod> getMethods() {

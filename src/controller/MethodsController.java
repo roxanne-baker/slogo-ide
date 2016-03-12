@@ -30,9 +30,4 @@ public class MethodsController extends Controller implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 	}
-	
-//	public Object getVariable(String name) { 
-//		return model.getVariable(name) == null? null: model.getVariable(name);
-//	}
-
 }
