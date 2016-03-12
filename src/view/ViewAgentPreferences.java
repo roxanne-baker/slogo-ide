@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import model.Agent;
 
 
 /**

@@ -27,6 +27,10 @@ public class MethodsController extends Controller implements Observer {
 		view.update(methodList);
 	}
 	
+	public Map<String, CreatedMethod> getMethodsModel() { 
+		return model.getMethods();
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 	}

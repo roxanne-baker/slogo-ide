@@ -3,9 +3,9 @@ package commands;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import Parsing.Interpreter;
 import controller.MethodsController;
 import controller.ControllerVariables;
-import model.Interpreter;
 
 public class To extends Command implements Executable {
 

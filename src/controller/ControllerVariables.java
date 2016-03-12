@@ -33,6 +33,10 @@ public class ControllerVariables extends Controller implements Observer {
 		}
 	}
 	
+	public HashMap<String, Object> getVariablesModel() {
+		return model.getVariables();
+	}
+ 	
 	public Object getVariable(String name) { 
 		return model.getVariable(name) == null? new Object(): model.getVariable(name);
 	}

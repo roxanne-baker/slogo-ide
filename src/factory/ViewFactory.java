@@ -17,8 +17,7 @@ public class ViewFactory {
 			Constructor viewConstructor = cls.getDeclaredConstructor(new Class[]{ViewType.class, Preferences.class});
 			return (View)viewConstructor.newInstance(ID,preferences);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("no such view found");
 		}
 		return null;
 	}

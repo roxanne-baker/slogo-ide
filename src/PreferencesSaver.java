@@ -1,4 +1,12 @@
+import java.io.File;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,8 +25,6 @@ public class PreferencesSaver extends Saver {
 	public PreferencesSaver(Stage stage, Preferences preferences){
 		super(stage,EXTENSION_DESCRIPTION,EXTENSION);
 		this.preferences = preferences;
-		String file = chooseFile();
-		saveFile(file);
 	}
 	
 	private boolean isSingleElem(Object obj){
@@ -41,7 +47,7 @@ public class PreferencesSaver extends Saver {
 		rootElem.appendChild(elem);
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
 	public void saveInfo(Document doc) {
 		this.doc = doc;
         rootElem = doc.createElement("preferences");
@@ -56,6 +62,26 @@ public class PreferencesSaver extends Saver {
 				saveListElem(prefName,(ObservableList<Object>)prefMap.get(prefName));
 			}
 		}
+	}
+	
+	public void saveFile(String filePath){
+		try{
+	        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	        dbFactory.setIgnoringElementContentWhitespace(true);
+	        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();	        
+	        doc = dBuilder.newDocument();  
+	        
+	        saveInfo(doc);
+	        
+	        TransformerFactory transformerFactory =
+	                TransformerFactory.newInstance();
+            Transformer transformer =
+            transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(filePath));
+            transformer.transform(source, result);
+		} catch(Exception e){	
+		}			
 	}
 	
 }

@@ -1,4 +1,4 @@
-package view;
+package model;
 import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
@@ -13,6 +13,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javafx.scene.paint.Color;
+import view.AgentElem;
+import view.CustomColor;
+import view.CustomColorPalette;
+import view.CustomImagePalette;
 /**
  * This is the super class for all agents. This class keeps track of all the properties of an agent. 
  * @author Melissa Zhang

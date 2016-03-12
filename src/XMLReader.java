@@ -25,7 +25,7 @@ public class XMLReader {
 	public XMLReader(Stage stage, boolean defaultPrefs) {
 		window = stage;
 		if(defaultPrefs){
-			file = "src/XML/default.xml";
+			file = "xml/default.xml";
 		}
 		else{
 			file = chooseFile();
@@ -64,7 +64,6 @@ public class XMLReader {
 	        rootElem = (Element) doc.getElementsByTagName("preferences").item(0);
 	        
 		} catch(Exception e){	
-			e.printStackTrace();
 		}			
 	}
 	

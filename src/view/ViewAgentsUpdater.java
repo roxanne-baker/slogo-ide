@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.Agent;
 
 /**
  * This class draws agents,maps imageview on screen to an agent, and updates the imageviews when they are selected or moved.

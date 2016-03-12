@@ -4,7 +4,7 @@ package commands;
 import java.util.List;
 
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class Heading extends TurtleQueryCommands implements Executable{
 	

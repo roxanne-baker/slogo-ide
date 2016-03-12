@@ -14,7 +14,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import view.Agent;
+import model.Agent;
 
 public class GuiObjectRadioButton extends GuiObject{
 	private String initialToggle;

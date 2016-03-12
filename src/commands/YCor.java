@@ -1,7 +1,7 @@
 package commands;
 import java.util.List;
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class YCor extends TurtleQueryCommands implements Executable{
 

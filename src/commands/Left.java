@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class Left extends TurtleCommand implements Executable {
 
@@ -18,7 +18,10 @@ public class Left extends TurtleCommand implements Executable {
 		double[] changeDegrees = new double[getTurtleController().getActiveAgents().size()];
 		for (int i=0; i<changeDegrees.length; i++) {
 			if (params.get(0) instanceof Double) {
-				Arrays.fill(changeDegrees, (double) params.get(0));
+				Arrays.fill(changeDegrees, (Double) params.get(0));
+			}
+			else if (params.get(0) instanceof Integer) { 
+				Arrays.fill(changeDegrees, (Integer) params.get(0));
 			}
 			else {
 				changeDegrees = (double[]) params.get(0);
