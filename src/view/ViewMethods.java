@@ -7,9 +7,11 @@ import javafx.scene.layout.*;
 public class ViewMethods extends View{
 	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	public ViewMethods(ViewType ID, Preferences savedPreferences){
 		super(ID, savedPreferences);
+		methodViews.getStyleClass().addAll(cssResources.getString("VBOX"),cssResources.getString("DISPLAYVIEW"));
 		init();
 	}
  	

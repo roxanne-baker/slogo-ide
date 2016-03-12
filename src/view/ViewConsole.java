@@ -7,8 +7,8 @@ import javafx.scene.layout.*;
 
 public class ViewConsole extends ViewInterpretable {
 	private ViewHistory historyView;
-	private ResourceBundle buttonResources = ResourceBundle.getBundle("windowProperties");
-	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
+	private final ResourceBundle buttonResources = ResourceBundle.getBundle("windowProperties");
+	private final ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	Pane pane;
 	
 	public ViewConsole(ViewType ID, Preferences savedPreferences) {

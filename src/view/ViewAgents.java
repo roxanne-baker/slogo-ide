@@ -58,6 +58,7 @@ public class ViewAgents extends View{
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
 
 		agentViewPreferences = new HBox();
+		agentViewPreferences.getStyleClass().add(cssResources.getString("HBOX"));
 		agentViewPreferences.setMaxHeight(MAX_PREFERENCE_HEIGHT);
 		agentViewPreferences.setLayoutY(WIDE_WIDTH-agentViewPreferences.getMaxHeight());
 		setPane(agentViewPreferences);

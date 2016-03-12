@@ -102,15 +102,17 @@ public class Workspace implements Observer {
 	private Menu initViewMenu() {
 		Menu menuView = new Menu(windowResources.getString("MENUVIEW"));
 		for(ViewType type: views){
-			CheckMenuItem view = new CheckMenuItem(type.toString());
-			menuView.getItems().add(view);
-			view.setSelected(true);
-			view.selectedProperty().addListener(new ChangeListener<Boolean>() {
-		        public void changed(ObservableValue ov,
-		                Boolean old_val, Boolean new_val) {
-		                    viewMap.get(type).getView().setVisible(new_val);
-		                }
-		            });
+			if(type!=ViewType.AGENT){
+				CheckMenuItem view = new CheckMenuItem(type.toString());
+				menuView.getItems().add(view);
+				view.setSelected(true);
+				view.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			        public void changed(ObservableValue ov,
+			                Boolean old_val, Boolean new_val) {
+			                    viewMap.get(type).getView().setVisible(new_val);
+			                }
+			            });	
+			}
 		}
 		return menuView;
 	}
