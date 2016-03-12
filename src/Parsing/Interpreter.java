@@ -85,11 +85,12 @@ public class Interpreter extends Observable {
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
+    	displayResult = true;
     	buildExprTree(cutFirst(text), commandStack, root);  
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
-    	int initSize = stack.size();
+    	//int initSize = stack.size();
 		Object result = new Object();
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
@@ -107,12 +108,13 @@ public class Interpreter extends Observable {
     			}
     		}
     	}
-    	if (displayResult) { 
-    		sendResultAfterParse(result, initSize);
-    	}
+    	//if (displayResult) { 
+    		sendResultAfterParse(result);
+    	//	displayResult = false; 
+    	//}
     }
     
-    private void sendResultAfterParse(Object result, int commandCount) { 
+    private void sendResultAfterParse(Object result) { 
     	if (result instanceof double[]) {
     		double[] resultArray = (double[]) result;
     		if (resultArray == null || resultArray.length == 0) {
@@ -125,9 +127,9 @@ public class Interpreter extends Observable {
     	else {
         	returnResult = result + "";    
     	}
-    	if (commandCount > 1) {
+    	//if (commandCount > 1) {
     		sendResult(returnResult);
-    	}
+    	//}
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -161,9 +163,7 @@ public class Interpreter extends Observable {
     				sendError("Too many parameters!");
     			}
     		} else { 
-    			displayResult = true;
 				processTree(root);
-				displayResult = false; 
     		}
     		return true; 
     	}
@@ -205,7 +205,7 @@ public class Interpreter extends Observable {
     }
     
     private boolean invalidInput(String text, String parsedFirst) { 
-    	if (parsedFirst.equals("NO MATCH")) {
+    	if (parsedFirst.equals("NO MATCH") && !text.trim().isEmpty()) {
     		sendError(String.format("%s is not a valid input", takeFirst(text)));
     		return true;
     	}
