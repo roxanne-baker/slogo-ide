@@ -23,8 +23,8 @@ public class If extends ControlCommand implements Executable {
 			System.out.println("param: "+param+" "+param.getClass().getName());
 		}
 		String commands = (String) params.get(1);
-		if (params.get(0) instanceof Double) {
-			Double ifCondition = (double) params.get(0);
+		if (params.get(0) instanceof Double || params.get(0) instanceof Integer) {
+			Integer ifCondition = (Integer) params.get(0);
 			if (!isEqual(ifCondition, 0)) {
 				interpreter.run(commands);
 			}

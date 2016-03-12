@@ -20,8 +20,8 @@ public class IfElse extends ControlCommand implements Executable {
 	public Object execute(List<Object> params) {
 		String trueCommands = (String) params.get(1);
 		String falseCommands = (String) params.get(2);
-		if (params.get(0) instanceof Double) {
-			Double ifCondition = (double) params.get(0);
+		if (params.get(0) instanceof Double || params.get(0) instanceof Integer) {
+			Integer ifCondition = (Integer) params.get(0);
 			if (!isEqual(ifCondition, 0)) {
 				interpreter.run(trueCommands);
 			}
