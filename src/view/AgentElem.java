@@ -63,11 +63,13 @@ public class AgentElem {
 			File imageFile = new File((String) myAgent.getImagePalette().getPaletteObject(myAgent.getCurrentImageIndex()));
 			if (imageFile.isFile()){
 				agentView = new ImageView(new Image(imageFile.toURI().toString(),myAgent.getSize(),myAgent.getSize(),true,true));
+
 			}else {
 				//new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),myAgent.getImagePath());
 				myAgent.getImagePalette().removeFromPalette(imagePath);
 				myAgent.setDefaultImageIndex();
 			}
+
 		}return agentView;
 		
 	}
