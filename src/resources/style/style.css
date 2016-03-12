@@ -5,14 +5,13 @@
 }
 
 .hbox {
-    	-fx-padding: 10;
-    	-fx-spacing: 10;
-    	-fx-alignment: center;
+	-fx-padding: 10;
+	-fx-spacing: 10;
+	-fx-alignment: center;
 }
 
 .vbox {
 	-fx-spacing: 2;
-	-fx-alignment: center-left;
 	-fx-font-wrap-text: true;
 }
 
@@ -46,7 +45,7 @@
 }
 
 .text-box {
-	-fx-background-color: #ebebeb;
+	-fx-background-color: #d7dfee;
 }
 
 .error {
@@ -61,12 +60,12 @@
 
 .combo-box {
 	-fx-text-fill: #43609c;
-	-fx-background-color: #FFFFFF;
+	-fx-background-color: #d7dfee;
 }
 
 .combo-box-base {
 	-fx-text-fill: #43609c;
-	-fx-background-color: #FFFFFF;
+	-fx-background-color: #d7dfee;
 	
 }
 .label {
@@ -93,9 +92,10 @@
 }
 
 .result {
+	-fx-fill: #43609c;
 	-fx-font-weight: bold;
 }
 
-/*.window-menu{
-	-fx-spacing: 10;
-}*/
+.window-view {
+	-fx-alignment: center;
+}

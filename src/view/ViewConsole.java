@@ -1,26 +1,18 @@
 package view;
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
+
 import java.util.ResourceBundle;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import model.Interpreter;
 
 public class ViewConsole extends ViewInterpretable {
-	private static final int CONSOLEX = NARROW_WIDTH;
-	private static final int CONSOLEY = WIDE_WIDTH+MENU_OFFSET;
 	private ViewHistory historyView;
-	private Interpreter interpreter;
 	private ResourceBundle buttonResources = ResourceBundle.getBundle("windowProperties");
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	Pane pane;
 	
 	public ViewConsole(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		init();
 	}
 	
@@ -28,14 +20,6 @@ public class ViewConsole extends ViewInterpretable {
 		historyView = hv;
 	}
 	
-	@Override
-	public void update(Observable o, Object arg) {
-
-	}
-	
-//	public void setInterpreter(Interpreter ip) { 
-//		interpreter = ip; 
-//	}
 
 	private void init() {
 		VBox vb = new VBox();
@@ -62,6 +46,16 @@ public class ViewConsole extends ViewInterpretable {
 		buttons.getStyleClass().add(cssResources.getString("HBOX"));
 		buttons.getChildren().addAll(runBtn,clearBtn);
 		return buttons;
+	}
+
+	@Override
+	public int getX() {
+		return COORD11[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD11[1];
 	}
 
 }

@@ -29,18 +29,17 @@ import view.ViewConsole;
 import view.ViewHistory;
 import view.ViewInterpretable;
 import view.ViewVariables;
-import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final String STYLE_SHEET = "resources/style/style.css";
 	private static final int WORKSPACE_INIT_WIDTH = View.NARROW_WIDTH*3+View.WIDE_WIDTH;
 	private static final String FILECHOOSER_FILTER = "SLOGO";
 	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
 	private static final List<String> MENU_OPTIONS = Arrays.asList("NEWWORKSPACE","SAVEPREFERENCES","LOADPREFERENCES","SAVECOMMANDS","LOADCOMMANDS");
+	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = ViewType.values();
 	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS,ViewType.PALETTES};
-	private ViewType[] needInterpreters = {ViewType.CONSOLE, ViewType.HISTORY, ViewType.WINDOWPREFERENCES};
-
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType, Controller> controllerMap = new HashMap<ViewType,Controller>();
@@ -51,9 +50,7 @@ public class Workspace implements Observer {
 	private Scene myScene;
 	private Stage myStage;
 	private Interpreter myInterpreter;
-	private ResourceBundle viewResources = ResourceBundle.getBundle("viewclasses");
 	private ResourceBundle windowResources = ResourceBundle.getBundle("windowProperties");
-	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private Preferences myPreferences;
 	
 	public Workspace(Stage stage, Preferences preferences){
@@ -73,7 +70,7 @@ public class Workspace implements Observer {
 		initInterpreters();
 
 		myScene = new Scene(pane);
-		myScene.getStylesheets().add("resources/style/style.css");
+		myScene.getStylesheets().add(STYLE_SHEET);
 		return myScene;
 	}
 	
@@ -85,7 +82,6 @@ public class Workspace implements Observer {
 	}
 	
 	private void initPalettes() {
-		
 		((ControllerTurtle)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
 		((ControllerBackground)controllerMap.get(ViewType.PALETTES)).setColorPalette(customColorPalette);	
 		((ControllerTurtle)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);

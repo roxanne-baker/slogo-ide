@@ -6,15 +6,11 @@ import javafx.scene.layout.*;
 import model.Interpreter;
 
 public class ViewHistory extends ViewInterpretable implements Observer{
-	private static final int CONSOLEX =NARROW_WIDTH+WIDE_WIDTH;
-	private static final int CONSOLEY = MENU_OFFSET;
-	private VBox vb = new VBox(2);
-	private Interpreter interpreter;
+	private VBox vb = new VBox();
+	private final ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	public ViewHistory(ViewType ID, Preferences savedPreferences){
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		init();
 	}
 	
@@ -39,15 +35,27 @@ public class ViewHistory extends ViewInterpretable implements Observer{
 
 	}
 	
-//	public void setInterpreter(Interpreter ip) { 
-//		interpreter = ip; 
-//		ip.addObserver(this);
-//	}
+	@Override
+	public void setInterpreter(Interpreter ip) { 
+		super.setInterpreter(ip);
+		ip.addObserver(this);
+	}
 	
 
 	private void init() {
 		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
+		vb.getStyleClass().add(cssResources.getString("VBOX"));
 		ScrollPane sp = new ScrollPane(vb);
 		setPane(sp);
+	}
+
+	@Override
+	public int getX() {
+		return COORD02[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD02[1];
 	}
 }

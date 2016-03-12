@@ -64,7 +64,7 @@ public class XMLReader {
 	        rootElem = (Element) doc.getElementsByTagName("preferences").item(0);
 	        
 		} catch(Exception e){	
-			//
+			e.printStackTrace();
 		}			
 	}
 	
@@ -75,8 +75,6 @@ public class XMLReader {
 	
 	private String getNodeValue(Element nodeElem, String tagName){ 
 		return nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim();
-
-		//return Arrays.asList(new String[]{nodeElem.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().trim()});
 	}
 	
 	private ObservableList<String> getListElem(Element nodeElem,String tagName){
@@ -102,7 +100,6 @@ public class XMLReader {
     				preferences.put(tagName, getListElem(rootElem,tagName));
     
     			}
-        		System.out.println(rootElem.getChildNodes().item(i).getNodeName());
         	}
         }
 		return preferences;

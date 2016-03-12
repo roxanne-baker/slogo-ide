@@ -41,7 +41,6 @@ public class PreferencesSaver extends Saver {
 		rootElem.appendChild(elem);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void saveInfo(Document doc) {
 		this.doc = doc;
