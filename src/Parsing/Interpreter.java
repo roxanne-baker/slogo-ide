@@ -110,10 +110,7 @@ public class Interpreter extends Observable {
     			}
     		}
     	}
-    	//if (displayResult) { 
-    		sendResultAfterParse(result);
-    	//	displayResult = false; 
-    	//}
+    	sendResultAfterParse(result);
     }
     
     private void sendResultAfterParse(Object result) { 
