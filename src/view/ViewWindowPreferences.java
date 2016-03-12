@@ -84,7 +84,7 @@ public class ViewWindowPreferences extends View{
 	private void createFileSaver() {
 		Button fileSaver = new Button(WINDOW_RESOURCES.getString("COMMANDSSAVERBUTTON"));
 		fileSaver.setOnAction(evt -> {
-			// blah 
+			
 		});
 		windowPreferencesBox.getChildren().add(fileSaver);
 
@@ -110,6 +110,7 @@ public class ViewWindowPreferences extends View{
 		    Scanner scan = new Scanner(file);
 		    while(scan.hasNextLine()){
 		        String line = scan.nextLine();
+		        if (scan.next().equals("#")) continue;
 		        sb.append(line);
 		        sb.append("\n");
 		    }

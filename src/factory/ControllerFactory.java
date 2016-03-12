@@ -23,7 +23,6 @@ public class ControllerFactory {
 	
 	public ControllerFactory(HashMap<ViewType,Model> models,HashMap<ViewType,View> views){
 		allModels = models;
-		System.out.println(models);
 		allViews = views;
 	}
 	
