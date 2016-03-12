@@ -54,9 +54,9 @@ public class TurtleController extends Controller implements IAgentController{
 		currentAgentIDProperty = new SimpleIntegerProperty();
 		activeAgentListProperty = new SimpleListProperty<Integer>();
 		
-		//bing currentAgentNameProperty to property in agent view
-		prefView.getCurrentAgentNameProperty().bind(currentAgentIDProperty);
-		//bind bidirectionl ActiveAgentListProperty to property in agentView
+		//bind bidirectional currentAgentNameProperty to property in pref view
+		currentAgentIDProperty.bindBidirectional(prefView.getCurrentAgentNameProperty());
+		//bind bidirectional ActiveAgentListProperty to property in agentView
 		activeAgentListProperty.bindBidirectional(obsView.getActiveAgentListProperty());
 		
 		
