@@ -68,17 +68,6 @@ public class Interpreter extends Observable {
     		c = commandsMap.get(parsedFirst);
     	}
 		if (c.getNumParams() == 0) { 
-//			Object result = c.execute(NO_PARAMS_LIST);
-//	    	if (result instanceof double[]) {
-//	    		double[] resultArray = (double[]) result;
-//	    		if (resultArray == null || resultArray.length == 0) {
-//	    			returnResult = 0+"";
-//	    		}
-//	    		else {
-//	    			returnResult = resultArray[resultArray.length-1]+"";
-//	    		}
-//	    	}
-//			callBuildTree(cutFirst(text));
 			runNoParamCommand(c, text);
 			return;
 		}
