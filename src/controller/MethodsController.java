@@ -5,14 +5,14 @@ import view.ViewMethods;
 import java.util.*;
 
 import commands.CreatedMethod;
-import model.MethodModel;
+import model.ModelMethods;
 
 
 public class MethodsController extends Controller implements Observer {
-	private MethodModel model;
+	private ModelMethods model;
 	private ViewMethods view;
 	
-	public MethodsController(MethodModel model, ViewMethods view) {
+	public MethodsController(ModelMethods model, ViewMethods view) {
 		this.model = model;
 		this.view = view;
 	}

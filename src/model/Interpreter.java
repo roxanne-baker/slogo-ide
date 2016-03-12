@@ -16,9 +16,9 @@ public class Interpreter extends Observable {
 	private final String WHITESPACE = "\\p{Space}";
     private Parser lang = new Parser();
     private final String resourcesPath = "resources/languages/";
-	private TurtleController turtleController;
-	private VariablesController variableController;
-	private BackgroundController backgroundController;
+	private ControllerTurtle turtleController;
+	private ControllerVariables variableController;
+	private ControllerBackground backgroundController;
 	private MethodsController methodController;
 	private String errorMessage = new String();
 	private String returnResult = new String();
@@ -27,10 +27,10 @@ public class Interpreter extends Observable {
 	private final char CLOSED_BRACKET = ']';
 	
 	public Interpreter(Map<ViewType, Controller> controllerMap) {
-		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
-		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
+		turtleController = (ControllerTurtle) controllerMap.get(ViewType.AGENT); 
+		variableController = (ControllerVariables) controllerMap.get(ViewType.VARIABLES);
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
-		backgroundController = (BackgroundController) controllerMap.get(ViewType.PALETTES);
+		backgroundController = (ControllerBackground) controllerMap.get(ViewType.PALETTES);
 		initializeCommandsMap();
 		initializeLangs();
 	}

@@ -2,18 +2,18 @@ package commands;
 
 import java.util.List;
 
-import controller.VariablesController;
+import controller.ControllerVariables;
 import model.Interpreter;
 
 public class CreatedMethod extends Command implements Executable {
 
 	private Interpreter interpreter;
-	private VariablesController variablesController;
+	private ControllerVariables variablesController;
 	private String name;
 	private String[] paramNames;
 	private String commands;
 	
-	public CreatedMethod(Interpreter interpreter, VariablesController variablesController, String methodName, String[] paramNames, String commands) {
+	public CreatedMethod(Interpreter interpreter, ControllerVariables variablesController, String methodName, String[] paramNames, String commands) {
 		this.interpreter = interpreter;
 		this.variablesController = variablesController;
 		this.name = methodName;

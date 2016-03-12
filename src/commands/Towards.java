@@ -2,12 +2,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class Towards extends TurtleCommand implements Executable {
 	
-	public Towards(TurtleController turtleController) {
+	public Towards(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 2;
 	}

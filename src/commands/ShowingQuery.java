@@ -2,12 +2,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class ShowingQuery extends TurtleQueryCommands implements Executable{
 	
-	public ShowingQuery(TurtleController turtleController) {
+	public ShowingQuery(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 0;
 	}

@@ -7,7 +7,7 @@ public class ResultElem extends TextBox {
 	private ResourceBundle myResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 
 	public ResultElem(String resultMessage) {
-		super(resultMessage);
+		super(">>> "+resultMessage);
 		addStyleClass(myResources.getString("RESULT"));
 	}
 }

@@ -2,12 +2,12 @@ package commands;
 
 import java.util.Arrays;
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class SetShape extends TurtleCommand implements Executable {
 	
-	public SetShape(TurtleController turtleController) {
+	public SetShape(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 1;
 	}

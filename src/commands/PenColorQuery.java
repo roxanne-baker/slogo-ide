@@ -2,13 +2,13 @@
 package commands;
 
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class PenColorQuery extends TurtleQueryCommands implements Executable{
 	
-	TurtleController turtleController;
-	public PenColorQuery(TurtleController turtleController) {
+	ControllerTurtle turtleController;
+	public PenColorQuery(ControllerTurtle turtleController) {
 		super(turtleController);
 	}
 	

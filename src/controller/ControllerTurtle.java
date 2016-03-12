@@ -26,7 +26,7 @@ import javafx.collections.ObservableList;
  * @author Melissa Zhang
  *
  */
-public class TurtleController extends Controller implements IAgentController{
+public class ControllerTurtle extends Controller implements ControllerAgents{
 
 	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
 	private HashMap<Integer,Agent> agentMap;
@@ -42,7 +42,7 @@ public class TurtleController extends Controller implements IAgentController{
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
 	
-	public TurtleController(ViewAgentPreferences prefView, ViewAgents obsView){
+	public ControllerTurtle(ViewAgentPreferences prefView, ViewAgents obsView){
 		preferencesView = prefView;
 		agentsView = obsView;
 		agentMap = new HashMap<Integer,Agent>();

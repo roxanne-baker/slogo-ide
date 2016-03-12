@@ -6,8 +6,6 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 
 public class ViewVariables extends View{
-	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH+NARROW_WIDTH;
-	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private Pane pane;
 	private final ResourceBundle windowResources = ResourceBundle.getBundle("windowProperties");	//added
 	private final ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
@@ -18,8 +16,6 @@ public class ViewVariables extends View{
 		super(ID, savedPreferences);
 		savedVars.getChildren().add(instructions); // added
 		savedVars.getStyleClass().add(cssResources.getString("DISPLAYVIEW"));
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		init();
 	}
 	
@@ -38,5 +34,15 @@ public class ViewVariables extends View{
 		ScrollPane sp = new ScrollPane(savedVars);
 		setPane(sp);
 		return pane;
+	}
+
+	@Override
+	public int getX() {
+		return COORD13[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD13[1];
 	}
 }

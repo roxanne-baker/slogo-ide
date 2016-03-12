@@ -2,16 +2,16 @@ package commands;
 
 import java.util.List;
 
-import controller.BackgroundController;
-import controller.TurtleController;
+import controller.ControllerBackground;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class ClearScreen extends Command implements Executable {
 
-	BackgroundController backgroundController;
-	TurtleController turtleController;
+	ControllerBackground backgroundController;
+	ControllerTurtle turtleController;
 	
-	public ClearScreen(TurtleController turtleController, BackgroundController bgController) {
+	public ClearScreen(ControllerTurtle turtleController, ControllerBackground bgController) {
 		this.turtleController = turtleController;
 		this.backgroundController = bgController;
 		numParams = 0;

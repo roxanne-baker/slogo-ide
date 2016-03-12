@@ -3,12 +3,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class PenDown extends TurtleQueryCommands implements Executable {
 
-	public PenDown(TurtleController turtleController) {
+	public PenDown(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 0;
 	}

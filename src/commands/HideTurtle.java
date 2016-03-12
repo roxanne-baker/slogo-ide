@@ -2,12 +2,12 @@
 package commands;
 
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class HideTurtle extends TurtleQueryCommands implements Executable {
 
-	public HideTurtle(TurtleController turtleController) {
+	public HideTurtle(ControllerTurtle turtleController) {
 		super(turtleController);
 	}
 	

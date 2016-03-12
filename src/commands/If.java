@@ -3,7 +3,7 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import model.Interpreter;
 
 
@@ -11,8 +11,8 @@ import model.Interpreter;
 public class If extends ControlCommand implements Executable {
 
 	Interpreter interpreter;
-	TurtleController turtleController;
-	public If(Interpreter interpreter, TurtleController turtleController) {
+	ControllerTurtle turtleController;
+	public If(Interpreter interpreter, ControllerTurtle turtleController) {
 		this.interpreter = interpreter;
 		this.turtleController = turtleController;
 		numParams = 2;

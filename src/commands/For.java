@@ -1,16 +1,16 @@
 package commands;
 
 import java.util.List;
-import controller.VariablesController;
+import controller.ControllerVariables;
 import model.Interpreter;
 
 
 public class For extends Command implements Executable {
 
 	Interpreter interpreter;
-	VariablesController variableController;
+	ControllerVariables variableController;
 	
-	public For(Interpreter interpreter, VariablesController variableController) {
+	public For(Interpreter interpreter, ControllerVariables variableController) {
 		this.interpreter = interpreter;
 		this.variableController = variableController;
 		numParams = 2;
