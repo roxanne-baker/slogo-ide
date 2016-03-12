@@ -154,7 +154,9 @@ public class Workspace implements Observer {
 		    Scanner scan = new Scanner(file);
 		    while(scan.hasNextLine()){
 		        String line = scan.nextLine();
-		        sb.append(line);
+		        if (!line.contains("#")) {
+			        sb.append(line);
+		        }
 		        sb.append("\n");
 		    }
 		} catch (FileNotFoundException e) { 
