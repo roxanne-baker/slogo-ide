@@ -2,13 +2,13 @@ package commands;
 
 import java.util.List;
 
-import controller.BackgroundController;
+import controller.ControllerBackground;
 
 public class ClearStamps extends Command implements Executable {
 
-	BackgroundController backgroundController;
+	ControllerBackground backgroundController;
 	
-	public ClearStamps(BackgroundController bgController) {
+	public ClearStamps(ControllerBackground bgController) {
 		this.backgroundController = bgController;
 		numParams = 0;
 	}

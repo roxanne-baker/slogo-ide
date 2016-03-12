@@ -3,12 +3,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class Heading extends TurtleQueryCommands implements Executable{
 	
-	public Heading(TurtleController turtleController) {
+	public Heading(ControllerTurtle turtleController) {
 		super(turtleController);
 	}
 	

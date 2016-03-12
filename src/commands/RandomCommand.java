@@ -3,12 +3,12 @@ package commands;
 import java.util.List;
 import java.util.Random;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 
 public class RandomCommand extends MathCommand implements Executable {
 
-	TurtleController turtleController;
-	public RandomCommand(TurtleController turtleController) {
+	ControllerTurtle turtleController;
+	public RandomCommand(ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 		numParams = 1;
 	}

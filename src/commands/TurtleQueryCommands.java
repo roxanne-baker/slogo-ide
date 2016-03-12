@@ -1,13 +1,13 @@
 package commands;
 
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 
 public abstract class TurtleQueryCommands extends Command implements Executable{
 
-	private TurtleController turtleController;
+	private ControllerTurtle turtleController;
 	
-	protected TurtleQueryCommands(TurtleController turtleController) {
+	protected TurtleQueryCommands(ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 		numParams = 0;
 	}
@@ -16,7 +16,7 @@ public abstract class TurtleQueryCommands extends Command implements Executable{
 		return null;
 	}
 
-	protected TurtleController getTurtleController() {
+	protected ControllerTurtle getTurtleController() {
 		return turtleController;
 	}
 	

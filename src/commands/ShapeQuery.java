@@ -2,13 +2,13 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class ShapeQuery {
 
-	TurtleController turtleController;
-	public ShapeQuery(TurtleController turtleController) {
+	ControllerTurtle turtleController;
+	public ShapeQuery(ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 	}
 	

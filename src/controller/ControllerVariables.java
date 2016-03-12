@@ -3,14 +3,14 @@ import view.VariableElem;
 import view.ViewVariables;
 import java.util.*;
 
-import model.VariableModel;
+import model.ModelVariables;
 
 
-public class VariablesController extends Controller implements Observer {
-	private VariableModel model;
+public class ControllerVariables extends Controller implements Observer {
+	private ModelVariables model;
 	private ViewVariables view;
 	
-	public VariablesController(VariableModel model, ViewVariables view) {
+	public ControllerVariables(ModelVariables model, ViewVariables view) {
 		this.model = model;
 		this.view = view;
 	}

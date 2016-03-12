@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import controller.MethodsController;
-import controller.VariablesController;
+import controller.ControllerVariables;
 import model.Interpreter;
 
 public class To extends Command implements Executable {
 
 	Interpreter interpreter;
-	VariablesController variablesController;
+	ControllerVariables variablesController;
 	MethodsController methodController;
 	
-	public To(Interpreter interpreter, VariablesController variablesController, MethodsController methodController) {
+	public To(Interpreter interpreter, ControllerVariables variablesController, MethodsController methodController) {
 		this.methodController = methodController;
 		this.variablesController = variablesController;
 		this.interpreter = interpreter;

@@ -6,8 +6,8 @@ import java.util.Stack;
 
 import commands.XCor;
 import commands.YCor;
-import controller.TurtleController;
-import controller.VariablesController;
+import controller.ControllerTurtle;
+import controller.ControllerVariables;
 import commands.ArcTangent;
 import commands.Back;
 import commands.Command;
@@ -50,8 +50,8 @@ public class IntPar {
     private static Parser lang = new Parser();
 
 
-	private static TurtleController turtleController;
-	private static VariablesController variableController;
+	private static ControllerTurtle turtleController;
+	private static ControllerVariables variableController;
 	
 	public IntPar() {
 //		turtleController = tc; 

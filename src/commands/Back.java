@@ -2,13 +2,13 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class Back extends TurtleCommand implements Executable {
 
 
-	public Back(TurtleController turtleController) {
+	public Back(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 1;
 	}

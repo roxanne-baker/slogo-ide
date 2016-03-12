@@ -1,11 +1,11 @@
 package commands;
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class YCor extends TurtleQueryCommands implements Executable{
 
-	public YCor(TurtleController turtleController) {
+	public YCor(ControllerTurtle turtleController) {
 		super(turtleController);
 	}
 	

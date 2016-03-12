@@ -3,12 +3,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class PenUp extends TurtleQueryCommands implements Executable {
 	
-	public PenUp(TurtleController turtleController) {
+	public PenUp(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 0; 
 	}

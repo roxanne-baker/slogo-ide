@@ -8,21 +8,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Interpreter;
 
-public class ViewConsole extends View {
+public class ViewConsole extends ViewInterpretable {
 	private static final int CONSOLEX = NARROW_WIDTH;
 	private static final int CONSOLEY = WIDE_WIDTH+MENU_OFFSET;
-	private static final String BUTTON_LABEL_PATH = "windowProperties";
-	private static final String CSS_CLASSES_PATH = "CSSClasses";
 	private ViewHistory historyView;
 	private Interpreter interpreter;
-	private ResourceBundle buttonResources;
-	private ResourceBundle cssResources;
+	private ResourceBundle buttonResources = ResourceBundle.getBundle("windowProperties");
+	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	Pane pane;
 	
 	public ViewConsole(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
-		buttonResources = ResourceBundle.getBundle(BUTTON_LABEL_PATH);
-		cssResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
 		setX(CONSOLEX);
 		setY(CONSOLEY);
 		init();
@@ -37,17 +33,18 @@ public class ViewConsole extends View {
 
 	}
 	
-	public void setInterpreter(Interpreter ip) { 
-		interpreter = ip; 
-	}
+//	public void setInterpreter(Interpreter ip) { 
+//		interpreter = ip; 
+//	}
 
 	private void init() {
 		VBox vb = new VBox();
 		TextArea console = new TextArea();
 		console.getStyleClass().add(cssResources.getString("CODE"));
+		console.setPrefSize(WIDE_WIDTH,NARROW_WIDTH);
 		HBox buttons = initButtons(console);
 		vb.getChildren().addAll(console,buttons);
-		vb.setPrefSize(View.WIDE_WIDTH, View.NARROW_WIDTH);
+		vb.setPrefSize(WIDE_WIDTH, NARROW_WIDTH);
 		setPane(vb);
 	}
 
@@ -55,7 +52,7 @@ public class ViewConsole extends View {
 		Button runBtn = new Button(buttonResources.getString("RUNBUTTON"));
 		runBtn.setOnMouseClicked(e->{
 			HistoryElem hist = new HistoryElem(console.getText(), historyView);
-			interpreter.run(console.getText());
+			getInterpreter().run(console.getText());
 		});
 		Button clearBtn = new Button(buttonResources.getString("CLEARBUTTON"));
 		clearBtn.setOnMouseClicked(e->{

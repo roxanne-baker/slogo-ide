@@ -2,14 +2,14 @@ package commands;
 
 import java.util.Arrays;
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class SetPenColor extends Command implements Executable {
 	
-	TurtleController turtleController;
+	ControllerTurtle turtleController;
 	
-	public SetPenColor(TurtleController turtleController) {
+	public SetPenColor(ControllerTurtle turtleController) {
 		numParams = 1;
 		this.turtleController = turtleController;
 	}

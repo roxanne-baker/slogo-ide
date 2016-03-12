@@ -25,6 +25,10 @@
 	-fx-text-fill: #FFFFFF;
 }
 
+.menu-item .label{
+	-fx-text-fill: black;
+}
+
 .menu:focused {
 	-fx-background-color: #F9F9F9;
 }
@@ -42,7 +46,7 @@
 }
 
 .text-box {
-	-fx-background-color: #F0F0F0;
+	-fx-background-color: #ebebeb;
 }
 
 .error {
@@ -87,6 +91,11 @@
 .radio-button {
 	-fx-mark-color: #43609c;
 }
-.window-menu{
-	-fx-spacing: 10;
+
+.result {
+	-fx-font-weight: bold;
 }
+
+/*.window-menu{
+	-fx-spacing: 10;
+}*/
