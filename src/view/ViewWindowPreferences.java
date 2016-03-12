@@ -17,6 +17,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
  */
 
 public class ViewWindowPreferences extends View{
+	private static final int ELEMENT_WIDTH = 240;
 	private static final String FILECHOOSER_FILTER = "SLOGO";
 	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
 	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH;
@@ -61,8 +64,18 @@ public class ViewWindowPreferences extends View{
 
 
 	private void createView() {
+		createLanguagesComboBox();
+		createHelpButton();
+		//createCommandsFileChooser();
+		//createFileSaver();
+		for(Node node: windowPreferencesBox.getChildren()){
+			((Control)node).setPrefWidth(ELEMENT_WIDTH);
+		}
+	}
+
+
+	private void createHelpButton() {
 		GuiObjectFactory guiFactory = new GuiObjectFactory();
-		windowPreferencesBox.setPadding(new Insets(0,PADDING,PADDING,PADDING));
 
 		for(String pref: PREFERENCES_LIST){
 			GuiObject guiObject = guiFactory.createNewGuiObject(pref, null);
@@ -74,55 +87,51 @@ public class ViewWindowPreferences extends View{
 		for (Node node: guiList){
 			windowPreferencesBox.getChildren().add(node);
 		}
-		createLanguagesComboBox();
-		createCommandsFileChooser();
-		createFileSaver();
-
 	}
 	
-	private void createFileSaver() {
-		Button fileSaver = new Button(WINDOW_RESOURCES.getString("COMMANDSSAVERBUTTON"));
-		fileSaver.setOnAction(evt -> {
-			
-		});
-		windowPreferencesBox.getChildren().add(fileSaver);
+//	private void createFileSaver() {
+//		Button fileSaver = new Button(WINDOW_RESOURCES.getString("COMMANDSSAVERBUTTON"));
+//		fileSaver.setOnAction(evt -> {
+//			// blah 
+//		});
+//		windowPreferencesBox.getChildren().add(fileSaver);
+//
+//	}
 
-	}
 
-
-	private void createCommandsFileChooser() {
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
-		fileChooser.getExtensionFilters().add(extFilter);
-		Stage stage = new Stage();
-		Button fileButton = new Button(WINDOW_RESOURCES.getString("COMMANDSLOADERBUTTON"));
-		fileButton.setOnAction(evt -> {
-			File file = fileChooser.showOpenDialog(stage);
-			myInterpreter.run(readText(file));
-		});
-		windowPreferencesBox.getChildren().add(fileButton);
-	}
-	
-	private static String readText (File file) {
-		StringBuilder sb = new StringBuilder();
-		try { 
-		    Scanner scan = new Scanner(file);
-		    while(scan.hasNextLine()){
-		        String line = scan.nextLine();
-		        if (line.contains("#")) {
-		        	continue;
-		        }
-		        sb.append(line);
-		        sb.append("\n");
-		    }
-		} catch (FileNotFoundException e) { 
-			System.out.println("couldn't find the file");
-		}
-		return sb.toString().trim();
-	}
+//	private void createCommandsFileChooser() {
+//		FileChooser fileChooser = new FileChooser();
+//		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
+//		fileChooser.getExtensionFilters().add(extFilter);
+//		Stage stage = new Stage();
+//		Button fileButton = new Button(WINDOW_RESOURCES.getString("COMMANDSLOADERBUTTON"));
+//		fileButton.setOnAction(evt -> {
+//			File file = fileChooser.showOpenDialog(stage);
+//			myInterpreter.run(readText(file));
+//		});
+//		windowPreferencesBox.getChildren().add(fileButton);
+//	}
+//	
+//	private static String readText (File file) {
+//		StringBuilder sb = new StringBuilder();
+//		try { 
+//		    Scanner scan = new Scanner(file);
+//		    while(scan.hasNextLine()){
+//		        String line = scan.nextLine();
+//		        sb.append(line);
+//		        sb.append("\n");
+//		    }
+//		} catch (FileNotFoundException e) { 
+//			System.out.println("couldn't find the file");
+//		}
+//		return sb.toString().trim();
+//	}
 
 
 	private void createLanguagesComboBox() {
+		Label label = new Label("Choose a language for commands");
+		windowPreferencesBox.getChildren().add(label);
+		
 		for (String language: LANGUAGES_LIST){
 			languageDropDown.getItems().add(language);
 		}

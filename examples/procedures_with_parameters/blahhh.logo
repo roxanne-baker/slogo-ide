@@ -1,0 +1,38 @@
+make :numsides 3.0
+make :side 100.0
+make :length 100.0
+make :size 100.0
+to square [:side ]  [ 
+poly 4 :side
+ ]
+to triangle [:side ]  [ 
+poly 3 :side
+ ]
+to poly [:length :angle ]  [ 
+repeat 100
+  [
+    fd :length 
+    rt :angle
+  ]
+ ]
+to outlinepoly [:length :angle ]  [ 
+repeat 100
+  [
+    fd :length 
+    rt :angle
+    fd :length 
+    rt product 2 :angle
+  ]
+ ]
+to house [:size ]  [ 
+square :size
+  fd :size rt 30
+  triangle :size
+ ]
+to poly [:numsides :length ]  [ 
+repeat :numsides
+  [
+    fd :length 
+    rt quotient 360 :numsides
+  ]
+ ]

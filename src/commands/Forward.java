@@ -22,6 +22,9 @@ public class Forward extends TurtleCommand implements Executable {
 			if (params.get(0) instanceof Double) {
 				distance[i] = (Double) params.get(0);
 			}
+			else if (params.get(0) instanceof Integer) { 
+				distance[i] = (Integer) params.get(0);
+			}
 			else {
 				distance[i] = ((double[]) params.get(0))[i];		
 			}

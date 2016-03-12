@@ -25,6 +25,7 @@ public class Interpreter extends Observable {
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
+	private boolean displayResult = false;
 	
 	public Interpreter(Map<ViewType, Controller> controllerMap, Parser parser) {
 		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
@@ -41,8 +42,8 @@ public class Interpreter extends Observable {
 	}
 	
 	private void initializeLangs() { 
-        parser.addPatterns("resources/languages/English");
-        parser.addPatterns("resources/languages/Syntax");
+        parser.addPatterns("English");
+        parser.addPatterns("Syntax");
 	}
 	
 	public void run(String userInput) { 
@@ -106,7 +107,9 @@ public class Interpreter extends Observable {
     			}
     		}
     	}
-    	sendResultAfterParse(result, initSize);
+    	if (displayResult) { 
+    		sendResultAfterParse(result, initSize);
+    	}
     }
     
     private void sendResultAfterParse(Object result, int commandCount) { 
@@ -158,7 +161,9 @@ public class Interpreter extends Observable {
     				sendError("Too many parameters!");
     			}
     		} else { 
+    			displayResult = true;
 				processTree(root);
+				displayResult = false; 
     		}
     		return true; 
     	}

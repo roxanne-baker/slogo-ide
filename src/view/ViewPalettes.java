@@ -27,6 +27,7 @@ public class ViewPalettes extends View{
 	private static final String FILECHOOSER_FILTER = "Images";
 	private static final int CONSOLEX = 0;
 	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
+	private static final int BUTTON_WIDTH = 150;
 	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
 	private static final ResourceBundle DIALOG_RESOURCES = ResourceBundle.getBundle("DialogBox");
 	private static final List<String> COLOR_COMPONENTS = Arrays.asList("RED","GREEN","BLUE");
@@ -72,6 +73,7 @@ public class ViewPalettes extends View{
 			colorAdderBox.getChildren().add(colorBox);
 		}
 		Button addColorButton = new Button(PALETTE_RESOURCES.getString("COLORADDERBUTTON"));
+		addColorButton.setPrefWidth(BUTTON_WIDTH);
 		addColorButtonEventHandler(colorInputList, addColorButton);
 		vbox.getChildren().addAll(colorAdderBox, addColorButton);
 		
@@ -141,7 +143,7 @@ public class ViewPalettes extends View{
 		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setTitle(PALETTE_RESOURCES.getString("IMAGECHOOSERLABEL"));
 		Button fileButton = new Button(PALETTE_RESOURCES.getString("IMAGECHOOSERBUTTON"));
-		
+		fileButton.setPrefWidth(BUTTON_WIDTH);
 		fileButton.setOnAction(evt -> {
 			List<File> fileList = fileChooser.showOpenMultipleDialog(stage);
 			if(fileList!=null){
