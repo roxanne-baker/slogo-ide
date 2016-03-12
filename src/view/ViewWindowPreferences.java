@@ -38,7 +38,7 @@ public class ViewWindowPreferences extends ViewInterpretable{
 		this.savedPreferences = savedPreferences;
 		guiList = new ArrayList<Node>();
 		windowPreferencesBox = new VBox();
-		windowPreferencesBox.getStyleClass().addAll(cssResources.getString("VBOXVIEW"),cssResources.getString("WINDOWVIEW"));
+		windowPreferencesBox.getStyleClass().addAll(cssResources.getString("VBOXVIEW"),cssResources.getString("WINDOWVIEW"),cssResources.getString("DISPLAYVIEW"));
 		setPane(windowPreferencesBox);
 		currentLanguage = savedPreferences.getPreference("language").toString();
 		languageDropDown = new ComboBox<String>();

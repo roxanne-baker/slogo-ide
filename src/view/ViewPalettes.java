@@ -100,11 +100,10 @@ public class ViewPalettes extends View{
 		try{
 			int intValue = Integer.parseInt(value);
 			if(intValue<0 || intValue>255){
-				//new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
 				return false;
 			}
 		}catch (Exception e){
-			//new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
+//			new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
 			return false;
 		}
 		return true;
