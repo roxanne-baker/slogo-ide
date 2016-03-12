@@ -3,7 +3,7 @@ package view;
 import java.io.File;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -64,7 +64,7 @@ public class AgentElem {
 			if (imageFile.isFile()){
 				agentView = new ImageView(new Image(imageFile.toURI().toString(),myAgent.getSize(),myAgent.getSize(),true,true));
 			}else {
-				new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),myAgent.getImagePath());
+				//new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),myAgent.getImagePath());
 				myAgent.getImagePalette().removeFromPalette(imagePath);
 				myAgent.setDefaultImageIndex();
 			}

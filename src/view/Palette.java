@@ -10,7 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Model;
@@ -53,20 +53,17 @@ public abstract class Palette extends Model {
 			elemBox.getChildren().addAll(objectView,indexLabel);
 			hbox.getChildren().add(elemBox);
 		}
-
 		paletteGroup.getChildren().add(hbox);
 	}
 	
 	public abstract Node getPaletteObjectView(int index);
 	
 	public void addToPalette(Object obj, int index){
-		System.out.println("here");
 		if (index >= paletteObjectListProperty.size()){ //add new object at next available spot
 			paletteObjectListProperty.add(obj);
 			
-		}else if (index <0){
-			new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("PALETTE"), DIALOG_RESOURCES.getString("PALETTEINFO"));
-		}
+		}//else if (index <0){
+			//new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("PALETTE"), DIALOG_RESOURCES.getString("PALETTEINFO"));		}
 		else{ //replace already existing object
 			paletteObjectListProperty.set(index, obj);
 
