@@ -16,10 +16,17 @@
 	-fx-font-wrap-text: true;
 }
 
-.workspace-menu {
-	-fx-spacing: 5;
-	-fx-background-color: #FFFFFF;
-	-fx-fill-height: true;
+.menu-bar {
+	-fx-background-color: #43609c;
+	-fx-fill: #FFFFFF;
+}
+
+.menu .label{
+	-fx-text-fill: #FFFFFF;
+}
+
+.menu:focused {
+	-fx-background-color: #F9F9F9;
 }
 
 .vbox-view {

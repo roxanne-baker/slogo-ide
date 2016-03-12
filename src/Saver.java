@@ -23,8 +23,6 @@ public abstract class Saver {
 		window = stage;
 		this.extensionDescription = extensionDescription;
 		this.extension = extension;
-		String file = chooseFile();
-		saveFile(file);
 	}
 	
 	public String chooseFile(){
@@ -40,7 +38,7 @@ public abstract class Saver {
 		return fileName;
 	}
 	
-	private void saveFile(String filePath){
+	public void saveFile(String filePath){
 		try{
 	        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	        dbFactory.setIgnoringElementContentWhitespace(true);

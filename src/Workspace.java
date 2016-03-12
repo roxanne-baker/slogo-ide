@@ -31,6 +31,7 @@ import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final int WORKSPACE_INIT_WIDTH = View.NARROW_WIDTH*3+View.WIDE_WIDTH;
 	private static final String FILECHOOSER_FILTER = "SLOGO";
 	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
 	
@@ -128,6 +129,7 @@ public class Workspace implements Observer {
 		            });
 		}
 		menu.getMenus().addAll(menuFile,menuView);
+		menu.setPrefWidth(WORKSPACE_INIT_WIDTH);
 		group.getChildren().add(menu);
 	}
 	
@@ -155,9 +157,11 @@ public class Workspace implements Observer {
 		myStage.close();
 		newStage.show();
 	}
+	
 	private void savePreferences(){
 		PreferencesSaver saver = new PreferencesSaver(myStage,myPreferences);
 	}
+	
 	private void initInterpreters() {
 		Interpreter ip = new Interpreter(controllerMap);
 		myInterpreter = ip;
