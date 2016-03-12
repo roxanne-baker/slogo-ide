@@ -1,6 +1,6 @@
 package view;
 
-import Parsing.Interpreter;
+import parsing.Interpreter;
 
 public abstract class ViewInterpretable extends View {
 	private Interpreter myInterpreter;

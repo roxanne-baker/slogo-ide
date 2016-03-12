@@ -1,4 +1,4 @@
-package Parsing;
+package parsing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,6 @@ public class Interpreter extends Observable {
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
-	private boolean displayResult = false;
 	
 	public Interpreter(Map<ViewType, Controller> controllerMap, Parser parser) {
 		turtleController = (ControllerTurtle) controllerMap.get(ViewType.AGENT); 
@@ -52,6 +51,7 @@ public class Interpreter extends Observable {
     
     private void callBuildTree(String text) { 
     	if (text.trim().length() == 0) return;
+    	text = text.trim();
     	String parsedFirst = parseText(takeFirst(text));
     	if (parsedFirst.equals("Constant")) { 
     		returnResult =  Double.parseDouble(takeFirst(text))+"";
@@ -64,29 +64,42 @@ public class Interpreter extends Observable {
     	Command c;
     	if (!errorCommandName(takeFirst(text))) {
     		c = commandsMap.get(takeFirst(text));
-    	}
-    	else { 
+    	} else { 
     		c = commandsMap.get(parsedFirst);
     	}
 		if (c.getNumParams() == 0) { 
-			Object result = c.execute(NO_PARAMS_LIST);
-	    	if (result instanceof double[]) {
-	    		double[] resultArray = (double[]) result;
-	    		if (resultArray == null || resultArray.length == 0) {
-	    			returnResult = 0+"";
-	    		}
-	    		else {
-	    			returnResult = resultArray[resultArray.length-1]+"";
-	    		}
-	    	}
-			callBuildTree(cutFirst(text));
+//			Object result = c.execute(NO_PARAMS_LIST);
+//	    	if (result instanceof double[]) {
+//	    		double[] resultArray = (double[]) result;
+//	    		if (resultArray == null || resultArray.length == 0) {
+//	    			returnResult = 0+"";
+//	    		}
+//	    		else {
+//	    			returnResult = resultArray[resultArray.length-1]+"";
+//	    		}
+//	    	}
+//			callBuildTree(cutFirst(text));
+			runNoParamCommand(c, text);
 			return;
 		}
     	ParseNode root = new ParseNode(c);
     	Stack<ParseNode> commandStack = new Stack<ParseNode>();
     	commandStack.push(root);
-    	displayResult = true;
     	buildExprTree(cutFirst(text), commandStack, root);  
+    }
+    
+    private void runNoParamCommand(Command c, String text) { 
+		Object result = c.execute(NO_PARAMS_LIST);
+    	if (result instanceof double[]) {
+    		double[] resultArray = (double[]) result;
+    		if (resultArray == null || resultArray.length == 0) {
+    			returnResult = 0+"";
+    		}
+    		else {
+    			returnResult = resultArray[resultArray.length-1]+"";
+    		}
+    	}
+		callBuildTree(cutFirst(text));
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 

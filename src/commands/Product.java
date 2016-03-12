@@ -1,6 +1,5 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Product extends MathCommand implements Executable {
