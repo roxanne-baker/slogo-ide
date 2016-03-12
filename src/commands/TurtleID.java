@@ -2,12 +2,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class TurtleID extends TurtleQueryCommands implements Executable{
 
-	public TurtleID(TurtleController turtleController) {
+	public TurtleID(ControllerTurtle turtleController) {
 		super(turtleController);
 	}
 	

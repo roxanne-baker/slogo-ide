@@ -3,10 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 import commands.CreatedMethod;
 
-public class MethodModel extends Model {
+public class ModelMethods extends Model {
 	private Map<String, CreatedMethod> savedMethods;
 	
-	public MethodModel() {
+	public ModelMethods() {
 		savedMethods = new HashMap<String, CreatedMethod>();
 	}
 	

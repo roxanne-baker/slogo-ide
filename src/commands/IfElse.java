@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import model.Interpreter;
 
 public class IfElse extends ControlCommand implements Executable {
 
 	Interpreter interpreter;
-	TurtleController turtleController;
-	public IfElse(Interpreter interpreter, TurtleController turtleController) {
+	ControllerTurtle turtleController;
+	public IfElse(Interpreter interpreter, ControllerTurtle turtleController) {
 		this.interpreter = interpreter;
 		this.turtleController = turtleController;
 		numParams = 3;

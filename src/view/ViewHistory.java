@@ -5,16 +5,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Interpreter;
 
-public class ViewHistory extends View implements Observer{
-	private static final int CONSOLEX =NARROW_WIDTH+WIDE_WIDTH;
-	private static final int CONSOLEY = MENU_OFFSET;
-	private VBox vb = new VBox(2);
-	private Interpreter interpreter;
+public class ViewHistory extends ViewInterpretable implements Observer{
+	private VBox vb = new VBox();
+	private final ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 
 	public ViewHistory(ViewType ID, Preferences savedPreferences){
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		init();
 	}
 	
@@ -29,7 +25,7 @@ public class ViewHistory extends View implements Observer{
 			vb.getChildren().add(errorText.getTextBox());
 		}
 		if(arg=="CLICKED"){
-			interpreter.run(((HistoryElem) o).getString());
+			getInterpreter().run(((HistoryElem) o).getString());
 		}
 		if (arg=="RESULT") { 
 			Interpreter ip = (Interpreter) o;
@@ -39,15 +35,27 @@ public class ViewHistory extends View implements Observer{
 
 	}
 	
+	@Override
 	public void setInterpreter(Interpreter ip) { 
-		interpreter = ip; 
+		super.setInterpreter(ip);
 		ip.addObserver(this);
 	}
 	
 
 	private void init() {
 		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
+		vb.getStyleClass().add(cssResources.getString("VBOX"));
 		ScrollPane sp = new ScrollPane(vb);
 		setPane(sp);
+	}
+
+	@Override
+	public int getX() {
+		return COORD02[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD02[1];
 	}
 }

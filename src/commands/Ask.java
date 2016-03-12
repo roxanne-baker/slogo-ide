@@ -3,14 +3,14 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import model.Interpreter;
 
 public class Ask extends Command implements Executable {
 	
-	TurtleController turtleController;
+	ControllerTurtle turtleController;
 	Interpreter interpreter;
-	public Ask(Interpreter interpreter, TurtleController turtleController) {
+	public Ask(Interpreter interpreter, ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 		this.interpreter = interpreter;
 		numParams = 2;

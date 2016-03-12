@@ -1,21 +1,28 @@
 package factory;
 
-import model.MethodModel;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
+
+import model.ModelMethods;
 import model.Model;
-import model.VariableModel;
+import model.ModelVariables;
+import view.Preferences;
+import view.View;
 import view.ViewType;
 
 public class ModelFactory {
-	
-	public ModelFactory(){
-	}
+	private ResourceBundle classResources = ResourceBundle.getBundle("viewclasses");
 	
 	public Model createModel(ViewType ID){
-		switch(ID){
-		case VARIABLES:
-			return new VariableModel();
-		case METHODS:
-			return new MethodModel();
+		String className = "model.Model"+classResources.getString(ID.toString());
+		try {
+			Class cls = Class.forName(className);
+			Constructor modelConstructor = cls.getDeclaredConstructor();
+			return (Model)modelConstructor.newInstance();
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -16,9 +16,9 @@ public class Interpreter extends Observable {
 	private final String WHITESPACE = "\\p{Space}";
     private final String resourcesPath = "resources/languages/";
     private Parser parser;
-	private TurtleController turtleController;
-	private VariablesController variableController;
-	private BackgroundController backgroundController;
+	private ControllerTurtle turtleController;
+	private ControllerVariables variableController;
+	private ControllerBackground backgroundController;
 	private MethodsController methodController;
 	private String errorMessage = new String();
 	private String returnResult = new String();
@@ -28,10 +28,10 @@ public class Interpreter extends Observable {
 	private boolean displayResult = false;
 	
 	public Interpreter(Map<ViewType, Controller> controllerMap, Parser parser) {
-		turtleController = (TurtleController) controllerMap.get(ViewType.AGENT); 
-		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
+		turtleController = (ControllerTurtle) controllerMap.get(ViewType.AGENT); 
+		variableController = (ControllerVariables) controllerMap.get(ViewType.VARIABLES);
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
-		backgroundController = (BackgroundController) controllerMap.get(ViewType.PALETTES);
+		backgroundController = (ControllerBackground) controllerMap.get(ViewType.PALETTES);
 		this.parser = parser;
 		initializeCommandsMap();
 		initializeLangs();

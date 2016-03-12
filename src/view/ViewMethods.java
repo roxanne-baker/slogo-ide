@@ -5,15 +5,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class ViewMethods extends View{
-	private static final int CONSOLEX = NARROW_WIDTH+WIDE_WIDTH+NARROW_WIDTH;
-	private static final int CONSOLEY = MENU_OFFSET;
 	private HashSet<TextBox> methods = new HashSet<TextBox>();
 	private VBox methodViews = new VBox();
 
 	public ViewMethods(ViewType ID, Preferences savedPreferences){
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		init();
 	}
  	
@@ -38,6 +34,16 @@ public class ViewMethods extends View{
  		methodViews.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
  		ScrollPane sp = new ScrollPane(methodViews);
  		setPane(sp);
+	}
+
+	@Override
+	public int getX() {
+		return COORD03[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD03[1];
 	}
 }
 

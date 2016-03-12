@@ -4,12 +4,12 @@ package commands;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class Right extends TurtleCommand implements Executable {
 
-	public Right(TurtleController turtleController) {
+	public Right(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 1;
 	}

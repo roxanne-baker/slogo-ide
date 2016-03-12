@@ -3,11 +3,11 @@ package model;
 import java.util.*;
 
 
-public class VariableModel extends Model {
+public class ModelVariables extends Model {
 	private HashMap<String,Object> variableMap = new HashMap<String,Object>();
 
 	
-	public VariableModel() {
+	public ModelVariables() {
 		// TODO Auto-generated constructor stub
 	}
 	

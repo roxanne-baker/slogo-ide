@@ -2,14 +2,14 @@ package commands;
 
 import java.util.Arrays;
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class SetPenSize extends TurtleCommand implements Executable {
 	
-	TurtleController turtleController;
+	ControllerTurtle turtleController;
 	
-	public SetPenSize(TurtleController turtleController) {
+	public SetPenSize(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 1;
 	}

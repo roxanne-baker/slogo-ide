@@ -2,12 +2,12 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class XCor extends TurtleQueryCommands implements Executable{
 
-	public XCor(TurtleController turtleController) {
+	public XCor(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 0; 
 	}

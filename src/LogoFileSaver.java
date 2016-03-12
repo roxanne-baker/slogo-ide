@@ -6,13 +6,13 @@ import java.util.Map;
 import commands.CreatedMethod;
 import controller.Controller;
 import controller.MethodsController;
-import controller.VariablesController;
+import controller.ControllerVariables;
 import javafx.stage.Stage;
 import model.Parser;
 import view.ViewType;
 
 public class LogoFileSaver extends Saver{
-	private VariablesController variableController; 
+	private ControllerVariables variableController; 
 	private MethodsController methodController; 
 	private Parser parser; 
 	PrintWriter writer; 
@@ -22,7 +22,7 @@ public class LogoFileSaver extends Saver{
 	
 	LogoFileSaver (Stage stage, HashMap<ViewType, Controller> controllerMap, Parser parser) { 
 		super(stage, EXTENSION_DESCRIPTION, EXTENSION);
-		variableController = (VariablesController) controllerMap.get(ViewType.VARIABLES);
+		variableController = (ControllerVariables) controllerMap.get(ViewType.VARIABLES);
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS); 
 		this.parser = parser;
 	}

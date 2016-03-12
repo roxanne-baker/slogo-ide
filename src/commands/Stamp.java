@@ -1,14 +1,14 @@
 package commands;
 
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class Stamp extends Command implements Executable {
 	
-	TurtleController turtleController;
+	ControllerTurtle turtleController;
 	
-	public Stamp(TurtleController turtleController) {
+	public Stamp(ControllerTurtle turtleController) {
 		numParams = 0;
 		this.turtleController = turtleController;
 	}

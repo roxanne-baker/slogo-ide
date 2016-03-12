@@ -7,13 +7,13 @@ import view.CustomColorPalette;
 import view.ViewAgentPreferences;
 import view.ViewAgents;
 
-public class BackgroundController extends Controller {
+public class ControllerBackground extends Controller {
 
 	ViewAgentPreferences myPenModel;
 	ViewAgents myBackgroundModel;
 	CustomColorPalette myPalette;
 	
-	public BackgroundController(ViewAgentPreferences penModel, ViewAgents backgroundModel) {
+	public ControllerBackground(ViewAgentPreferences penModel, ViewAgents backgroundModel) {
 		myPenModel = penModel;
 		myBackgroundModel = backgroundModel;
 	}

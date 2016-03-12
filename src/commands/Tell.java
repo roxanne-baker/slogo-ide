@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 
 public class Tell extends ControlCommand implements Executable{
 
-	TurtleController turtleController;
-	public Tell(TurtleController turtleController) {
+	ControllerTurtle turtleController;
+	public Tell(ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 		numParams = 1;
 	}

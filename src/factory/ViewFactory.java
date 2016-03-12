@@ -11,7 +11,7 @@ public class ViewFactory {
 	
 
 	public View createView(ViewType ID, Preferences preferences){
-		String className = "view."+classResources.getString(ID.toString());
+		String className = "view.View"+classResources.getString(ID.toString());
 		try {
 			Class cls = Class.forName(className);
 			Constructor viewConstructor = cls.getDeclaredConstructor(new Class[]{ViewType.class, Preferences.class});

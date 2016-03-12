@@ -3,12 +3,12 @@ package commands;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class SetXY extends TurtleCommand implements Executable {
 	
-	public SetXY(TurtleController turtleController) {
+	public SetXY(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 2;
 	}

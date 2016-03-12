@@ -2,15 +2,15 @@ package commands;
 
 import java.util.List;
 
-import controller.VariablesController;
+import controller.ControllerVariables;
 
 
 public class MakeVar extends Command implements Executable {
 
-	VariablesController variableController;
+	ControllerVariables variableController;
 	private final int numStringParams = 1;
 
-	public MakeVar(VariablesController variableController) {
+	public MakeVar(ControllerVariables variableController) {
 		numParams = 2;
 		needsVarName = true;
 		this.variableController = variableController;

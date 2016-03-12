@@ -2,11 +2,11 @@ package commands;
 
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 
 public class NumTurtles extends TurtleQueryCommands implements Executable{
 
-	public NumTurtles(TurtleController turtleController) {
+	public NumTurtles(ControllerTurtle turtleController) {
 		super(turtleController);
 	}
 	

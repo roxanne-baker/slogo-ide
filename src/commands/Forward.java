@@ -2,13 +2,13 @@
 package commands;
 
 import java.util.List;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class Forward extends TurtleCommand implements Executable {
 
 
-	public Forward(TurtleController turtleController) {
+	public Forward(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 1;
 	}

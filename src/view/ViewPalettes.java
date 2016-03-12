@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert.AlertType;
 //import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,8 +26,6 @@ import javafx.stage.Stage;
 
 public class ViewPalettes extends View{
 	private static final String FILECHOOSER_FILTER = "Images";
-	private static final int CONSOLEX = 0;
-	private static final int CONSOLEY = MENU_OFFSET+WIDE_WIDTH;
 	private static final int BUTTON_WIDTH = 150;
 	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
 	private static final ResourceBundle DIALOG_RESOURCES = ResourceBundle.getBundle("DialogBox");
@@ -44,8 +43,6 @@ public class ViewPalettes extends View{
 
 	public ViewPalettes(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		paletteList = new ArrayList<Palette>();
 
 		vbox = new VBox();
@@ -104,11 +101,11 @@ public class ViewPalettes extends View{
 		try{
 			int intValue = Integer.parseInt(value);
 			if(intValue<0 || intValue>255){
-				//new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
+				new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
 				return false;
 			}
 		}catch (Exception e){
-			//new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
+			new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
 			return false;
 		}
 		return true;
@@ -165,6 +162,16 @@ public class ViewPalettes extends View{
 			paletteDisplay.getChildren().addAll(label,palette.getPaletteViewGroup());	
 			vbox.getChildren().add(paletteDisplay);
 		}
+	}
+
+	@Override
+	public int getX() {
+		return COORD10[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD10[1];
 	}
 
 

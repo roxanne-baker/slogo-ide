@@ -3,11 +3,10 @@ package view;
 import java.util.ResourceBundle;
 
 public class ErrorElem extends TextBox {
-	private static final String CSS_CLASSES_PATH = "CSSClasses";
-	private ResourceBundle myResources = ResourceBundle.getBundle(CSS_CLASSES_PATH);
+	private final ResourceBundle myResources = ResourceBundle.getBundle("CSSClasses");
 
 	public ErrorElem(String errorMessage) {
-		super(errorMessage);
+		super("ERROR: "+errorMessage);
 		addStyleClass(myResources.getString("ERROR"));
 	}
 }

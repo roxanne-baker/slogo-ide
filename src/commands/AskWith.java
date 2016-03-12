@@ -5,14 +5,14 @@ import java.util.List;
 
 import commands.Command;
 import commands.Executable;
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import model.Interpreter;
 
 public class AskWith extends Command implements Executable {
 	
-	TurtleController turtleController;
+	ControllerTurtle turtleController;
 	Interpreter interpreter;
-	public AskWith(Interpreter interpreter, TurtleController turtleController) {
+	public AskWith(Interpreter interpreter, ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 		this.interpreter = interpreter;
 		numParams = 2;

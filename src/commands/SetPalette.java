@@ -2,13 +2,13 @@ package commands;
 
 import java.util.List;
 
-import controller.BackgroundController;
+import controller.ControllerBackground;
 
 public class SetPalette extends Command implements Executable {
 
-	BackgroundController backgroundController;
+	ControllerBackground backgroundController;
 	
-	public SetPalette(BackgroundController backgroundController) {
+	public SetPalette(ControllerBackground backgroundController) {
 		numParams = 4;
 		this.backgroundController = backgroundController;
 	}

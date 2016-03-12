@@ -13,7 +13,7 @@ import view.Agent;
  * @author Melissa Zhang
  *
  */
-public interface IAgentController {
+public interface ControllerAgents {
 	int getNumTotalAgents();
 	int getNumActiveAgents();
 	List<Agent> getAgents();

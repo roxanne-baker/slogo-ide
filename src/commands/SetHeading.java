@@ -3,12 +3,12 @@ package commands;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.TurtleController;
+import controller.ControllerTurtle;
 import view.Agent;
 
 public class SetHeading extends TurtleCommand implements Executable {
 
-	public SetHeading(TurtleController turtleController) {
+	public SetHeading(ControllerTurtle turtleController) {
 		super(turtleController);
 		numParams = 1;
 	}

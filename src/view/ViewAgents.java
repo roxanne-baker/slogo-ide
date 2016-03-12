@@ -24,8 +24,6 @@ import javafx.scene.paint.Color;
  *
  */
 public class ViewAgents extends View{
-	private static final int CONSOLEX = NARROW_WIDTH;
-	private static final int CONSOLEY = MENU_OFFSET;
 	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
 	private static final ResourceBundle WINDOW_RESOURCES = ResourceBundle.getBundle("windowProperties");
 	private static final double MAX_PREFERENCE_HEIGHT = 40;
@@ -46,8 +44,6 @@ public class ViewAgents extends View{
 	
 	public ViewAgents(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 
 		activeAgentsListProperty = new SimpleListProperty<Integer>();
 		addListener(activeAgentsListProperty);
@@ -55,7 +51,7 @@ public class ViewAgents extends View{
 
 		isSelectedAgentToggle = true;
 
-		agentPane = getPane();
+		agentPane = super.getView();
 		agentPane.setId((cssResources.getString("AGENTVIEW")));
 		drawer = new Drawer(agentPane);
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
@@ -156,7 +152,16 @@ public class ViewAgents extends View{
 	public double getHeight() {
 		return WIDE_WIDTH;
 	}
-
+	
+	@Override
+	public int getX(){
+		return COORD01[0];
+	}
+	
+	@Override
+	public int getY(){
+		return COORD01[1];
+	}
 
 	public boolean getIsSelectedAgentToggle() {
 		return isSelectedAgentToggle;

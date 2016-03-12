@@ -3,8 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 import controller.Controller;
-import controller.TurtleController;
-import controller.BackgroundController;
+import controller.ControllerTurtle;
+import controller.ControllerBackground;
 import factory.ControllerFactory;
 import factory.ModelFactory;
 import factory.ViewFactory;
@@ -28,18 +28,20 @@ import view.ViewPalettes;
 import view.ViewType;
 import view.ViewConsole;
 import view.ViewHistory;
+import view.ViewInterpretable;
 import view.ViewVariables;
 import view.ViewWindowPreferences;
 
 public class Workspace implements Observer {
+	private static final String STYLE_SHEET = "resources/style/style.css";
 	private static final int WORKSPACE_INIT_WIDTH = View.NARROW_WIDTH*3+View.WIDE_WIDTH;
 	private static final String FILECHOOSER_FILTER = "SLOGO";
 	private static final List<String> FILTERLIST = Arrays.asList("*.logo");
+	private static final List<String> MENU_OPTIONS = Arrays.asList("NEWWORKSPACE","SAVEPREFERENCES","LOADPREFERENCES","SAVECOMMANDS","LOADCOMMANDS");
 	
 	private ViewType[] models = {ViewType.VARIABLES,ViewType.METHODS};
 	private ViewType[] views = ViewType.values();
 	private ViewType[] controllers = {ViewType.AGENT,ViewType.VARIABLES,ViewType.METHODS,ViewType.PALETTES};
-
 	private HashMap<ViewType,Model> modelMap = new HashMap<ViewType,Model>();
 	private HashMap<ViewType,View> viewMap = new HashMap<ViewType,View>();
 	private HashMap<ViewType, Controller> controllerMap = new HashMap<ViewType,Controller>();
@@ -52,7 +54,6 @@ public class Workspace implements Observer {
 	private Parser parser = new Parser();
 	private Interpreter myInterpreter;
 	private ResourceBundle windowResources = ResourceBundle.getBundle("windowProperties");
-	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private Preferences myPreferences;
 	
 	public Workspace(Stage stage, Preferences preferences){
@@ -71,49 +72,35 @@ public class Workspace implements Observer {
 		initTurtles();
 		initWindowMenu();	
 		myScene = new Scene(pane);
-		myScene.getStylesheets().add("resources/style/style.css");
+		myScene.getStylesheets().add(STYLE_SHEET);
 		return myScene;
 	}
 	
 	private void initTurtles(){
 		int numTurtles = Integer.parseInt(myPreferences.getPreference("turtles").toString());
 		for(int i=0; i<numTurtles; i++){
-			((TurtleController)controllerMap.get(ViewType.AGENT)).addAgent(i+1);
+			((ControllerTurtle)controllerMap.get(ViewType.AGENT)).addAgent(i+1);
 		}
 	}
 	
 	private void initPalettes() {
-		((TurtleController)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
-		((BackgroundController)controllerMap.get(ViewType.PALETTES)).setColorPalette(customColorPalette);	
-		((TurtleController)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
+		((ControllerTurtle)controllerMap.get(ViewType.AGENT)).setColorPalette(customColorPalette);
+		((ControllerBackground)controllerMap.get(ViewType.PALETTES)).setColorPalette(customColorPalette);	
+		((ControllerTurtle)controllerMap.get(ViewType.AGENT)).setImagePalette(customImagePalette);
 		((ViewPalettes) viewMap.get(ViewType.PALETTES)).setPaletteList(Arrays.asList(customColorPalette,customImagePalette));
 	}
 	
-	//TO DO: refactor
 	private void initWindowMenu(){
 		MenuBar menu = new MenuBar();
-		Menu menuFile = new Menu("File");
-		MenuItem newWorkspace = new MenuItem("New Workspace");
-		newWorkspace.setOnAction(e->openWorkspace());
-		MenuItem loadPreferences = new MenuItem("Load Preferences");
-		loadPreferences.setOnAction(e->loadPreferences());
-		MenuItem savePreferences = new MenuItem("Save Preferences");
-		savePreferences.setOnAction(e->savePreferences());
+		Menu menuFile = initFileMenu();
+		Menu menuView = initViewMenu();
+		menu.getMenus().addAll(menuFile,menuView);
+		menu.setPrefWidth(WORKSPACE_INIT_WIDTH);
+		group.getChildren().add(menu);
+	}
 
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
-		fileChooser.getExtensionFilters().add(extFilter);
-		MenuItem loadCommands = new MenuItem(windowResources.getString("COMMANDSLOADERBUTTON"));
-		loadCommands.setOnAction(evt -> {
-			File file = fileChooser.showOpenDialog(myStage);
-			myInterpreter.run(readText(file));
-		});
-		MenuItem saveCommands = new MenuItem(windowResources.getString("COMMANDSSAVERBUTTON"));
-		saveCommands.setOnAction(e->saveCommandsMethods());
-		
-		menuFile.getItems().addAll(newWorkspace,loadPreferences,savePreferences,loadCommands,saveCommands);
-		
-		Menu menuView = new Menu("View");
+	private Menu initViewMenu() {
+		Menu menuView = new Menu(windowResources.getString("MENUVIEW"));
 		for(ViewType type: views){
 			CheckMenuItem view = new CheckMenuItem(type.toString());
 			menuView.getItems().add(view);
@@ -125,9 +112,37 @@ public class Workspace implements Observer {
 		                }
 		            });
 		}
-		menu.getMenus().addAll(menuFile,menuView);
-		menu.setPrefWidth(WORKSPACE_INIT_WIDTH);
-		group.getChildren().add(menu);
+		return menuView;
+	}
+
+	private Menu initFileMenu() {
+		Menu menuFile = new Menu(windowResources.getString("MENUFILE"));
+		for(String option: MENU_OPTIONS){
+			String[] resourceString = windowResources.getString(option).split(",");
+			MenuItem item = new MenuItem(resourceString[0]);
+			item.setOnAction(e->{
+				try {
+					getClass().getDeclaredMethod(resourceString[1].trim()).invoke(this);
+				} catch (Exception e1) {
+				}
+			});
+			menuFile.getItems().add(item);
+		}
+		return menuFile;
+	}
+	
+	private void saveCommands() { 
+		LogoFileSaver logoWriter = new LogoFileSaver(myStage, controllerMap, parser);
+		String filePath = logoWriter.chooseFile();
+		logoWriter.saveFile(filePath);
+	}
+	
+	private void loadCommands() {
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(FILECHOOSER_FILTER, FILTERLIST);
+		fileChooser.getExtensionFilters().add(extFilter);
+		File file = fileChooser.showOpenDialog(myStage);
+		myInterpreter.run(readText(file));
 	}
 	
 
@@ -159,12 +174,6 @@ public class Workspace implements Observer {
 		PreferencesSaver prefSaver = new PreferencesSaver(myStage,myPreferences);
 		String filePath = prefSaver.chooseFile();
 		prefSaver.saveFile(filePath);
-	}
-	
-	private void saveCommandsMethods() { 
-		LogoFileSaver logoWriter = new LogoFileSaver(myStage, controllerMap, parser);
-		String filePath = logoWriter.chooseFile();
-		logoWriter.saveFile(filePath);
 	}
 	
 	private void initInterpreters() {

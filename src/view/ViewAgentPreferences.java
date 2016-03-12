@@ -28,8 +28,6 @@ public class ViewAgentPreferences extends View{
 	private CustomColorPalette colorPalette;
 	
 
-	private static final int CONSOLEX = 0;
-	private static final int CONSOLEY = MENU_OFFSET;
 	private VBox allPreferencesBox = new VBox();
 	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
 
@@ -38,8 +36,6 @@ public class ViewAgentPreferences extends View{
 	
 	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
-		setX(CONSOLEX);
-		setY(CONSOLEY);
 		setPane(allPreferencesBox);
 		allPreferencesBox.getStyleClass().addAll(cssResources.getString("DISPLAYVIEW"),cssResources.getString("VBOXVIEW"));
 
@@ -157,6 +153,16 @@ public class ViewAgentPreferences extends View{
 
 	public CustomColorPalette getColorPalette() {
 		return colorPalette;
+	}
+
+	@Override
+	public int getX() {
+		return COORD00[0];
+	}
+
+	@Override
+	public int getY() {
+		return COORD00[1];
 	}
 
 

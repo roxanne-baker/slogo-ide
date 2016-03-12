@@ -5,14 +5,13 @@
 }
 
 .hbox {
-    	-fx-padding: 10;
-    	-fx-spacing: 10;
-    	-fx-alignment: center;
+	-fx-padding: 10;
+	-fx-spacing: 10;
+	-fx-alignment: center;
 }
 
 .vbox {
 	-fx-spacing: 2;
-	-fx-alignment: center-left;
 	-fx-font-wrap-text: true;
 }
 
@@ -23,6 +22,10 @@
 
 .menu .label{
 	-fx-text-fill: #FFFFFF;
+}
+
+.menu-item .label{
+	-fx-text-fill: black;
 }
 
 .menu:focused {
@@ -42,7 +45,7 @@
 }
 
 .text-box {
-	-fx-background-color: #F0F0F0;
+	-fx-background-color: #d7dfee;
 }
 
 .error {
@@ -57,12 +60,12 @@
 
 .combo-box {
 	-fx-text-fill: #43609c;
-	-fx-background-color: #FFFFFF;
+	-fx-background-color: #d7dfee;
 }
 
 .combo-box-base {
 	-fx-text-fill: #43609c;
-	-fx-background-color: #FFFFFF;
+	-fx-background-color: #d7dfee;
 	
 }
 .label {
@@ -87,6 +90,12 @@
 .radio-button {
 	-fx-mark-color: #43609c;
 }
-.window-menu{
-	-fx-spacing: 10;
+
+.result {
+	-fx-fill: #43609c;
+	-fx-font-weight: bold;
+}
+
+.window-view {
+	-fx-alignment: center;
 }
