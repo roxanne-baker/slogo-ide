@@ -20,8 +20,8 @@ public class IfElse extends ControlCommand implements Executable {
 	public Object execute(List<Object> params) {
 		String trueCommands = (String) params.get(1);
 		String falseCommands = (String) params.get(2);
-		if (params.get(0) instanceof Double) {
-			Double ifCondition = (double) params.get(0);
+		if (params.get(0) instanceof Double || params.get(0) instanceof Integer) {
+			Integer ifCondition = (Integer) params.get(0);
 			if (!isEqual(ifCondition, 0)) {
 				interpreter.run(trueCommands);
 			}
@@ -31,10 +31,6 @@ public class IfElse extends ControlCommand implements Executable {
 		}
 		else {
 			// MAKE TEMPORARY NEW LIST OF ACTIVE AGENTS
-			double[] temp = new double[params.size()];
-			for (int i=0;i<temp.length;i++) { 
-				temp[i] = (double) params.get(0);
-			}
 			handleMultTurtlesCase(trueCommands, falseCommands, (double[]) params.get(0));
 		}
 	

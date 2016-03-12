@@ -21,7 +21,7 @@ public class Interpreter extends Observable {
 	private BackgroundController backgroundController;
 	private MethodsController methodController;
 	private String errorMessage = new String();
-	private String returnResult; 
+	private String returnResult = new String();
 	private final List<Object> NO_PARAMS_LIST = new ArrayList<Object>();
 	private final char OPEN_BRACKET = '[';
 	private final char CLOSED_BRACKET = ']';
@@ -88,7 +88,7 @@ public class Interpreter extends Observable {
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
-    	int initNodeCount = stack.size();
+    	int initSize = stack.size();
 		Object result = new Object();
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
@@ -106,6 +106,10 @@ public class Interpreter extends Observable {
     			}
     		}
     	}
+    	sendResultAfterParse(result, initSize);
+    }
+    
+    private void sendResultAfterParse(Object result, int commandCount) { 
     	if (result instanceof double[]) {
     		double[] resultArray = (double[]) result;
     		if (resultArray == null || resultArray.length == 0) {
@@ -116,16 +120,10 @@ public class Interpreter extends Observable {
     		}
     	}
     	else {
-    		if (result instanceof Integer) {
-    			returnResult = result + ""; 
-    			//returnResult = Integer.parseInt((Doubl) result)+0.0+"";
-    		}
-    		else {
-        		returnResult = result + "";    			
-    		}
+        	returnResult = result + "";    
     	}
-    	if (initNodeCount == 1) {
-    		sendResult(result+"");
+    	if (commandCount > 1) {
+    		sendResult(returnResult);
     	}
     }
     
@@ -265,7 +263,6 @@ public class Interpreter extends Observable {
 			} else { 
         		cur = new ParseNode(commandsMap.get(parsedFirst));
 			}
-			// may want to check for turtlequery/turtle command here
         	if (cur.getCommand().getNumParams() == 0) { 
         		double val = (double) cur.getCommand().execute(NO_PARAMS_LIST);
         		cur.setValue(val);
@@ -306,14 +303,11 @@ public class Interpreter extends Observable {
     
     private int endParenIndex(String s) {
     	int lastClosed = 0;
-    	//int lastOpen = 0; 
     	int openCount = 0;
     	int closedCount = 0;
     	for (int i=0; i<s.length();i++) {
-    		// maybe  && i < s.indexOf(']')
     		if (s.charAt(i) == OPEN_BRACKET) { 
     			openCount++;
-    			//lastOpen = i; 
     		} else if (s.charAt(i) == CLOSED_BRACKET) { 
     			lastClosed = i; 
     			closedCount++; 
