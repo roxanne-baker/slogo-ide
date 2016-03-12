@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert.AlertType;
 //import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -101,11 +100,10 @@ public class ViewPalettes extends View{
 		try{
 			int intValue = Integer.parseInt(value);
 			if(intValue<0 || intValue>255){
-				new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
 				return false;
 			}
 		}catch (Exception e){
-			new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
+//			new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
 			return false;
 		}
 		return true;

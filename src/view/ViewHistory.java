@@ -45,7 +45,7 @@ public class ViewHistory extends ViewInterpretable implements Observer{
 
 	private void init() {
 		vb.setPrefSize(View.NARROW_WIDTH,View.WIDE_WIDTH);
-		vb.getStyleClass().add(cssResources.getString("VBOX"));
+		vb.getStyleClass().addAll(cssResources.getString("VBOX"),cssResources.getString("DISPLAYVIEW"));
 		ScrollPane sp = new ScrollPane(vb);
 		setPane(sp);
 	}

@@ -11,7 +11,7 @@
 }
 
 .vbox {
-	-fx-spacing: 2;
+	-fx-spacing: 3;
 	-fx-font-wrap-text: true;
 }
 
@@ -34,6 +34,7 @@
 
 .vbox-view {
 	-fx-spacing: 15;
+	-fx-alignment: center-left;
 }
 
 .code {
@@ -46,9 +47,11 @@
 
 .text-box {
 	-fx-background-color: #d7dfee;
+	-fx-padding: 5;
 }
 
 .error {
+	-fx-background-color: white;
 	-fx-fill: #B0171F;
 }
 
@@ -60,12 +63,15 @@
 
 .combo-box {
 	-fx-text-fill: #43609c;
-	-fx-background-color: #d7dfee;
+	-fx-background-color: white;
+	-fx-effect: dropshadow(gaussian, rgba(224,224,224,0.25) , 0,0,2,2 );
 }
 
 .combo-box-base {
 	-fx-text-fill: #43609c;
-	-fx-background-color: #d7dfee;
+	-fx-background-color: white;
+	-fx-effect: dropshadow(gaussian, rgba(224,224,224,0.25) , 0,0,2,2 );
+
 	
 }
 .label {
@@ -94,8 +100,15 @@
 .result {
 	-fx-fill: #43609c;
 	-fx-font-weight: bold;
+	-fx-background-color: white;
 }
 
 .window-view {
 	-fx-alignment: center;
+}
+
+.clickable-text {
+	-fx-background-color: #d7dfee;
+	-fx-padding: 5;
+	-fx-effect: dropshadow(gaussian, rgba(67,96,156,0.25) , 0,0,1,1 );
 }
