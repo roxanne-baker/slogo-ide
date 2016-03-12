@@ -1,8 +1,9 @@
 package commands;
 
 import java.util.List;
+
+import Parsing.Interpreter;
 import controller.ControllerVariables;
-import model.Interpreter;
 
 
 public class For extends Command implements Executable {

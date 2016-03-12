@@ -7,11 +7,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.ResourceBundle;
 
-import view.Agent;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.Palette;
-import view.Turtle;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
 import javafx.beans.property.IntegerProperty;
@@ -20,6 +18,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Agent;
+import model.Turtle;
 
 /**
  * This class keeps track of all the turtles on the screen.

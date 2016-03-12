@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 import controller.ControllerTurtle;
-import view.Agent;
+import model.Agent;
 
 public class Stamp extends Command implements Executable {
 	

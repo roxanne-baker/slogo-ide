@@ -3,7 +3,7 @@ package GUI;
 import java.util.Arrays;
 import java.util.List;
 
-import view.Agent;
+import model.Agent;
 
 /**
  * This Factory class creates GuiObjects that are linked to an agent. 

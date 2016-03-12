@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javafx.collections.ObservableList;
-import view.Agent;
+import model.Agent;
 
 
 /**

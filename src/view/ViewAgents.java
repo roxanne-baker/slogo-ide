@@ -17,6 +17,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import model.Agent;
 
 /**
  * This view displays all the agents and updates when the update method is called by the Agent Observables.

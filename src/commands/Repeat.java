@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-import model.Interpreter;
+import Parsing.Interpreter;
 
 
 

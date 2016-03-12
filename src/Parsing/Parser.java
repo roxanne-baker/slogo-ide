@@ -4,7 +4,7 @@
  * by the actual parsing engine in the Interpreter class. 
  */
 
-package model;
+package Parsing;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

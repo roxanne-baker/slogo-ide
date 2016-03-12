@@ -1,9 +1,10 @@
 package view;
 
 import java.util.*;
+
+import Parsing.Interpreter;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import model.Interpreter;
 
 public class ViewHistory extends ViewInterpretable implements Observer{
 	private VBox vb = new VBox();
