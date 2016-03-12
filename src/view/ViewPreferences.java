@@ -67,7 +67,6 @@ public class ViewPreferences extends View{
 		VBox agentPrefBox = new VBox();
 		List<Node> observerLabelList = new ArrayList<Node>();
 			if(currentAgent!=null){
-			System.out.println(currentAgent);
 			populateObserverLabelList(agentMap.get(currentAgent), observerLabelList);
 			
 			List<Node> mutableGuiObjectList = new ArrayList<Node>();

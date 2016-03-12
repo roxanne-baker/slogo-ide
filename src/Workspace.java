@@ -156,7 +156,9 @@ public class Workspace implements Observer {
 	}
 	
 	private void savePreferences(){
-		PreferencesSaver saver = new PreferencesSaver(myStage,myPreferences);
+		PreferencesSaver prefSaver = new PreferencesSaver(myStage,myPreferences);
+		String filePath = prefSaver.chooseFile();
+		prefSaver.saveFile(filePath);
 	}
 	
 	private void saveCommandsMethods() { 

@@ -25,8 +25,6 @@ public class PreferencesSaver extends Saver {
 	public PreferencesSaver(Stage stage, Preferences preferences){
 		super(stage,EXTENSION_DESCRIPTION,EXTENSION);
 		this.preferences = preferences;
-		String file = chooseFile();
-		saveFile(file);
 	}
 	
 	private boolean isSingleElem(Object obj){

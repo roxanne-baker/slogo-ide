@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -8,18 +7,14 @@ import commands.CreatedMethod;
 import controller.Controller;
 import controller.MethodsController;
 import controller.VariablesController;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Parser;
 import view.ViewType;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class LogoFileSaver extends Saver{
-	private Stage window;
 	private VariablesController variableController; 
 	private MethodsController methodController; 
 	private Parser parser; 
-	private String filePath; 
 	PrintWriter writer; 
 
 	private static final String EXTENSION = "*.logo";
