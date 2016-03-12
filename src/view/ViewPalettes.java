@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 /**
@@ -48,7 +50,8 @@ public class ViewPalettes extends View{
 		vbox = new VBox();
 		vbox.getStyleClass().addAll(cssResources.getString("VBOXVIEW"),cssResources.getString("DISPLAYVIEW"));
 		vbox.setPrefSize(NARROW_WIDTH,NARROW_WIDTH);
-		setPane(vbox);
+		ScrollPane pane = new ScrollPane(vbox);
+		setPane(pane);
 		setUpPalettes();
 		setUpColorAdder();
 		setUpImageAdder();
@@ -77,20 +80,19 @@ public class ViewPalettes extends View{
 	private void addColorButtonEventHandler(List<TextField> colorInputList,Button addColorButton) {
 		
 		addColorButton.setOnAction(evt -> {
-			List<Integer> valueList = new ArrayList<Integer>();
-			System.out.println("here");
+			List<Double> valueList = new ArrayList<Double>();
 			boolean isValidInputs = true;
 			for (TextField n: colorInputList){
 				String value = n.getText();
 				if (checkValidInput(value)){
-					valueList.add(Integer.parseInt(value));
+					valueList.add(Double.parseDouble(value));
 				}else{
-					isValidInputs= false;
+					isValidInputs= false; 
 					break;
 				}
 			}
 			if (isValidInputs){
-				paletteList.get(colorPaletteIndex).addToPalette(new CustomColor(valueList.get(RED_INDEX),valueList.get(GREEN_INDEX),valueList.get(BLUE_INDEX)), paletteList.get(imagePaletteIndex).getPaletteSize());
+				paletteList.get(colorPaletteIndex).addToPalette(Color.color(valueList.get(RED_INDEX)/255,valueList.get(GREEN_INDEX)/255,valueList.get(BLUE_INDEX)/255).toString(), paletteList.get(colorPaletteIndex).getPaletteSize());
 			}
 		});
 	}
@@ -100,11 +102,11 @@ public class ViewPalettes extends View{
 		try{
 			int intValue = Integer.parseInt(value);
 			if(intValue<0 || intValue>255){
-				new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
+				//new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("COLOROUTOFBOUNDS"), value);
 				return false;
 			}
 		}catch (Exception e){
-			new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
+			//new DialogBox(AlertType.ERROR, DIALOG_RESOURCES.getString("INVALIDCOLORINPUT"), value);
 			return false;
 		}
 		return true;
@@ -155,6 +157,7 @@ public class ViewPalettes extends View{
 	private void setUpPalettes() {
 		for (Palette palette: paletteList){
 			VBox paletteDisplay = new VBox();
+			paletteDisplay.setPrefSize(NARROW_WIDTH, NARROW_WIDTH);
 			paletteDisplay.getStyleClass().add(cssResources.getString("VBOX"));
 			Label label = new Label(PALETTE_RESOURCES.getString(palette.getPaletteName() + "LABEL"));
 			paletteDisplay.getChildren().addAll(label,palette.getPaletteViewGroup());	

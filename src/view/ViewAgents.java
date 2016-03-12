@@ -164,7 +164,13 @@ public class ViewAgents extends View{
 
 	public void updateActiveAgentViews(){
 		for (Integer agentID: activeAgentsListProperty.getValue()){
-			update(agentMap.get(agentID),UPDATE_RESOURCES.getString("ACTIVE"));
+		
+			if (isSelectedAgentToggle){
+				update(agentMap.get(agentID),UPDATE_RESOURCES.getString("ACTIVE"));
+			}else {
+				update(agentMap.get(agentID),UPDATE_RESOURCES.getString("NOTACTIVE"));
+				
+			}
 		}
 	}
 	public void updateAgentMap(HashMap<Integer, Agent> newAgentMap) {

@@ -34,6 +34,7 @@ public class ViewAgentPreferences extends View{
 	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
 
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
+	private ComboBox<String> agentDropDown;
 	
 	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
@@ -89,24 +90,25 @@ public class ViewAgentPreferences extends View{
 		List<Node> observerLabelList = new ArrayList<Node>();
 		List<Node> mutableGuiObjectList = new ArrayList<Node>();
 
-		
-		if(currentAgentIDProperty.getValue()!=null && currentAgentIDProperty.getValue() != 0){
+		if (currentAgentIDProperty.getValue()!=null && agentMap.get(currentAgentIDProperty.getValue())!=null){
 			populateObserverLabelList(agentMap.get(currentAgentIDProperty.getValue()), observerLabelList);
 			populateMutableGuiObjectList(agentMap.get(currentAgentIDProperty.getValue()),mutableGuiObjectList);
-			
+				
 			addToAgentPrefBox(observerBox, observerLabelList);
 			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
-			}
+			
+		}
 	}
 
 	private void setUpAgentDropDown() {
-		ComboBox<String> agentDropDown = new ComboBox<String>();
+		agentDropDown = new ComboBox<String>();
 		for (Integer name: agentMap.keySet()){
 			agentDropDown.getItems().add(""+name);
 		}
 		agentDropDown.setValue(currentAgentIDProperty.getValue().toString());
 		agentDropDown.valueProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue ov, String oldValue, String newValue) {                
+            @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
+            	currentAgentIDProperty.setValue(Integer.parseInt(agentDropDown.getValue()));
 				updateView();
             }
 		});
