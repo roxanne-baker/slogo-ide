@@ -81,10 +81,13 @@ We implemented all of the features in the specification, but I also added an add
 Additional dependencies: The ControllerTurtle, ControllerBackground,, and ViewPalettes class depend on the CustomImagePalette and CustomColorPalette classes. A possible dependency is that since he image and color index for the given Turtle must correspond to the correct index in the respective palette, the classes assumes that the palettes, as well as the agents, are updating correctly.
 
 Describe two features from the assignment specification (at least one you did not implement) in detail:
+
 **Preferences File Saving and Loading** (I did not implement this feature)
+
 This feature requires the PreferencesSaver, Saver, XMLReader, Preferences, and Workspace class. The application automatically loads a default XML file upon running. The user can set a new XML file and the program will throw an error if the format is incorrect. The Preferences class introduces some dependencies since it is passed through the constructor of the classes. This makes the code less extendable since you would require an instance of Preferences to instantiate the views. Setting preferences within classes needs to be hardcoded which also introduces a lot of dependencies as the number of saved preferences grows. To solve these issues we could create a separate PreferencesSetter class that encapsulates all the preferences and removes these dependencies. A downside to this would be a large number of getters and setters within each View class.
 
 **Select Active Turtles Graphically** (implemented by me)
+
 This feature requires the ViewAgentsUpdater and Drawer classes. The user interactive part of the turtle images is handled by the ViewAgentsUpdater and is completely encapsulated from the ViewAgents class. Therefore, only the ViewAgentsUpdater knows which turtles are displayed on the screen. In the ControllerTurtle class there is an activeAgentListProperty that is binded to the same property in the ViewAgents class. When an image is toggled between active and inactive, the ViewAgentsUpdater updates the binded activeAgentListProperty to propagate the changes throughout the code. The Drawer, on the hand, keeps track of each imageview, stamp, and line on the screen. This graphic information is encapsulated from the ViewAgentsUpdater since it only needs to know that an imageview has been clicked. The Drawer and ViewAgentsUpdater have very clear responsibilities and follow the Open/Closed Principle which makes them very easy to reuse and extend the code. For example, you could also display a list of preferences for every active turtle by adding a changing listener to the activeAgentListProperty. 
 
 
@@ -100,15 +103,21 @@ We originally planned for the Drawer to be an external API but realized that onl
 ##Conclusions##
 Describe the two best features of the overall project's current design (these could include your own or others code).
 **ViewAgentPreferences and Adding GUI Elements**
+
 As mentioned above, this code follows the Open/Closed Principle, has few dependencies, and introduces a lot of flexibility into the GUI. This class uses the GuiObjectFactory and ObserverLabelFactory to dynamically add new GUI elements that are user interactive/editable based on the MUTABLE_LIST and OBSERVER_LIST in the Turtle class. A GuiObject is editable by the user and propagates changes to the turtle model. An ObserverLabel displays information and is binded to a property in the turtle model. The factory classes add polymorphism so the view does not need to keep track of which GUI elements need to be created. The GUIObject and ObserverLabel classes also encapsulate any user interactivity so that this view only handles displaying the GUI elements. In addition, the displayed preferences dynamically update when the CurrentAgentProperty is changed in the ControllerTurtle class to reflect the model.   
 
 **ViewHistory**
+
 As mentioned above, this class has the perfect level of abstraction to make the code extendable and flexible. There are no hardcoded values and appropriately distributes responsibilities between the GUI elements (ResultElem, HistoryElem, ErrorElem) and the view itself. As a result, the view only handles displaying the GUI elements. It also utilizes the Observer/Observable design pattern to reduce dependencies.
 
 Describe the two worst features that remain in the overall project's current design (these could include your own or others code).
+
 **Interpreter**
+
 As described in the previous sections, the code is hard to follow and very long. There are issues with hardcoded values and repeated code. The responsibilities of the class are also unclear since it seems to be working with tree traversal as well as keeping track of the commands map.
+
 **ControllerBackground**
+
 This class also does not have a clear purpose since it controls elements of the CustomColorPalette as well as the background color of the ViewAgents display. This class seems to be an afterthought without consideration for design.
 
 To be a better designer, what should you start doing, keep doing, or stop doing?
