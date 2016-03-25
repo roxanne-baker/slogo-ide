@@ -1,0 +1,27 @@
+make :time 60.0
+make :numsides 4.0
+make :goat 450.0
+make :side 60.0
+make :length 60.0
+make :size 70
+to square [ :side ] [ 
+poly 4 :side
+ ]
+to triangle [ :side ] [ 
+poly 3 :side
+ ]
+to tree [ :size ] [ 
+repeat 50 [ fd :size rt 20 ]
+ ]
+to house [ :size ] [ 
+square :size
+  fd :size rt 30
+  triangle :size
+ ]
+to poly [ :numsides :length ] [ 
+repeat :numsides
+  [
+    fd :length 
+    rt quotient 360 :numsides
+  ]
+ ]
