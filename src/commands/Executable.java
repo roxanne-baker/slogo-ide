@@ -14,6 +14,15 @@ public interface Executable {
 	public Object execute(List<Object> params);
 	
 	/**
+	 * This method will take the user input and determine if there
+	 * are too few/many parameters for the command
+	 * @param userInput
+	 * @return String representing error message
+	 * or null if there is no error
+	 */
+	public String checkNumParams(List<Object> params);
+	
+	/**
 	 * This method will take the user input and determine if the
 	 * type of the parameters fits the command
 	 * @param userInput

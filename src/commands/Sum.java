@@ -1,15 +1,63 @@
-// This entire file is part of my masterpiece.
-// Roxanne Baker
-// I was able to generalize the needs of the math commands in order to
-// allow no methods to be defined in the actual subclass
-// This allows the class to be the true "core" of the command
-// and reduce significant amounts of duplicated code
-
 package commands;
+
+import java.util.List;
 
 public class Sum extends MathCommand implements Executable {
 
 	public Sum() {
-		setOperation((Double num1, Double num2) -> num1+num2);
+		numParams = 2;
+	}
+	
+	public Object execute(List<Object> params) {
+		double sum = 0;
+		double[] sumArray = null;
+		sum = getSum(params);
+		sumArray = getSumArray(params);
+		
+		if (sumArray != null) {
+			for (int i=0; i<sumArray.length; i++) {
+				sumArray[i] += sum;
+			}
+			return sumArray;
+		}
+		return sum;
+	}
+	
+	private double getSum(List<Object> params) {
+		double sum = 0;
+		for (Object param : params) {
+			if ((param instanceof Double)) {
+				sum += (double) param;
+			}
+		}
+		return sum;		
+	}
+	
+	private double[] getSumArray(List<Object> params) {
+		double[] sumArray = null;
+		for (Object param : params) {
+			if (!(param instanceof Double)) {
+				if (sumArray == null) {
+					sumArray = (double[]) param;
+				}
+				else {
+					double[] paramArray = (double[]) param;
+					for (int i=0; i<paramArray.length; i++) {
+						sumArray[i] += paramArray[i];
+					}
+				}
+			}
+		}
+		return sumArray;
+	}
+	
+	@Override
+	public String checkNumParams(List<Object> params) {
+		if (params.size() < numParams) {
+			return String.format(errors.getString("MathTooFewParams"), params.size());
+		}
+		else {
+			return null;
+		}
 	}
 }
