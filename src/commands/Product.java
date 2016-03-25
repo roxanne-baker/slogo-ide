@@ -49,5 +49,6 @@ public class Product extends MathCommand implements Executable {
 			}
 		}
 		return productArray;
-	}
+	}	
+	
 }
