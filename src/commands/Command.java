@@ -1,3 +1,11 @@
+// This entire file is part of my masterpiece.
+// Roxanne Baker
+// The handling of the ambiguity of a double/double[] parameter was reduced here
+// to only be addressed in a few brief methods
+// It allows for flexibility in the number of parameters (despite the "multiple parameters" not being implemented)
+// It also gets rid of the ugly code that continuously refers to whether the current parameter was
+// passed in as a "double" or "double[]"
+
 package commands;
 
 import java.util.ArrayList;
@@ -26,25 +34,48 @@ public abstract class Command implements Executable {
 	public void addParam(Object param) { 
 		params.add(param);
 	}
-	
-	public String checkNumParams(List<Object> params) {
-		if (params.size() != numParams) {
-			return String.format(errors.getString("WrongNumParams"), numParams, params.size());
-		}
-		else {
-			return null;
-		}
-	}
 
 	public int getNumParams() {
 		return numParams;
 	}
 	
+	/*
+	 * Since doubles should not be compared directly,
+	 * this method tests if the values are close enough
+	 * to be deemed equal for our purposes
+	 */
 	protected boolean isEqual(double a, double b) {
 		if (Math.abs(a - b) < 0.00001) {
 			return true;
 		}
 		return false;
+	}
+	
+	/*
+	 * Used to handle cases of ambiguity where a parameter
+	 * may have been passed in as either a double or a double[]
+	 */
+	protected Double getExprToCompare(Object expr, int index) {
+		if (expr instanceof Double) {
+			return (double) expr;
+		}
+		else {
+			return ((double[]) expr)[index];
+		}
+	}
+	
+	/*
+	 * Determines the number of elements in any arrays contained in parameters
+	 * Otherwise returns 1
+	 * This is effectively equal to the current number of agents
+	 */
+	protected int getNumAgents(List<Object> params) {
+		for (Object param : params) {
+			if (param instanceof double[]) {
+				return ((double[]) param).length;
+			}
+		}
+		return 1;
 	}
 
 }

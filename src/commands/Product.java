@@ -50,16 +50,4 @@ public class Product extends MathCommand implements Executable {
 		}
 		return productArray;
 	}
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < 2) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
-	
-	
 }

@@ -37,17 +37,6 @@ public class For extends Command implements Executable {
 		//NEED TO ADD IN RETURN VALUE
 		return interpreter.getReturnResult();
 	}	
-
-	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
 	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {

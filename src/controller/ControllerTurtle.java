@@ -79,13 +79,13 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 
 	@Override
 	public void setActiveAgents(List<Integer> activeAgents) {
-		ObservableList<Integer> observableList = FXCollections.observableArrayList(activeAgents);
-		activeAgentListProperty.setValue(observableList);
 		for (Integer agentID : activeAgents) {
 			if (!agentMap.containsKey(agentID) ) {
 				addAgent(agentID);
 			}
 		}
+		ObservableList<Integer> observableList = FXCollections.observableArrayList(activeAgents);
+		activeAgentListProperty.setValue(observableList);
 
 	}
 	
