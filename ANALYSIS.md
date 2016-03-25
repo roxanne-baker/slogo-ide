@@ -102,6 +102,7 @@ We originally planned for the Drawer to be an external API but realized that onl
 
 ##Conclusions##
 Describe the two best features of the overall project's current design (these could include your own or others code).
+
 **ViewAgentPreferences and Adding GUI Elements**
 
 As mentioned above, this code follows the Open/Closed Principle, has few dependencies, and introduces a lot of flexibility into the GUI. This class uses the GuiObjectFactory and ObserverLabelFactory to dynamically add new GUI elements that are user interactive/editable based on the MUTABLE_LIST and OBSERVER_LIST in the Turtle class. A GuiObject is editable by the user and propagates changes to the turtle model. An ObserverLabel displays information and is binded to a property in the turtle model. The factory classes add polymorphism so the view does not need to keep track of which GUI elements need to be created. The GUIObject and ObserverLabel classes also encapsulate any user interactivity so that this view only handles displaying the GUI elements. In addition, the displayed preferences dynamically update when the CurrentAgentProperty is changed in the ControllerTurtle class to reflect the model.   
