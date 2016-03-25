@@ -13,6 +13,7 @@ import view.ViewType;
 
 public class Interpreter extends Observable {
 	private Map<String, Command> commandsMap; 
+	private CommandMapInitializer mapInit;
 	private final String WHITESPACE = "\\p{Space}";
     private final String resourcesPath = "resources/languages/";
     private Parser parser;
@@ -32,7 +33,10 @@ public class Interpreter extends Observable {
 		methodController = (MethodsController) controllerMap.get(ViewType.METHODS);
 		backgroundController = (ControllerBackground) controllerMap.get(ViewType.PALETTES);
 		this.parser = parser;
-		initializeCommandsMap();
+		mapInit = new CommandMapInitializer(this, turtleController, variableController,
+				backgroundController, methodController);
+		commandsMap = mapInit.getCommandsMap();
+		//initializeCommandsMap();
 		initializeLangs();
 	}
 	
@@ -92,7 +96,6 @@ public class Interpreter extends Observable {
     }
     
     private void fillCommandStackParams(Stack<ParseNode> stack) { 
-    	//int initSize = stack.size();
 		Object result = new Object();
     	while (!stack.isEmpty()) { 
     		result = stack.peek().getValue();
@@ -126,9 +129,7 @@ public class Interpreter extends Observable {
     	else {
         	returnResult = result + "";    
     	}
-    	//if (commandCount > 1) {
-    		sendResult(returnResult);
-    	//}
+    	sendResult(returnResult);
     }
     
     private void combThruTree(ParseNode root, Stack<ParseNode> stack) {
@@ -354,93 +355,93 @@ public class Interpreter extends Observable {
 		}
 	}
     
-    private String parseText(String s) {
+    public String parseText(String s) {
     	return parser.getSymbol(s);
     }
     
-    private void initializeCommandsMap() { 
-		commandsMap = new HashMap<String, Command>(); 
-		addTurtleCommands();
-		addTurtleQueries();
-		addMathOps();
-		addBooleanOps();
-		addControlStructureCommands();
-		commandsMap.put("MakeVariable", new MakeVar(variableController));
-		commandsMap.put("SetPalette", new SetPalette(backgroundController));
-		commandsMap.put("SetBackground", new SetBackground(backgroundController));
-		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
-		commandsMap.put("SetPenSize", new SetPenSize(turtleController));
-		commandsMap.put("SetShape", new SetShape(turtleController));
-		commandsMap.put("Stamp", new Stamp(turtleController));
-		commandsMap.put("ClearStamps",  new ClearStamps(backgroundController));
-		commandsMap.put("Tell", new Tell(turtleController));
-		commandsMap.put("ID", new TurtleID(turtleController));
-		commandsMap.put("Ask", new Ask(this, turtleController));
-		commandsMap.put("Turtles", new NumTurtles(turtleController));
-		commandsMap.put("AskWith", new AskWith(this, turtleController));
-	}
-	
-    private void addControlStructureCommands() { 
-    	commandsMap.put("Repeat", new Repeat(this));
-    	commandsMap.put("If", new If(this, turtleController));
-    	commandsMap.put("IfElse", new IfElse(this, turtleController));
-    	commandsMap.put("For", new For(this, variableController));
-    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
-    	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
-    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
-    }
-    
-	private void addTurtleCommands() {
-		commandsMap.put("Forward", new Forward(turtleController));
-		commandsMap.put("Backward", new Back(turtleController));
-		commandsMap.put("Left", new Left(turtleController));
-		commandsMap.put("Right", new Right(turtleController));
-		commandsMap.put("SetHeading", new SetHeading(turtleController));
-		commandsMap.put("SetTowards", new Towards(turtleController));
-		commandsMap.put("SetPosition", new SetXY(turtleController));
-		commandsMap.put("PenDown", new PenDown(turtleController));
-		commandsMap.put("PenUp", new PenUp(turtleController));
-		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
-		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
-		commandsMap.put("Home", new Home(turtleController));
-		commandsMap.put("ClearScreen", new ClearScreen(turtleController, backgroundController));
-	}
-	
-	private void addTurtleQueries() {
-		commandsMap.put("XCoordinate", new XCor(turtleController));
-		commandsMap.put("YCoordinate", new YCor(turtleController));		
-		commandsMap.put("Heading", new Heading(turtleController));
-		commandsMap.put("IsPenDown", new PenDownQuery(turtleController));
-		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
-		commandsMap.put("GetPenColor", new PenColorQuery(turtleController));
-	}
-	
-	private void addMathOps() {
-		commandsMap.put("Sum", new Sum());
-		commandsMap.put("Difference", new Difference());
-		commandsMap.put("Product", new Product());
-		commandsMap.put("Quotient", new Divide());
-		commandsMap.put("Remainder", new Remainder());
-		commandsMap.put("Minus", new Minus());
-		commandsMap.put("Random", new RandomCommand(turtleController));
-		commandsMap.put("Sine", new Sine());
-		commandsMap.put("Cosine", new Cosine());
-		commandsMap.put("Tangent", new Tangent());
-		commandsMap.put("ArcTangent", new ArcTangent());
-		commandsMap.put("NaturalLog", new Logarithm());
-		commandsMap.put("Power", new Power());
-		commandsMap.put("Pi", new Pi());
-	}
-	
-	private void addBooleanOps() {
-		commandsMap.put("LessThan", new Less());
-		commandsMap.put("GreaterThan", new Greater());
-		commandsMap.put("Equal", new Equal());
-		commandsMap.put("NotEqual", new NotEqual());
-		commandsMap.put("And", new And());
-		commandsMap.put("Or", new Or());
-		commandsMap.put("Not", new Not());
-	}
+//    private void initializeCommandsMap() { 
+//		commandsMap = new HashMap<String, Command>(); 
+//		addTurtleCommands();
+//		addTurtleQueries();
+//		addMathOps();
+//		addBooleanOps();
+//		addControlStructureCommands();
+//		commandsMap.put("MakeVariable", new MakeVar(variableController));
+//		commandsMap.put("SetPalette", new SetPalette(backgroundController));
+//		commandsMap.put("SetBackground", new SetBackground(backgroundController));
+//		commandsMap.put("ClearStamps",  new ClearStamps(backgroundController));
+//		commandsMap.put("SetPenColor", new SetPenColor(turtleController));
+//		commandsMap.put("SetPenSize", new SetPenSize(turtleController));
+//		commandsMap.put("SetShape", new SetShape(turtleController));
+//		commandsMap.put("Stamp", new Stamp(turtleController));
+//		commandsMap.put("Tell", new Tell(turtleController));
+//		commandsMap.put("ID", new TurtleID(turtleController));
+//		commandsMap.put("Ask", new Ask(this, turtleController));
+//		commandsMap.put("Turtles", new NumTurtles(turtleController));
+//		commandsMap.put("AskWith", new AskWith(this, turtleController));
+//	}
+//	
+//    private void addControlStructureCommands() { 
+//    	commandsMap.put("Repeat", new Repeat(this));
+//    	commandsMap.put("If", new If(this, turtleController));
+//    	commandsMap.put("IfElse", new IfElse(this, turtleController));
+//    	commandsMap.put("For", new For(this, variableController));
+//    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
+//    	commandsMap.put("MakeUserInstruction", new To(this, variableController, methodController));
+//    	commandsMap.put("DoTimes", new DoTimes(this, variableController));
+//    }
+//    
+//	private void addTurtleCommands() {
+//		commandsMap.put("Forward", new Forward(turtleController));
+//		commandsMap.put("Backward", new Back(turtleController));
+//		commandsMap.put("Left", new Left(turtleController));
+//		commandsMap.put("Right", new Right(turtleController));
+//		commandsMap.put("SetHeading", new SetHeading(turtleController));
+//		commandsMap.put("SetTowards", new Towards(turtleController));
+//		commandsMap.put("SetPosition", new SetXY(turtleController));
+//		commandsMap.put("PenDown", new PenDown(turtleController));
+//		commandsMap.put("PenUp", new PenUp(turtleController));
+//		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
+//		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
+//		commandsMap.put("Home", new Home(turtleController));
+//		commandsMap.put("ClearScreen", new ClearScreen(turtleController, backgroundController));
+//	}
+//	
+//	private void addTurtleQueries() {
+//		commandsMap.put("XCoordinate", new XCor(turtleController));
+//		commandsMap.put("YCoordinate", new YCor(turtleController));		
+//		commandsMap.put("Heading", new Heading(turtleController));
+//		commandsMap.put("IsPenDown", new PenDownQuery(turtleController));
+//		commandsMap.put("IsShowing", new ShowingQuery(turtleController));
+//		commandsMap.put("GetPenColor", new PenColorQuery(turtleController));
+//	}
+//	
+//	private void addMathOps() {
+//		commandsMap.put("Sum", new Sum());
+//		commandsMap.put("Difference", new Difference());
+//		commandsMap.put("Product", new Product());
+//		commandsMap.put("Quotient", new Divide());
+//		commandsMap.put("Remainder", new Remainder());
+//		commandsMap.put("Minus", new Minus());
+//		commandsMap.put("Random", new RandomCommand(turtleController));
+//		commandsMap.put("Sine", new Sine());
+//		commandsMap.put("Cosine", new Cosine());
+//		commandsMap.put("Tangent", new Tangent());
+//		commandsMap.put("ArcTangent", new ArcTangent());
+//		commandsMap.put("NaturalLog", new Logarithm());
+//		commandsMap.put("Power", new Power());
+//		commandsMap.put("Pi", new Pi());
+//	}
+//	
+//	private void addBooleanOps() {
+//		commandsMap.put("LessThan", new Less());
+//		commandsMap.put("GreaterThan", new Greater());
+//		commandsMap.put("Equal", new Equal());
+//		commandsMap.put("NotEqual", new NotEqual());
+//		commandsMap.put("And", new And());
+//		commandsMap.put("Or", new Or());
+//		commandsMap.put("Not", new Not());
+//	}
     
     public void addCommandToMap(CreatedMethod method) { 
     	commandsMap.put(method.getMethodName(), method);

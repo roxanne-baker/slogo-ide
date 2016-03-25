@@ -17,7 +17,6 @@ public class DoTimes extends ControlCommand implements Executable {
 	
 	public Object execute(List<Object> params) {
 		String varLimitExpr = (String) params.get(0);
-		//System.out.println(varLimitExpr);
 		String varName = varLimitExpr.split(" ")[0];
 		int endVarNameIndex = varLimitExpr.indexOf(" ");
 
@@ -33,7 +32,7 @@ public class DoTimes extends ControlCommand implements Executable {
 		return interpreter.getReturnResult();
 	}	
 	
-	public String checkParamTypes(List<Object> params) {
+	@Override public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			if (!(param instanceof String)) {
 				return String.format(errors.getString("WrongParamType"), param.toString());

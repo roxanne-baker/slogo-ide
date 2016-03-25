@@ -18,7 +18,6 @@ public class For extends Command implements Executable {
 	}
 	
 	public Object execute(List<Object> params) {
-		// WANT TO GET MAX VALUE FOR VARIABLE
 		String variableStartEndIncrement = (String) params.get(0);
 		String[] forLoopCondition = variableStartEndIncrement.split(" ");
 		String varName = forLoopCondition[0];
@@ -33,8 +32,6 @@ public class For extends Command implements Executable {
 			variableController.addVariable(varName, ""+i);
 			interpreter.run(commands);
 		}
-
-		//NEED TO ADD IN RETURN VALUE
 		return interpreter.getReturnResult();
 	}	
 

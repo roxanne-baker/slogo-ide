@@ -30,10 +30,8 @@ public class IfElse extends ControlCommand implements Executable {
 			}
 		}
 		else {
-			// MAKE TEMPORARY NEW LIST OF ACTIVE AGENTS
 			handleMultTurtlesCase(trueCommands, falseCommands, (double[]) params.get(0));
 		}
-	
 		return interpreter.getReturnResult();
 	}	
 	
@@ -52,7 +50,6 @@ public class IfElse extends ControlCommand implements Executable {
 		interpreter.run(trueCommands);
 		List<Integer> currentlyActiveAgents = new ArrayList<>();
 		currentlyActiveAgents.addAll(activeAgents);
-		
 		activeAgents.removeAll(activeAgents);
 		activeAgents.addAll(tempInactiveAgents);
 		interpreter.run(falseCommands);

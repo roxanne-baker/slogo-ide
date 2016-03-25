@@ -30,7 +30,6 @@ public class If extends ControlCommand implements Executable {
 			}
 		}
 		else {
-			// MAKE TEMPORARY NEW LIST OF ACTIVE AGENTS
 			handleMultTurtlesCase(commands, (double[]) params.get(0));
 		}
 	

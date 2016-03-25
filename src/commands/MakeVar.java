@@ -31,7 +31,7 @@ public class MakeVar extends Command implements Executable {
 		return valueNum;
 	}
 	
-	public String checkParamTypes(List<Object> params) {
+	@Override public String checkParamTypes(List<Object> params) {
 		Object name = params.get(0);
 		if (!(name instanceof String)) {
 			return String.format(errors.getString("WrongParamType"), name.toString());

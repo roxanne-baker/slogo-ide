@@ -1,6 +1,9 @@
-package commands;
+// This entire file is part of my masterpiece. 
+// I've taken out the checkParamTypes method from this class, along with the MathCommands class
+// and put it into the Commands superclass. 
+// This way, there is no duplicated error-checking code. 
 
-import java.util.List;
+package commands;
 
 import controller.ControllerTurtle;
 
@@ -11,16 +14,7 @@ public abstract class TurtleCommand extends Command implements Executable{
 	public TurtleCommand(ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 	}
-	
-	public String checkParamTypes(List<Object> params) {
-		for (Object param : params) {
-			if (!(param instanceof Integer || param instanceof Double || param instanceof double[])) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}			
-		}
-		return null;
-	}
-	
+
 	protected void setTurtleController(ControllerTurtle turtleController) {
 		this.turtleController = turtleController;
 	}

@@ -30,18 +30,5 @@ public class Repeat extends ControlCommand implements Executable {
 		}
 		return interpreter.getReturnResult();
 	}	
-	
-	public String checkParamTypes(List<Object> params) {
-		Object param = params.get(0);
-		if (!(param instanceof Integer || param instanceof Double || param instanceof double[])) {
-			return String.format(errors.getString("WrongParamType"), param.toString());
-		}
-		for (int i=1; i<params.size(); i++) {
-			Object command = params.get(i);
-			if (!(command instanceof String)) {
-				return String.format(errors.getString("WrongParamType"), param.toString());
-			}
-		}
-		return null;
-	}	
+
 }
