@@ -36,7 +36,7 @@ public class CustomImagePalette extends Palette{
 			if (imageFile.isFile()){
 				imageView = new ImageView(new Image(imageFile.toURI().toString(),SIZE,SIZE,true,true));
 			}else {
-				new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),imagePath);
+				//new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),imagePath);
 				removeFromPalette(index);
 			}
 			

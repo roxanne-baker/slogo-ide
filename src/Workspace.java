@@ -2,8 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import Parsing.Interpreter;
-import Parsing.Parser;
 import controller.Controller;
 import controller.ControllerTurtle;
 import controller.ControllerBackground;
@@ -20,6 +18,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
+import Parsing.Interpreter;
+import Parsing.Parser;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.Preferences;
@@ -154,7 +154,9 @@ public class Workspace implements Observer {
 		    Scanner scan = new Scanner(file);
 		    while(scan.hasNextLine()){
 		        String line = scan.nextLine();
-		        sb.append(line);
+		        if (!line.contains("#")) {
+			        sb.append(line);
+		        }
 		        sb.append("\n");
 		    }
 		} catch (FileNotFoundException e) { 
