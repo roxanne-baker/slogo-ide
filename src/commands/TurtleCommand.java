@@ -1,4 +1,5 @@
 // This entire file is part of my masterpiece. 
+// Carolyn Yao
 // I've taken out the checkParamTypes method from this class, along with the MathCommands class
 // and put it into the Commands superclass. 
 // This way, there is no duplicated error-checking code. 
@@ -15,9 +16,9 @@ public abstract class TurtleCommand extends Command implements Executable{
 		this.turtleController = turtleController;
 	}
 
-	protected void setTurtleController(ControllerTurtle turtleController) {
-		this.turtleController = turtleController;
-	}
+//	protected void setTurtleController(ControllerTurtle turtleController) {
+//		this.turtleController = turtleController;
+//	}
 	
 	protected ControllerTurtle getTurtleController() {
 		return turtleController;
