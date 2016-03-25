@@ -3,7 +3,7 @@ package view;
 import java.io.File;
 import java.util.ResourceBundle;
 
-//import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -22,7 +22,7 @@ public class AgentElem {
 	private ImageView imgCopy;
 	private static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	private static final ResourceBundle DIALOG_RESOURCES = ResourceBundle.getBundle("DialogBox");
-	
+
 	public AgentElem(Agent agent){
 		myAgent = agent;
 		agentImageView = getImageViewFromFile(agentImageView, myAgent.getImagePath());
@@ -32,7 +32,7 @@ public class AgentElem {
 
 	}
 
-	
+
 	public Agent getAgent(){
 		return myAgent;
 	}
@@ -45,11 +45,11 @@ public class AgentElem {
 		imgCopy.setRotate(myAgent.getOrientation());
 		return imgCopy;
 
-	}	
+	}
 	public ImageView getImageView(){
 		return agentImageView;
 	}
-	public void updateImageView(){	
+	public void updateImageView(){
 		oldImageView = agentImageView;
 		agentImageView = getImageViewFromFile(agentImageView, myAgent.getImagePath());
 	}
@@ -66,17 +66,17 @@ public class AgentElem {
 				agentView = new ImageView(new Image(imageFile.toURI().toString(),myAgent.getSize(),myAgent.getSize(),true,true));
 
 			}else {
-				//new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),myAgent.getImagePath());
+				new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),myAgent.getImagePath());
 				myAgent.getImagePalette().removeFromPalette(imagePath);
 				myAgent.setDefaultImageIndex();
 			}
 
 		}return agentView;
-		
+
 	}
 
 	public void setRotate(Double value) {
-		agentImageView.setRotate(value);		
+		agentImageView.setRotate(value);
 	}
 	public void setPenColor(Color color){
 		penColor = color;
@@ -84,5 +84,5 @@ public class AgentElem {
 	public Color getPenColor(){
 		return penColor;
 	}
-	
+
 }

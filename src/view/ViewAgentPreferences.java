@@ -2,7 +2,6 @@ package view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.IntegerProperty;
@@ -19,22 +18,18 @@ import model.Agent;
 
 
 /**
- * This class displays all the Agents properties with some components that can/cannot be changed by the user. 
+ * This class is part of my masterpiece code. This code follows the Open/Closed Principle, has few dependencies, and introduces a lot of flexibility into the GUI. This class uses the GuiObjectFactory and ObserverLabelFactory to dynamically add new GUI elements that are user interactive/editable based on the MUTABLE_LIST and OBSERVER_LIST in the Turtle class. A GuiObject is editable by the user and propagates changes to the turtle model. An ObserverLabel displays information and is binded to a property in the turtle model. The factory classes add polymorphism so the view does not need to keep track of which GUI elements need to be created. The GUIObject and ObserverLabel classes also encapsulate any user interactivity so that this view only handles displaying the GUI elements. In addition, the displayed preferences dynamically update when the CurrentAgentProperty is changed in the ControllerTurtle class to reflect the model.   
+ * This class displays all the Agents properties with some components that can/cannot be changed by the user.
  * @author Melissa Zhang
  *
  */
 public class ViewAgentPreferences extends View{
 	private HashMap<Integer, Agent> agentMap;
 	private IntegerProperty currentAgentIDProperty;
-	private CustomColorPalette colorPalette;
-	
-
 	private VBox allPreferencesBox = new VBox();
-	private static final ResourceBundle UPDATE_RESOURCES = ResourceBundle.getBundle("updateObserver");
-
 	private ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
 	private ComboBox<String> agentDropDown;
-	
+
 	public ViewAgentPreferences(ViewType ID, Preferences savedPreferences) {
 		super(ID, savedPreferences);
 		setPane(allPreferencesBox);
@@ -46,6 +41,33 @@ public class ViewAgentPreferences extends View{
 		addListenerToCurrentAgentProperty(currentAgentIDProperty);
 
 
+	}
+	@Override
+	public Pane getView() {
+		updateView();
+		return super.getView();
+	}
+	private void updateView() {
+
+		allPreferencesBox.getChildren().clear();
+		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
+
+		setUpAgentDropDown();
+
+		VBox observerBox = new VBox();
+		allPreferencesBox.getChildren().add(observerBox);
+
+		List<Node> observerLabelList = new ArrayList<Node>();
+		List<Node> mutableGuiObjectList = new ArrayList<Node>();
+
+		if (currentAgentIDProperty.getValue()!=null && agentMap.get(currentAgentIDProperty.getValue())!=null){
+			populateObserverLabelList(agentMap.get(currentAgentIDProperty.getValue()), observerLabelList);
+			populateMutableGuiObjectList(agentMap.get(currentAgentIDProperty.getValue()),mutableGuiObjectList);
+
+			addToAgentPrefBox(observerBox, observerLabelList);
+			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
+
+		}
 	}
 
 	private void addListenerToCurrentAgentProperty(IntegerProperty property) {
@@ -59,43 +81,6 @@ public class ViewAgentPreferences extends View{
 		});
 	}
 
-	@Override
-	public void update(Observable agent, Object updateType) {
-		if (updateType == UPDATE_RESOURCES.getString("COLORPALETTE") ){
-			updateView();
-		}else if (updateType == UPDATE_RESOURCES.getString("IMAGEPALETTE")){
-			updateView();
-		}
-		
-	}
-
-	@Override
-	public Pane getView() {
-		updateView();
-		return super.getView();
-	}
-	private void updateView() {
-
-		allPreferencesBox.getChildren().clear();
-		allPreferencesBox.setPrefSize(NARROW_WIDTH, WIDE_WIDTH);
-
-		setUpAgentDropDown();		
-
-		VBox observerBox = new VBox();
-		allPreferencesBox.getChildren().add(observerBox);
-
-		List<Node> observerLabelList = new ArrayList<Node>();
-		List<Node> mutableGuiObjectList = new ArrayList<Node>();
-
-		if (currentAgentIDProperty.getValue()!=null && agentMap.get(currentAgentIDProperty.getValue())!=null){
-			populateObserverLabelList(agentMap.get(currentAgentIDProperty.getValue()), observerLabelList);
-			populateMutableGuiObjectList(agentMap.get(currentAgentIDProperty.getValue()),mutableGuiObjectList);
-				
-			addToAgentPrefBox(observerBox, observerLabelList);
-			addToAgentPrefBox(allPreferencesBox,mutableGuiObjectList);
-			
-		}
-	}
 
 	private void setUpAgentDropDown() {
 		agentDropDown = new ComboBox<String>();
@@ -132,7 +117,7 @@ public class ViewAgentPreferences extends View{
 		for (String property: agent.getObserverProperties()){
 			ObserverLabelFactory labelFactory = new ObserverLabelFactory();
 			Object newLabel = labelFactory.createNewObserverLabel(property, agent);
-			
+
 			if (newLabel!= null){
 				observerLabelList.add((Node) newLabel);
 			}
@@ -148,13 +133,7 @@ public class ViewAgentPreferences extends View{
 		return currentAgentIDProperty;
 	}
 
-	public void updateCurrentAgentSelection() {
-		updateView();
-	}
 
-	public CustomColorPalette getColorPalette() {
-		return colorPalette;
-	}
 
 	@Override
 	public int getX() {

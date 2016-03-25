@@ -24,13 +24,14 @@ public class ViewWindowPreferences extends ViewInterpretable{
 	private static final int ELEMENT_WIDTH = 240;
 	private static final List<String> PREFERENCES_LIST = Arrays.asList("HELP");
 	private static final List<String> LANGUAGES_LIST = Arrays.asList("Chinese","English","French","German","Italian","Portuguese","Russian","Spanish");
-	
 	private List<Node> guiList;
 	private String currentLanguage;
 	private VBox windowPreferencesBox;
 	private ComboBox<String> languageDropDown;
 	private Preferences savedPreferences;
-	private final ResourceBundle cssResources = ResourceBundle.getBundle("CSSClasses");
+	private static final ResourceBundle CSS_RESOURCES = ResourceBundle.getBundle("CSSClasses");
+	private static final ResourceBundle WINDOW_RESOURCES = ResourceBundle.getBundle("windowProperties");
+	
 	
 
 	public ViewWindowPreferences(ViewType ID, Preferences savedPreferences) {
@@ -38,7 +39,7 @@ public class ViewWindowPreferences extends ViewInterpretable{
 		this.savedPreferences = savedPreferences;
 		guiList = new ArrayList<Node>();
 		windowPreferencesBox = new VBox();
-		windowPreferencesBox.getStyleClass().addAll(cssResources.getString("VBOXVIEW"),cssResources.getString("WINDOWVIEW"),cssResources.getString("DISPLAYVIEW"));
+		windowPreferencesBox.getStyleClass().addAll(CSS_RESOURCES.getString("VBOXVIEW"),CSS_RESOURCES.getString("WINDOWVIEW"),CSS_RESOURCES.getString("DISPLAYVIEW"));
 		setPane(windowPreferencesBox);
 		currentLanguage = savedPreferences.getPreference("language").toString();
 		languageDropDown = new ComboBox<String>();
@@ -72,7 +73,7 @@ public class ViewWindowPreferences extends ViewInterpretable{
 
 
 	private void createLanguagesComboBox() {
-		Label label = new Label("Choose a language for commands");
+		Label label = new Label(WINDOW_RESOURCES.getString("LANGUAGELABEL"));
 		windowPreferencesBox.getChildren().add(label);
 		
 		for (String language: LANGUAGES_LIST){

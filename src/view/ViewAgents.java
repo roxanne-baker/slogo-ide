@@ -49,13 +49,14 @@ public class ViewAgents extends View{
 		activeAgentsListProperty = new SimpleListProperty<Integer>();
 		addListener(activeAgentsListProperty);
 		agentMap = new HashMap<Integer,Agent>();
-
 		isSelectedAgentToggle = true;
 
 		agentPane = super.getView();
 		agentPane.setId((cssResources.getString("AGENTVIEW")));
-		drawer = new Drawer(agentPane);
 		agentPane.setPrefSize(WIDE_WIDTH, WIDE_WIDTH);
+
+		drawer = new Drawer(agentPane);
+		viewUpdater = new ViewAgentsUpdater(this,drawer);
 
 		agentViewPreferences = new HBox();
 		agentViewPreferences.getStyleClass().add(cssResources.getString("HBOX"));
@@ -66,20 +67,8 @@ public class ViewAgents extends View{
 		this.savedPreferences = savedPreferences;
 		setBackgroundColor(Color.valueOf(savedPreferences.getPreference("background").toString()));
 		
-		viewUpdater = new ViewAgentsUpdater(this,drawer);
 
 	}
-		
-	private void addListener(Property<ObservableList<Integer>> listProperty) {
-		listProperty.addListener(new ChangeListener<Object>(){
-			@Override
-			public void changed(ObservableValue<? extends Object> ov,
-					Object oldValue, Object newValue) {
-					updateActiveAgentViews();
-			}
-		});		
-	}
-
 	@Override
 	public Pane getView() {
 		setUpColorPicker();
@@ -92,7 +81,16 @@ public class ViewAgents extends View{
 	public void update(Observable agent, Object updateType) {
 		viewUpdater.updateView((Agent)agent, (String) updateType);
 	}
-
+		
+	private void addListener(Property<ObservableList<Integer>> listProperty) {
+		listProperty.addListener(new ChangeListener<Object>(){
+			@Override
+			public void changed(ObservableValue<? extends Object> ov,
+					Object oldValue, Object newValue) {
+					updateActiveAgentViews();
+			}
+		});		
+	}
 
 
 	public void setBackgroundColor(Color color){
@@ -129,6 +127,10 @@ public class ViewAgents extends View{
 	public void clearScreen(){
 		drawer.clearAllLines();
 		drawer.clearAllStamps();
+	}
+	
+	public double clearStamps() {
+		return drawer.clearAllStamps();
 	}
 	private void setUpSelectAgentToggle(){
 
@@ -183,13 +185,7 @@ public class ViewAgents extends View{
 	public void updateAgentMap(HashMap<Integer, Agent> newAgentMap) {
 		agentMap = newAgentMap;
 		
-
 	}
-
-	public double clearStamps() {
-		return drawer.clearAllStamps();
-	}
-
 
 
 	public Property<ObservableList<Integer>> getActiveAgentListProperty() {

@@ -1,6 +1,4 @@
 package view;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
@@ -11,7 +9,7 @@ import javafx.scene.layout.HBox;
  *
  */
 
-public class ObserverLabel implements Observer{
+public class ObserverLabel {
 	private String labelName;
 	private ResourceBundle myResources;
 	private Label observerLabel;
@@ -35,10 +33,7 @@ public class ObserverLabel implements Observer{
 	public Label getObserverLabel(){
 		return observerLabel;
 	}
-	@Override
-	public void update(Observable newName, Object agent) {
-		
-	}
+
 
 
 }

@@ -208,7 +208,6 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	@Override
 	public void setCurrentAgent(Integer agentName) {
 		currentAgentIDProperty.setValue(agentName);	
-		preferencesView.updateCurrentAgentSelection();
 
 	}
 

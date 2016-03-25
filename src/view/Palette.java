@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 //import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
@@ -62,8 +63,8 @@ public abstract class Palette extends Model {
 		if (index >= paletteObjectListProperty.size()){ //add new object at next available spot
 			paletteObjectListProperty.add(obj);
 			
-		}//else if (index <0){
-			//new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("PALETTE"), DIALOG_RESOURCES.getString("PALETTEINFO"));		}
+		}else if (index <0){
+			new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("PALETTE"), DIALOG_RESOURCES.getString("PALETTEINFO"));		}
 		else{ //replace already existing object
 			paletteObjectListProperty.set(index, obj);
 

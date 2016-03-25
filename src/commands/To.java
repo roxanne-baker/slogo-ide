@@ -3,8 +3,8 @@ package commands;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import controller.MethodsController;
 import parsing.Interpreter;
+import controller.MethodsController;
 import controller.ControllerVariables;
 
 public class To extends Command implements Executable {

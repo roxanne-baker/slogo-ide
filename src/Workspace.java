@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import parsing.Interpreter;
+import parsing.Parser;
 import controller.Controller;
 import controller.ControllerTurtle;
 import controller.ControllerBackground;
@@ -18,8 +20,6 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
-import parsing.Interpreter;
-import parsing.Parser;
 import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.Preferences;
