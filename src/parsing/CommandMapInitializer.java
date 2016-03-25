@@ -10,6 +10,9 @@
 // For this to work, we also want to no longer have command constructors that are specific to which controllers they'd like to
 // be passed in for construction. 
 
+// this reduces duplicate code and when we expect an influx of new commands to be made, we can simply add to the arrays. 
+// we can even outsource the data in the arrays to resource files. 
+
 package parsing;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
