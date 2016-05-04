@@ -3,6 +3,8 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -15,6 +17,10 @@ public class Drawer {
 	private static final String NO_SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0)";
 	private static final String SELECT_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)";
 	private static final double DASH_OFFSET = 8;
+	private static final double X_MIN = 0;
+	private static final double X_MAX = 500;
+	private static final double Y_MIN = 0;
+	private static final double Y_MAX = 500;
 	private Pane agentGroup;
 	private List<ImageView> stampList;
 	private List<Node> lineList;
@@ -29,12 +35,46 @@ public class Drawer {
 		
 
 	}
+	
+	private double getYPoint(double slope, double x, double y, double xPoint) {
+		return slope*(xPoint - x) + y;
+	}
+	
+	private double getXPoint(double slope, double x, double y, double yPoint) {
+		return ((yPoint - y) / slope) + x;
+	}
+	
+	private double[] setPoint(double xValue, double yValue, double slope, double xPoint, double yPoint) {
+			if (xValue < X_MIN) {
+				yValue = getYPoint(slope, xPoint, yPoint, X_MIN);
+				xValue = X_MIN;
+			}
+			else if (xValue > X_MAX) {
+				yValue = getYPoint(slope, xPoint, yPoint, X_MIN);
+				xValue = X_MAX;
+			}
+			if (yValue < Y_MIN) {
+				xValue = getXPoint(slope, xPoint, yPoint, Y_MIN);
+				yValue = Y_MIN;
+			}
+			else if (yValue > Y_MAX) {
+				xValue = getXPoint(slope, xPoint, yPoint, Y_MAX);
+				yValue = Y_MAX;
+			}
+			return new double[]{xValue, yValue};
+	}
+	
 	public void drawLine(double oldX,double oldY,double newX, double newY, double thickness, Color color, double dash){
 		Line line = new Line();
-		line.setStartX(oldX);
-		line.setStartY(oldY);
-		line.setEndX(newX);
-		line.setEndY(newY);
+		
+		double slope = (newY - oldY) / (newX - oldX);
+		double[] oldCoords = setPoint(oldX, oldY, slope, newX, newY);
+		double[] newCoords = setPoint(newX, newY, slope, oldX, oldY);
+		
+		line.setStartX(oldCoords[0]);
+		line.setStartY(oldCoords[1]);
+		line.setEndX(newCoords[0]);
+		line.setEndY(newCoords[1]);
 		line.setStrokeWidth(thickness);
 		line.setStroke(color);
 		line.getStrokeDashArray().removeAll();
