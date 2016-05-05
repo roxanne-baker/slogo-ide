@@ -3,8 +3,8 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import Parsing.Interpreter;
 import controller.ControllerTurtle;
+import Parsing.Interpreter;
 
 public class Ask extends Command implements Executable {
 	

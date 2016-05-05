@@ -3,12 +3,12 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import Parsing.Parser;
 import commands.CreatedMethod;
 import controller.Controller;
 import controller.MethodsController;
 import controller.ControllerVariables;
 import javafx.stage.Stage;
+import Parsing.Parser;
 import view.ViewType;
 
 public class LogoFileSaver extends Saver{

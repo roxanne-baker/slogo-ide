@@ -3,10 +3,10 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import Parsing.Interpreter;
 import commands.Command;
 import commands.Executable;
 import controller.ControllerTurtle;
+import Parsing.Interpreter;
 
 public class AskWith extends Command implements Executable {
 	

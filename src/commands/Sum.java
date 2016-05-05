@@ -1,6 +1,5 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Sum extends MathCommand implements Executable {
@@ -9,7 +8,6 @@ public class Sum extends MathCommand implements Executable {
 		numParams = 2;
 	}
 	
-	@SuppressWarnings("unused")
 	public Object execute(List<Object> params) {
 		double sum = 0;
 		double[] sumArray = null;

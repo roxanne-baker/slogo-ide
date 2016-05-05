@@ -2,8 +2,8 @@ package commands;
 
 import java.util.List;
 
-import Parsing.Interpreter;
 import controller.ControllerVariables;
+import Parsing.Interpreter;
 
 public class CreatedMethod extends Command implements Executable {
 
