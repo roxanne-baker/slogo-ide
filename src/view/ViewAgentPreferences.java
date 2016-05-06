@@ -74,6 +74,7 @@ public class ViewAgentPreferences extends View{
 		updateView();
 		return super.getView();
 	}
+	
 	private void updateView() {
 
 		allPreferencesBox.getChildren().clear();

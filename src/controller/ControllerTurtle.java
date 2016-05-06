@@ -11,6 +11,7 @@ import view.CustomColorPalette;
 import view.CustomImagePalette;
 import view.Palette;
 import view.ViewAgents;
+import view.ViewImages;
 import view.ViewAgentPreferences;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
@@ -32,7 +33,7 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	private HashMap<Integer,Agent> agentMap;
 	private IntegerProperty currentAgentIDProperty;
 	private ListProperty<Integer> activeAgentListProperty;
-
+	private ViewImages turtlesView;
 	private ViewAgentPreferences preferencesView;
 	private ViewAgents agentsView;
 	private double observerWidth;
@@ -42,7 +43,8 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
 	
-	public ControllerTurtle(ViewAgentPreferences prefView, ViewAgents obsView){
+	public ControllerTurtle(ViewImages turtlesView, ViewAgentPreferences prefView, ViewAgents obsView){
+		this.turtlesView = turtlesView;
 		preferencesView = prefView;
 		agentsView = obsView;
 		agentMap = new HashMap<Integer,Agent>();
@@ -159,6 +161,7 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	private void updateAgentMapInDisplayViews() {
 		preferencesView.updateAgentMap(agentMap);
 		agentsView.updateAgentMap(agentMap);
+		turtlesView.updateAgentMap(agentMap);
 	}
 	
 	

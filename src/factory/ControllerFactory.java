@@ -1,7 +1,5 @@
 package factory;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import controller.ControllerBackground;
@@ -16,6 +14,7 @@ import view.ViewMethods;
 import view.ViewVariables;
 import view.View;
 import view.ViewAgents;
+import view.ViewImages;
 import view.ViewType;
 import view.ViewAgentPreferences;
 
@@ -40,7 +39,7 @@ public class ControllerFactory {
 		case PALETTES:
 			return new ControllerBackground((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES), (ViewAgents)allViews.get(ViewType.AGENT));
 		case AGENT:
-			return new ControllerTurtle((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view);
+			return new ControllerTurtle((ViewImages)allViews.get(ViewType.IMAGES),(ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view);
 		}
 		return null;
 	}
