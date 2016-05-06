@@ -2,7 +2,6 @@ package view;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.*;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -19,10 +18,15 @@ import javafx.scene.layout.VBox;
 import model.Agent;
 
 public class ViewImages extends View {
+	private static int HBOX_SPACING = 5;
+	private static int VBOX_SPACING = 2;
+	private static int CHOOSER_WIDTH = 150;
+	private static int IMAGE_HEIGHT = 50;
+	private static int CHOOSER_INDEX = 1;
 	private HBox hb;
 	private ObservableMap<Integer, Agent> agentMap;
-	private static final ResourceBundle IMAGE_RESOURCES = ResourceBundle.getBundle("Palettes");
 	private static final String IMAGES_DIR = "images/";
+	private static final ResourceBundle TURTLE_RESOURCES = ResourceBundle.getBundle("TurtleProperties");
 	private Agent currentAgent;
 	private ComboBoxBase<String> imageDropDown;
 	
@@ -49,7 +53,7 @@ public class ViewImages extends View {
 			imgNames.add(imageFile.getName());
 		}
 		imageDropDown = new ComboBox<String>(imgNames);
-		imageDropDown.setPrefWidth(100);
+		imageDropDown.setPrefWidth(CHOOSER_WIDTH);
 		imageDropDown.setOnAction(e->{
 			if(currentAgent!=null){
 				currentAgent.setImagePath(imageDropDown.getValue());
@@ -60,9 +64,9 @@ public class ViewImages extends View {
 	}
 	
 	private void init(){
-		VBox pane = new VBox(2);
-		Label instructions = new Label("Click on a turtle to change its image");
-		hb = new HBox(5);
+		VBox pane = new VBox(VBOX_SPACING);
+		Label instructions = new Label(TURTLE_RESOURCES.getString("IMAGELABEL"));
+		hb = new HBox(HBOX_SPACING);
 		hb.setPrefSize(WIDE_WIDTH, NARROW_WIDTH);
 		pane.getChildren().addAll(instructions,hb);
 		setPane(pane);
@@ -71,11 +75,11 @@ public class ViewImages extends View {
 	private void updateView(){	
 		hb.getChildren().clear();
 		for(Agent a: agentMap.values()){
-			VBox vb = new VBox(2);
+			VBox vb = new VBox(VBOX_SPACING);
 			Label label = new Label(Integer.toString(a.getName()));
 			ImageView imgView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(a.getImagePath())));
 			imgView.setPreserveRatio(true);
-			imgView.setFitHeight(50);
+			imgView.setFitHeight(IMAGE_HEIGHT);
 			imgView.setOnMouseClicked(e->selectImage(a,vb));
 			vb.getChildren().addAll(imgView,label);
 			hb.getChildren().add(vb);
@@ -84,7 +88,7 @@ public class ViewImages extends View {
 	
 	private void selectImage(Agent agent, VBox vb){
 		currentAgent = agent;
-		vb.getChildren().add(1,imageDropDown);
+		vb.getChildren().add(CHOOSER_INDEX,imageDropDown);
 	}
 	
 	public void updateAgentMap(HashMap<Integer,Agent> agentMap){
