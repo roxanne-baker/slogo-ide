@@ -30,13 +30,19 @@ public class ViewAgentsUpdater {
 	public void updateView(Agent agent, String updateType){
 		AgentElem agentView = ((Agent) agent).getAgentView();
 		
-		if(((Agent) agent).isVisible()){
+		if(!((Agent) agent).isPenUp()){
 			
 			if (updateType == UPDATE_RESOURCES.getString("STAMP")){
 				myDrawer.stampImage(agentView.getImageCopy(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 			
 			}else if (updateType == UPDATE_RESOURCES.getString("MOVE")){
-				myDrawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				if (((Agent) agent).isVisible()) {
+					myDrawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
+				}
+				else {
+					myDrawer.removeImage(agentView.getImageView());					
+				}
+				
 				if(!((Agent) agent).isPenUp()){
 					myDrawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(UPDATE_RESOURCES.getString(((Agent) agent).getPenStyle()+"DASH")));
 				}

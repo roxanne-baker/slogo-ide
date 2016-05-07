@@ -47,16 +47,6 @@ public class Or extends Command implements Executable {
 		return booleanConditionals;
 	}
 	
-	@Override
-	public String checkNumParams(List<Object> params) {
-		if (params.size() < numParams) {
-			return String.format(errors.getString("MathTooFewParams"), params.size());
-		}
-		else {
-			return null;
-		}
-	}
-	
 	public String checkParamTypes(List<Object> params) {
 		for (Object param : params) {
 			if (!(param instanceof Integer || param instanceof Double)) {
