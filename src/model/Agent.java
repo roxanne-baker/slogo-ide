@@ -1,4 +1,5 @@
 package model;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,7 @@ public abstract class Agent extends Observable{
 		double yValue = agentYPosition.doubleValue() + y;
 		double slope = (yValue - oldYPosition.doubleValue()) / (xValue - oldXPosition.doubleValue());
 		double[] newCoords = Coordinates.setPoint(xValue, yValue, slope, oldXPosition.doubleValue(), oldYPosition.doubleValue());
+		System.out.println(Arrays.toString(newCoords));
 		agentXPosition.setValue(newCoords[0]);
 		agentYPosition.setValue(newCoords[1]);
 	}
@@ -127,7 +129,7 @@ public abstract class Agent extends Observable{
 	private void windowBorder(double x, double y) {
 		agentXPosition.setValue(agentXPosition.doubleValue() + x);
 		agentYPosition.setValue(agentYPosition.doubleValue() + y);
-		if (!isOffScreen(oldXPosition, oldYPosition) && isOffScreen(agentXPosition,agentYPosition)) {
+		if (isOffScreen(agentXPosition,agentYPosition)) {
 			setVisible(false);
 		}
 		else if (isOffScreen(oldXPosition, oldYPosition) && !isOffScreen(agentXPosition,agentYPosition)) {

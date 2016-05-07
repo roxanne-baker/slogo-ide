@@ -40,12 +40,13 @@ public class ViewAgentsUpdater {
 					myDrawer.moveImage(agentView.getImageView(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition());
 				}
 				else {
-					myDrawer.removeImage(agentView.getImageView());					
+					myDrawer.removeImage(agentView.getImageView());	
 				}
 				
 				if(!((Agent) agent).isPenUp()){
 					myDrawer.drawLine(((Agent) agent).getOldXPosition(), ((Agent) agent).getOldYPosition(), ((Agent) agent).getXPosition(), ((Agent) agent).getYPosition(),((Agent) agent).getPenThickness(),agentView.getPenColor(),Integer.parseInt(UPDATE_RESOURCES.getString(((Agent) agent).getPenStyle()+"DASH")));
 				}
+				System.out.println("move off screen");
 
 			}else if (updateType == UPDATE_RESOURCES.getString("INITIAL")){ 
 				ImageView agentImageView = createNewImageViewWithHandler(agent);
@@ -72,7 +73,6 @@ public class ViewAgentsUpdater {
 		if(updateType == UPDATE_RESOURCES.getString("CLEARSTAMPS")){
 			myDrawer.clearAllStamps();
 		}
-
 	}
 	
 	private ImageView createNewImageViewWithHandler(Observable agent) {
