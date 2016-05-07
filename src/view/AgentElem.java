@@ -61,7 +61,7 @@ public class AgentElem {
 		if (resourceFile.isFile()){
 			agentView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imagePath),myAgent.getSize(),myAgent.getSize(),true,true));
 		}else{
-			File imageFile = new File((String) myAgent.getImagePalette().getPaletteObject(myAgent.getCurrentImageIndex()));
+			File imageFile = new File(imagePath);
 			if (imageFile.isFile()){
 				agentView = new ImageView(new Image(imageFile.toURI().toString(),myAgent.getSize(),myAgent.getSize(),true,true));
 

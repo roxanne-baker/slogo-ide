@@ -12,6 +12,7 @@ import controller.ControllerVariables;
 import model.ModelMethods;
 import model.Model;
 import model.ModelVariables;
+import view.ViewImageChanger;
 import view.ViewMethods;
 import view.ViewVariables;
 import view.View;
@@ -40,7 +41,7 @@ public class ControllerFactory {
 		case PALETTES:
 			return new ControllerBackground((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES), (ViewAgents)allViews.get(ViewType.AGENT));
 		case AGENT:
-			return new ControllerTurtle((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view);
+			return new ControllerTurtle((ViewAgentPreferences)allViews.get(ViewType.PREFERENCES),(ViewAgents)view, (ViewImageChanger) allViews.get(ViewType.IMAGECHANGER));
 		}
 		return null;
 	}

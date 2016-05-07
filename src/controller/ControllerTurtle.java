@@ -12,6 +12,7 @@ import view.CustomImagePalette;
 import view.Palette;
 import view.ViewAgents;
 import view.ViewAgentPreferences;
+import view.ViewImageChanger;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -41,10 +42,12 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	private double offsetY;
 	private CustomColorPalette colorPalette;
 	private CustomImagePalette imagePalette;
+	private ViewImageChanger imagesView;
 	
-	public ControllerTurtle(ViewAgentPreferences prefView, ViewAgents obsView){
+	public ControllerTurtle(ViewAgentPreferences prefView, ViewAgents obsView, ViewImageChanger imgsView){
 		preferencesView = prefView;
 		agentsView = obsView;
+		imagesView = imgsView;
 		agentMap = new HashMap<Integer,Agent>();
 		observerWidth = obsView.getWidth();
 		observerHeight = obsView.getHeight();
@@ -159,6 +162,9 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	private void updateAgentMapInDisplayViews() {
 		preferencesView.updateAgentMap(agentMap);
 		agentsView.updateAgentMap(agentMap);
+		imagesView.updateAgentMap(agentMap);
+		
+		
 	}
 	
 	
@@ -186,6 +192,7 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 			setCurrentAgent(agentID);
 			turtleMethod.accept(agentMap.get(currentAgentIDProperty.getValue()));
 		}
+		imagesView.updateView();
 	}
 	
 	public double[] getAgentProperties(Function<Agent, Double> propertyToGet) {
@@ -203,6 +210,8 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 			setCurrentAgent(activeAgentListProperty.getValue().get(i));
 			changeProperty.accept(agentMap.get(currentAgentIDProperty.getValue()), changePropertyValues[i]);
 		}
+		imagesView.updateView();
+
 	}
 	
 	@Override
