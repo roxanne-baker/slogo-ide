@@ -21,13 +21,14 @@ I had to change some of the
 ##### what do you feel this exercise reveals about your project's design and documentation?
 I think it reveals something interesting about the integration, and it tests the
 way in which we've constructed commands. It revealed that there are even more
-ways to divide tasks into model-view-culture. 
+ways to divide tasks into model-view-culture.
 
 ##### was it as good (or bad) as you remembered?
 No, I expected there to be more happening in the controller, but a lot of the actions actually happens in the model class.
 ##### what could be improved?
 Instead of the window behavior being a part of the Agent's properties, there
 should actually be a Window Model-View-Controller so that the window can actually impose its own moves rather than the turtle stopping on its own accord.
+NOTE: the reflection that I added in my Slogo masterpiece would have allowed me to not need to individually instantiate Fence and Window in my Interpreter class. 
 
 ##### what would it have been like if you were not familiar with the code at all?
 It would have been very easy to create the new commands that could be parsed, and it would be easy to pinpoint the movePosition method in the Agent that allows the turtle to move, but it would have been tricky to see how to divide that into different methods base don the window behavior. Again, if we had a window controller, the call would have been very simple.
