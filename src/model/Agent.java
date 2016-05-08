@@ -117,34 +117,45 @@ public abstract class Agent extends Observable{
 	
 	public void moveWithWindowBehavior(Double x, Double y) {
 		setVisible(!willCrossBounds(x,y));
+		System.out.println(!willCrossBounds(x, y));
 		setMovePosition(x, y);
 	}
-
-	public void moveWithWrapBehavior(Double x, Double y) { 
-		System.out.println("hey");
-		double xChange = x; 
-		double yChange = y; 
-		if (willCrossBounds(x, 0)) {
-			double moveFactor = (x < 0) ? 1 : -1;
-			xChange = (moveFactor * (WORLD_DIMENSION - x)) + agentXPosition.getValue(); 
-			System.out.println(xChange);
-			System.out.println("what x " + agentXPosition.getValue() + xChange);
-//			if ((x /-1) > 0) { 
-//				xChange = 500 - (x - agentXPosition.getValue()); 
-//			} else { 
-//				xChange = x - (500 - agentXPosition.getValue()); 
-//			}	
+//	
+	public void moveWithFenceBehavior(Double x, Double y) { 
+		Double xChange = x; 
+		Double yChange = y; 
+		if (willCrossBounds(x, 0)) { 
+			xChange = (x < 0) ? -agentXPosition.getValue() : -(WORLD_DIMENSION - agentXPosition.getValue());
 		}
-		if (willCrossBounds(y, 0)) { 
-			double moveFactor = (y < 0) ? 1 : -1;
-			yChange = (moveFactor * (WORLD_DIMENSION - y)) + agentYPosition.getValue(); 
+		if (willCrossBounds(0, y)) { 
+			yChange = (y < 0) ? -agentYPosition.getValue() : -(WORLD_DIMENSION - agentYPosition.getValue());
 		}
 		setMovePosition(xChange, yChange);
 	}
+
+//	public void moveWithWrapBehavior(Double x, Double y) { 
+//		System.out.println("hey");
+//		double xChange = x; 
+//		double yChange = y; 
+//		if (willCrossBounds(x, 0)) {
+//			//double moveFactor = (x < 0) ? 1 : -1;
+//			//xChange = (moveFactor * (WORLD_DIMENSION - x)) + agentXPosition.getValue(); 			
+//			if ((x /-1) > 0) { 
+//				
+//			} else { 
+//				xChange = x - (500 - agentXPosition.getValue()); 
+//			}	
+//		}
+//		if (willCrossBounds(0, y)) { 
+//			double moveFactor = (y < 0) ? 1 : -1;
+//			yChange = (moveFactor * (WORLD_DIMENSION - y)) + agentYPosition.getValue(); 
+//		}
+//		setMovePosition(xChange, yChange);
+//	}
 	
 	private boolean outOfBounds(double xPos, double yPos) { 
 		return (xPos >= WORLD_DIMENSION || xPos < 0) ||
-				(yPos >= WORLD_DIMENSION || xPos < 0);
+				(yPos >= WORLD_DIMENSION || yPos < 0);
 	}
 	
 	private boolean willCrossBounds(double x, double y) { 
