@@ -125,10 +125,10 @@ public abstract class Agent extends Observable{
 		Double xChange = x; 
 		Double yChange = y; 
 		if (willCrossBounds(x, 0)) { 
-			xChange = (x < 0) ? -agentXPosition.getValue() : -(WORLD_DIMENSION - agentXPosition.getValue());
+			xChange = (x < 0) ? -agentXPosition.getValue() : (WORLD_DIMENSION - agentXPosition.getValue());
 		}
 		if (willCrossBounds(0, y)) { 
-			yChange = (y < 0) ? -agentYPosition.getValue() : -(WORLD_DIMENSION - agentYPosition.getValue());
+			yChange = (y < 0) ? -agentYPosition.getValue() : (WORLD_DIMENSION - agentYPosition.getValue());
 		}
 		setMovePosition(xChange, yChange);
 	}
@@ -164,20 +164,8 @@ public abstract class Agent extends Observable{
 	
 	
 	public void movePosition(double x, double y){
-		java.lang.reflect.Method method = null;
-		System.out.println(WINDOW_RESOURCES.getString(windowBehaviorProperty.getValue()+""));
-		try {
-			  method = Agent.class.getMethod(WINDOW_RESOURCES.getString(windowBehaviorProperty.getValue()+""), Double.class, Double.class);
-		} catch (SecurityException e) {
-			} catch (NoSuchMethodException e) {
-				System.out.println("no such method");
-			}
-		try {
-			  method.invoke(this, (Double) x, (Double) y);
-			} catch (IllegalArgumentException e) { // exception handling omitted for brevity
-			} catch (IllegalAccessException e) { // exception handling omitted for brevity
-			} catch (InvocationTargetException e) { // exception handling omitted for brevity
-			}
+		Method method = methodReflection(WINDOW_RESOURCES.getString(windowBehaviorProperty.getValue()+""), (Double) x, (Double) y);
+		reflectedMethodExecute(method, (Double) x, (Double) y);
 	}
 		
 	private Method methodReflection(String methodName, Object... args) { 
