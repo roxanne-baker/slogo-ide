@@ -26,12 +26,13 @@ import model.Turtle;
  * @author Melissa Zhang
  *
  */
-public class ControllerTurtle extends Controller implements ControllerAgents{
+public class ControllerTurtle extends Controller implements ControllerAgents {
 
 	private static final ResourceBundle PALETTE_RESOURCES = ResourceBundle.getBundle("Palettes");
 	private HashMap<Integer,Agent> agentMap;
 	private IntegerProperty currentAgentIDProperty;
 	private ListProperty<Integer> activeAgentListProperty;
+	private SimpleIntegerProperty windowBehaviorProperty; 
 
 	private ViewAgentPreferences preferencesView;
 	private ViewAgents agentsView;
@@ -235,7 +236,6 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 			setCurrentAgent(activeAgentListProperty.getValue().get(i));
 			agentMap.get(currentAgentIDProperty.getValue()).movePosition(changeX[i], changeY[i]);			
 		}
-
 	}
 
 
@@ -249,7 +249,7 @@ public class ControllerTurtle extends Controller implements ControllerAgents{
 	public void setImagePalette(CustomImagePalette customImagePalette) {
 		imagePalette = customImagePalette;
 		addPaletteToTurtles(customImagePalette);
-		
+
 	}
 	
 	private void addPaletteToTurtles(Palette palette) {

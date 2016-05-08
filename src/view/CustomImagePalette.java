@@ -6,10 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 //import javafx.scene.control.Alert.AlertType;
 //import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 /**
- * This is a palette for all the images available for the user. 
+ * This is a palette for all the images available for the user.
  * @author Melissa Zhang
  *
  */
@@ -36,21 +37,19 @@ public class CustomImagePalette extends Palette{
 			if (imageFile.isFile()){
 				imageView = new ImageView(new Image(imageFile.toURI().toString(),SIZE,SIZE,true,true));
 			}else {
-				new DialogBox(AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),imagePath);
+				new DialogBox(Alert.AlertType.ERROR,DIALOG_RESOURCES.getString("IMAGENOTFOUND"),imagePath);
 				removeFromPalette(index);
 			}
-			
+
 		}
-			
+
 		return imageView;
 	}
 
 	public void removeFromPalette(String imagePath) {
 		getPaletteList().remove(imagePath);
-		
+
 	}
-
-
 
 
 

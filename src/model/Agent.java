@@ -1,8 +1,9 @@
 package model;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -25,10 +26,13 @@ import view.CustomImagePalette;
 public abstract class Agent extends Observable{
 	private static final String DEFAULT_IMAGE_PATH = "dot.png";
 	private static final String UPDATE_PROPERTIES = "updateObserver";
+	private final ResourceBundle WINDOW_RESOURCES = ResourceBundle.getBundle("WorldProperties");
+	private final double WORLD_DIMENSION = Double.parseDouble(WINDOW_RESOURCES.getString("WORLD_SIZE"));
 	private static final int DEFAULT_PEN_THICKNESS = 2;
 	private static final double DEFAULT_SIZE = 50;
 	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
 	private static final int DEFAULT_INDEX = 0;
+	private final int DEFAULT_WINDOW_BEHAVIOR = 0; 
 	private IntegerProperty currentImageIndex;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
@@ -42,7 +46,7 @@ public abstract class Agent extends Observable{
 	private DoubleProperty penThickness;
 
 	private IntegerProperty idProperty;
-
+	private IntegerProperty windowBehaviorProperty; 
 	private DoubleProperty sizeProperty;
 	private ResourceBundle updateResources;
 	private StringProperty penStyle;
@@ -69,6 +73,7 @@ public abstract class Agent extends Observable{
 		isVisible = new SimpleBooleanProperty(true);
 		currentImageIndex = new SimpleIntegerProperty(DEFAULT_INDEX); 
 		idProperty = new SimpleIntegerProperty(name);
+		windowBehaviorProperty = new SimpleIntegerProperty(DEFAULT_WINDOW_BEHAVIOR);
 
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		penStyle = new SimpleStringProperty(updateResources.getString("SOLID"));
@@ -96,15 +101,94 @@ public abstract class Agent extends Observable{
 	public DoubleProperty getYPositionProperty(){
 		return agentYPosition;
 	}
-	public void movePosition(double x, double y){
+	
+	private void saveAgentPosition() { 
 		oldXPosition.setValue(agentXPosition.getValue());
 		oldYPosition.setValue(agentYPosition.getValue());
+	}
+	
+	public void setMovePosition(Double x, Double y) { 
+		saveAgentPosition();
 		agentXPosition.setValue(agentXPosition.doubleValue() + x);
 		agentYPosition.setValue(agentYPosition.doubleValue() + y);
 		setChanged();
 		notifyObservers(updateResources.getString("MOVE"));
-
 	}
+	
+	public void moveWithWindowBehavior(Double x, Double y) {
+		setVisible(!willCrossBounds(x,y));
+		setMovePosition(x, y);
+	}
+
+	public void moveWithWrapBehavior(Double x, Double y) { 
+		System.out.println("hey");
+		double xChange = x; 
+		double yChange = y; 
+		if (willCrossBounds(x, 0)) {
+			double moveFactor = (x < 0) ? 1 : -1;
+			xChange = (moveFactor * (WORLD_DIMENSION - x)) + agentXPosition.getValue(); 
+			System.out.println(xChange);
+			System.out.println("what x " + agentXPosition.getValue() + xChange);
+//			if ((x /-1) > 0) { 
+//				xChange = 500 - (x - agentXPosition.getValue()); 
+//			} else { 
+//				xChange = x - (500 - agentXPosition.getValue()); 
+//			}	
+		}
+		if (willCrossBounds(y, 0)) { 
+			double moveFactor = (y < 0) ? 1 : -1;
+			yChange = (moveFactor * (WORLD_DIMENSION - y)) + agentYPosition.getValue(); 
+		}
+		setMovePosition(xChange, yChange);
+	}
+	
+	private boolean outOfBounds(double xPos, double yPos) { 
+		return (xPos >= WORLD_DIMENSION || xPos < 0) ||
+				(yPos >= WORLD_DIMENSION || xPos < 0);
+	}
+	
+	private boolean willCrossBounds(double x, double y) { 
+		return outOfBounds(agentXPosition.getValue() + x, agentYPosition.getValue() + y);
+	}
+	
+	
+	public void movePosition(double x, double y){
+		java.lang.reflect.Method method = null;
+		System.out.println(WINDOW_RESOURCES.getString(windowBehaviorProperty.getValue()+""));
+		try {
+			  method = Agent.class.getMethod(WINDOW_RESOURCES.getString(windowBehaviorProperty.getValue()+""), Double.class, Double.class);
+		} catch (SecurityException e) {
+			} catch (NoSuchMethodException e) {
+				System.out.println("no such method");
+			}
+		try {
+			  method.invoke(this, (Double) x, (Double) y);
+			} catch (IllegalArgumentException e) { // exception handling omitted for brevity
+			} catch (IllegalAccessException e) { // exception handling omitted for brevity
+			} catch (InvocationTargetException e) { // exception handling omitted for brevity
+			}
+	}
+		
+	private Method methodReflection(String methodName, Object... args) { 
+		java.lang.reflect.Method method = null;
+		try {
+			  method = this.getClass().getMethod(methodName, args[0].getClass(), args[1].getClass());
+		} catch (SecurityException e) {		
+		} catch (NoSuchMethodException e) {
+				System.out.println("no such method");
+		}
+		return method;
+	}
+	
+	private void reflectedMethodExecute(Method method, Object...args) { 
+		try {
+			  method.invoke(this, args);
+		} catch (IllegalArgumentException e) { 
+		} catch (IllegalAccessException e) { 
+		} catch (InvocationTargetException e) { 
+		}
+	}
+	
 	public void leaveStamp(){
 		setChanged();
 		notifyObservers(updateResources.getString("STAMP"));
@@ -187,9 +271,9 @@ public abstract class Agent extends Observable{
 		setChanged();
 		notifyObservers(updateResources.getString("VISIBLE"));
 		setChanged();
-		notifyObservers(updateResources.getString("UPDATE"));
-		
+		notifyObservers(updateResources.getString("UPDATE"));	
 	}
+	
 	public boolean isVisible(){
 		return isVisible.getValue();
 	}
@@ -219,6 +303,11 @@ public abstract class Agent extends Observable{
 		agentView.setPenColor((Color) ((CustomColor) myColorPalette.getPaletteObject(penColorIndex.getValue())).getColor());
 
 	}
+	
+	public void setWindowBehavior(int windowBehavior) { 
+		windowBehaviorProperty.setValue(windowBehavior);
+	}
+	
 	public int getPenColorIndex() {
 		return penColorIndex.getValue();
 	}

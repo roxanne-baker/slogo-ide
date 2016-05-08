@@ -403,6 +403,8 @@ public class Interpreter extends Observable {
 		commandsMap.put("ShowTurtle", new ShowTurtle(turtleController));
 		commandsMap.put("HideTurtle", new HideTurtle(turtleController));
 		commandsMap.put("Home", new Home(turtleController));
+		commandsMap.put("Window", new Window(turtleController));
+		commandsMap.put("Wrap", new Wrap(turtleController));
 		commandsMap.put("ClearScreen", new ClearScreen(turtleController, backgroundController));
 	}
 	
