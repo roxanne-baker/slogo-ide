@@ -1,7 +1,11 @@
 package model;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -29,6 +33,7 @@ public abstract class Agent extends Observable{
 	private static final double DEFAULT_SIZE = 50;
 	private static final double DEFAULT_ORIENTATION = 0;//vertical, going clockwise
 	private static final int DEFAULT_INDEX = 0;
+	
 	private IntegerProperty currentImageIndex;
 	private DoubleProperty agentXPosition;
 	private DoubleProperty agentYPosition;
@@ -40,6 +45,7 @@ public abstract class Agent extends Observable{
 	private DoubleProperty oldXPosition;
 	private BooleanProperty isVisible;
 	private DoubleProperty penThickness;
+	private IntegerProperty borderProperty;
 
 	private IntegerProperty idProperty;
 
@@ -49,8 +55,10 @@ public abstract class Agent extends Observable{
 	private AgentElem agentView;
 	private CustomColorPalette myColorPalette;
 	private CustomImagePalette myImagePalette;
+	private Map<Integer, BiConsumer<Double, Double>> borderProperties;
 	
 	public Agent(Integer name, double defaultXlocation, double defaultYlocation){
+		initializeBorderProperties();
 		agentXPosition = new SimpleDoubleProperty(0);
 		agentYPosition = new SimpleDoubleProperty(0);
 		oldXPosition = new SimpleDoubleProperty(0);
@@ -69,6 +77,7 @@ public abstract class Agent extends Observable{
 		isVisible = new SimpleBooleanProperty(true);
 		currentImageIndex = new SimpleIntegerProperty(DEFAULT_INDEX); 
 		idProperty = new SimpleIntegerProperty(name);
+		borderProperty = new SimpleIntegerProperty(2);
 
 		updateResources = ResourceBundle.getBundle(UPDATE_PROPERTIES);
 		penStyle = new SimpleStringProperty(updateResources.getString("SOLID"));
@@ -96,15 +105,54 @@ public abstract class Agent extends Observable{
 	public DoubleProperty getYPositionProperty(){
 		return agentYPosition;
 	}
+	
+	private void initializeBorderProperties() {
+		borderProperties = new HashMap<>();
+		borderProperties.put(2,  (Double x, Double y) -> windowBorder(x, y));
+		borderProperties.put(3, (Double x, Double y) -> fenceBorder(x, y));
+	}
+	
+	public void setBorderProperty(int value) {
+		borderProperty.setValue(value);
+	}
+	
+	private void fenceBorder(double x, double y) {
+		double xValue = agentXPosition.doubleValue() + x;
+		double yValue = agentYPosition.doubleValue() + y;
+		double slope = (yValue - oldYPosition.doubleValue()) / (xValue - oldXPosition.doubleValue());
+		double[] newCoords = Coordinates.setPoint(xValue, yValue, slope, oldXPosition.doubleValue(), oldYPosition.doubleValue());
+		System.out.println(Arrays.toString(newCoords));
+		agentXPosition.setValue(newCoords[0]);
+		agentYPosition.setValue(newCoords[1]);
+	}
+	
+	private void windowBorder(double x, double y) {
+		agentXPosition.setValue(agentXPosition.doubleValue() + x);
+		agentYPosition.setValue(agentYPosition.doubleValue() + y);
+		if (isOffScreen(agentXPosition,agentYPosition)) {
+			setVisible(false);
+		}
+		else if (isOffScreen(oldXPosition, oldYPosition) && !isOffScreen(agentXPosition,agentYPosition)) {
+			setVisible(true);
+		}
+	}
+	
 	public void movePosition(double x, double y){
 		oldXPosition.setValue(agentXPosition.getValue());
 		oldYPosition.setValue(agentYPosition.getValue());
-		agentXPosition.setValue(agentXPosition.doubleValue() + x);
-		agentYPosition.setValue(agentYPosition.doubleValue() + y);
+		
+		borderProperties.get(borderProperty.get()).accept(x, y);
+		
 		setChanged();
 		notifyObservers(updateResources.getString("MOVE"));
-
 	}
+	
+	
+	private boolean isOffScreen(DoubleProperty xPos, DoubleProperty yPos) {
+		return (xPos.get() < Coordinates.X_MIN) || (xPos.get() > Coordinates.X_MAX) ||
+		(yPos.get() < Coordinates.Y_MIN) ||( yPos.get() > Coordinates.Y_MAX);
+	}
+	
 	public void leaveStamp(){
 		setChanged();
 		notifyObservers(updateResources.getString("STAMP"));
